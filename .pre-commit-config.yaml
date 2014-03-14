@@ -1,7 +1,7 @@
 
 -
     repo: git@github.com:pre-commit/pre-commit-hooks
-    sha: 3d3427e85ff938668ef3d7884233a147bd760082
+    sha: ab35cd3634c4a76c0a84322ce75a650eecbec9c6
     hooks:
         -
             id: pyflakes
@@ -12,6 +12,9 @@
         -
             id: trailing-whitespace
             files: '\.(py|sh|yaml)'
+        -
+            id: name-tests-test
+            files: 'tests/.*\.py'
 
 -
     repo: git@github.com:pre-commit/pre-commit
