@@ -17,3 +17,9 @@
     description: This hook trims trailing whitespace.
     entry: trailing-whitespace-fixer
     language: python
+-
+    id: name-tests-test
+    name: Tests should end in _test.py
+    description: This verifies that test files are named correctly
+    entry: name-tests-test
+    language: python

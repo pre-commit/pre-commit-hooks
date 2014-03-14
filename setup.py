@@ -15,6 +15,7 @@ setup(
         'console_scripts': [
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:entry',
             'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:entry',
+            'name-tests-test = pre_commit_hooks.tests_should_end_in_test:entry',
         ],
     },
 )
