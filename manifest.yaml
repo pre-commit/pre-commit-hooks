@@ -1,0 +1,7 @@
+
+-
+    id: pyflakes
+    name: Pyflakes
+    description: This validator runs pyflakes.
+    entry: pyflakes
+    language: python

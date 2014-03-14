@@ -1,10 +1,9 @@
 argparse
-pyyaml
+pyflakes
 simplejson
 
 # Testing requirements
 coverage
 ipdb
 mock
-pyflakes
 pytest
