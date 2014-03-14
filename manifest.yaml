@@ -11,3 +11,9 @@
     description: This hook checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
     entry: debug-statement-hook
     language: python
+-
+    id: trailing-whitespace
+    name: Trim Trailing Whitespace
+    description: This hook trims trailing whitespace.
+    entry: trailing-whitespace-fixer
+    language: python
