@@ -1,0 +1,19 @@
+
+-
+    repo: git@github.com:pre-commit/pre-commit-hooks
+    sha: 5e713f8878b7d100c0e059f8cc34be4fc2e8f897
+    hooks:
+        -
+            id: pyflakes
+            files: '\.py$'
+
+-
+    repo: git@github.com:pre-commit/pre-commit
+    sha: c77d65d9cbbcf30e2be005f5ba8b63447deedc1e
+    hooks:
+        -
+            id: validate_manifest
+            files: /manifest.yaml
+        -
+            id: validate_config
+            files: /\.pre-commit-config.yaml

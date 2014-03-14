@@ -10,4 +10,9 @@ setup(
         'pyflakes',
         'simplejson',
     ],
+    entry_points={
+        'console_scripts': [
+            'debug-statement-hook = pre_commit_hooks.debug_statement_hook:entry',
+        ],
+    },
 )

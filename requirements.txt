@@ -6,4 +6,5 @@ simplejson
 coverage
 ipdb
 mock
+git+git://github.com/pre-commit/pre-commit#egg=pre-commit
 pytest

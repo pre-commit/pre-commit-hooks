@@ -9,3 +9,4 @@ build
 dist
 *.egg-info
 *.iml
+.pre-commit-files

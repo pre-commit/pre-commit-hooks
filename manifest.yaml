@@ -5,3 +5,9 @@
     description: This validator runs pyflakes.
     entry: pyflakes
     language: python
+-
+    id: debug-statements
+    name: Debug Statements (Python)
+    description: This hook checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
+    entry: debug-statement-hook
+    language: python
