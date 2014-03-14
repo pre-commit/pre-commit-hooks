@@ -45,7 +45,7 @@ def check_file_for_debug_statements(filename):
 
 def debug_statement_hook(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('filenames', nargs='+', help='Filenames to run')
+    parser.add_argument('filenames', nargs='*', help='Filenames to run')
     args = parser.parse_args()
 
     retv = 0

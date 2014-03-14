@@ -2,8 +2,8 @@
 import ast
 import pytest
 
-from pre_commit_hooks.debug_statement_hook import ImportStatementParser, \
-    DebugStatement
+from pre_commit_hooks.debug_statement_hook import DebugStatement
+from pre_commit_hooks.debug_statement_hook import ImportStatementParser
 
 
 @pytest.fixture
