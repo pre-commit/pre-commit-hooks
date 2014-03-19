@@ -1,4 +1,6 @@
 
+from __future__ import print_function
+
 import sys
 
 
@@ -11,13 +13,13 @@ def validate_files(argv):
             not filename.endswith('/conftest.py')
         ):
             retcode = 1
-            print '{0} does not end in _test.py'.format(filename)
+            print('{0} does not end in _test.py'.format(filename))
 
     return retcode
 
 
 def entry():
-    validate_files(sys.argv[1:])
+    return validate_files(sys.argv[1:])
 
 
 if __name__ == '__main__':
