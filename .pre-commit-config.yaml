@@ -1,7 +1,7 @@
 
 -
     repo: git@github.com:pre-commit/pre-commit-hooks
-    sha: ab35cd3634c4a76c0a84322ce75a650eecbec9c6
+    sha: 12794c1c19c001e3d05bcfe316b4f93b414035a7
     hooks:
         -
             id: pyflakes
