@@ -4,6 +4,8 @@ import ast
 import collections
 import sys
 
+from pre_commit_hooks.util import entry
+
 
 DEBUG_STATEMENTS = set(['pdb', 'ipdb', 'pudb'])
 
@@ -43,6 +45,7 @@ def check_file_for_debug_statements(filename):
         return 0
 
 
+@entry
 def debug_statement_hook(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to run')
@@ -55,9 +58,5 @@ def debug_statement_hook(argv):
     return retv
 
 
-def entry():
-    return debug_statement_hook(sys.argv[1:])
-
-
 if __name__ == '__main__':
-    sys.exit(entry())
+    sys.exit(debug_statement_hook())

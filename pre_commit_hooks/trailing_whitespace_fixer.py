@@ -3,7 +3,10 @@ import argparse
 import sys
 from plumbum import local
 
+from pre_commit_hooks.util import entry
 
+
+@entry
 def fix_trailing_whitespace(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
@@ -22,9 +25,5 @@ def fix_trailing_whitespace(argv):
         return 0
 
 
-def entry():
-    fix_trailing_whitespace(sys.argv[1:])
-
-
 if __name__ == '__main__':
-    sys.exit(entry())
+    sys.exit(fix_trailing_whitespace())

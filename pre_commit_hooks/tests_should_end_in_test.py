@@ -3,7 +3,10 @@ from __future__ import print_function
 
 import sys
 
+from pre_commit_hooks.util import entry
 
+
+@entry
 def validate_files(argv):
     retcode = 0
     for filename in argv:
@@ -16,10 +19,6 @@ def validate_files(argv):
             print('{0} does not end in _test.py'.format(filename))
 
     return retcode
-
-
-def entry():
-    return validate_files(sys.argv[1:])
 
 
 if __name__ == '__main__':
