@@ -16,6 +16,7 @@ setup(
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',
             'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:fix_trailing_whitespace',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
+            'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
         ],
     },
 )
