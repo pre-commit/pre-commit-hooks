@@ -1,7 +1,4 @@
-argparse
-plumbum
-pyflakes
-simplejson
+-e .
 
 # Testing requirements
 coverage
