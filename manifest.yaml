@@ -19,3 +19,8 @@
     description: This verifies that test files are named correctly
     entry: name-tests-test
     language: python
+-   id: end-of-file-fixer
+    name: Fix End of Files
+    description: Ensures that a file is either empty, or ends with one newline.
+    entry: end-of-file-fixer
+    language: python
