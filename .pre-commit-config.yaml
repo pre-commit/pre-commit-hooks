@@ -1,22 +1,20 @@
-
 -   repo: git@github.com:pre-commit/pre-commit-hooks
-    sha: 76739902911688e8d7b13241409f9facc0e534e4
+    sha: 8aa14d218d0fe5a2c486498269b3e37d3ba5aad2
     hooks:
-        -   id: pyflakes
-            files: '\.py$'
-        -   id: debug-statements
-            files: '\.py$'
-        -   id: trailing-whitespace
-            files: '\.(py|sh|yaml)$'
-        -   id: name-tests-test
-            files: 'tests/.*\.py'
-        -   id: end-of-file-fixer
-            files: '\.(py|sh|yaml)$'
-
+    -   id: pyflakes
+        files: \.py$
+    -   id: debug-statements
+        files: \.py$
+    -   id: trailing-whitespace
+        files: \.(py|sh|yaml)$
+    -   id: name-tests-test
+        files: tests/.*\.py
+    -   id: end-of-file-fixer
+        files: \.(py|sh|yaml)$
 -   repo: git@github.com:pre-commit/pre-commit
-    sha: c77d65d9cbbcf30e2be005f5ba8b63447deedc1e
+    sha: c300a11a973e0e2d88662aef4b282881d0f17b4a
     hooks:
-        -   id: validate_manifest
-            files: /manifest.yaml
-        -   id: validate_config
-            files: /\.pre-commit-config.yaml
+    -   id: validate_manifest
+        files: /manifest.yaml
+    -   id: validate_config
+        files: /\.pre-commit-config.yaml
