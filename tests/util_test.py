@@ -3,7 +3,7 @@ import mock
 import pytest
 import sys
 
-from pre_commit.util import entry
+from pre_commit_hooks.util import entry
 
 
 @pytest.fixture
