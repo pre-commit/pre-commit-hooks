@@ -1,26 +1,30 @@
-
--   id: pyflakes
-    name: Pyflakes
-    description: This validator runs pyflakes.
-    entry: pyflakes
+-   id: check-yaml
+    name: Check Yaml
+    description: This hook checks yaml files for parseable syntax.
+    entry: check-yaml
     language: python
 -   id: debug-statements
     name: Debug Statements (Python)
     description: This hook checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
     entry: debug-statement-hook
     language: python
--   id: trailing-whitespace
-    name: Trim Trailing Whitespace
-    description: This hook trims trailing whitespace.
-    entry: trailing-whitespace-fixer
+-   id: end-of-file-fixer
+    name: Fix End of Files
+    description: Ensures that a file is either empty, or ends with one newline.
+    entry: end-of-file-fixer
     language: python
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly
     entry: name-tests-test
     language: python
--   id: end-of-file-fixer
-    name: Fix End of Files
-    description: Ensures that a file is either empty, or ends with one newline.
-    entry: end-of-file-fixer
+-   id: pyflakes
+    name: Pyflakes
+    description: This validator runs pyflakes.
+    entry: pyflakes
+    language: python
+-   id: trailing-whitespace
+    name: Trim Trailing Whitespace
+    description: This hook trims trailing whitespace.
+    entry: trailing-whitespace-fixer
     language: python
