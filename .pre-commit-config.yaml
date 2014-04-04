@@ -18,9 +18,5 @@
     hooks:
     -   id: validate_config
         files: ^\.pre-commit-config.yaml$
-        exclude: ^$
-        args: []
     -   id: validate_manifest
         files: ^hooks.yaml$
-        exclude: ^$
-        args: []
