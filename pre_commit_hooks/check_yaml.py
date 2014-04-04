@@ -9,7 +9,7 @@ from pre_commit_hooks.util import entry
 @entry
 def check_yaml(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument('filenames', nargs='+', help='Filenames to check.')
+    parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)
 
     retval = 0
