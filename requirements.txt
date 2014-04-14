@@ -1,8 +1,1 @@
--e .
-
-# Testing requirements
-coverage
-flake8
-mock
-git+git://github.com/pre-commit/pre-commit#egg=pre-commit
-pytest
+.

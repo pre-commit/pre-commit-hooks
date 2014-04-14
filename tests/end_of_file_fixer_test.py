@@ -1,5 +1,4 @@
-
-import cStringIO
+import io
 import os.path
 import pytest
 
@@ -9,19 +8,19 @@ from pre_commit_hooks.end_of_file_fixer import fix_file
 
 # Input, expected return value, expected output
 TESTS = (
-    ('foo\n', 0, 'foo\n'),
-    ('', 0, ''),
-    ('\n\n', 1, ''),
-    ('\n\n\n\n', 1, ''),
-    ('foo', 1, 'foo\n'),
-    ('foo\n\n\n', 1, 'foo\n'),
-    ('\xe2\x98\x83', 1, '\xe2\x98\x83\n'),
+    (b'foo\n', 0, b'foo\n'),
+    (b'', 0, b''),
+    (b'\n\n', 1, b''),
+    (b'\n\n\n\n', 1, b''),
+    (b'foo', 1, b'foo\n'),
+    (b'foo\n\n\n', 1, b'foo\n'),
+    (b'\xe2\x98\x83', 1, b'\xe2\x98\x83\n'),
 )
 
 
 @pytest.mark.parametrize(('input', 'expected_retval', 'output'), TESTS)
 def test_fix_file(input, expected_retval, output):
-    file_obj = cStringIO.StringIO()
+    file_obj = io.BytesIO()
     file_obj.write(input)
     ret = fix_file(file_obj)
     assert file_obj.getvalue() == output
@@ -32,11 +31,11 @@ def test_fix_file(input, expected_retval, output):
 def test_integration(input, expected_retval, output, tmpdir):
     file_path = os.path.join(tmpdir.strpath, 'file.txt')
 
-    with open(file_path, 'w') as file_obj:
+    with open(file_path, 'wb') as file_obj:
         file_obj.write(input)
 
     ret = end_of_file_fixer([file_path])
-    file_output = open(file_path, 'r').read()
+    file_output = open(file_path, 'rb').read()
 
     assert file_output == output
     assert ret == expected_retval

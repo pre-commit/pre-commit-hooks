@@ -1,4 +1,3 @@
-
 from __future__ import print_function
 from __future__ import unicode_literals
 
@@ -18,11 +17,11 @@ def fix_file(file_obj):
         return 0
     last_character = file_obj.read(1)
     # last_character will be '' for an empty file
-    if last_character != '\n' and last_character != '':
-        file_obj.write('\n')
+    if last_character != b'\n' and last_character != b'':
+        file_obj.write(b'\n')
         return 1
 
-    while last_character == '\n':
+    while last_character == b'\n':
         # Deal with the beginning of the file
         if file_obj.tell() == 1:
             # If we've reached the beginning of the file and it is all

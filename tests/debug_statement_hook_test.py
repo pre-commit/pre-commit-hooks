@@ -1,9 +1,10 @@
-
 import ast
 import pytest
 
 from pre_commit_hooks.debug_statement_hook import DebugStatement
+from pre_commit_hooks.debug_statement_hook import debug_statement_hook
 from pre_commit_hooks.debug_statement_hook import ImportStatementParser
+from testing.util import get_resource_path
 
 
 @pytest.fixture
@@ -54,3 +55,13 @@ def test_returns_one_form_2(ast_with_debug_import_form_2):
     assert visitor.debug_import_statements == [
         DebugStatement('pudb', 3, 0)
     ]
+
+
+def test_returns_one_for_failing_file():
+    ret = debug_statement_hook([get_resource_path('file_with_debug.notpy')])
+    assert ret == 1
+
+
+def test_returns_zero_for_passing_file():
+    ret = debug_statement_hook([__file__])
+    assert ret == 0
