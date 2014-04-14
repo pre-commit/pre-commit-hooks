@@ -13,14 +13,19 @@
     description: Ensures that a file is either empty, or ends with one newline.
     entry: end-of-file-fixer
     language: python
+-   id: flake8
+    name: Flake8
+    description: This hook runs flake8.
+    entry: flake8
+    language: python
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly
     entry: name-tests-test
     language: python
 -   id: pyflakes
-    name: Pyflakes
-    description: This validator runs pyflakes.
+    name: Pyflakes (DEPRECATED, use flake8)
+    description: This hook runs pyflakes. (This is deprecated, use flake8).
     entry: pyflakes
     language: python
 -   id: trailing-whitespace
