@@ -9,8 +9,7 @@ def test_fixes_trailing_whitespace(tmpdir):
             ('foo.py', 'foo \nbar \n'),
             ('bar.py', 'bar\t\nbaz\t\n'),
         ):
-            with open(filename, 'w') as file_obj:
-                file_obj.write(contents)
+            open(filename, 'w').write(contents)
 
         ret = fix_trailing_whitespace(['foo.py', 'bar.py'])
         assert ret == 1
