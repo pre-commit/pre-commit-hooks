@@ -1,9 +1,25 @@
 from setuptools import find_packages
 from setuptools import setup
 
+
 setup(
     name='pre_commit_hooks',
+    description='Some out-of-the-box hooks for pre-commit.',
+    url='https://github.com/pre-commit/pre-commit-hooks',
     version='0.0.0',
+
+    author='Anthony Sottile',
+    author_email='asottile@umich.edu',
+
+    platforms='linux',
+    classifiers=[
+        'License :: Public Domain',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: Implementation :: PyPy',
+    ],
+
     packages=find_packages('.', exclude=('tests*', 'testing*')),
     install_requires=[
         'argparse',

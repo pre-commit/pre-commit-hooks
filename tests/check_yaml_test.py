@@ -1,4 +1,3 @@
-
 import pytest
 
 from pre_commit_hooks.check_yaml import check_yaml

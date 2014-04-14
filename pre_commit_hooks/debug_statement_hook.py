@@ -1,3 +1,4 @@
+from __future__ import print_function
 
 import argparse
 import ast
@@ -39,7 +40,14 @@ def check_file_for_debug_statements(filename):
     visitor.visit(ast_obj)
     if visitor.debug_import_statements:
         for debug_statement in visitor.debug_import_statements:
-            print '{0}:{2}:{3} - {1} imported'.format(filename, *debug_statement)
+            print(
+                '{0}:{1}:{2} - {3} imported'.format(
+                    filename,
+                    debug_statement.line,
+                    debug_statement.col,
+                    debug_statement.name,
+                )
+            )
         return 1
     else:
         return 0

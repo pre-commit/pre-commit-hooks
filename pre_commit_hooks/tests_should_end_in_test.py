@@ -1,4 +1,3 @@
-
 from __future__ import print_function
 
 import sys
@@ -22,4 +21,4 @@ def validate_files(argv):
 
 
 if __name__ == '__main__':
-    sys.exit(entry())
+    sys.exit(validate_files())

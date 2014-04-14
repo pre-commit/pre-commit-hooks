@@ -1,0 +1,8 @@
+-e .
+
+coverage
+flake8
+mock
+pylint
+pytest
+git+git://github.com/pre-commit/pre-commit#egg=pre_commit

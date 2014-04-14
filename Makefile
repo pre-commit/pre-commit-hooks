@@ -1,41 +1,27 @@
 
-TEST_TARGETS =
-ITEST_TARGETS = -m integration
-UTEST_TARGETS = -m "not(integration)"
+REBUILD_FLAG =
 
-DEBUG=
+.PHONY: all
+all: venv test
 
-all: _tests
+.PHONY: venv
+venv: .venv.touch
+	tox -e venv $(REBUILD_FLAG)
 
-integration:
-	$(eval TEST_TARGETS := $(ITEST_TARGETS))
-
-unit:
-	$(eval TEST_TARGETS := $(UTEST_TARGETS))
-
-utests: test
-utest: test
+.PHONY: tests test
 tests: test
-test: unit _tests
-itests: itest
-itest: integration _tests
+test: .venv.touch
+	tox $(REBUILD_FLAG)
 
-_tests: py_env
-	bash -c 'source py_env/bin/activate && py.test tests $(TEST_TARGETS) $(DEBUG)'
 
-ucoverage: unit coverage
-icoverage: integration coverage
+.venv.touch: setup.py requirements.txt requirements_dev.txt
+	$(eval REBUILD_FLAG := --recreate)
+	touch .venv.touch
 
-coverage: py_env
-	bash -c 'source py_env/bin/activate && \
-		coverage erase && \
-		coverage run `which py.test` tests $(TEST_TARGETS) && \
-		coverage report -m'
 
-py_env: requirements.txt setup.py
-	rm -rf py_env
-	virtualenv py_env
-	bash -c 'source py_env/bin/activate && pip install -r requirements.txt'
-
+.PHONY: clean
 clean:
-	rm -rf py_env
+	find . -iname '*.pyc' | xargs rm -f
+	rm -rf .tox
+	rm -rf ./venv-*
+	rm -f .venv.touch
