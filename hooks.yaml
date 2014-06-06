@@ -3,33 +3,40 @@
     description: This hook checks yaml files for parseable syntax.
     entry: check-yaml
     language: python
+    files: \.(yaml|yml)$
 -   id: debug-statements
     name: Debug Statements (Python)
     description: This hook checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
     entry: debug-statement-hook
     language: python
+    files: \.py$
 -   id: end-of-file-fixer
     name: Fix End of Files
     description: Ensures that a file is either empty, or ends with one newline.
     entry: end-of-file-fixer
     language: python
+    files: \.(js|rb|md|py|sh|txt|yaml|yml)$
 -   id: flake8
     name: Flake8
     description: This hook runs flake8.
     entry: flake8
     language: python
+    files: \.py$
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly
     entry: name-tests-test
     language: python
+    files: tests/.+\.py$
 -   id: pyflakes
     name: Pyflakes (DEPRECATED, use flake8)
     description: This hook runs pyflakes. (This is deprecated, use flake8).
     entry: pyflakes
     language: python
+    files: \.py$
 -   id: trailing-whitespace
     name: Trim Trailing Whitespace
     description: This hook trims trailing whitespace.
     entry: trailing-whitespace-fixer
     language: python
+    files: \.(js|rb|md|py|sh|txt|yaml|yml)$
