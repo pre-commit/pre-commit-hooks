@@ -1,0 +1,7 @@
+0.1.1
+=====
+- Don't crash on non-parseable files for debug-statement-hook
+
+0.1.0
+=====
+- Initial Release
