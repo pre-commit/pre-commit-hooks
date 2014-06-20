@@ -65,3 +65,8 @@ def test_returns_one_for_failing_file():
 def test_returns_zero_for_passing_file():
     ret = debug_statement_hook([__file__])
     assert ret == 0
+
+
+def test_syntaxerror_file():
+    ret = debug_statement_hook([get_resource_path('cannot_parse_ast.notpy')])
+    assert ret == 1

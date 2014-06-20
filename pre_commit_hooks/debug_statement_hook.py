@@ -1,9 +1,10 @@
 from __future__ import print_function
+from __future__ import unicode_literals
 
 import argparse
 import ast
 import collections
-import sys
+import traceback
 
 from pre_commit_hooks.util import entry
 
@@ -35,7 +36,14 @@ class ImportStatementParser(ast.NodeVisitor):
 
 
 def check_file_for_debug_statements(filename):
-    ast_obj = ast.parse(open(filename).read())
+    try:
+        ast_obj = ast.parse(open(filename).read(), filename=filename)
+    except SyntaxError:
+        print('{0} - Could not parse ast'.format(filename))
+        print()
+        print('\t' + traceback.format_exc().replace('\n', '\n\t'))
+        print()
+        return 1
     visitor = ImportStatementParser()
     visitor.visit(ast_obj)
     if visitor.debug_import_statements:
@@ -67,4 +75,4 @@ def debug_statement_hook(argv):
 
 
 if __name__ == '__main__':
-    sys.exit(debug_statement_hook())
+    exit(debug_statement_hook())
