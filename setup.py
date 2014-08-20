@@ -6,7 +6,7 @@ setup(
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
-    version='0.1.1',
+    version='0.2.0',
 
     author='Anthony Sottile',
     author_email='asottile@umich.edu',
@@ -32,6 +32,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
+            'check-json = pre_commit_hooks.check_json:check_json',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
