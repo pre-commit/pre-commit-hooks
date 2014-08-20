@@ -22,6 +22,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ### Hooks available
 
+- `check-json` - Attempts to load all json files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.
 - `end-of-file-fixer` - Makes sure files end in a newline and only a newline.
