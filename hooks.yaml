@@ -1,3 +1,10 @@
+-   id: autopep8-wrapper
+    name: autopep8 wrapper
+    description: Runs autopep8 over python source.
+    entry: autopep8-wrapper
+    language: python
+    files: \.py$
+    args: [-i]
 -   id: check-json
     name: Check JSON
     description: This hook checks json files for parseable syntax.
