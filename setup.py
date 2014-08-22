@@ -24,6 +24,7 @@ setup(
     packages=find_packages('.', exclude=('tests*', 'testing*')),
     install_requires=[
         'argparse',
+        'autopep8',
         'flake8',
         'plumbum',
         'pyflakes',
@@ -32,6 +33,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
+            'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',
             'check-json = pre_commit_hooks.check_json:check_json',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',
