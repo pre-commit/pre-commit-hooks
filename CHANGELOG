@@ -1,3 +1,7 @@
+0.3.0
+=====
+- Add autopep8-wrapper hook
+
 0.2.0
 =====
 - Add check-json hook
