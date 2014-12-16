@@ -30,6 +30,7 @@ Add this to your `.pre-commit-config.yaml`
 - `flake8` - Run flake8 on your python files
 - `name-tests-test` - Assert that files in tests/ end in _test.py
 - `pyflakes` - Run pyflakes on your python files
+- `requirements-txt-fixer` - Sorts entries in requirements.txt
 - `trailing-whitespace` - Trims trailing whitespace.
 
 ### As a standalone package

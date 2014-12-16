@@ -47,6 +47,12 @@
     entry: pyflakes
     language: python
     files: \.py$
+-   id: requirements-txt-fixer
+    name: Fix requirements.txt
+    description: Sorts entries in requirements.txt
+    entry: requirements-txt-fixer
+    language: python
+    files: requirements.*\.txt$
 -   id: trailing-whitespace
     name: Trim Trailing Whitespace
     description: This hook trims trailing whitespace.
