@@ -10,3 +10,4 @@ install: pip install coveralls tox --use-mirrors
 script: tox
 after_success:
     - coveralls
+sudo: false
