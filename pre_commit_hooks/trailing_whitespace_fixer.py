@@ -20,7 +20,7 @@ def fix_trailing_whitespace(argv):
     if bad_whitespace_files:
         for bad_whitespace_file in bad_whitespace_files:
             print('Fixing {0}'.format(bad_whitespace_file))
-            local['sed']['-i', '-e', 's/[[:space:]]*$//', bad_whitespace_file]()
+            local['sed']['-i', '', '-e', 's/[[:space:]]*$//', bad_whitespace_file]()
         return 1
     else:
         return 0
