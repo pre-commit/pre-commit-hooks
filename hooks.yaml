@@ -5,6 +5,13 @@
     language: python
     files: \.py$
     args: [-i]
+-   id: check-added-large-files
+    name: Check for added large files
+    language: python
+    entry: check-added-large-files
+    description: Prevent giant files from being committed
+    # Match all files
+    files: ''
 -   id: check-json
     name: Check JSON
     description: This hook checks json files for parseable syntax.
