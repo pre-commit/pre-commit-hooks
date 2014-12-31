@@ -1,11 +1,12 @@
 -   repo: git@github.com:pre-commit/pre-commit-hooks
-    sha: 6343700aa063fe30acc319d2dc84353a35a3d6d0
+    sha: e0a6e66528c8335599408cbefe7ebf9e7e15ccb3
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: autopep8-wrapper
         args: ['-i', '--ignore=E265,E309,E501']
     -   id: check-json
+    -   id: check-added-large-files
     -   id: check-yaml
     -   id: debug-statements
     -   id: name-tests-test
