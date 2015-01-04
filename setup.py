@@ -37,8 +37,9 @@ setup(
     entry_points={
         'console_scripts': [
             'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',
-            'check-json = pre_commit_hooks.check_json:check_json',
             'check-added-large-files = pre_commit_hooks.check_added_large_files:main',
+            'check-docstring-first = pre_commit_hooks.check_docstring_first:main',
+            'check-json = pre_commit_hooks.check_json:check_json',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
