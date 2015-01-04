@@ -23,7 +23,8 @@ Add this to your `.pre-commit-config.yaml`
 ### Hooks available
 
 - `autopep8-wrapper` - Runs autopep8 over python source.
-' `check-added-large-files` - Prevent giant files from being committed.
+- `check-added-large-files` - Prevent giant files from being committed.
+- `check-docstring-first` - Checks a common error of defining a docstring after code.
 - `check-json` - Attempts to load all json files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.

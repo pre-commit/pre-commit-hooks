@@ -7,11 +7,17 @@
     args: [-i]
 -   id: check-added-large-files
     name: Check for added large files
-    language: python
-    entry: check-added-large-files
     description: Prevent giant files from being committed
+    entry: check-added-large-files
+    language: python
     # Match all files
     files: ''
+-   id: check-docstring-first
+    name: Check docstring is first
+    description: Checks a common error of defining a docstring after code.
+    entry: check-docstring-first
+    language: python
+    files: \.py$
 -   id: check-json
     name: Check JSON
     description: This hook checks json files for parseable syntax.
