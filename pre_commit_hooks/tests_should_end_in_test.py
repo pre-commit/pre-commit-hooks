@@ -2,11 +2,8 @@ from __future__ import print_function
 
 import sys
 
-from pre_commit_hooks.util import entry
 
-
-@entry
-def validate_files(argv):
+def validate_files(argv=None):
     retcode = 0
     for filename in argv:
         if (

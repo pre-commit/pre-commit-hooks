@@ -4,11 +4,8 @@ import argparse
 import sys
 import simplejson
 
-from pre_commit_hooks.util import entry
 
-
-@entry
-def check_json(argv):
+def check_json(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='JSON filenames to check.')
     args = parser.parse_args(argv)
@@ -17,8 +14,8 @@ def check_json(argv):
     for filename in args.filenames:
         try:
             simplejson.load(open(filename))
-        except simplejson.JSONDecodeError as e:
-            print('{0}: Failed to json encode ({1})'.format(filename, e))
+        except simplejson.JSONDecodeError as exc:
+            print('{0}: Failed to json encode ({1})'.format(filename, exc))
             retval = 1
     return retval
 

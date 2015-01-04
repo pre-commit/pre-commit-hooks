@@ -18,21 +18,21 @@ TESTS = (
 )
 
 
-@pytest.mark.parametrize(('input', 'expected_retval', 'output'), TESTS)
-def test_fix_file(input, expected_retval, output):
+@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
+def test_fix_file(input_s, expected_retval, output):
     file_obj = io.BytesIO()
-    file_obj.write(input)
+    file_obj.write(input_s)
     ret = fix_file(file_obj)
     assert file_obj.getvalue() == output
     assert ret == expected_retval
 
 
-@pytest.mark.parametrize(('input', 'expected_retval', 'output'), TESTS)
-def test_integration(input, expected_retval, output, tmpdir):
+@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
+def test_integration(input_s, expected_retval, output, tmpdir):
     file_path = os.path.join(tmpdir.strpath, 'file.txt')
 
     with open(file_path, 'wb') as file_obj:
-        file_obj.write(input)
+        file_obj.write(input_s)
 
     ret = end_of_file_fixer([file_path])
     file_output = open(file_path, 'rb').read()

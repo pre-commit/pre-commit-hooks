@@ -5,8 +5,6 @@ import argparse
 import os
 import sys
 
-from pre_commit_hooks.util import entry
-
 
 def fix_file(file_obj):
     # Test for newline at end of file
@@ -46,8 +44,7 @@ def fix_file(file_obj):
     return 0
 
 
-@entry
-def end_of_file_fixer(argv):
+def end_of_file_fixer(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

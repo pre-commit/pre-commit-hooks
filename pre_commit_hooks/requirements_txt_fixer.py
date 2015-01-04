@@ -2,8 +2,6 @@ from __future__ import print_function
 
 import argparse
 
-from pre_commit_hooks.util import entry
-
 
 class Requirement(object):
 
@@ -67,8 +65,7 @@ def fix_requirements(f):
         return 1
 
 
-@entry
-def fix_requirements_txt(argv):
+def fix_requirements_txt(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -76,7 +73,7 @@ def fix_requirements_txt(argv):
     retv = 0
 
     for arg in args.filenames:
-        with open(arg, 'rb+') as f:
-            retv |= fix_requirements(f)
+        with open(arg, 'rb+') as file_obj:
+            retv |= fix_requirements(file_obj)
 
     return retv
