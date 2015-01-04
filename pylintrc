@@ -1,5 +1,5 @@
 [MESSAGES CONTROL]
-disable=missing-docstring,abstract-method,redefined-builtin,invalid-name,no-value-for-parameter,redefined-outer-name,no-member,bad-open-mode
+disable=bad-open-mode,invalid-name,missing-docstring,redefined-outer-name
 
 [REPORTS]
 output-format=colorized

@@ -5,16 +5,13 @@ import fileinput
 import sys
 from plumbum import local
 
-from pre_commit_hooks.util import entry
-
 
 def _fix_file(filename):
     for line in fileinput.input([filename], inplace=True):
         print(line.rstrip())
 
 
-@entry
-def fix_trailing_whitespace(argv):
+def fix_trailing_whitespace(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

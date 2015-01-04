@@ -9,8 +9,8 @@ def test_fixes_trailing_whitespace(tmpdir):
                 ('foo.py', 'foo \nbar \n'),
                 ('bar.py', 'bar\t\nbaz\t\n'),
         ):
-            with open(filename, 'w') as f:
-                f.write(contents)  # pragma: no cover (python 2.6 coverage bug)
+            with open(filename, 'w') as file_obj:
+                file_obj.write(contents)  # pragma: no cover (26 coverage bug)
 
         ret = fix_trailing_whitespace(['foo.py', 'bar.py'])
         assert ret == 1

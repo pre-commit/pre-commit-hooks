@@ -17,12 +17,12 @@ TESTS = (
 )
 
 
-@pytest.mark.parametrize(('input', 'expected_retval', 'output'), TESTS)
-def test_integration(input, expected_retval, output, tmpdir):
+@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
+def test_integration(input_s, expected_retval, output, tmpdir):
     path = os.path.join(tmpdir.strpath, 'file.txt')
 
     with open(path, 'wb') as file_obj:
-        file_obj.write(input)
+        file_obj.write(input_s)
 
     assert fix_requirements_txt([path]) == expected_retval
     assert open(path, 'rb').read() == output

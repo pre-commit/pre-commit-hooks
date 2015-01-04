@@ -6,8 +6,6 @@ import ast
 import collections
 import traceback
 
-from pre_commit_hooks.util import entry
-
 
 DEBUG_STATEMENTS = set(['pdb', 'ipdb', 'pudb'])
 
@@ -61,8 +59,7 @@ def check_file_for_debug_statements(filename):
         return 0
 
 
-@entry
-def debug_statement_hook(argv):
+def debug_statement_hook(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to run')
     args = parser.parse_args(argv)

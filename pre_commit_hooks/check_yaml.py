@@ -4,11 +4,8 @@ import argparse
 import sys
 import yaml
 
-from pre_commit_hooks.util import entry
 
-
-@entry
-def check_yaml(argv):
+def check_yaml(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Yaml filenames to check.')
     args = parser.parse_args(argv)
@@ -17,8 +14,8 @@ def check_yaml(argv):
     for filename in args.filenames:
         try:
             yaml.load(open(filename))
-        except yaml.YAMLError as e:
-            print(e)
+        except yaml.YAMLError as exc:
+            print(exc)
             retval = 1
     return retval
 
