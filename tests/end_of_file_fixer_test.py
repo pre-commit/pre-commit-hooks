@@ -1,5 +1,6 @@
 import io
 import os.path
+
 import pytest
 
 from pre_commit_hooks.end_of_file_fixer import end_of_file_fixer

@@ -1,8 +1,9 @@
 import ast
+
 import pytest
 
-from pre_commit_hooks.debug_statement_hook import DebugStatement
 from pre_commit_hooks.debug_statement_hook import debug_statement_hook
+from pre_commit_hooks.debug_statement_hook import DebugStatement
 from pre_commit_hooks.debug_statement_hook import ImportStatementParser
 from testing.util import get_resource_path
 

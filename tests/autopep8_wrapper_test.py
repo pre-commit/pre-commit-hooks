@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import io
 import os.path
+
 import pytest
 
 from pre_commit_hooks.autopep8_wrapper import main

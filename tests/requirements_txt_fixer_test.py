@@ -1,4 +1,5 @@
 import os.path
+
 import pytest
 
 from pre_commit_hooks.requirements_txt_fixer import fix_requirements_txt
