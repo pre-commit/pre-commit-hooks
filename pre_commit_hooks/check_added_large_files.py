@@ -8,15 +8,13 @@ import math
 import os
 import sys
 
-from plumbum import local
+from pre_commit_hooks.util import added_files
 
 
 def find_large_added_files(filenames, maxkb):
     # Find all added files that are also in the list of files pre-commit tells
     # us about
-    filenames = set(local['git'](
-        'diff', '--staged', '--name-only', '--diff-filter', 'A',
-    ).splitlines()) & set(filenames)
+    filenames = added_files() & set(filenames)
 
     retv = 0
     for filename in filenames:

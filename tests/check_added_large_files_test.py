@@ -1,26 +1,11 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import io
-
-import pytest
 from plumbum import local
 
 from pre_commit_hooks.check_added_large_files import find_large_added_files
 from pre_commit_hooks.check_added_large_files import main
-
-
-@pytest.yield_fixture
-def temp_git_dir(tmpdir):
-    git_dir = tmpdir.join('gits').strpath
-    local['git']('init', git_dir)
-    yield git_dir
-
-
-def write_file(filename, contents):
-    """Hax because coveragepy chokes on nested context managers."""
-    with io.open(filename, 'w') as file_obj:
-        file_obj.write(contents)
+from testing.util import write_file
 
 
 def test_nothing_added(temp_git_dir):
