@@ -74,6 +74,11 @@ def fix_requirements_txt(argv=None):
 
     for arg in args.filenames:
         with open(arg, 'rb+') as file_obj:
-            retv |= fix_requirements(file_obj)
+            ret_for_file = fix_requirements(file_obj)
+
+            if ret_for_file:
+                print('Sorting {0}'.format(arg))
+
+            retv |= ret_for_file
 
     return retv
