@@ -22,7 +22,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ### Hooks available
 
-- `autopep8-wrapper` - Runs autopep8 over python source.
+- `autopep8-wrapper` - Runs autopep8 over python source. (You'll want `args: ['-i]` when using this hook, see `.pre-commit-config.yaml` for an example.)
 - `check-added-large-files` - Prevent giant files from being committed.
 - `check-docstring-first` - Checks a common error of defining a docstring after code.
 - `check-json` - Attempts to load all json files to verify syntax.
