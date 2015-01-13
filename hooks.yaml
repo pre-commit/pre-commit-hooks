@@ -12,6 +12,13 @@
     language: python
     # Match all files
     files: ''
+-   id: check-case-conflict
+    name: Check for case conflicts
+    description: Check for files that would conflict in case-insensitive filesystems
+    entry: check-case-conflict
+    language: python
+    # Match all files
+    files: ''
 -   id: check-docstring-first
     name: Check docstring is first
     description: Checks a common error of defining a docstring after code.

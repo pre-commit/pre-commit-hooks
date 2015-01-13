@@ -17,3 +17,6 @@ ignored-classes=pytest
 [DESIGN]
 min-public-methods=0
 
+[SIMILARITIES]
+min-similarity-lines=5
+ignore-imports=yes
