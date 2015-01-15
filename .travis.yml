@@ -5,7 +5,6 @@ env: # These should match the tox env list
     - TOXENV=py33
     - TOXENV=py34
     - TOXENV=pypy
-    - TOXENV=pypy3
 install: pip install coveralls tox --use-mirrors
 script: tox
 # Special snowflake.  Our tests depend on making real commits.
