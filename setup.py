@@ -41,6 +41,7 @@ setup(
             'check-case-conflict = pre_commit_hooks.check_case_conflict:main',
             'check-docstring-first = pre_commit_hooks.check_docstring_first:main',
             'check-json = pre_commit_hooks.check_json:check_json',
+            'check-xml = pre_commit_hooks.check_xml:check_xml',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',

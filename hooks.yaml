@@ -31,6 +31,12 @@
     entry: check-json
     language: python
     files: \.json$
+-   id: check-xml
+    name: Check Xml
+    description: This hook checks xml files for parseable syntax.
+    entry: check-xml
+    language: python
+    files: \.xml$
 -   id: check-yaml
     name: Check Yaml
     description: This hook checks yaml files for parseable syntax.
