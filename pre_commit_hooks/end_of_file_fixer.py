@@ -16,6 +16,8 @@ def fix_file(file_obj):
     last_character = file_obj.read(1)
     # last_character will be '' for an empty file
     if last_character != b'\n' and last_character != b'':
+        # Needs this seek for windows, otherwise IOError
+        file_obj.seek(0, os.SEEK_END)
         file_obj.write(b'\n')
         return 1
 
