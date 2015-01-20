@@ -1,0 +1,17 @@
+environment:
+    matrix:
+        - TOXENV: py27
+        - TOXENV: py34
+
+install:
+    - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+    - pip install tox
+
+# Not a C# project
+build: false
+
+before_test:
+  - git config --global user.name "AppVeyor CI"
+  - git config --global user.email "user@example.com"
+
+test_script: tox
