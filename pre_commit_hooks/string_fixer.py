@@ -8,7 +8,7 @@ import tokenize
 
 
 double_quote_starts = tuple(s for s in tokenize.single_quoted if '"' in s)
-compiled_tokenize_string = re.compile(tokenize.String)
+compiled_tokenize_string = re.compile('(?<!")' + tokenize.String + '(?!")')
 
 
 def handle_match(m):
@@ -19,34 +19,18 @@ def handle_match(m):
             meat = string[len(double_quote_start):-1]
             if '"' in meat or "'" in meat:
                 break
-            return (
-                double_quote_start.replace('"', "'") +
-                string[len(double_quote_start):-1] +
-                "'"
-            )
+            return double_quote_start.replace('"', "'") + meat + "'"
     return string
 
 
 def fix_strings(filename):
-    return_value = 0
-
-    lines = []
-
-    with open(filename, 'r') as read_handle:
-        for line in read_handle:
-            if '"""' in line:
-                # Docstrings are hard, fuck it
-                lines.append(line)
-            else:
-                result = re.sub(compiled_tokenize_string, handle_match, line)
-                lines.append(result)
-                return_value |= int(result != line)
-
-    with open(filename, 'w') as write_handle:
-        for line in lines:
-            write_handle.write(line)
-
-    return return_value
+    contents = open(filename).read()
+    new_contents = compiled_tokenize_string.sub(handle_match, contents)
+    retval = int(new_contents != contents)
+    if retval:
+        with open(filename, 'w') as write_handle:
+            write_handle.write(new_contents)
+    return retval
 
 
 def main(argv=None):
