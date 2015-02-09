@@ -79,6 +79,12 @@
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
+-   id: double-quote-string-fixer
+    name: Fix double quoted strings
+    description: This hook replaces double quoted strings with single quoted strings
+    entry: double-quote-string-fixer
+    language: python
+    files: \.py$
 -   id: trailing-whitespace
     name: Trim Trailing Whitespace
     description: This hook trims trailing whitespace.

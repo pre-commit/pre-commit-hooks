@@ -36,6 +36,7 @@ Add this to your `.pre-commit-config.yaml`
 - `name-tests-test` - Assert that files in tests/ end in _test.py
 - `pyflakes` - Run pyflakes on your python files
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
+- `double-quote-string-fixer` - This hook replaces double quoted strings with single quoted strings
 - `trailing-whitespace` - Trims trailing whitespace.
 
 ### As a standalone package

@@ -15,7 +15,7 @@ TESTS = (
     ('', 0, ''),
     # Acceptable
     ('"foo"', 0, ''),
-    # Docstrin after code
+    # Docstring after code
     (
         'from __future__ import unicode_literals\n'
         '"foo"\n',
