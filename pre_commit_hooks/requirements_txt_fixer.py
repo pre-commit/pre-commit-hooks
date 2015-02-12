@@ -18,7 +18,10 @@ class Requirement(object):
         elif requirement.value == b'\n':
             return False
         else:
-            return self.value < requirement.value
+            return (
+                self.value.partition(b'==') <
+                requirement.value.partition(b'==')
+            )
 
 
 def fix_requirements(f):
