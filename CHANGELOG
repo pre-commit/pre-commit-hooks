@@ -1,3 +1,15 @@
+0.4.0
+=====
+- Fix trailing-whitespace on OS X
+- Add check-added-large-files hook
+- Add check-docstring-first hook
+- Add requirements-txt-fixer hook
+- Add check-case-conflict hook
+- Use yaml's CLoader when available in check-yaml for more speed
+- Add check-xml hook
+- Fix end-of-file-fixer for windows
+- Add double-quote-string-fixer hook
+
 0.3.0
 =====
 - Add autopep8-wrapper hook
