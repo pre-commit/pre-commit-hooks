@@ -27,7 +27,7 @@ setup(
     packages=find_packages('.', exclude=('tests*', 'testing*')),
     install_requires=[
         'argparse',
-        'autopep8',
+        'autopep8>=1.1',
         'flake8',
         'plumbum',
         'pyflakes',
