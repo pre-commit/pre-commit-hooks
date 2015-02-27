@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/pre-commit/pre-commit-hooks.svg?branch=master)](https://travis-ci.org/pre-commit/pre-commit-hooks)
 [![Coverage Status](https://img.shields.io/coveralls/pre-commit/pre-commit-hooks.svg?branch=master)](https://coveralls.io/r/pre-commit/pre-commit-hooks)
-[![Build status](https://ci.appveyor.com/api/projects/status/dfcpng35u4g0r0t1?svg=true)](https://ci.appveyor.com/project/asottile/pre-commit-hooks)
+[![Build status](https://ci.appveyor.com/api/projects/status/dfcpng35u4g0r0t1/branch/master?svg=true)](https://ci.appveyor.com/project/asottile/pre-commit-hooks/branch/master)
 
 pre-commit-hooks
 ==========
