@@ -10,7 +10,7 @@ import autopep8
 
 def main(argv=None):
     argv = argv if argv is not None else sys.argv[1:]
-    args = autopep8.parse_args(argv)
+    args = autopep8.parse_args(argv, apply_config=True)
 
     retv = 0
     for filename in args.files:
