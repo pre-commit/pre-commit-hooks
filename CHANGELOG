@@ -1,3 +1,8 @@
+0.4.1
+=====
+- Respect configuration when running autopep8
+- Quickfix for pep8 version conflicts
+
 0.4.0
 =====
 - Fix trailing-whitespace on OS X
