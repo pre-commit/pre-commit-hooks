@@ -49,6 +49,12 @@
     entry: debug-statement-hook
     language: python
     files: \.py$
+-   id: detect-private-key
+    name: Detect Private Key
+    description: Detects the presence of private keys
+    entry: detect-private-key
+    language: python
+    files: ''
 -   id: double-quote-string-fixer
     name: Fix double quoted strings
     description: This hook replaces double quoted strings with single quoted strings
