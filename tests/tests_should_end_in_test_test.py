@@ -9,3 +9,23 @@ def test_validate_files_all_pass():
 def test_validate_files_one_fails():
     ret = validate_files(['not_test_ending.py', 'foo_test.py'])
     assert ret == 1
+
+
+def test_validate_files_django_all_pass():
+    ret = validate_files(['--django', 'test_foo.py', 'test_bar.py'])
+    assert ret == 0
+
+
+def test_validate_files_django_one_fails():
+    ret = validate_files(['--django', 'not_test_ending.py', 'test_foo.py'])
+    assert ret == 1
+
+
+def test_validate_files_not_django_fails():
+    ret = validate_files(['foo_test.py', 'bar_test.py', 'test_baz.py'])
+    assert ret == 1
+
+
+def test_validate_files_django_fails():
+    ret = validate_files(['--django', 'foo_test.py', 'test_bar.py', 'test_baz.py'])
+    assert ret == 1
