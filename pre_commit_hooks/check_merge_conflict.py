@@ -22,7 +22,7 @@ def detect_merge_conflict(argv=None):
             for i, line in enumerate(inputfile):
                 for pattern in CONFLICT_PATTERNS:
                     if line.startswith(pattern):
-                        print(WARNING_MSG.format(pattern, filename, i))
+                        print(WARNING_MSG.format(pattern, filename, i + 1))
                         retcode = 1
 
     return retcode
