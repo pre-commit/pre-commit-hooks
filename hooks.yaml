@@ -31,6 +31,13 @@
     entry: check-json
     language: python
     files: \.json$
+-   id: check-merge-conflict
+    name: Check for merge conflicts
+    description: Check for files that contain merge conflict strings.
+    entry: check-merge-conflict
+    language: python
+    # Match all files
+    files: ''
 -   id: check-xml
     name: Check Xml
     description: This hook checks xml files for parseable syntax.
