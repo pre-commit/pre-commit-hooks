@@ -28,6 +28,7 @@ Add this to your `.pre-commit-config.yaml`
 - `check-case-conflict` - Check for files that would conflict in case-insensitive filesystems.
 - `check-docstring-first` - Checks a common error of defining a docstring after code.
 - `check-json` - Attempts to load all json files to verify syntax.
+- `check-merge-conflict` - Check for files that contain merge conflict strings.
 - `check-xml` - Attempts to load all xml files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.

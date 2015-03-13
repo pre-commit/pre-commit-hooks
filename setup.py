@@ -41,6 +41,7 @@ setup(
             'check-added-large-files = pre_commit_hooks.check_added_large_files:main',
             'check-case-conflict = pre_commit_hooks.check_case_conflict:main',
             'check-docstring-first = pre_commit_hooks.check_docstring_first:main',
+            'check-merge-conflict = pre_commit_hooks.check_merge_conflict:detect_merge_conflict',
             'check-json = pre_commit_hooks.check_json:check_json',
             'check-xml = pre_commit_hooks.check_xml:check_xml',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
