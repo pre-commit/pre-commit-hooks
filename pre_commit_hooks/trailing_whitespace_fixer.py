@@ -4,7 +4,7 @@ import argparse
 import fileinput
 import sys
 
-from plumbum import local
+from pre_commit_hooks.util import cmd_output
 
 
 def _fix_file(filename):
@@ -17,9 +17,9 @@ def fix_trailing_whitespace(argv=None):
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
-    bad_whitespace_files = local['grep'][
-        ('-l', '[[:space:]]$') + tuple(args.filenames)
-    ](retcode=None).strip().splitlines()
+    bad_whitespace_files = cmd_output(
+        'grep', '-l', '[[:space:]]$', *args.filenames, retcode=None
+    ).strip().splitlines()
 
     if bad_whitespace_files:
         for bad_whitespace_file in bad_whitespace_files:
