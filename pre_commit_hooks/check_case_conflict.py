@@ -4,9 +4,8 @@ from __future__ import unicode_literals
 
 import argparse
 
-from plumbum import local
-
 from pre_commit_hooks.util import added_files
+from pre_commit_hooks.util import cmd_output
 
 
 def lower_set(iterable):
@@ -14,7 +13,7 @@ def lower_set(iterable):
 
 
 def find_conflicting_filenames(filenames):
-    repo_files = set(local['git']('ls-files').splitlines())
+    repo_files = set(cmd_output('git', 'ls-files').splitlines())
     relevant_files = set(filenames) | added_files()
     repo_files -= relevant_files
     retv = 0

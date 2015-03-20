@@ -1,10 +1,12 @@
-from plumbum import local
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
 from pre_commit_hooks.trailing_whitespace_fixer import fix_trailing_whitespace
+from testing.util import cwd
 
 
 def test_fixes_trailing_whitespace(tmpdir):
-    with local.cwd(tmpdir.strpath):
+    with cwd(tmpdir.strpath):
         for filename, contents in (
                 ('foo.py', 'foo \nbar \n'),
                 ('bar.py', 'bar\t\nbaz\t\n'),
