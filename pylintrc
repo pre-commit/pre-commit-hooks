@@ -1,5 +1,5 @@
 [MESSAGES CONTROL]
-disable=bad-open-mode,invalid-name,missing-docstring,redefined-outer-name,star-args
+disable=bad-open-mode,invalid-name,missing-docstring,redefined-outer-name,star-args,locally-disabled
 
 [REPORTS]
 output-format=colorized
