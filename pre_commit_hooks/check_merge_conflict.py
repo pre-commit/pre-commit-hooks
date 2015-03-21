@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import os.path
 import sys
 
 CONFLICT_PATTERNS = [
@@ -11,10 +12,20 @@ CONFLICT_PATTERNS = [
 WARNING_MSG = 'Merge conflict string "{0}" found in {1}:{2}'
 
 
+def is_in_merge_conflict():
+    return (
+        os.path.exists(os.path.join('.git', 'MERGE_MSG')) and
+        os.path.exists(os.path.join('.git', 'MERGE_HEAD'))
+    )
+
+
 def detect_merge_conflict(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)
+
+    if not is_in_merge_conflict():
+        return 0
 
     retcode = 0
     for filename in args.filenames:
