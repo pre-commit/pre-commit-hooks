@@ -33,9 +33,11 @@ setup(
         'pyflakes',
         'pyyaml',
         'simplejson',
+        # TODO: include yapf when it is released
     ],
     entry_points={
         'console_scripts': [
+            'yapf-wrapper = pre_commit_hooks.yapf_wrapper:main',
             'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',
             'check-added-large-files = pre_commit_hooks.check_added_large_files:main',
             'check-case-conflict = pre_commit_hooks.check_case_conflict:main',

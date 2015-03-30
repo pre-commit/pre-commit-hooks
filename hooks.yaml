@@ -1,3 +1,10 @@
+-   id: yapf-wrapper
+    name: yapf wrapper
+    description: "Runs yapf over python source. (You'll want args: [-i] when using this hook, see .pre-commit-config.yaml for an example.)"
+    entry: yapf-wrapper
+    language: python
+    files: \.py$
+    args: [-i]
 -   id: autopep8-wrapper
     name: autopep8 wrapper
     description: "Runs autopep8 over python source. (You'll want args: [-i] when using this hook, see .pre-commit-config.yaml for an example.)"
