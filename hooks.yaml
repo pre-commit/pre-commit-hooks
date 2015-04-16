@@ -49,7 +49,7 @@
     description: This hook checks yaml files for parseable syntax.
     entry: check-yaml
     language: python
-    files: \.(yaml|yml)$
+    files: \.(yaml|yml|eyaml)$
 -   id: debug-statements
     name: Debug Statements (Python)
     description: This hook checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
