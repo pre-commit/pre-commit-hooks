@@ -24,6 +24,8 @@ Add this to your `.pre-commit-config.yaml`
 ### Hooks available
 
 - `autopep8-wrapper` - Runs autopep8 over python source. (You'll want `args: ['-i]` when using this hook, see `.pre-commit-config.yaml` for an example.)
+- `yapf-wrapper` - Runs yapf over python source. (You'll want `args: ['-i]` when using this hook, see `.pre-commit-config.yaml` for an example.)
+  **NOTE: yapf is currently alpha and has not yet been released, so enabling this hook currently requires you to install yapf manually from source.**
 - `check-added-large-files` - Prevent giant files from being committed.
 - `check-case-conflict` - Check for files that would conflict in case-insensitive filesystems.
 - `check-docstring-first` - Checks a common error of defining a docstring after code.
