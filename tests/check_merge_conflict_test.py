@@ -47,7 +47,7 @@ def f1_is_a_conflict_file(in_tmpdir):
 
 
 @pytest.mark.parametrize(
-    'failing_contents', ('<<<<<<< HEAD', '=======', '>>>>>>> master'),
+    'failing_contents', ('<<<<<<< HEAD\n', '=======\n', '>>>>>>> master\n'),
 )
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
 def test_merge_conflicts_failing(failing_contents):
@@ -56,7 +56,7 @@ def test_merge_conflicts_failing(failing_contents):
 
 
 @pytest.mark.parametrize(
-    'ok_contents', ('# <<<<<<< HEAD', '# =======', 'import my_module', ''),
+    'ok_contents', ('# <<<<<<< HEAD\n', '# =======\n', 'import my_module', ''),
 )
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
 def test_merge_conflicts_ok(ok_contents):
@@ -67,5 +67,5 @@ def test_merge_conflicts_ok(ok_contents):
 @pytest.mark.usefixtures('in_tmpdir')
 def test_does_not_care_when_not_in_a_conflict():
     with io.open('README.md', 'w') as readme_file:
-        readme_file.write('pre-commit\n=================\n')
+        readme_file.write('problem\n=======\n')
     assert detect_merge_conflict(['README.md']) == 0
