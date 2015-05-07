@@ -13,7 +13,7 @@ CONFLICT_PATTERNS = [
 WARNING_MSG = 'Merge conflict string "{0}" found in {1}:{2}'
 
 
-def is_in_merge_conflict():
+def is_in_merge():
     return (
         os.path.exists(os.path.join('.git', 'MERGE_MSG')) and
         os.path.exists(os.path.join('.git', 'MERGE_HEAD'))
@@ -25,7 +25,7 @@ def detect_merge_conflict(argv=None):
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)
 
-    if not is_in_merge_conflict():
+    if not is_in_merge():
         return 0
 
     retcode = 0
