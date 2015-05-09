@@ -6,7 +6,8 @@ import sys
 
 CONFLICT_PATTERNS = [
     '<<<<<<< ',
-    '=======',
+    '======= ',
+    '=======\n',
     '>>>>>>> '
 ]
 WARNING_MSG = 'Merge conflict string "{0}" found in {1}:{2}'
