@@ -23,23 +23,34 @@ Add this to your `.pre-commit-config.yaml`
 
 ### Hooks available
 
-- `autopep8-wrapper` - Runs autopep8 over python source. (You'll want `args: ['-i]` when using this hook, see `.pre-commit-config.yaml` for an example.)
+- `autopep8-wrapper` - Runs autopep8 over python source.
+    - Ignore PEP 8 violation types with `args: ['-i', '--ignore=E000,...']`,
+      see `.pre-commit-config.yaml` in this repository for an example.
 - `check-added-large-files` - Prevent giant files from being committed.
-- `check-case-conflict` - Check for files that would conflict in case-insensitive filesystems.
-- `check-docstring-first` - Checks a common error of defining a docstring after code.
+    - Specify what is "too large" with `args: ['--maxkb=123']` (default=500kB).
+- `check-case-conflict` - Check for files with names that would conflict on a
+  case-insensitive filesystem like MacOS HFS+ or Windows FAT.
+- `check-docstring-first` - Checks for a common error of placing code before
+  the docstring.
 - `check-json` - Attempts to load all json files to verify syntax.
 - `check-merge-conflict` - Check for files that contain merge conflict strings.
 - `check-xml` - Attempts to load all xml files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.
-- `detect-private-key` - Checks for the existence of private keys
-- `double-quote-string-fixer` - This hook replaces double quoted strings with single quoted strings
+- `detect-private-key` - Checks for the existence of private keys.
+- `double-quote-string-fixer` - This hook replaces double quoted strings
+  with single quoted strings.
 - `end-of-file-fixer` - Makes sure files end in a newline and only a newline.
-- `flake8` - Run flake8 on your python files
-- `name-tests-test` - Assert that files in tests/ end in _test.py
-- `pyflakes` - Run pyflakes on your python files
+- `flake8` - Run flake8 on your python files.
+- `name-tests-test` - Assert that files in tests/ end in `_test.py`.
+    - Use `args: ['--django']` to match `test*.py` instead.
+- `pyflakes` - Run pyflakes on your python files.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
 - `trailing-whitespace` - Trims trailing whitespace.
+    - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;
+      use `args: ['--markdown-linebreak-ext=txt,text']` to add other extensions,
+      `args: ['--markdown-linebreak-ext=*']` to preserve them for all files,
+      or `args: ['--no-markdown-linebreak-ext']` to disable and always trim.
 
 ### As a standalone package
 
