@@ -1,9 +1,8 @@
 from __future__ import print_function
 
+import argparse
 import io
 import sys
-
-import argparse
 
 
 def detect_private_key(argv=None):
