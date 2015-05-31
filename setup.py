@@ -6,7 +6,7 @@ setup(
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
-    version='0.4.1',
+    version='0.4.2',
 
     author='Anthony Sottile',
     author_email='asottile@umich.edu',
