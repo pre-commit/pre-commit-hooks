@@ -44,6 +44,7 @@ setup(
             'check-xml = pre_commit_hooks.check_xml:check_xml',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',
+            'detect-aws-credentials = pre_commit_hooks.detect_aws_credentials:main',
             'detect-private-key = pre_commit_hooks.detect_private_key:detect_private_key',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
