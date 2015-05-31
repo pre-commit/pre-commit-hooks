@@ -30,7 +30,6 @@ setup(
         'flake8',
         'argparse',
         'autopep8>=1.1',
-        'pyflakes',
         'pyyaml',
         'simplejson',
     ],
