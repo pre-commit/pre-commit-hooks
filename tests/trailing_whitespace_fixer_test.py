@@ -29,14 +29,12 @@ def test_fixes_trailing_whitespace(tmpdir):
 
 
 # filename, expected input, expected output
-# pylint: disable=bad-whitespace
 MD_TESTS_1 = (
-    ('foo.md',        'foo  \nbar \n  ',         'foo  \nbar\n\n'),
-    ('bar.Markdown',  'bar   \nbaz\t\n\t\n',     'bar  \nbaz\n\n'),
-    ('.md',           'baz   \nquux  \t\n\t\n',  'baz\nquux\n\n'),
-    ('txt',           'foo   \nbaz \n\t\n',      'foo\nbaz\n\n'),
+    ('foo.md', 'foo  \nbar \n  ', 'foo  \nbar\n\n'),
+    ('bar.Markdown', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
+    ('.md', 'baz   \nquux  \t\n\t\n', 'baz\nquux\n\n'),
+    ('txt', 'foo   \nbaz \n\t\n', 'foo\nbaz\n\n'),
 )
-# pylint: enable=bad-whitespace
 
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_1)
@@ -51,15 +49,13 @@ def test_fixes_trailing_markdown_whitespace(filename, input_s, output, tmpdir):
 
 
 # filename, expected input, expected output
-# pylint: disable=bad-whitespace
 MD_TESTS_2 = (
-    ('foo.txt',       'foo  \nbar \n  \n',       'foo  \nbar\n\n'),
-    ('bar.Markdown',  'bar   \nbaz\t\n\t\n',     'bar  \nbaz\n\n'),
-    ('bar.MD',        'bar   \nbaz\t   \n\t\n',  'bar  \nbaz\n\n'),
-    ('.txt',          'baz   \nquux  \t\n\t\n',  'baz\nquux\n\n'),
-    ('txt',           'foo   \nbaz \n\t\n',      'foo\nbaz\n\n'),
+    ('foo.txt', 'foo  \nbar \n  \n', 'foo  \nbar\n\n'),
+    ('bar.Markdown', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
+    ('bar.MD', 'bar   \nbaz\t   \n\t\n', 'bar  \nbaz\n\n'),
+    ('.txt', 'baz   \nquux  \t\n\t\n', 'baz\nquux\n\n'),
+    ('txt', 'foo   \nbaz \n\t\n', 'foo\nbaz\n\n'),
 )
-# pylint: enable=bad-whitespace
 
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_2)
@@ -75,12 +71,10 @@ def test_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
 
 
 # filename, expected input, expected output
-# pylint: disable=bad-whitespace
 MD_TESTS_3 = (
-    ('foo.baz',       'foo  \nbar \n  ',         'foo  \nbar\n\n'),
-    ('bar',           'bar   \nbaz\t\n\t\n',     'bar  \nbaz\n\n'),
+    ('foo.baz', 'foo  \nbar \n  ', 'foo  \nbar\n\n'),
+    ('bar', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
 )
-# pylint: enable=bad-whitespace
 
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_3)
@@ -107,12 +101,10 @@ def test_markdown_linebreak_ext_badopt(arg):
 
 
 # filename, expected input, expected output
-# pylint: disable=bad-whitespace
 MD_TESTS_4 = (
-    ('bar.md',        'bar   \nbaz\t   \n\t\n',  'bar\nbaz\n\n'),
-    ('bar.markdown',  'baz   \nquux  \n',        'baz\nquux\n'),
+    ('bar.md', 'bar   \nbaz\t   \n\t\n', 'bar\nbaz\n\n'),
+    ('bar.markdown', 'baz   \nquux  \n', 'baz\nquux\n'),
 )
-# pylint: enable=bad-whitespace
 
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_4)

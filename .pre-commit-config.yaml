@@ -4,7 +4,6 @@
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: autopep8-wrapper
-        args: ['-i', '--ignore=E265,E309,E501']
     -   id: check-docstring-first
     -   id: check-json
     -   id: check-added-large-files
@@ -14,11 +13,11 @@
     -   id: requirements-txt-fixer
     -   id: flake8
 -   repo: git@github.com:pre-commit/pre-commit
-    sha: 645838cb514583249478e347aa80a0af743edace
+    sha: 8dba3281d5051060755459dcf88e28fc26c27526
     hooks:
     -   id: validate_config
     -   id: validate_manifest
 -   repo: git@github.com:asottile/reorder_python_imports
-    sha: ea9fa14a757bb210d849de5af8f8ba2c9744027a
+    sha: 3d86483455ab5bd06cc1069fdd5ac57be5463f10
     hooks:
     -   id: reorder-python-imports
