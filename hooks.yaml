@@ -31,6 +31,12 @@
     entry: check-json
     language: python
     files: \.json$
+-   id: pretty-format-json
+    name: Pretty format JSON
+    description: This hook sets a standard for formatting JSON files.
+    entry: pretty-format-json
+    language: python
+    files: \.json$
 -   id: check-merge-conflict
     name: Check for merge conflicts
     description: Check for files that contain merge conflict strings.
