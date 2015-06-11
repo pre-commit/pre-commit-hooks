@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import argparse
-import io
 import sys
 
 
@@ -13,12 +12,11 @@ def detect_private_key(argv=None):
     private_key_files = []
 
     for filename in args.filenames:
-        with io.open(filename, 'r') as f:
-            content = f.read()
-            if 'BEGIN RSA PRIVATE KEY' in content:
-                private_key_files.append(content)
-            if 'BEGIN DSA PRIVATE KEY' in content:
-                private_key_files.append(content)
+        content = open(filename, 'rb').read()
+        if b'BEGIN RSA PRIVATE KEY' in content:
+            private_key_files.append(content)
+        if b'BEGIN DSA PRIVATE KEY' in content:
+            private_key_files.append(content)
 
     if private_key_files:
         for private_key_file in private_key_files:
