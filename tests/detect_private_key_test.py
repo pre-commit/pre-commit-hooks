@@ -10,6 +10,8 @@ TESTS = (
     (b'-----BEGIN DSA PRIVATE KEY-----', 1),
     (b'ssh-rsa DATA', 0),
     (b'ssh-dsa DATA', 0),
+    # Some arbitrary binary data
+    (b'\xa2\xf1\x93\x12', 0),
 )
 
 
