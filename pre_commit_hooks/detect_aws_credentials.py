@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import argparse
 import os
+
 from six.moves import configparser
 
 
@@ -12,7 +13,7 @@ def get_your_keys(credentials_file):
     """
     aws_credentials_file_path = os.path.expanduser(credentials_file)
     if not os.path.exists(aws_credentials_file_path):
-        exit(2)
+        return None
 
     parser = configparser.ConfigParser()
     parser.read(aws_credentials_file_path)
@@ -37,13 +38,15 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to run')
     parser.add_argument(
-        "--credentials-file", 
+        "--credentials-file",
         default='~/.aws/credentials',
         help="location of aws credentials file from which to get the secret "
              "keys we're looking for",
     )
     args = parser.parse_args(argv)
     keys = get_your_keys(args.credentials_file)
+    if not keys:
+        return 2
 
     retv = 0
     for filename in args.filenames:
