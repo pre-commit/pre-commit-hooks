@@ -20,7 +20,6 @@ def get_your_keys(credentials_file):
     keys = set()
     for section in parser.sections():
         keys.add(parser.get(section, 'aws_secret_access_key'))
-    print(str(keys))
     return keys
 
 
