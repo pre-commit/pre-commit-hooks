@@ -7,3 +7,4 @@ mock
 pre-commit
 pylint<1.4
 pytest
+six==1.9.0
