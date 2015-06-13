@@ -37,7 +37,7 @@ Add this to your `.pre-commit-config.yaml`
 - `check-xml` - Attempts to load all xml files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.
-- `detect-aws-credentials` - Checks for the existence of aws access keys and secrets that you have set up with the AWS cli.
+- `detect-aws-credentials` - Checks for the existence of AWS secrets that you have set up with the AWS CLI.
 - `detect-private-key` - Checks for the existence of private keys.
 - `double-quote-string-fixer` - This hook replaces double quoted strings
   with single quoted strings.
