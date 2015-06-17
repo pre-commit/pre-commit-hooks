@@ -32,7 +32,7 @@ setup(
         'autopep8>=1.1',
         'pyyaml',
         'simplejson',
-        'six==1.9.0',
+        'six',
     ],
     entry_points={
         'console_scripts': [
