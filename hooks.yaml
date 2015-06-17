@@ -62,6 +62,12 @@
     entry: debug-statement-hook
     language: python
     files: \.py$
+-   id: detect-aws-credentials
+    name: Detect AWS Credentials
+    description: Detects *your* aws credentials from the aws cli credentials file
+    entry: detect-aws-credentials
+    language: python
+    files: ''
 -   id: detect-private-key
     name: Detect Private Key
     description: Detects the presence of private keys
