@@ -3,6 +3,12 @@ from __future__ import print_function
 import argparse
 import sys
 
+BLACKLIST = [
+    b'BEGIN RSA PRIVATE KEY',
+    b'BEGIN DSA PRIVATE KEY',
+    b'BEGIN EC PRIVATE KEY',
+]
+
 
 def detect_private_key(argv=None):
     parser = argparse.ArgumentParser()
@@ -12,11 +18,10 @@ def detect_private_key(argv=None):
     private_key_files = []
 
     for filename in args.filenames:
-        content = open(filename, 'rb').read()
-        if b'BEGIN RSA PRIVATE KEY' in content:
-            private_key_files.append(content)
-        if b'BEGIN DSA PRIVATE KEY' in content:
-            private_key_files.append(content)
+        with open(filename, 'rb') as f:
+            content = f.read()
+            if any(line in content for line in BLACKLIST):
+                private_key_files.append(filename)
 
     if private_key_files:
         for private_key_file in private_key_files:
