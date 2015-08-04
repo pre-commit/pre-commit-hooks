@@ -12,6 +12,12 @@
     language: python
     # Match all files
     files: ''
+-   id: check-ast
+    name: Check python ast
+    description: Simply check whether the files parse as valid python.
+    entry: check-ast
+    language: python
+    files: '\.py$'
 -   id: check-case-conflict
     name: Check for case conflicts
     description: Check for files that would conflict in case-insensitive filesystems
