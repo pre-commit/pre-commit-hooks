@@ -19,8 +19,8 @@ class Requirement(object):
             return False
         else:
             return (
-                self.value.partition(b'==') <
-                requirement.value.partition(b'==')
+                self.value.lower().partition(b'==') <
+                requirement.value.lower().partition(b'==')
             )
 
 
