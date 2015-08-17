@@ -16,6 +16,7 @@ TESTS = (
     (b'\nfoo\nbar\n', 1, b'bar\n\nfoo\n'),
     (b'\nbar\nfoo\n', 0, b'\nbar\nfoo\n'),
     (b'pyramid==1\npyramid-foo==2\n', 0, b'pyramid==1\npyramid-foo==2\n'),
+    (b'ocflib\nDjango\nPyMySQL\n', 1, b'Django\nocflib\nPyMySQL\n'),
 )
 
 
