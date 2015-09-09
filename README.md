@@ -34,6 +34,7 @@ Add this to your `.pre-commit-config.yaml`
 - `check-docstring-first` - Checks for a common error of placing code before
   the docstring.
 - `check-json` - Attempts to load all json files to verify syntax.
+- `check-rubocop` - Attempts to verify syntax / style for ruby files
 - `check-merge-conflict` - Check for files that contain merge conflict strings.
 - `check-xml` - Attempts to load all xml files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
