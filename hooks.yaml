@@ -1,6 +1,6 @@
 -   id: autopep8-wrapper
     name: autopep8 wrapper
-    description: "Runs autopep8 over python source. (You'll want args: [-i] when using this hook, see .pre-commit-config.yaml for an example.)"
+    description: "Runs autopep8 over python source.  If you configure additional arguments you'll want to at least include -i."
     entry: autopep8-wrapper
     language: python
     files: \.py$
