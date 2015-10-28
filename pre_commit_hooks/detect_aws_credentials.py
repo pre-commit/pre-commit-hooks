@@ -24,14 +24,17 @@ def get_your_keys(credentials_file):
     return keys
 
 
-def check_file_for_aws_keys(filename, keys):
-    with open(filename, 'r') as content:
-        # naively match the entire file, chances be so slim
-        # of random characters matching your flipping key.
-        text_body = content.read()
-        if any(key in text_body for key in keys):
-            return 1
-    return 0
+def check_file_for_aws_keys(filenames, keys):
+    bad_files = []
+
+    for filename in filenames:
+        with open(filename, 'r') as content:
+            text_body = content.read()
+            if any(key in text_body for key in keys):
+                # naively match the entire file, low chance of incorrect collision
+                bad_files.append(filename)
+
+    return bad_files
 
 
 def main(argv=None):
@@ -48,11 +51,13 @@ def main(argv=None):
     if not keys:
         return 2
 
-    retv = 0
-    for filename in args.filenames:
-        retv |= check_file_for_aws_keys(filename, keys)
-    return retv
-
+    bad_filenames = check_file_for_aws_keys(args.filenames, keys)
+    if bad_filenames:
+        for bad_file in bad_filenames:
+            print('AWS secret key found: {0}'.format(bad_file))
+        return 1
+    else:
+        return 0
 
 if __name__ == '__main__':
     exit(main())
