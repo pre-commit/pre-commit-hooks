@@ -92,6 +92,12 @@
     entry: end-of-file-fixer
     language: python
     files: \.(c|cpp|html|erb|slim|haml|ejs|jade|js|coffee|json|rb|md|py|css|scss|less|sh|tmpl|txt|yaml|yml|pp)$
+-   id: fix-encoding-pragma
+    name: Fix python encoding pragma
+    language: python
+    entry: fix-encoding-pragma
+    description: 'Add # -*- coding: utf-8 -*- to the top of python files'
+    files: \.py$
 -   id: flake8
     name: Flake8
     description: This hook runs flake8.

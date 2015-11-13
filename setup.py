@@ -50,6 +50,7 @@ setup(
             'detect-private-key = pre_commit_hooks.detect_private_key:detect_private_key',
             'double-quote-string-fixer = pre_commit_hooks.string_fixer:main',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
+            'fix-encoding-pragma = pre_commit_hooks.fix_encoding_pragma:main',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
