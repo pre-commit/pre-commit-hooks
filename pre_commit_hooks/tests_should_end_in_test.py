@@ -3,6 +3,7 @@ from __future__ import print_function
 import argparse
 import re
 import sys
+from os.path import basename
 
 
 def validate_files(argv=None):
@@ -15,14 +16,13 @@ def validate_files(argv=None):
     args = parser.parse_args(argv)
 
     retcode = 0
-    test_name_pattern = '.*_test.py'
-    if args.django:
-        test_name_pattern = 'test.*.py'
+    test_name_pattern = 'test_.*.py' if args.django else '.*_test.py'
     for filename in args.filenames:
+        base = basename(filename)
         if (
-                not re.match(test_name_pattern, filename) and
-                not filename.endswith('__init__.py') and
-                not filename.endswith('/conftest.py')
+                not re.match(test_name_pattern, base) and
+                not base == '__init__.py' and
+                not base == 'conftest.py'
         ):
             retcode = 1
             print(
