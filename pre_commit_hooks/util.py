@@ -11,7 +11,7 @@ class CalledProcessError(RuntimeError):
 
 def added_files():
     return set(cmd_output(
-        'git', 'diff', '--staged', '--name-only', '--diff-filter', 'A',
+        'git', 'diff', '--staged', '--name-only', '--diff-filter=A',
     ).splitlines())
 
 
