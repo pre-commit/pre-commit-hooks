@@ -43,7 +43,7 @@ Add this to your `.pre-commit-config.yaml`
 - `double-quote-string-fixer` - This hook replaces double quoted strings
   with single quoted strings.
 - `end-of-file-fixer` - Makes sure files end in a newline and only a newline.
-- `fix-encoding-pragma` - Add # -*- coding: utf-8 -*- to the top of python files
+- `fix-encoding-pragma` - Add `# -*- coding: utf-8 -*-` to the top of python files
 - `flake8` - Run flake8 on your python files.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
