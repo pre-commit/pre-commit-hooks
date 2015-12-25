@@ -1,4 +1,3 @@
-
 REBUILD_FLAG =
 
 .PHONY: all
@@ -13,15 +12,13 @@ tests: test
 test: .venv.touch
 	tox $(REBUILD_FLAG)
 
-
-.venv.touch: setup.py requirements.txt requirements-dev.txt
+.venv.touch: setup.py requirements-dev.txt
 	$(eval REBUILD_FLAG := --recreate)
 	touch .venv.touch
 
-
 .PHONY: clean
 clean:
-	find . -iname '*.pyc' | xargs rm -f
+	find . -name '*.pyc' -delete
 	rm -rf .tox
 	rm -rf ./venv-*
 	rm -f .venv.touch

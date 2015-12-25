@@ -6,7 +6,7 @@ env: # These should match the tox env list
     - TOXENV=py34
     - TOXENV=pypy
     - TOXENV=pypy3
-install: pip install coveralls tox --use-mirrors
+install: pip install coveralls tox
 script: tox
 # Special snowflake.  Our tests depend on making real commits.
 before_install:
@@ -15,3 +15,7 @@ before_install:
 after_success:
     - coveralls
 sudo: false
+cache:
+    directories:
+        - $HOME/.cache/pip
+        - $HOME/.pre-commit

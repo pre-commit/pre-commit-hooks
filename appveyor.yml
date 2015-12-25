@@ -15,3 +15,7 @@ before_test:
   - git config --global user.email "user@example.com"
 
 test_script: tox
+
+cache:
+  - '%LOCALAPPDATA%\pip\cache'
+  - '%USERPROFILE%\.pre-commit'
