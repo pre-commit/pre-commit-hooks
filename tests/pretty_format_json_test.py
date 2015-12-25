@@ -1,5 +1,6 @@
-import pytest
 import tempfile
+
+import pytest
 
 from pre_commit_hooks.pretty_format_json import pretty_format_json
 from testing.util import get_resource_path
