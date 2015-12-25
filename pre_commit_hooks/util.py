@@ -21,7 +21,9 @@ def cmd_output(*cmd, **kwargs):
     popen_kwargs.update(kwargs)
     proc = subprocess.Popen(cmd, **popen_kwargs)
     stdout, stderr = proc.communicate()
-    stdout, stderr = stdout.decode('UTF-8'), stderr.decode('UTF-8')
+    stdout = stdout.decode('UTF-8')
+    if stderr is not None:
+        stderr = stderr.decode('UTF-8')
     if retcode is not None and proc.returncode != retcode:
         raise CalledProcessError(cmd, retcode, proc.returncode, stdout, stderr)
     return stdout
