@@ -1,4 +1,4 @@
-import tempfile
+import io
 
 import pytest
 
@@ -15,24 +15,18 @@ def test_pretty_format_json(filename, expected_retval):
     assert ret == expected_retval
 
 
-def test_autofix_pretty_format_json():
-    toformat_file = tempfile.NamedTemporaryFile(delete=False, mode='w+')
-
-    # copy our file to format there
-    model_file = open(get_resource_path('not_pretty_formatted_json.json'), 'r')
-    model_contents = model_file.read()
-    model_file.close()
-
-    toformat_file.write(model_contents)
-    toformat_file.close()
+def test_autofix_pretty_format_json(tmpdir):
+    srcfile = tmpdir.join('to_be_json_formatted.json')
+    with io.open(get_resource_path('not_pretty_formatted_json.json')) as f:
+        srcfile.write_text(f.read(), 'UTF-8')
 
     # now launch the autofix on that file
-    ret = pretty_format_json(['--autofix', toformat_file.name])
+    ret = pretty_format_json(['--autofix', srcfile.strpath])
     # it should have formatted it
     assert ret == 1
 
-    # file already good
-    ret = pretty_format_json([toformat_file.name])
+    # file was formatted (shouldn't trigger linter again)
+    ret = pretty_format_json([srcfile.strpath])
     assert ret == 0
 
 
