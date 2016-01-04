@@ -12,6 +12,8 @@ script: tox
 before_install:
   - git config --global user.name "Travis CI"
   - git config --global user.email "user@example.com"
+  # Install git-lfs for a test
+  - './get-git-lfs.py && export PATH="/tmp/git-lfs:$PATH"'
 after_success:
     - coveralls
 sudo: false
@@ -19,3 +21,4 @@ cache:
     directories:
         - $HOME/.cache/pip
         - $HOME/.pre-commit
+        - /tmp/git-lfs
