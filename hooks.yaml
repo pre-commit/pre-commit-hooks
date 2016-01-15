@@ -50,6 +50,13 @@
     language: python
     # Match all files
     files: ''
+-   id: check-symlinks
+    name: Check for broken symlinks
+    description: Checks for symlinks which do not point to anything.
+    entry: check-symlinks
+    language: python
+    # Match all files
+    files: ''
 -   id: check-xml
     name: Check Xml
     description: This hook checks xml files for parseable syntax.
