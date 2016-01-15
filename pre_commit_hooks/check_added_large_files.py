@@ -23,7 +23,7 @@ def lfs_files():
         (line[:3].strip(), line[3:].rpartition(' ')[0]) for line in lines
     ]
 
-    def to_file_part(mode, filepart):
+    def to_file_part(mode, filepart):  # pragma: no cover (no git-lfs)
         assert mode in ('A', 'R')
         return filepart if mode == 'A' else filepart.split(' -> ')[1]
 
