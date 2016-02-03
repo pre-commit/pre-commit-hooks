@@ -18,7 +18,7 @@ def check_symlinks(argv=None):
         if (
                 os.path.islink(filename) and
                 not os.path.exists(filename)
-        ):  # pragma no cover (symlink support required)
+        ):  # pragma: no cover (symlink support required)
             print('{0}: Broken symlink'.format(filename))
             retv = 1
 
