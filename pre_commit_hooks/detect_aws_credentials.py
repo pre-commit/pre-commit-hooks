@@ -8,8 +8,8 @@ from six.moves import configparser  # pylint: disable=import-error
 
 
 def get_your_keys(credentials_file):
-    """ reads the secret keys in your credentials file in order to be able to look
-    for them in the submitted code.
+    """reads the secret keys in your credentials file in order to be able to
+    look for them in the submitted code.
     """
     aws_credentials_file_path = os.path.expanduser(credentials_file)
     if not os.path.exists(aws_credentials_file_path):
@@ -41,14 +41,22 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to run')
     parser.add_argument(
-        "--credentials-file",
+        '--credentials-file',
         default='~/.aws/credentials',
-        help="location of aws credentials file from which to get the secret "
-             "keys we're looking for",
+        help=(
+            'location of aws credentials file from which to get the secret '
+            "keys we're looking for"
+        ),
     )
     args = parser.parse_args(argv)
     keys = get_your_keys(args.credentials_file)
     if not keys:
+        print(
+            'No aws keys were configured at {0}\n'
+            'Configure them with --credentials-file'.format(
+                args.credentials_file,
+            ),
+        )
         return 2
 
     bad_filenames = check_file_for_aws_keys(args.filenames, keys)
