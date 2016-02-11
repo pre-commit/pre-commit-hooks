@@ -27,7 +27,7 @@ setup(
     packages=find_packages('.', exclude=('tests*', 'testing*')),
     install_requires=[
         # quickfix to prevent pep8 conflicts
-        'flake8',
+        'flake8!=2.5.3',
         'argparse',
         'autopep8>=1.1',
         'pyyaml',
