@@ -29,6 +29,7 @@ Add this to your `.pre-commit-config.yaml`
 - `check-added-large-files` - Prevent giant files from being committed.
     - Specify what is "too large" with `args: ['--maxkb=123']` (default=500kB).
 - `check-ast` - Simply check whether files parse as valid python.
+- `check-byte-order-marker` - Forbid files which have a UTF-8 byte-order marker
 - `check-case-conflict` - Check for files with names that would conflict on a
   case-insensitive filesystem like MacOS HFS+ or Windows FAT.
 - `check-docstring-first` - Checks for a common error of placing code before

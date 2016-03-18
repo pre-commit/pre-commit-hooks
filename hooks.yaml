@@ -18,6 +18,12 @@
     entry: check-ast
     language: python
     files: '\.py$'
+-   id: check-byte-order-marker
+    name: Check for byte-order marker
+    description: Forbid files which have a UTF-8 byte-order marker
+    entry: check-byte-order-marker
+    language: python
+    files: '\.py$'
 -   id: check-case-conflict
     name: Check for case conflicts
     description: Check for files that would conflict in case-insensitive filesystems
