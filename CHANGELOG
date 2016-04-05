@@ -1,3 +1,17 @@
+0.5.0
+=====
+- Add check-byte-order-marker
+- Add check-synlinks
+- check-large-files-added understands git-lfs
+- Support older git
+- Fix regex for --django in test name checker
+- Add fix-encoding-pragma hook
+- requirements-txt-fixer now sorts like latest pip
+- Add check-ast hook
+- Add detect-aws-credentials hook
+- Allow binary files to pass private key hook
+- Add pretty-format-json hook
+
 0.4.2
 =====
 - Add --django to test name checker
