@@ -51,6 +51,8 @@ Add this to your `.pre-commit-config.yaml`
     - Use `args: ['--django']` to match `test*.py` instead.
 - `pyflakes` - Run pyflakes on your python files.
 - `pretty-format-json` - Checks that all your JSON files are pretty
+    - Use `args: ['--autofix']` to automatically fixing the encountered not-pretty-formatted files and
+    `args: ['--no-sort-keys']` to disable the sort on the keys.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
 - `trailing-whitespace` - Trims trailing whitespace.
     - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;

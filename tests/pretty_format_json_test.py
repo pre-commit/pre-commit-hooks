@@ -8,10 +8,21 @@ from testing.util import get_resource_path
 
 @pytest.mark.parametrize(('filename', 'expected_retval'), (
     ('not_pretty_formatted_json.json', 1),
+    ('unsorted_pretty_formatted_json.json', 1),
     ('pretty_formatted_json.json', 0),
 ))
 def test_pretty_format_json(filename, expected_retval):
     ret = pretty_format_json([get_resource_path(filename)])
+    assert ret == expected_retval
+
+
+@pytest.mark.parametrize(('filename', 'expected_retval'), (
+    ('not_pretty_formatted_json.json', 1),
+    ('unsorted_pretty_formatted_json.json', 0),
+    ('pretty_formatted_json.json', 0),
+))
+def test_unsorted_pretty_format_json(filename, expected_retval):
+    ret = pretty_format_json(['--no-sort-keys', get_resource_path(filename)])
     assert ret == expected_retval
 
 
