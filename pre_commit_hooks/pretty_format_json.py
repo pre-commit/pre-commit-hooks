@@ -9,8 +9,10 @@ import simplejson
 
 def _get_pretty_format(contents, indent, sort_keys=True):
     return simplejson.dumps(
-        simplejson.loads(contents,
-                         object_pairs_hook=None if sort_keys else OrderedDict),
+        simplejson.loads(
+            contents,
+            object_pairs_hook=None if sort_keys else OrderedDict,
+        ),
         sort_keys=sort_keys,
         indent=indent
     ) + "\n"  # dumps don't end with a newline
@@ -28,20 +30,20 @@ def pretty_format_json(argv=None):
         '--autofix',
         action='store_true',
         dest='autofix',
-        help='Automatically fixes encountered not-pretty-formatted files'
+        help='Automatically fixes encountered not-pretty-formatted files',
     )
     parser.add_argument(
         '--indent',
         type=int,
         default=2,
-        help='Number of indent spaces used to pretty-format files'
+        help='Number of indent spaces used to pretty-format files',
     )
     parser.add_argument(
         '--no-sort-keys',
         action='store_true',
         dest='no_sort_keys',
         default=False,
-        help='Keep JSON nodes in the same order'
+        help='Keep JSON nodes in the same order',
     )
 
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
@@ -50,12 +52,13 @@ def pretty_format_json(argv=None):
     status = 0
 
     for json_file in args.filenames:
-        try:
-            f = open(json_file, 'r')
+        with open(json_file) as f:
             contents = f.read()
-            f.close()
 
-            pretty_contents = _get_pretty_format(contents, args.indent, (not args.no_sort_keys))
+        try:
+            pretty_contents = _get_pretty_format(
+                contents, args.indent, sort_keys=not args.no_sort_keys,
+            )
 
             if contents != pretty_contents:
                 print("File {0} is not pretty-formatted".format(json_file))
