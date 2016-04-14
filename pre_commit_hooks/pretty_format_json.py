@@ -2,13 +2,7 @@ from __future__ import print_function
 
 import argparse
 import sys
-
-# Versions older than Python 2.6 will need to install ordereddict,
-# but newer versions will import from the built-in collections module.
-try:
-    from collections import OrderedDict
-except ImportError:
-    from ordereddict import OrderedDict
+from collections import OrderedDict
 
 import simplejson
 
