@@ -3,13 +3,21 @@ from __future__ import print_function
 import argparse
 import sys
 
+# Versions older than Python 2.6 will need to install ordereddict,
+# but newer versions will import from the built-in collections module.
+try:
+    from collections import OrderedDict
+except ImportError:
+    from ordereddict import OrderedDict
+
 import simplejson
 
 
-def _get_pretty_format(contents, indent, no_sort_keys):
+def _get_pretty_format(contents, indent, sort_keys=True):
     return simplejson.dumps(
-        simplejson.loads(contents),
-        sort_keys=no_sort_keys,
+        simplejson.loads(contents,
+                         object_pairs_hook=None if sort_keys else OrderedDict),
+        sort_keys=sort_keys,
         indent=indent
     ) + "\n"  # dumps don't end with a newline
 
@@ -39,7 +47,7 @@ def pretty_format_json(argv=None):
         action='store_true',
         dest='no_sort_keys',
         default=False,
-        help='Do not sort the keys'
+        help='Keep JSON nodes in the same order'
     )
 
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')

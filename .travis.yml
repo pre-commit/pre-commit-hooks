@@ -6,7 +6,9 @@ env: # These should match the tox env list
     - TOXENV=py34
     - TOXENV=pypy
     - TOXENV=pypy3
-install: pip install coveralls tox
+install:
+    - if [[ $TOXENV == py26 ]]; then pip install ordereddict; fi
+    - pip install coveralls tox
 script: tox
 # Special snowflake.  Our tests depend on making real commits.
 before_install:
