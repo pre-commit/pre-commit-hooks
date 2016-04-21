@@ -129,6 +129,12 @@
     entry: pyflakes
     language: python
     files: \.py$
+-   id: prospector
+    name: Prospector
+    description: This hook runs prospector.
+    entry: prospector
+    language: python
+    files: \.py$
 -   id: requirements-txt-fixer
     name: Fix requirements.txt
     description: Sorts entries in requirements.txt
