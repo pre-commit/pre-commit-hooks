@@ -10,32 +10,46 @@ from pre_commit_hooks.fix_encoding_pragma import main
 
 
 def test_integration_inserting_pragma(tmpdir):
-    file_path = tmpdir.join('foo.py').strpath
+    path = tmpdir.join('foo.py')
+    path.write_binary(b'import httplib\n')
 
-    with open(file_path, 'wb') as file_obj:
-        file_obj.write(b'import httplib\n')
+    assert main((path.strpath,)) == 1
 
-    assert main([file_path]) == 1
-
-    with open(file_path, 'rb') as file_obj:
-        assert file_obj.read() == (
-            b'# -*- coding: utf-8 -*-\n'
-            b'import httplib\n'
-        )
+    assert path.read_binary() == (
+        b'# -*- coding: utf-8 -*-\n'
+        b'import httplib\n'
+    )
 
 
 def test_integration_ok(tmpdir):
-    file_path = tmpdir.join('foo.py').strpath
-    with open(file_path, 'wb') as file_obj:
-        file_obj.write(b'# -*- coding: utf-8 -*-\nx = 1\n')
-    assert main([file_path]) == 0
+    path = tmpdir.join('foo.py')
+    path.write_binary(b'# -*- coding: utf-8 -*-\nx = 1\n')
+    assert main((path.strpath,)) == 0
+
+
+def test_integration_remove(tmpdir):
+    path = tmpdir.join('foo.py')
+    path.write_binary(b'# -*- coding: utf-8 -*-\nx = 1\n')
+
+    assert main((path.strpath, '--remove')) == 1
+
+    assert path.read_binary() == b'x = 1\n'
+
+
+def test_integration_remove_ok(tmpdir):
+    path = tmpdir.join('foo.py')
+    path.write_binary(b'x = 1\n')
+    assert main((path.strpath, '--remove')) == 0
 
 
 @pytest.mark.parametrize(
     'input_str',
     (
         b'',
-        b'# -*- coding: utf-8 -*-\n',
+        (
+            b'# -*- coding: utf-8 -*-\n'
+            b'x = 1\n'
+        ),
         (
             b'#!/usr/bin/env python\n'
             b'# -*- coding: utf-8 -*-\n'
@@ -59,20 +73,32 @@ def test_ok_inputs(input_str):
             b'import httplib\n',
         ),
         (
-            b'#!/usr/bin/env python\n',
+            b'#!/usr/bin/env python\n'
+            b'x = 1\n',
             b'#!/usr/bin/env python\n'
             b'# -*- coding: utf-8 -*-\n'
+            b'x = 1\n',
         ),
         (
-            b'#coding=utf-8\n',
+            b'#coding=utf-8\n'
+            b'x = 1\n',
             b'# -*- coding: utf-8 -*-\n'
+            b'x = 1\n',
         ),
         (
             b'#!/usr/bin/env python\n'
-            b'#coding=utf8\n',
+            b'#coding=utf8\n'
+            b'x = 1\n',
             b'#!/usr/bin/env python\n'
-            b'# -*- coding: utf-8 -*-\n',
+            b'# -*- coding: utf-8 -*-\n'
+            b'x = 1\n',
         ),
+        # These should each get truncated
+        (b'#coding: utf-8\n', b''),
+        (b'# -*- coding: utf-8 -*-\n', b''),
+        (b'#!/usr/bin/env python\n', b''),
+        (b'#!/usr/bin/env python\n#coding: utf8\n', b''),
+        (b'#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n', b''),
     )
 )
 def test_not_ok_inputs(input_str, output):
