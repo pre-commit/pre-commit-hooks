@@ -1,3 +1,9 @@
+-   id: auto-indent
+    name: Check and fix indentation
+    language: python
+    entry: auto-indent
+    description: "Checks and fixes indentation of things like parameters and arguments."
+    files: \.py$
 -   id: autopep8-wrapper
     name: autopep8 wrapper
     description: "Runs autopep8 over python source.  If you configure additional arguments you'll want to at least include -i."
