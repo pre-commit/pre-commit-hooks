@@ -37,9 +37,18 @@ def f1_is_a_conflict_file(in_tmpdir):
         cmd_output('git', 'commit', '-am', 'clone commit2')
         cmd_output('git', 'pull', retcode=None)
         # We should end up in a merge conflict!
-        assert io.open('f1').read().startswith(
+        f1 = io.open('f1').read()
+        assert f1.startswith(
             '<<<<<<< HEAD\n'
             'child\n'
+            '=======\n'
+            'parent\n'
+            '>>>>>>>'
+        ) or f1.startswith(
+            '<<<<<<< HEAD\n'
+            'child\n'
+            # diff3 conflict style git merges add this line:
+            '||||||| merged common ancestors\n'
             '=======\n'
             'parent\n'
             '>>>>>>>'
