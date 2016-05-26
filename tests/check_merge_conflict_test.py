@@ -3,12 +3,14 @@ from __future__ import unicode_literals
 
 import io
 import os
+import shutil
 
 import pytest
 
 from pre_commit_hooks.check_merge_conflict import detect_merge_conflict
 from pre_commit_hooks.util import cmd_output
 from testing.util import cwd
+from testing.util import get_resource_path
 from testing.util import write_file
 
 
@@ -106,6 +108,12 @@ def test_merge_conflicts_failing(failing_contents):
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
 def test_merge_conflicts_ok(ok_contents):
     write_file('f1', ok_contents)
+    assert detect_merge_conflict(['f1']) == 0
+
+
+@pytest.mark.usefixtures('f1_is_a_conflict_file')
+def test_ignores_binary_files():
+    shutil.copy(get_resource_path('img1.jpg'), 'f1')
     assert detect_merge_conflict(['f1']) == 0
 
 
