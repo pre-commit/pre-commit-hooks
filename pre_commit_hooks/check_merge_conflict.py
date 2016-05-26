@@ -5,10 +5,10 @@ import os.path
 import sys
 
 CONFLICT_PATTERNS = [
-    '<<<<<<< ',
-    '======= ',
-    '=======\n',
-    '>>>>>>> '
+    b'<<<<<<< ',
+    b'======= ',
+    b'=======\n',
+    b'>>>>>>> '
 ]
 WARNING_MSG = 'Merge conflict string "{0}" found in {1}:{2}'
 
@@ -30,11 +30,13 @@ def detect_merge_conflict(argv=None):
 
     retcode = 0
     for filename in args.filenames:
-        with open(filename) as inputfile:
+        with open(filename, 'rb') as inputfile:
             for i, line in enumerate(inputfile):
                 for pattern in CONFLICT_PATTERNS:
                     if line.startswith(pattern):
-                        print(WARNING_MSG.format(pattern, filename, i + 1))
+                        print(WARNING_MSG.format(
+                            pattern.decode(), filename, i + 1,
+                        ))
                         retcode = 1
 
     return retcode
