@@ -8,18 +8,16 @@ import pytest
 from pre_commit_hooks.check_added_large_files import find_large_added_files
 from pre_commit_hooks.check_added_large_files import main
 from pre_commit_hooks.util import cmd_output
-from testing.util import cwd
-from testing.util import write_file
 
 
 def test_nothing_added(temp_git_dir):
-    with cwd(temp_git_dir):
+    with temp_git_dir.as_cwd():
         assert find_large_added_files(['f.py'], 0) == 0
 
 
 def test_adding_something(temp_git_dir):
-    with cwd(temp_git_dir):
-        write_file('f.py', "print('hello world')")
+    with temp_git_dir.as_cwd():
+        temp_git_dir.join('f.py').write("print('hello world')")
         cmd_output('git', 'add', 'f.py')
 
         # Should fail with max size of 0
@@ -27,8 +25,8 @@ def test_adding_something(temp_git_dir):
 
 
 def test_add_something_giant(temp_git_dir):
-    with cwd(temp_git_dir):
-        write_file('f.py', 'a' * 10000)
+    with temp_git_dir.as_cwd():
+        temp_git_dir.join('f.py').write('a' * 10000)
 
         # Should not fail when not added
         assert find_large_added_files(['f.py'], 0) == 0
@@ -46,8 +44,8 @@ def test_add_something_giant(temp_git_dir):
 
 
 def test_added_file_not_in_pre_commits_list(temp_git_dir):
-    with cwd(temp_git_dir):
-        write_file('f.py', "print('hello world')")
+    with temp_git_dir.as_cwd():
+        temp_git_dir.join('f.py').write("print('hello world')")
         cmd_output('git', 'add', 'f.py')
 
         # Should pass even with a size of 0
@@ -55,10 +53,10 @@ def test_added_file_not_in_pre_commits_list(temp_git_dir):
 
 
 def test_integration(temp_git_dir):
-    with cwd(temp_git_dir):
+    with temp_git_dir.as_cwd():
         assert main(argv=[]) == 0
 
-        write_file('f.py', 'a' * 10000)
+        temp_git_dir.join('f.py').write('a' * 10000)
         cmd_output('git', 'add', 'f.py')
 
         # Should not fail with default
@@ -80,11 +78,11 @@ xfailif_no_gitlfs = pytest.mark.xfail(
 
 @xfailif_no_gitlfs
 def test_allows_gitlfs(temp_git_dir):  # pragma: no cover
-    with cwd(temp_git_dir):
+    with temp_git_dir.as_cwd():
         # Work around https://github.com/github/git-lfs/issues/913
         cmd_output('git', 'commit', '--allow-empty', '-m', 'foo')
         cmd_output('git', 'lfs', 'install')
-        write_file('f.py', 'a' * 10000)
+        temp_git_dir.join('f.py').write('a' * 10000)
         cmd_output('git', 'lfs', 'track', 'f.py')
         cmd_output('git', 'add', '.')
         # Should succeed
@@ -93,11 +91,11 @@ def test_allows_gitlfs(temp_git_dir):  # pragma: no cover
 
 @xfailif_no_gitlfs
 def test_moves_with_gitlfs(temp_git_dir):  # pragma: no cover
-    with cwd(temp_git_dir):
+    with temp_git_dir.as_cwd():
         cmd_output('git', 'lfs', 'install')
         cmd_output('git', 'lfs', 'track', 'a.bin', 'b.bin')
         # First add the file we're going to move
-        write_file('a.bin', 'a' * 10000)
+        temp_git_dir.join('a.bin').write('a' * 10000)
         cmd_output('git', 'add', '.')
         cmd_output('git', 'commit', '-am', 'foo')
         # Now move it and make sure the hook still succeeds

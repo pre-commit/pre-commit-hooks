@@ -40,11 +40,8 @@ TESTS = (
 
 @pytest.mark.parametrize(('input_s', 'output', 'expected_retval'), TESTS)
 def test_rewrite(input_s, output, expected_retval, tmpdir):
-    tmpfile = tmpdir.join('file.txt')
-
-    with open(tmpfile.strpath, 'w') as f:
-        f.write(input_s)
-
-    retval = main([tmpfile.strpath])
-    assert tmpfile.read() == output
+    path = tmpdir.join('file.txt')
+    path.write(input_s)
+    retval = main([path.strpath])
+    assert path.read() == output
     assert retval == expected_retval

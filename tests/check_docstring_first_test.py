@@ -1,8 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import io
-
 import pytest
 
 from pre_commit_hooks.check_docstring_first import check_docstring_first
@@ -59,9 +57,7 @@ def test_unit(capsys, contents, expected, expected_out):
 
 @all_tests
 def test_integration(tmpdir, capsys, contents, expected, expected_out):
-    tmpfilename = tmpdir.join('test.py').strpath
-    with io.open(tmpfilename, 'w') as tmpfile:
-        tmpfile.write(contents)
-
-    assert main([tmpfilename]) == expected
-    assert capsys.readouterr()[0] == expected_out.format(filename=tmpfilename)
+    f = tmpdir.join('test.py')
+    f.write(contents)
+    assert main([f.strpath]) == expected
+    assert capsys.readouterr()[0] == expected_out.format(filename=f.strpath)
