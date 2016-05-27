@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import io
 import os
 import shutil
 
@@ -9,7 +8,6 @@ import pytest
 
 from pre_commit_hooks.check_merge_conflict import detect_merge_conflict
 from pre_commit_hooks.util import cmd_output
-from testing.util import cwd
 from testing.util import get_resource_path
 from testing.util import write_file
 
@@ -18,28 +16,33 @@ from testing.util import write_file
 
 
 @pytest.yield_fixture
-def f1_is_a_conflict_file(in_tmpdir):
+def f1_is_a_conflict_file(tmpdir):
     # Make a merge conflict
-    cmd_output('git', 'init', 'repo1')
-    with cwd('repo1'):
-        io.open('f1', 'w').close()
-        cmd_output('git', 'add', 'f1')
-        cmd_output('git', 'commit', '-m' 'commit1')
+    repo1 = tmpdir.join('repo1')
+    repo1_f1 = repo1.join('f1')
+    repo2 = tmpdir.join('repo2')
+    repo2_f1 = repo2.join('f1')
 
-    cmd_output('git', 'clone', 'repo1', 'repo2')
+    cmd_output('git', 'init', repo1.strpath)
+    with repo1.as_cwd():
+        repo1_f1.ensure()
+        cmd_output('git', 'add', repo1_f1.strpath)
+        cmd_output('git', 'commit', '-m', 'commit1')
+
+    cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
 
     # Commit in master
-    with cwd('repo1'):
-        write_file('f1', 'parent\n')
+    with repo1.as_cwd():
+        repo1_f1.write('parent\n')
         cmd_output('git', 'commit', '-am', 'master commit2')
 
     # Commit in clone and pull
-    with cwd('repo2'):
-        write_file('f1', 'child\n')
+    with repo2.as_cwd():
+        repo2_f1.write('child\n')
         cmd_output('git', 'commit', '-am', 'clone commit2')
         cmd_output('git', 'pull', retcode=None)
         # We should end up in a merge conflict!
-        f1 = io.open('f1').read()
+        f1 = repo2_f1.read()
         assert f1.startswith(
             '<<<<<<< HEAD\n'
             'child\n'
@@ -60,30 +63,35 @@ def f1_is_a_conflict_file(in_tmpdir):
 
 
 @pytest.yield_fixture
-def repository_is_pending_merge(in_tmpdir):
+def repository_is_pending_merge(tmpdir):
     # Make a (non-conflicting) merge
-    cmd_output('git', 'init', 'repo1')
-    with cwd('repo1'):
-        io.open('f1', 'w').close()
-        cmd_output('git', 'add', 'f1')
+    repo1 = tmpdir.join('repo1')
+    repo1_f1 = repo1.join('f1')
+    repo2 = tmpdir.join('repo2')
+    repo2_f1 = repo2.join('f1')
+    repo2_f2 = repo2.join('f2')
+    cmd_output('git', 'init', repo1.strpath)
+    with repo1.as_cwd():
+        repo1_f1.ensure()
+        cmd_output('git', 'add', repo1_f1.strpath)
         cmd_output('git', 'commit', '-m' 'commit1')
 
-    cmd_output('git', 'clone', 'repo1', 'repo2')
+    cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
 
     # Commit in master
-    with cwd('repo1'):
-        write_file('f1', 'parent\n')
+    with repo1.as_cwd():
+        repo1_f1.write('parent\n')
         cmd_output('git', 'commit', '-am', 'master commit2')
 
     # Commit in clone and pull without committing
-    with cwd('repo2'):
-        write_file('f2', 'child\n')
-        cmd_output('git', 'add', 'f2')
+    with repo2.as_cwd():
+        repo2_f2.write('child\n')
+        cmd_output('git', 'add', repo2_f2.strpath)
         cmd_output('git', 'commit', '-m', 'clone commit2')
         cmd_output('git', 'pull', '--no-commit')
         # We should end up in a pending merge
-        assert io.open('f1').read().startswith('parent\n')
-        assert io.open('f2').read().startswith('child\n')
+        assert repo2_f1.read() == 'parent\n'
+        assert repo2_f2.read() == 'child\n'
         assert os.path.exists(os.path.join('.git', 'MERGE_HEAD'))
         yield
 
@@ -117,8 +125,6 @@ def test_ignores_binary_files():
     assert detect_merge_conflict(['f1']) == 0
 
 
-@pytest.mark.usefixtures('in_tmpdir')
-def test_does_not_care_when_not_in_a_merge():
-    with io.open('README.md', 'w') as readme_file:
-        readme_file.write('problem\n=======\n')
+def test_does_not_care_when_not_in_a_merge(tmpdir):
+    tmpdir.join('README.md').write('problem\n=======\n')
     assert detect_merge_conflict(['README.md']) == 0

@@ -1,5 +1,4 @@
 import io
-import os.path
 
 import pytest
 
@@ -21,8 +20,7 @@ TESTS = (
 
 @pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
 def test_fix_file(input_s, expected_retval, output):
-    file_obj = io.BytesIO()
-    file_obj.write(input_s)
+    file_obj = io.BytesIO(input_s)
     ret = fix_file(file_obj)
     assert file_obj.getvalue() == output
     assert ret == expected_retval
@@ -30,13 +28,11 @@ def test_fix_file(input_s, expected_retval, output):
 
 @pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
 def test_integration(input_s, expected_retval, output, tmpdir):
-    file_path = os.path.join(tmpdir.strpath, 'file.txt')
+    path = tmpdir.join('file.txt')
+    path.write_binary(input_s)
 
-    with open(file_path, 'wb') as file_obj:
-        file_obj.write(input_s)
-
-    ret = end_of_file_fixer([file_path])
-    file_output = open(file_path, 'rb').read()
+    ret = end_of_file_fixer([path.strpath])
+    file_output = path.read_binary()
 
     assert file_output == output
     assert ret == expected_retval

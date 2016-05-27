@@ -16,9 +16,10 @@ TESTS = (
 @pytest.mark.parametrize(('filename', 'expected_retval'), TESTS)
 def test_detect_aws_credentials(filename, expected_retval):
     # with a valid credentials file
-    ret = main(
-        [get_resource_path(filename), "--credentials-file=testing/resources/sample_aws_credentials"]
-    )
+    ret = main((
+        get_resource_path(filename),
+        "--credentials-file=testing/resources/sample_aws_credentials",
+    ))
     assert ret == expected_retval
 
 

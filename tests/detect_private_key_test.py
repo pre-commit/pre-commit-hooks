@@ -1,5 +1,3 @@
-import os.path
-
 import pytest
 
 from pre_commit_hooks.detect_private_key import detect_private_key
@@ -18,9 +16,6 @@ TESTS = (
 
 @pytest.mark.parametrize(('input_s', 'expected_retval'), TESTS)
 def test_detect_private_key(input_s, expected_retval, tmpdir):
-    path = os.path.join(tmpdir.strpath, 'file.txt')
-
-    with open(path, 'wb') as file_obj:
-        file_obj.write(input_s)
-
-    assert detect_private_key([path]) == expected_retval
+    path = tmpdir.join('file.txt')
+    path.write_binary(input_s)
+    assert detect_private_key([path.strpath]) == expected_retval

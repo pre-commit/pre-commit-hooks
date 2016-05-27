@@ -1,31 +1,23 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import sys
-
 import pytest
 
 from pre_commit_hooks.trailing_whitespace_fixer import fix_trailing_whitespace
-from testing.util import cwd
 
 
-def test_fixes_trailing_whitespace(tmpdir):
-    with cwd(tmpdir.strpath):
-        for filename, contents in (
-                ('foo.py', 'foo \nbar \n'),
-                ('bar.py', 'bar\t\nbaz\t\n'),
-        ):
-            with open(filename, 'w') as file_obj:
-                file_obj.write(contents)  # pragma: no branch (26 coverage bug)
-
-        ret = fix_trailing_whitespace(['foo.py', 'bar.py'])
-        assert ret == 1
-
-        for filename, after_contents in (
-                ('foo.py', 'foo\nbar\n'),
-                ('bar.py', 'bar\nbaz\n'),
-        ):
-            assert open(filename).read() == after_contents
+@pytest.mark.parametrize(
+    ('input_s', 'expected'),
+    (
+        ('foo \nbar \n', 'foo\nbar\n'),
+        ('bar\t\nbaz\t\n', 'bar\nbaz\n'),
+    ),
+)
+def test_fixes_trailing_whitespace(input_s, expected, tmpdir):
+    path = tmpdir.join('file.txt')
+    path.write(input_s)
+    assert fix_trailing_whitespace((path.strpath,)) == 1
+    assert path.read() == expected
 
 
 # filename, expected input, expected output
@@ -39,13 +31,11 @@ MD_TESTS_1 = (
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_1)
 def test_fixes_trailing_markdown_whitespace(filename, input_s, output, tmpdir):
-    with cwd(tmpdir.strpath):
-        with open(filename, 'w') as file_obj:
-            file_obj.write(input_s)  # pragma: no branch (26 coverage bug)
-
-        ret = fix_trailing_whitespace([filename])
-        assert ret == 1
-        assert open(filename).read() == output
+    path = tmpdir.join(filename)
+    path.write(input_s)
+    ret = fix_trailing_whitespace([path.strpath])
+    assert ret == 1
+    assert path.read() == output
 
 
 # filename, expected input, expected output
@@ -60,14 +50,13 @@ MD_TESTS_2 = (
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_2)
 def test_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
-    with cwd(tmpdir.strpath):
-        with open(filename, 'w') as file_obj:
-            file_obj.write(input_s)  # pragma: no branch (26 coverage bug)
-
-        ret = fix_trailing_whitespace(['--markdown-linebreak-ext=TxT',
-                                       filename])
-        assert ret == 1
-        assert open(filename).read() == output
+    path = tmpdir.join(filename)
+    path.write(input_s)
+    ret = fix_trailing_whitespace((
+        '--markdown-linebreak-ext=TxT', path.strpath
+    ))
+    assert ret == 1
+    assert path.read() == output
 
 
 # filename, expected input, expected output
@@ -79,25 +68,21 @@ MD_TESTS_3 = (
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_3)
 def test_markdown_linebreak_ext_opt_all(filename, input_s, output, tmpdir):
-    with cwd(tmpdir.strpath):
-        with open(filename, 'w') as file_obj:
-            file_obj.write(input_s)  # pragma: no branch (26 coverage bug)
-
-        # need to make sure filename is not treated as argument to option
-        ret = fix_trailing_whitespace(['--markdown-linebreak-ext=*',
-                                       filename])
-        assert ret == 1
-        assert open(filename).read() == output
+    path = tmpdir.join(filename)
+    path.write(input_s)
+    # need to make sure filename is not treated as argument to option
+    ret = fix_trailing_whitespace([
+        '--markdown-linebreak-ext=*', path.strpath,
+    ])
+    assert ret == 1
+    assert path.read() == output
 
 
 @pytest.mark.parametrize(('arg'), ('--', 'a.b', 'a/b'))
 def test_markdown_linebreak_ext_badopt(arg):
-    try:
-        ret = fix_trailing_whitespace(['--markdown-linebreak-ext', arg])
-    except SystemExit:
-        ret = sys.exc_info()[1].code
-    finally:
-        assert ret == 2
+    with pytest.raises(SystemExit) as excinfo:
+        fix_trailing_whitespace(['--markdown-linebreak-ext', arg])
+    assert excinfo.value.code == 2
 
 
 # filename, expected input, expected output
@@ -109,13 +94,11 @@ MD_TESTS_4 = (
 
 @pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_4)
 def test_no_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
-    with cwd(tmpdir.strpath):
-        with open(filename, 'w') as file_obj:
-            file_obj.write(input_s)  # pragma: no branch (26 coverage bug)
-
-        ret = fix_trailing_whitespace(['--no-markdown-linebreak-ext', filename])
-        assert ret == 1
-        assert open(filename).read() == output
+    path = tmpdir.join(filename)
+    path.write(input_s)
+    ret = fix_trailing_whitespace(['--no-markdown-linebreak-ext', path.strpath])
+    assert ret == 1
+    assert path.read() == output
 
 
 def test_returns_zero_for_no_changes():

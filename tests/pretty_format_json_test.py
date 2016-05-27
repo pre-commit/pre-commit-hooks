@@ -1,4 +1,4 @@
-import io
+import shutil
 
 import pytest
 
@@ -28,8 +28,10 @@ def test_unsorted_pretty_format_json(filename, expected_retval):
 
 def test_autofix_pretty_format_json(tmpdir):
     srcfile = tmpdir.join('to_be_json_formatted.json')
-    with io.open(get_resource_path('not_pretty_formatted_json.json')) as f:
-        srcfile.write_text(f.read(), 'UTF-8')
+    shutil.copyfile(
+        get_resource_path('not_pretty_formatted_json.json'),
+        srcfile.strpath,
+    )
 
     # now launch the autofix on that file
     ret = pretty_format_json(['--autofix', srcfile.strpath])
