@@ -2,8 +2,19 @@ import io
 
 import pytest
 
+from pre_commit_hooks.pretty_format_json import parse_indent
 from pre_commit_hooks.pretty_format_json import pretty_format_json
 from testing.util import get_resource_path
+
+
+def test_parse_indent():
+    assert parse_indent('0') == ''
+    assert parse_indent('2') == '  '
+    assert parse_indent('\t') == '\t'
+    with pytest.raises(ValueError):
+        parse_indent('a')
+    with pytest.raises(ValueError):
+        parse_indent('-2')
 
 
 @pytest.mark.parametrize(('filename', 'expected_retval'), (
@@ -23,6 +34,17 @@ def test_pretty_format_json(filename, expected_retval):
 ))
 def test_unsorted_pretty_format_json(filename, expected_retval):
     ret = pretty_format_json(['--no-sort-keys', get_resource_path(filename)])
+    assert ret == expected_retval
+
+
+@pytest.mark.parametrize(('filename', 'expected_retval'), (
+    ('not_pretty_formatted_json.json', 1),
+    ('unsorted_pretty_formatted_json.json', 1),
+    ('pretty_formatted_json.json', 1),
+    ('tab_pretty_formatted_json.json', 0),
+))
+def test_tab_pretty_format_json(filename, expected_retval):
+    ret = pretty_format_json(['--indent', '\t', get_resource_path(filename)])
     assert ret == expected_retval
 
 
