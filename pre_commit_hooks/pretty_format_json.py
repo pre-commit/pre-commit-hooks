@@ -24,6 +24,25 @@ def _autofix(filename, new_contents):
         f.write(new_contents)
 
 
+def parse_indent(s):
+    # type: (str) -> str
+    try:
+        int_indentation_spec = int(s)
+        if int_indentation_spec >= 0:
+            return int_indentation_spec * ' '
+        else:
+            raise ValueError(
+                'Negative integer supplied to construct JSON indentation delimiter. ',
+            )
+    except ValueError:
+        if s.strip() == '':
+            return s
+        else:
+            raise ValueError(
+                'Non-whitespace JSON indentation delimiter supplied. ',
+            )
+
+
 def pretty_format_json(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -34,9 +53,9 @@ def pretty_format_json(argv=None):
     )
     parser.add_argument(
         '--indent',
-        type=int,
-        default=2,
-        help='Number of indent spaces used to pretty-format files',
+        type=parse_indent,
+        default='  ',
+        help='String used as delimiter for one indentation level',
     )
     parser.add_argument(
         '--no-sort-keys',
