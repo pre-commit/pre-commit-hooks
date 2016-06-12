@@ -23,23 +23,23 @@ def f1_is_a_conflict_file(tmpdir):
     repo2 = tmpdir.join('repo2')
     repo2_f1 = repo2.join('f1')
 
-    cmd_output('git', 'init', repo1.strpath)
+    cmd_output('git', 'init', '--', repo1.strpath)
     with repo1.as_cwd():
         repo1_f1.ensure()
-        cmd_output('git', 'add', repo1_f1.strpath)
-        cmd_output('git', 'commit', '-m', 'commit1')
+        cmd_output('git', 'add', '--', repo1_f1.strpath)
+        cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'commit1')
 
     cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
 
     # Commit in master
     with repo1.as_cwd():
         repo1_f1.write('parent\n')
-        cmd_output('git', 'commit', '-am', 'master commit2')
+        cmd_output('git', 'commit', '--no-gpg-sign', '-am', 'master commit2')
 
     # Commit in clone and pull
     with repo2.as_cwd():
         repo2_f1.write('child\n')
-        cmd_output('git', 'commit', '-am', 'clone commit2')
+        cmd_output('git', 'commit', '--no-gpg-sign', '-am', 'clone commit2')
         cmd_output('git', 'pull', retcode=None)
         # We should end up in a merge conflict!
         f1 = repo2_f1.read()
@@ -73,21 +73,21 @@ def repository_is_pending_merge(tmpdir):
     cmd_output('git', 'init', repo1.strpath)
     with repo1.as_cwd():
         repo1_f1.ensure()
-        cmd_output('git', 'add', repo1_f1.strpath)
-        cmd_output('git', 'commit', '-m' 'commit1')
+        cmd_output('git', 'add', '--', repo1_f1.strpath)
+        cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'commit1')
 
     cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
 
     # Commit in master
     with repo1.as_cwd():
         repo1_f1.write('parent\n')
-        cmd_output('git', 'commit', '-am', 'master commit2')
+        cmd_output('git', 'commit', '--no-gpg-sign', '-am', 'master commit2')
 
     # Commit in clone and pull without committing
     with repo2.as_cwd():
         repo2_f2.write('child\n')
-        cmd_output('git', 'add', repo2_f2.strpath)
-        cmd_output('git', 'commit', '-m', 'clone commit2')
+        cmd_output('git', 'add', '--', repo2_f2.strpath)
+        cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'clone commit2')
         cmd_output('git', 'pull', '--no-commit')
         # We should end up in a pending merge
         assert repo2_f1.read() == 'parent\n'
