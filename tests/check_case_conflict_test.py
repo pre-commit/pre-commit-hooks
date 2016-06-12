@@ -41,7 +41,7 @@ def test_file_conflicts_with_committed_file(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.join('f.py').write("print('hello world')")
         cmd_output('git', 'add', 'f.py')
-        cmd_output('git', 'commit', '--no-verify', '-m', 'Add f.py')
+        cmd_output('git', 'commit', '--no-gpg-sign', '-n', '-m', 'Add f.py')
 
         temp_git_dir.join('F.py').write("print('hello world')")
         cmd_output('git', 'add', 'F.py')

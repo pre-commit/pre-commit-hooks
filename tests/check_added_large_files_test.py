@@ -80,11 +80,18 @@ xfailif_no_gitlfs = pytest.mark.xfail(
 def test_allows_gitlfs(temp_git_dir):  # pragma: no cover
     with temp_git_dir.as_cwd():
         # Work around https://github.com/github/git-lfs/issues/913
-        cmd_output('git', 'commit', '--allow-empty', '-m', 'foo')
+        cmd_output(
+            'git',
+            'commit',
+            '--no-gpg-sign',
+            '--allow-empty',
+            '-m',
+            'foo',
+        )
         cmd_output('git', 'lfs', 'install')
         temp_git_dir.join('f.py').write('a' * 10000)
         cmd_output('git', 'lfs', 'track', 'f.py')
-        cmd_output('git', 'add', '.')
+        cmd_output('git', 'add', '--', '.')
         # Should succeed
         assert main(('--maxkb', '9', 'f.py')) == 0
 
@@ -96,8 +103,8 @@ def test_moves_with_gitlfs(temp_git_dir):  # pragma: no cover
         cmd_output('git', 'lfs', 'track', 'a.bin', 'b.bin')
         # First add the file we're going to move
         temp_git_dir.join('a.bin').write('a' * 10000)
-        cmd_output('git', 'add', '.')
-        cmd_output('git', 'commit', '-am', 'foo')
+        cmd_output('git', 'add', '--', '.')
+        cmd_output('git', 'commit', '--no-gpg-sign', '-am', 'foo')
         # Now move it and make sure the hook still succeeds
         cmd_output('git', 'mv', 'a.bin', 'b.bin')
         assert main(('--maxkb', '9', 'b.bin')) == 0
