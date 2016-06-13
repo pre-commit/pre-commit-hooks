@@ -28,18 +28,19 @@ def parse_indent(s):
     # type: (str) -> str
     try:
         int_indentation_spec = int(s)
+    except ValueError:
+        if not s.strip():
+            return s
+        else:
+            raise ValueError(
+                'Non-whitespace JSON indentation delimiter supplied. ',
+            )
+    else:
         if int_indentation_spec >= 0:
             return int_indentation_spec * ' '
         else:
             raise ValueError(
                 'Negative integer supplied to construct JSON indentation delimiter. ',
-            )
-    except ValueError:
-        if s.strip() == '':
-            return s
-        else:
-            raise ValueError(
-                'Non-whitespace JSON indentation delimiter supplied. ',
             )
 
 
