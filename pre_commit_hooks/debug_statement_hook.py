@@ -7,7 +7,7 @@ import collections
 import traceback
 
 
-DEBUG_STATEMENTS = set(['pdb', 'ipdb', 'pudb', 'q'])
+DEBUG_STATEMENTS = set(['pdb', 'ipdb', 'pudb', 'q', 'rdb'])
 
 
 DebugStatement = collections.namedtuple(
