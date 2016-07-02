@@ -10,6 +10,13 @@ class Requirement(object):
         self.value = None
         self.comments = []
 
+    @property
+    def name(self):
+        if self.value.startswith(b'-e '):
+            return self.value.lower().partition(b'=')[-1]
+
+        return self.value.lower().partition(b'==')[0]
+
     def __lt__(self, requirement):
         # \n means top of file comment, so always return True,
         # otherwise just do a string comparison with value.
@@ -18,10 +25,7 @@ class Requirement(object):
         elif requirement.value == b'\n':
             return False
         else:
-            return (
-                self.value.lower().partition(b'==') <
-                requirement.value.lower().partition(b'==')
-            )
+            return self.name < requirement.name
 
 
 def fix_requirements(f):
