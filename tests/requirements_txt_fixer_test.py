@@ -15,6 +15,7 @@ TESTS = (
     (b'\nbar\nfoo\n', 0, b'\nbar\nfoo\n'),
     (b'pyramid==1\npyramid-foo==2\n', 0, b'pyramid==1\npyramid-foo==2\n'),
     (b'ocflib\nDjango\nPyMySQL\n', 1, b'Django\nocflib\nPyMySQL\n'),
+    (b'-e git+ssh://git_url@tag#egg=ocflib\nDjango\nPyMySQL\n', 1, b'Django\n-e git+ssh://git_url@tag#egg=ocflib\nPyMySQL\n'),
 )
 
 
