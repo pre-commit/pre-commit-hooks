@@ -12,12 +12,6 @@ class Requirement(object):
 
     @property
     def name(self):
-        if self.value is None:
-            return
-
-        if self.value == b'\n':
-            return
-
         if self.value.startswith(b'-e '):
             return self.value.lower().partition(b'=')[-1]
 
