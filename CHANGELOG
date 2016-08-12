@@ -1,3 +1,10 @@
+0.6.0
+=====
+- Merge conflict detection no longer crashes on binary files
+- Indentation in json may be an arbitrary separator
+- Editable requirements are properly sorted
+- Encoding pragma fixer pragma is configurable
+
 0.5.1
 =====
 - Add a --no-sort-keys to json pretty formatter
