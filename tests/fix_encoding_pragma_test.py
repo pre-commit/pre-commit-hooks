@@ -5,6 +5,7 @@ import io
 
 import pytest
 
+from pre_commit_hooks.fix_encoding_pragma import _normalize_pragma
 from pre_commit_hooks.fix_encoding_pragma import fix_encoding_pragma
 from pre_commit_hooks.fix_encoding_pragma import main
 
@@ -106,3 +107,46 @@ def test_not_ok_inputs(input_str, output):
     assert fix_encoding_pragma(bytesio) == 1
     bytesio.seek(0)
     assert bytesio.read() == output
+
+
+def test_ok_input_alternate_pragma():
+    input_s = b'# coding: utf-8\nx = 1\n'
+    bytesio = io.BytesIO(input_s)
+    ret = fix_encoding_pragma(bytesio, expected_pragma=b'# coding: utf-8\n')
+    assert ret == 0
+    bytesio.seek(0)
+    assert bytesio.read() == input_s
+
+
+def test_not_ok_input_alternate_pragma():
+    bytesio = io.BytesIO(b'x = 1\n')
+    ret = fix_encoding_pragma(bytesio, expected_pragma=b'# coding: utf-8\n')
+    assert ret == 1
+    bytesio.seek(0)
+    assert bytesio.read() == b'# coding: utf-8\nx = 1\n'
+
+
+@pytest.mark.parametrize(
+    ('input_s', 'expected'),
+    (
+        # Python 2 cli parameters are bytes
+        (b'# coding: utf-8', b'# coding: utf-8\n'),
+        # Python 3 cli parameters are text
+        ('# coding: utf-8', b'# coding: utf-8\n'),
+        # trailing whitespace
+        ('# coding: utf-8\n', b'# coding: utf-8\n'),
+    ),
+)
+def test_normalize_pragma(input_s, expected):
+    assert _normalize_pragma(input_s) == expected
+
+
+def test_integration_alternate_pragma(tmpdir, capsys):
+    f = tmpdir.join('f.py')
+    f.write('x = 1\n')
+
+    pragma = '# coding: utf-8'
+    assert main((f.strpath, '--pragma', pragma)) == 1
+    assert f.read() == '# coding: utf-8\nx = 1\n'
+    out, _ = capsys.readouterr()
+    assert out == 'Added `# coding: utf-8` to {}\n'.format(f.strpath)
