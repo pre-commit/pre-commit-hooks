@@ -5,11 +5,11 @@ import os
 import shutil
 
 import pytest
+from py.path import local
 
 from pre_commit_hooks.check_merge_conflict import detect_merge_conflict
 from pre_commit_hooks.util import cmd_output
 from testing.util import get_resource_path
-from testing.util import write_file
 
 
 # pylint:disable=unused-argument
@@ -106,7 +106,7 @@ def test_merge_conflicts_git():
 )
 @pytest.mark.usefixtures('repository_is_pending_merge')
 def test_merge_conflicts_failing(failing_contents):
-    write_file('f2', failing_contents)
+    local('f2').write(failing_contents)
     assert detect_merge_conflict(['f2']) == 1
 
 
@@ -115,7 +115,7 @@ def test_merge_conflicts_failing(failing_contents):
 )
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
 def test_merge_conflicts_ok(ok_contents):
-    write_file('f1', ok_contents)
+    local('f1').write(ok_contents)
     assert detect_merge_conflict(['f1']) == 0
 
 
