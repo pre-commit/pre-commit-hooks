@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import argparse
 import collections
 
-expected_pragma = b'# -*- coding: utf-8 -*-\n'
+DEFAULT_PRAGMA = b'# -*- coding: utf-8 -*-\n'
 
 
 def has_coding(line):
@@ -41,7 +41,7 @@ class ExpectedContents(collections.namedtuple(
         return self.pragma_status is expected_pragma_status
 
 
-def _get_expected_contents(first_line, second_line, rest):
+def _get_expected_contents(first_line, second_line, rest, expected_pragma):
     if first_line.startswith(b'#!'):
         shebang = first_line
         potential_coding = second_line
@@ -63,8 +63,10 @@ def _get_expected_contents(first_line, second_line, rest):
     )
 
 
-def fix_encoding_pragma(f, remove=False):
-    expected = _get_expected_contents(f.readline(), f.readline(), f.read())
+def fix_encoding_pragma(f, remove=False, expected_pragma=DEFAULT_PRAGMA):
+    expected = _get_expected_contents(
+        f.readline(), f.readline(), f.read(), expected_pragma,
+    )
 
     # Special cases for empty files
     if not expected.rest.strip():
@@ -91,9 +93,25 @@ def fix_encoding_pragma(f, remove=False):
     return 1
 
 
+def _normalize_pragma(pragma):
+    if not isinstance(pragma, bytes):
+        pragma = pragma.encode('UTF-8')
+    return pragma.rstrip() + b'\n'
+
+
+def _to_disp(pragma):
+    return pragma.decode().rstrip()
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser('Fixes the encoding pragma of python files')
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
+    parser.add_argument(
+        '--pragma', default=DEFAULT_PRAGMA, type=_normalize_pragma,
+        help='The encoding pragma to use.  Default: {}'.format(
+            _to_disp(DEFAULT_PRAGMA),
+        ),
+    )
     parser.add_argument(
         '--remove', action='store_true',
         help='Remove the encoding pragma (Useful in a python3-only codebase)',
@@ -109,10 +127,14 @@ def main(argv=None):
 
     for filename in args.filenames:
         with open(filename, 'r+b') as f:
-            file_ret = fix_encoding_pragma(f, remove=args.remove)
+            file_ret = fix_encoding_pragma(
+                f, remove=args.remove, expected_pragma=args.pragma,
+            )
             retv |= file_ret
             if file_ret:
-                print(fmt.format(pragma=expected_pragma, filename=filename))
+                print(fmt.format(
+                    pragma=_to_disp(args.pragma), filename=filename,
+                ))
 
     return retv
 
