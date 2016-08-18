@@ -9,7 +9,7 @@ from pre_commit_hooks.util import cmd_output
 
 
 def _fix_file(filename, markdown=False):
-    for line in fileinput.input([filename], inplace=True):
+    for line in fileinput.input([filename], inplace=True, backup='.bak'):
         # preserve trailing two-space for non-blank lines in markdown files
         if markdown and (not line.isspace()) and (line.endswith("  \n")):
             line = line.rstrip(' \n')
@@ -64,14 +64,20 @@ def fix_trailing_whitespace(argv=None):
                 .format(ext)
             )
 
-    if bad_whitespace_files:
-        for bad_whitespace_file in bad_whitespace_files:
-            print('Fixing {0}'.format(bad_whitespace_file))
-            _, extension = os.path.splitext(bad_whitespace_file.lower())
+    return_code = 0
+    for bad_whitespace_file in bad_whitespace_files:
+        print('Fixing {0}'.format(bad_whitespace_file))
+        _, extension = os.path.splitext(bad_whitespace_file.lower())
+        try:
             _fix_file(bad_whitespace_file, all_markdown or extension in md_exts)
-        return 1
-    else:
-        return 0
+            return_code = 1
+        # pylint: disable=broad-except
+        except Exception as error:  # pragma: no cover
+            # e.g. error can be a UnicodeDecodeError in Python 3
+            print('Ignoring {} that caused a {}'.format(bad_whitespace_file, error.__class__))
+            os.remove(bad_whitespace_file)
+            os.rename(bad_whitespace_file + '.bak', bad_whitespace_file)
+    return return_code
 
 
 if __name__ == '__main__':

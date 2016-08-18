@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import sys
+
 import pytest
 
 from pre_commit_hooks.trailing_whitespace_fixer import fix_trailing_whitespace
@@ -103,3 +105,11 @@ def test_no_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
 
 def test_returns_zero_for_no_changes():
     assert fix_trailing_whitespace([__file__]) == 0
+
+
+def test_preserve_non_utf8_file(tmpdir):
+    path = tmpdir.join('file.txt')
+    path.write_binary(b'<a>\xe9 \n</a>')
+    ret = fix_trailing_whitespace([path.strpath])
+    assert ret == (1 if sys.version_info[0] < 3 else 0)  # a UnicodeDecodeError is only triggered in Python 3
+    assert path.size() > 0
