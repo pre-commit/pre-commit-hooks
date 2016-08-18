@@ -9,16 +9,20 @@ from pre_commit_hooks.util import cmd_output
 
 
 def _fix_file(filename, markdown=False):
-    for line in fileinput.input([filename], inplace=True):
-        # preserve trailing two-space for non-blank lines in markdown files
-        if markdown and (not line.isspace()) and (line.endswith("  \n")):
-            line = line.rstrip(' \n')
-            # only preserve if there are no trailing tabs or unusual whitespace
-            if not line[-1].isspace():
-                print(line + "  ")
-                continue
-
-        print(line.rstrip())
+    try:
+        for line in fileinput.input([filename], inplace=True, backup='.bak'):
+            # preserve trailing two-space for non-blank lines in markdown files
+            if markdown and (not line.isspace()) and (line.endswith("  \n")):
+                line = line.rstrip(' \n')
+                # only preserve if there are no trailing tabs or unusual whitespace
+                if not line[-1].isspace():
+                    print(line + "  ")
+                    continue
+            print(line.rstrip())
+    except Exception:  # e.g. for UnicodeDecodeError
+        os.remove(filename)  # needed on Windows apparently
+        os.replace(filename + '.bak', filename)
+        raise
 
 
 def fix_trailing_whitespace(argv=None):
