@@ -1,8 +1,6 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import sys
-
 import pytest
 
 from pre_commit_hooks.trailing_whitespace_fixer import fix_trailing_whitespace
@@ -108,8 +106,9 @@ def test_returns_zero_for_no_changes():
 
 
 def test_preserve_non_utf8_file(tmpdir):
+    non_utf8_bytes_content = b'<a>\xe9 \n</a>\n'
     path = tmpdir.join('file.txt')
-    path.write_binary(b'<a>\xe9 \n</a>')
+    path.write_binary(non_utf8_bytes_content)
     ret = fix_trailing_whitespace([path.strpath])
-    assert ret == (1 if sys.version_info[0] < 3 else 0)  # a UnicodeDecodeError is only triggered in Python 3
-    assert path.size() > 0
+    assert ret == 1
+    assert path.size() == (len(non_utf8_bytes_content) - 1)

@@ -1,24 +1,29 @@
 from __future__ import print_function
 
 import argparse
-import fileinput
 import os
 import sys
+import tempfile
 
 from pre_commit_hooks.util import cmd_output
 
 
 def _fix_file(filename, markdown=False):
-    for line in fileinput.input([filename], inplace=True, backup='.bak'):
-        # preserve trailing two-space for non-blank lines in markdown files
-        if markdown and (not line.isspace()) and (line.endswith("  \n")):
-            line = line.rstrip(' \n')
-            # only preserve if there are no trailing tabs or unusual whitespace
-            if not line[-1].isspace():
-                print(line + "  ")
-                continue
-
-        print(line.rstrip())
+    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+        with open(filename, 'rb') as original_file:
+            for line in original_file.readlines():
+                # preserve trailing two-space for non-blank lines in markdown files
+                if markdown and (not line.isspace()) and line.endswith(b'  \n'):
+                    line = line.rstrip(b' \n')  # restricted stripping: e.g. \t are not stripped
+                    # only preserve if there are no trailing tabs or unusual whitespace
+                    if not line[-1:].isspace():
+                        tmp_file.write(line + b'  \n')
+                    else:
+                        tmp_file.write(line.rstrip() + b'\n')
+                else:
+                    tmp_file.write(line.rstrip() + b'\n')
+    os.remove(filename)
+    os.rename(tmp_file.name, filename)
 
 
 def fix_trailing_whitespace(argv=None):
@@ -68,15 +73,8 @@ def fix_trailing_whitespace(argv=None):
     for bad_whitespace_file in bad_whitespace_files:
         print('Fixing {0}'.format(bad_whitespace_file))
         _, extension = os.path.splitext(bad_whitespace_file.lower())
-        try:
-            _fix_file(bad_whitespace_file, all_markdown or extension in md_exts)
-            return_code = 1
-        # pylint: disable=broad-except
-        except Exception as error:  # pragma: no cover
-            # e.g. error can be a UnicodeDecodeError in Python 3
-            print('Ignoring {} that caused a {}'.format(bad_whitespace_file, error.__class__))
-            os.remove(bad_whitespace_file)
-            os.rename(bad_whitespace_file + '.bak', bad_whitespace_file)
+        _fix_file(bad_whitespace_file, all_markdown or extension in md_exts)
+        return_code = 1
     return return_code
 
 
