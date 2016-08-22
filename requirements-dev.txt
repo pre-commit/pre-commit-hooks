@@ -1,9 +1,7 @@
 -e .
 
-astroid<1.3.3
 coverage
 flake8
 mock
 pre-commit
-pylint<1.4
 pytest

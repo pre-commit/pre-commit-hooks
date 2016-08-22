@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import argparse
 import os
 
-from six.moves import configparser  # pylint: disable=import-error
+from six.moves import configparser
 
 
 def get_your_keys(credentials_file):

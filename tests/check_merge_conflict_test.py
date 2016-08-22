@@ -12,9 +12,6 @@ from testing.util import get_resource_path
 from testing.util import write_file
 
 
-# pylint:disable=unused-argument
-
-
 @pytest.yield_fixture
 def f1_is_a_conflict_file(tmpdir):
     # Make a merge conflict
