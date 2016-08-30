@@ -9,19 +9,18 @@ from pre_commit_hooks.util import cmd_output
 
 
 def _fix_file(filename, markdown=False):
-    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-        with open(filename, 'rb') as original_file:
+    with tempfile.NamedTemporaryFile(mode='w+b', delete=False) as tmp_file:
+        with open(filename, mode='rb') as original_file:
             for line in original_file.readlines():
                 # preserve trailing two-space for non-blank lines in markdown files
-                if markdown and (not line.isspace()) and line.endswith(b'  \n'):
-                    line = line.rstrip(b' \n')  # restricted stripping: e.g. \t are not stripped
+                eol = b'\r\n' if line[-2:] == b'\r\n' else b'\n'
+                if markdown and (not line.isspace()) and line.endswith(b'  ' + eol):
+                    line = line.rstrip(b' \r\n')  # restricted stripping: e.g. \t are not stripped
                     # only preserve if there are no trailing tabs or unusual whitespace
                     if not line[-1:].isspace():
-                        tmp_file.write(line + b'  \n')
-                    else:
-                        tmp_file.write(line.rstrip() + b'\n')
-                else:
-                    tmp_file.write(line.rstrip() + b'\n')
+                        tmp_file.write(line + b'  ' + eol)
+                        continue
+                tmp_file.write(line.rstrip() + eol)
     os.remove(filename)
     os.rename(tmp_file.name, filename)
 
