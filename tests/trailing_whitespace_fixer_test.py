@@ -42,7 +42,7 @@ def test_fixes_trailing_markdown_whitespace(filename, input_s, output, tmpdir):
 MD_TESTS_2 = (
     ('foo.txt', 'foo  \nbar \n  \n', 'foo  \nbar\n\n'),
     ('bar.Markdown', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
-    ('bar.MD', 'bar   \nbaz\t   \n\t\n', 'bar  \nbaz\n\n'),
+    ('bar.MD', 'bar   \nbaz\t   \n\t\n', 'bar  \nbaz  \n\n'),
     ('.txt', 'baz   \nquux  \t\n\t\n', 'baz\nquux\n\n'),
     ('txt', 'foo   \nbaz \n\t\n', 'foo\nbaz\n\n'),
 )
@@ -103,3 +103,12 @@ def test_no_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
 
 def test_returns_zero_for_no_changes():
     assert fix_trailing_whitespace([__file__]) == 0
+
+
+def test_preserve_non_utf8_file(tmpdir):
+    non_utf8_bytes_content = b'<a>\xe9 \n</a>\n'
+    path = tmpdir.join('file.txt')
+    path.write_binary(non_utf8_bytes_content)
+    ret = fix_trailing_whitespace([path.strpath])
+    assert ret == 1
+    assert path.size() == (len(non_utf8_bytes_content) - 1)
