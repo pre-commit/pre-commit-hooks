@@ -42,7 +42,7 @@ def test_fixes_trailing_markdown_whitespace(filename, input_s, output, tmpdir):
 MD_TESTS_2 = (
     ('foo.txt', 'foo  \nbar \n  \n', 'foo  \nbar\n\n'),
     ('bar.Markdown', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
-    ('bar.MD', 'bar   \nbaz\t   \n\t\n', 'bar  \nbaz\n\n'),
+    ('bar.MD', 'bar   \nbaz\t   \n\t\n', 'bar  \nbaz  \n\n'),
     ('.txt', 'baz   \nquux  \t\n\t\n', 'baz\nquux\n\n'),
     ('txt', 'foo   \nbaz \n\t\n', 'foo\nbaz\n\n'),
 )

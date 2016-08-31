@@ -3,26 +3,25 @@ from __future__ import print_function
 import argparse
 import os
 import sys
-import tempfile
 
 from pre_commit_hooks.util import cmd_output
 
 
-def _fix_file(filename, markdown=False):
-    with tempfile.NamedTemporaryFile(mode='w+b', delete=False) as tmp_file:
-        with open(filename, mode='rb') as original_file:
-            for line in original_file.readlines():
-                # preserve trailing two-space for non-blank lines in markdown files
-                eol = b'\r\n' if line[-2:] == b'\r\n' else b'\n'
-                if markdown and (not line.isspace()) and line.endswith(b'  ' + eol):
-                    line = line.rstrip(b' \r\n')  # restricted stripping: e.g. \t are not stripped
-                    # only preserve if there are no trailing tabs or unusual whitespace
-                    if not line[-1:].isspace():
-                        tmp_file.write(line + b'  ' + eol)
-                        continue
-                tmp_file.write(line.rstrip() + eol)
-    os.remove(filename)
-    os.rename(tmp_file.name, filename)
+def _fix_file(filename, is_markdown):
+    with open(filename, mode='rb') as file_processed:
+        lines = file_processed.readlines()
+    lines = [_process_line(line, is_markdown) for line in lines]
+    with open(filename, mode='wb') as file_processed:
+        for line in lines:
+            file_processed.write(line)
+
+
+def _process_line(line, is_markdown):
+    # preserve trailing two-space for non-blank lines in markdown files
+    eol = b'\r\n' if line[-2:] == b'\r\n' else b'\n'
+    if is_markdown and (not line.isspace()) and line.endswith(b'  ' + eol):
+        return line.rstrip() + b'  ' + eol
+    return line.rstrip() + eol
 
 
 def fix_trailing_whitespace(argv=None):
