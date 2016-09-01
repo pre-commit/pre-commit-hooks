@@ -104,7 +104,7 @@
     description: Ensures that a file is either empty, or ends with one newline.
     entry: end-of-file-fixer
     language: python
-    files: \.(c|coffee|cpp|css|ejs|erb|haml|html|jade|js|json|less|md|pp|py|rb|scala|scss|sh|slim|tmpl|ts|txt|yaml|yml)$
+    files: \.(asciidoc|adoc|coffee|cpp|css|c|ejs|erb|h|haml|hh|hpp|hxx|html|in|jade|json|js|less|markdown|md|ml|mli|pp|py|rb|rs|R|scala|scss|sh|slim|tmpl|ts|txt|yaml|yml)$
 -   id: fix-encoding-pragma
     name: Fix python encoding pragma
     language: python
