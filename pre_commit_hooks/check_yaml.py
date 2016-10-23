@@ -5,11 +5,10 @@ import sys
 
 import yaml
 
-
 try:
-    from yaml.cyaml import CLoader as Loader
+    from yaml.cyaml import CSafeLoader as Loader
 except ImportError:  # pragma: no cover (no libyaml-dev / pypy)
-    Loader = yaml.Loader
+    Loader = yaml.SafeLoader
 
 
 def check_yaml(argv=None):
