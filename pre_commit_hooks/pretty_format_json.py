@@ -7,7 +7,6 @@ from collections import OrderedDict
 import simplejson
 
 
-
 def _get_pretty_format(contents, indent, sort_keys=True, top_keys=[]):
     def pairs_first(pairs):
         before = [pair for pair in pairs if pair[0] in top_keys]
@@ -50,9 +49,11 @@ def parse_indent(s):
                 'Negative integer supplied to construct JSON indentation delimiter. ',
             )
 
+
 def parse_topkeys(s):
     # type: (str) -> array
     return s.split(',')
+
 
 def pretty_format_json(argv=None):
     parser = argparse.ArgumentParser()
