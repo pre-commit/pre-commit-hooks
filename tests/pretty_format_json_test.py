@@ -68,7 +68,7 @@ def test_orderfile_get_pretty_format():
     ret = pretty_format_json(['--top-keys=alist', get_resource_path('pretty_formatted_json.json')])
     assert ret == 0
 
-def test_orderfile_get_pretty_format():
+def test_not_orderfile_get_pretty_format():
     ret = pretty_format_json(['--top-keys=blah', get_resource_path('pretty_formatted_json.json')])
     assert ret == 1
 
