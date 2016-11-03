@@ -24,6 +24,7 @@ def _get_pretty_format(contents, indent, sort_keys=True, top_keys=[]):
         indent=indent
     ) + "\n"  # dumps don't end with a newline
 
+
 def _autofix(filename, new_contents):
     print("Fixing file {0}".format(filename))
     with open(filename, 'w') as f:
