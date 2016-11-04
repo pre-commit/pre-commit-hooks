@@ -1,0 +1,16 @@
+{
+  "01-alist": [
+    2,
+    34,
+    234
+  ],
+  "alist": [
+    2,
+    34,
+    234
+  ],
+  "00-foo": "bar",
+  "02-blah": null,
+  "blah": null,
+  "foo": "bar"
+}

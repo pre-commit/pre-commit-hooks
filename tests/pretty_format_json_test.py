@@ -75,6 +75,11 @@ def test_not_orderfile_get_pretty_format():
     assert ret == 1
 
 
+def test_top_sorted_get_pretty_format():
+    ret = pretty_format_json(['--top-keys=01-alist,alist', get_resource_path('top_sorted_json.json')])
+    assert ret == 0
+
+
 def test_badfile_pretty_format_json():
     ret = pretty_format_json([get_resource_path('ok_yaml.yaml')])
     assert ret == 1
