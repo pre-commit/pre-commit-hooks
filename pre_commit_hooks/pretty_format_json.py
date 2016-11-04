@@ -7,13 +7,19 @@ from collections import OrderedDict
 import simplejson
 
 
-def _get_pretty_format(contents, indent, sort_keys=True):
+def _get_pretty_format(contents, indent, sort_keys=True, top_keys=[]):
+    def pairs_first(pairs):
+        before = [pair for pair in pairs if pair[0] in top_keys]
+        before = sorted(before, key=lambda x: top_keys.index(x[0]))
+        after = [pair for pair in pairs if pair[0] not in top_keys]
+        if sort_keys:
+            after = sorted(after, key=lambda x: x[0])
+        return OrderedDict(before + after)
     return simplejson.dumps(
         simplejson.loads(
             contents,
-            object_pairs_hook=None if sort_keys else OrderedDict,
+            object_pairs_hook=pairs_first,
         ),
-        sort_keys=sort_keys,
         indent=indent
     ) + "\n"  # dumps don't end with a newline
 
@@ -44,6 +50,11 @@ def parse_indent(s):
             )
 
 
+def parse_topkeys(s):
+    # type: (str) -> array
+    return s.split(',')
+
+
 def pretty_format_json(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -65,6 +76,13 @@ def pretty_format_json(argv=None):
         default=False,
         help='Keep JSON nodes in the same order',
     )
+    parser.add_argument(
+        '--top-keys',
+        type=parse_topkeys,
+        dest='top_keys',
+        default=[],
+        help='Ordered list of keys to keep at the top of JSON hashes',
+    )
 
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -78,6 +96,7 @@ def pretty_format_json(argv=None):
         try:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, sort_keys=not args.no_sort_keys,
+                top_keys=args.top_keys
             )
 
             if contents != pretty_contents:
