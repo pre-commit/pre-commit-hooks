@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 import argparse
 import math
 import os
-import sys
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import CalledProcessError
@@ -49,8 +48,6 @@ def find_large_added_files(filenames, maxkb):
 
 
 def main(argv=None):
-    argv = argv if argv is not None else sys.argv[1:]
-
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',
