@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from __future__ import print_function
 from __future__ import unicode_literals
 
 from pre_commit_hooks.util import cmd_output
@@ -19,6 +20,7 @@ def main(argv=None):
             retv = 1
 
     if retv:
+        print()
         print('This commit introduces new submodules.')
         print('Did you unintentionally `git add .`?')
         print('To fix: git rm {thesubmodule}  # no trailing slash')

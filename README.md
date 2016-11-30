@@ -48,6 +48,7 @@ Add this to your `.pre-commit-config.yaml`
 - `fix-encoding-pragma` - Add `# -*- coding: utf-8 -*-` to the top of python files.
     - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
 - `flake8` - Run flake8 on your python files.
+- `forbid-new-submodules` - Prevent addition of new git submodules.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `pyflakes` - Run pyflakes on your python files.
