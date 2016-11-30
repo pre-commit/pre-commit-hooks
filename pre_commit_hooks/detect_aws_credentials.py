@@ -29,7 +29,7 @@ def check_file_for_aws_keys(filenames, keys):
 
     for filename in filenames:
         with open(filename, 'r') as content:
-            text_body = content.read()
+            text_body = content.read().decode('utf-8')
             if any(key in text_body for key in keys):
                 # naively match the entire file, low chance of incorrect collision
                 bad_files.append(filename)
