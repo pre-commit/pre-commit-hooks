@@ -7,10 +7,7 @@ env: # These should match the tox env list
     - TOXENV=pypy
 install: pip install coveralls tox
 script: tox
-# Special snowflake.  Our tests depend on making real commits.
 before_install:
-  - git config --global user.name "Travis CI"
-  - git config --global user.email "user@example.com"
   # Install git-lfs for a test
   - './get-git-lfs.py && export PATH="/tmp/git-lfs:$PATH"'
 after_success:
