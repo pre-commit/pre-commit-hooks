@@ -52,10 +52,13 @@ Add this to your `.pre-commit-config.yaml`
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `pyflakes` - Run pyflakes on your python files.
-- `pretty-format-json` - Checks that all your JSON files are pretty
+- `pretty-format-json` - Checks that all your JSON files are pretty.  "Pretty"
+  here means that keys are sorted and indented.  You can configure this with
+  the following commandline options:
     - `--autofix` - automatically format json files
+    - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 4 spaces.
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
-    - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).
+    - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
 - `trailing-whitespace` - Trims trailing whitespace.
     - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;
