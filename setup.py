@@ -32,6 +32,7 @@ setup(
         'pyyaml',
         'simplejson',
         'six',
+        'pylint',
     ],
     entry_points={
         'console_scripts': [
