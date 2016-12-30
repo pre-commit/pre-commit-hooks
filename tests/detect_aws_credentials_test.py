@@ -19,8 +19,10 @@ def test_get_aws_credentials_file_from_env(monkeypatch):
     assert get_aws_credential_files_from_env() == {'/foo', '/bar'}
     monkeypatch.setenv('BOTO_CONFIG', '/baz')
     assert get_aws_credential_files_from_env() == {'/foo', '/bar', '/baz'}
+    monkeypatch.setenv('AWS_CONFIG_FILE', '/xxx')
+    assert get_aws_credential_files_from_env() == {'/foo', '/bar', '/baz', '/xxx'}
     monkeypatch.setenv('AWS_DUMMY_KEY', 'foobar')
-    assert get_aws_credential_files_from_env() == {'/foo', '/bar', '/baz'}
+    assert get_aws_credential_files_from_env() == {'/foo', '/bar', '/baz', '/xxx'}
 
 
 def test_get_aws_secrets_from_env(monkeypatch):

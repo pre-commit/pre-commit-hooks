@@ -10,8 +10,8 @@ from six.moves import configparser
 def get_aws_credential_files_from_env():
     """Extract credential file paths from environment variables."""
     files = set()
-    for env_var in {'AWS_CREDENTIAL_FILE', 'AWS_SHARED_CREDENTIALS_FILE',
-                    'BOTO_CONFIG'}:
+    for env_var in {'AWS_CONFIG_FILE', 'AWS_CREDENTIAL_FILE',
+                    'AWS_SHARED_CREDENTIALS_FILE', 'BOTO_CONFIG'}:
         try:
             files.add(os.environ[env_var])
         except KeyError:
