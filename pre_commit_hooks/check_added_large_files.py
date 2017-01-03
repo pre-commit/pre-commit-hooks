@@ -15,7 +15,7 @@ from pre_commit_hooks.util import cmd_output
 def lfs_files():
     try:  # pragma: no cover (no git-lfs)
         lines = cmd_output('git', 'lfs', 'status', '--porcelain').splitlines()
-    except CalledProcessError:
+    except CalledProcessError:  # pragma: no cover (with git-lfs)
         lines = []
 
     modes_and_fileparts = [
