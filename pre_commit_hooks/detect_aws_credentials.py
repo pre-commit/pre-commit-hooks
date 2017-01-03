@@ -74,8 +74,9 @@ def check_file_for_aws_keys(filenames, keys):
                 # naively match the entire file, low chance of incorrect
                 # collision
                 if key in text_body:
-                    bad_files.append({'filename': filename,
-                                      'key': key[:4] + '*' * 28})
+                    bad_files.append({
+                        'filename': filename, 'key': key[:4] + '*' * 28,
+                    })
     return bad_files
 
 
@@ -86,8 +87,9 @@ def main(argv=None):
         '--credentials-file',
         dest='credential_files',
         action='append',
-        default=['~/.aws/config', '~/.aws/credentials', '/etc/boto.cfg',
-                 '~/.boto'],
+        default=[
+            '~/.aws/config', '~/.aws/credentials', '/etc/boto.cfg', '~/.boto',
+        ],
         help=(
             'Location of additional AWS credential files from which to get '
             'secret keys from'
