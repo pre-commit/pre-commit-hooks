@@ -10,24 +10,23 @@ from six.moves import configparser
 def get_aws_credential_files_from_env():
     """Extract credential file paths from environment variables."""
     files = set()
-    for env_var in {'AWS_CONFIG_FILE', 'AWS_CREDENTIAL_FILE',
-                    'AWS_SHARED_CREDENTIALS_FILE', 'BOTO_CONFIG'}:
-        try:
+    for env_var in (
+        'AWS_CONFIG_FILE', 'AWS_CREDENTIAL_FILE', 'AWS_SHARED_CREDENTIALS_FILE',
+        'BOTO_CONFIG'
+    ):
+        if env_var in os.environ:
             files.add(os.environ[env_var])
-        except KeyError:
-            pass
     return files
 
 
 def get_aws_secrets_from_env():
     """Extract AWS secrets from environment variables."""
     keys = set()
-    for env_var in {'AWS_SECRET_ACCESS_KEY', 'AWS_SECURITY_TOKEN',
-                    'AWS_SESSION_TOKEN'}:
-        try:
+    for env_var in (
+        'AWS_SECRET_ACCESS_KEY', 'AWS_SECURITY_TOKEN', 'AWS_SESSION_TOKEN'
+    ):
+        if env_var in os.environ:
             keys.add(os.environ[env_var])
-        except KeyError:
-            pass
     return keys
 
 
@@ -49,8 +48,10 @@ def get_aws_secrets_from_file(credentials_file):
 
     keys = set()
     for section in parser.sections():
-        for var in {'aws_secret_access_key', 'aws_security_token',
-                    'aws_session_token'}:
+        for var in (
+            'aws_secret_access_key', 'aws_security_token',
+            'aws_session_token'
+        ):
             try:
                 keys.add(parser.get(section, var))
             except configparser.NoOptionError:
@@ -74,7 +75,7 @@ def check_file_for_aws_keys(filenames, keys):
                 # collision
                 if key in text_body:
                     bad_files.append({'filename': filename,
-                                      'key': key[:4].ljust(32, str('*'))})
+                                      'key': key[:4] + '*' * 28})
     return bad_files
 
 
@@ -109,16 +110,17 @@ def main(argv=None):
     keys |= get_aws_secrets_from_env()
 
     if not keys:
-        print('No AWS keys were found in the configured credential files and '
-              'environment variables.\nPlease ensure you have the correct '
-              'setting for --credentials-file')
+        print(
+            'No AWS keys were found in the configured credential files and '
+            'environment variables.\nPlease ensure you have the correct '
+            'setting for --credentials-file'
+        )
         return 2
 
     bad_filenames = check_file_for_aws_keys(args.filenames, keys)
     if bad_filenames:
         for bad_file in bad_filenames:
-            print('AWS secret found in {filename}: {key}'.format(
-                **bad_file))
+            print('AWS secret found in {filename}: {key}'.format(**bad_file))
         return 1
     else:
         return 0
