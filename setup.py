@@ -6,7 +6,7 @@ setup(
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
-    version='0.6.0',
+    version='0.6.0a',
 
     author='Anthony Sottile',
     author_email='asottile@umich.edu',
@@ -56,6 +56,7 @@ setup(
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
             'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:fix_trailing_whitespace',
+            'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
         ],
     },
 )
