@@ -40,7 +40,12 @@ Add this to your `.pre-commit-config.yaml`
 - `check-xml` - Attempts to load all xml files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.
-- `detect-aws-credentials` - Checks for the existence of AWS secrets that you have set up with the AWS CLI.
+- `detect-aws-credentials` - Checks for the existence of AWS secrets that you
+  have set up with the AWS CLI.
+  The following arguments are available:
+  - `--credentials-file` - additional AWS CLI style configuration file in a
+    non-standard location to fetch configured credentials from. Can be repeated
+    multiple times.
 - `detect-private-key` - Checks for the existence of private keys.
 - `double-quote-string-fixer` - This hook replaces double quoted strings
   with single quoted strings.
@@ -48,13 +53,17 @@ Add this to your `.pre-commit-config.yaml`
 - `fix-encoding-pragma` - Add `# -*- coding: utf-8 -*-` to the top of python files.
     - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
 - `flake8` - Run flake8 on your python files.
+- `forbid-new-submodules` - Prevent addition of new git submodules.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `pyflakes` - Run pyflakes on your python files.
-- `pretty-format-json` - Checks that all your JSON files are pretty
+- `pretty-format-json` - Checks that all your JSON files are pretty.  "Pretty"
+  here means that keys are sorted and indented.  You can configure this with
+  the following commandline options:
     - `--autofix` - automatically format json files
+    - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 4 spaces.
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
-    - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).
+    - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
 - `trailing-whitespace` - Trims trailing whitespace.
     - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;

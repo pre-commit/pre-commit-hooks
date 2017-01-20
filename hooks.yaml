@@ -117,6 +117,12 @@
     entry: flake8
     language: python
     files: \.py$
+-   id: forbid-new-submodules
+    name: Forbid new submodules
+    language: python
+    entry: forbid-new-submodules
+    description: Prevent addition of new git submodules
+    files: ''
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly

@@ -2,7 +2,6 @@ from __future__ import print_function
 
 import argparse
 import os.path
-import sys
 
 CONFLICT_PATTERNS = [
     b'<<<<<<< ',
@@ -41,5 +40,6 @@ def detect_merge_conflict(argv=None):
 
     return retcode
 
+
 if __name__ == '__main__':
-    sys.exit(detect_merge_conflict())
+    exit(detect_merge_conflict())

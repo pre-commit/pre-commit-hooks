@@ -6,7 +6,7 @@ setup(
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
-    version='0.6.0',
+    version='0.6.1',
 
     author='Anthony Sottile',
     author_email='asottile@umich.edu',
@@ -52,6 +52,7 @@ setup(
             'double-quote-string-fixer = pre_commit_hooks.string_fixer:main',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
             'fix-encoding-pragma = pre_commit_hooks.fix_encoding_pragma:main',
+            'forbid-new-submodules = pre_commit_hooks.forbid_new_submodules:main',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',

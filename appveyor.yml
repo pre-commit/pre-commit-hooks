@@ -10,10 +10,6 @@ install:
 # Not a C# project
 build: false
 
-before_test:
-  - git config --global user.name "AppVeyor CI"
-  - git config --global user.email "user@example.com"
-
 test_script: tox
 
 cache:

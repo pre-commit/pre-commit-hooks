@@ -34,5 +34,6 @@ def main():
                 shutil.copyfileobj(src_file, dest_file)
     os.chmod(DEST_PATH, 0o755)
 
+
 if __name__ == '__main__':
     exit(main())

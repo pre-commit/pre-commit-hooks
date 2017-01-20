@@ -7,6 +7,7 @@ TESTS = (
     (b'-----BEGIN RSA PRIVATE KEY-----', 1),
     (b'-----BEGIN DSA PRIVATE KEY-----', 1),
     (b'-----BEGIN EC PRIVATE KEY-----', 1),
+    (b'-----BEGIN OPENSSH PRIVATE KEY-----', 1),
     (b'ssh-rsa DATA', 0),
     (b'ssh-dsa DATA', 0),
     # Some arbitrary binary data
