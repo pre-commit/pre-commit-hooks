@@ -1,18 +1,19 @@
 language: python
-python: 3.5
-env: # These should match the tox env list
-    - TOXENV=py27
-    - TOXENV=py34
-    - TOXENV=py35
-    - TOXENV=pypy
+sudo: false
+matrix:
+    include:  # These should match the tox env list
+    -   env: TOXENV=py27
+    -   env: TOXENV=py35
+        python: 3.5
+    -   env: TOXENV=py36
+        python: 3.6
+    -   env: TOXENV=pypy
 install: pip install coveralls tox
 script: tox
 before_install:
   # Install git-lfs for a test
   - './get-git-lfs.py && export PATH="/tmp/git-lfs:$PATH"'
-after_success:
-    - coveralls
-sudo: false
+after_success: coveralls
 cache:
     directories:
         - $HOME/.cache/pip

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.4
+#!/usr/bin/env python3
 """This is a script to install git-lfs to a tempdir for use in tests"""
 import io
 import os.path
