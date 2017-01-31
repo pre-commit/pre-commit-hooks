@@ -64,6 +64,12 @@ Add this to your `.pre-commit-config.yaml`
     - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 4 spaces.
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
     - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
+- `pretty-format-yaml` - Checks that all your YAML files are pretty.  "Pretty"
+  here means that keys are sorted and indented.  You can configure this with
+  the following commandline options:
+    - `--autofix` - automatically format yaml files
+    - `--default_style`, `--default_flow_style`, `--canonical`, `--indent`, `--width`, `--allow_unicode`, `--line_break`, `--encoding`, `--explicit_start`, `--explicit_end`, `--version`, `--tags` - define how a pretty YAML file looks like.
+        The parameters are passed as kwargs into yaml.safe_dump method provided by [pyyaml package](http://pyyaml.org/wiki/PyYAMLDocumentation). Our suggestion of pretty YAML file is `-indent=4 --default_flow_style=False`.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
 - `trailing-whitespace` - Trims trailing whitespace.
     - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;

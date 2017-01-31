@@ -1,0 +1,8 @@
+"array":
+- !!int "2"
+- !!int "34"
+- !!int "234"
+"null_items": !!null "null"
+"object":
+  "inner_object":
+    "attribute": !!bool "true"

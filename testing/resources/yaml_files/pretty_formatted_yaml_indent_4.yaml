@@ -1,0 +1,4 @@
+array: [2, 34, 234]
+null_items: null
+object:
+    inner_object: {attribute: true}

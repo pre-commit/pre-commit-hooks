@@ -1,0 +1,19 @@
+---
+!!map {
+  ? !!str "array"
+  : !!seq [
+    !!int "2",
+    !!int "34",
+    !!int "234",
+  ],
+  ? !!str "null_items"
+  : !!null "null",
+  ? !!str "object"
+  : !!map {
+    ? !!str "inner_object"
+    : !!map {
+      ? !!str "attribute"
+      : !!bool "true",
+    },
+  },
+}
