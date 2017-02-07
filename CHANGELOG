@@ -1,3 +1,7 @@
+0.7.1
+=====
+- Don't false positive on files where trailing whitespace isn't changed.
+
 0.7.0
 =====
 - Improve search for detecting aws keys
