@@ -130,3 +130,17 @@ def test_non_existent_credentials(mock_secrets_env, mock_secrets_file, capsys):
         'and environment variables.\nPlease ensure you have the '
         'correct setting for --credentials-file\n'
     )
+
+
+@patch('pre_commit_hooks.detect_aws_credentials.get_aws_secrets_from_file')
+@patch('pre_commit_hooks.detect_aws_credentials.get_aws_secrets_from_env')
+def test_non_existent_credentials_with_allow_flag(mock_secrets_env, mock_secrets_file):
+    """Test behavior with no configured AWS secrets and flag to allow when missing."""
+    mock_secrets_env.return_value = set()
+    mock_secrets_file.return_value = set()
+    ret = main((
+        get_resource_path('aws_config_without_secrets.ini'),
+        "--credentials-file=testing/resources/credentailsfilethatdoesntexist",
+        "--allow-missing-credentials"
+    ))
+    assert ret == 0
