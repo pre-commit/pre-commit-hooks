@@ -95,6 +95,12 @@ def main(argv=None):
             'secret keys from'
         )
     )
+    parser.add_argument(
+        '--allow-missing-credentials',
+        dest='allow_missing_credentials',
+        action='store_true',
+        help='Allow hook to pass when no credentials are detected.'
+    )
     args = parser.parse_args(argv)
 
     credential_files = set(args.credential_files)
@@ -110,6 +116,9 @@ def main(argv=None):
     # Secrets might be part of environment variables, so add such secrets to
     # the set of keys.
     keys |= get_aws_secrets_from_env()
+
+    if not keys and args.allow_missing_credentials:
+        return 0
 
     if not keys:
         print(
