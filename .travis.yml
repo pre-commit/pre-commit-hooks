@@ -8,7 +8,7 @@ matrix:
     -   env: TOXENV=py36
         python: 3.6
     -   env: TOXENV=pypy
-install: pip install coveralls tox
+#install: pip install coveralls tox
 script: tox
 before_install:
   # Install git-lfs for a test
