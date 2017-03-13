@@ -25,7 +25,7 @@ def _get_pretty_format(contents, indent, sort_keys=True, top_keys=[]):
 
 
 def _autofix(filename, new_contents):
-    print("Fixing file {0}".format(filename))
+    print("Fixing file {}".format(filename))
     with open(filename, 'w') as f:
         f.write(new_contents)
 
@@ -100,7 +100,7 @@ def pretty_format_json(argv=None):
             )
 
             if contents != pretty_contents:
-                print("File {0} is not pretty-formatted".format(json_file))
+                print("File {} is not pretty-formatted".format(json_file))
 
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
@@ -109,7 +109,7 @@ def pretty_format_json(argv=None):
 
         except simplejson.JSONDecodeError:
             print(
-                "Input File {0} is not a valid JSON, consider using check-json"
+                "Input File {} is not a valid JSON, consider using check-json"
                 .format(json_file)
             )
             return 1

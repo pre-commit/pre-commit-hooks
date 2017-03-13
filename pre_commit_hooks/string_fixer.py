@@ -69,7 +69,7 @@ def main(argv=None):
     for filename in args.filenames:
         return_value = fix_strings(filename)
         if return_value != 0:
-            print('Fixing strings in {0}'.format(filename))
+            print('Fixing strings in {}'.format(filename))
         retv |= return_value
 
     return retv

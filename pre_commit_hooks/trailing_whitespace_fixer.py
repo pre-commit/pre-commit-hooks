@@ -67,7 +67,7 @@ def fix_trailing_whitespace(argv=None):
     for ext in md_exts:
         if any(c in ext[1:] for c in r'./\:'):
             parser.error(
-                "bad --markdown-linebreak-ext extension '{0}' (has . / \\ :)\n"
+                "bad --markdown-linebreak-ext extension '{}' (has . / \\ :)\n"
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
                 .format(ext)
             )

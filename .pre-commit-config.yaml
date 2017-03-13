@@ -22,3 +22,7 @@
     hooks:
     -   id: reorder-python-imports
         language_version: python2.7
+-   repo: https://github.com/asottile/pyupgrade
+    sha: v1.0.0
+    hooks:
+    -   id: pyupgrade

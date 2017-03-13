@@ -26,10 +26,10 @@ def lfs_files():
         assert mode in ('A', 'R')
         return filepart if mode == 'A' else filepart.split(' -> ')[1]
 
-    return set(
+    return {
         to_file_part(mode, filepart) for mode, filepart in modes_and_fileparts
         if mode in ('A', 'R')
-    )
+    }
 
 
 def find_large_added_files(filenames, maxkb):
@@ -41,7 +41,7 @@ def find_large_added_files(filenames, maxkb):
     for filename in filenames:
         kb = int(math.ceil(os.stat(filename).st_size / 1024))
         if kb > maxkb:
-            print('{0} ({1} KB) exceeds {2} KB.'.format(filename, kb, maxkb))
+            print('{} ({} KB) exceeds {} KB.'.format(filename, kb, maxkb))
             retv = 1
 
     return retv

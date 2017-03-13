@@ -22,10 +22,10 @@ def check_ast(argv=None):
         try:
             ast.parse(open(filename, 'rb').read(), filename=filename)
         except SyntaxError:
-            print('{0}: failed parsing with {1}:'.format(
+            print('{}: failed parsing with {}:'.format(
                 filename, interpreter,
             ))
-            print('\n{0}'.format(
+            print('\n{}'.format(
                 '    ' + traceback.format_exc().replace('\n', '\n    ')
             ))
             retval = 1

@@ -17,7 +17,7 @@ def main(argv=None):
         original_contents = io.open(filename).read()
         new_contents = autopep8.fix_code(original_contents, args)
         if original_contents != new_contents:
-            print('Fixing {0}'.format(filename))
+            print('Fixing {}'.format(filename))
             retv = 1
             with io.open(filename, 'w') as output_file:
                 output_file.write(new_contents)
