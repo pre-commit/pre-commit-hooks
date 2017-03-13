@@ -25,7 +25,8 @@ Add this to your `.pre-commit-config.yaml`
 
 - `autopep8-wrapper` - Runs autopep8 over python source.
     - Ignore PEP 8 violation types with `args: ['-i', '--ignore=E000,...']` or
-      through configuration of the `[pep8]` section in setup.cfg / tox.ini.
+      through configuration of the `[pycodestyle]` section in
+      setup.cfg / tox.ini.
 - `check-added-large-files` - Prevent giant files from being committed.
     - Specify what is "too large" with `args: ['--maxkb=123']` (default=500kB).
 - `check-ast` - Simply check whether files parse as valid python.
