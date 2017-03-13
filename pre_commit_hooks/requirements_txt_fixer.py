@@ -84,7 +84,7 @@ def fix_requirements_txt(argv=None):
             ret_for_file = fix_requirements(file_obj)
 
             if ret_for_file:
-                print('Sorting {0}'.format(arg))
+                print('Sorting {}'.format(arg))
 
             retv |= ret_for_file
 

@@ -7,7 +7,7 @@ import collections
 import traceback
 
 
-DEBUG_STATEMENTS = set(['pdb', 'ipdb', 'pudb', 'q', 'rdb'])
+DEBUG_STATEMENTS = {'pdb', 'ipdb', 'pudb', 'q', 'rdb'}
 
 
 DebugStatement = collections.namedtuple(
@@ -37,7 +37,7 @@ def check_file_for_debug_statements(filename):
     try:
         ast_obj = ast.parse(open(filename).read(), filename=filename)
     except SyntaxError:
-        print('{0} - Could not parse ast'.format(filename))
+        print('{} - Could not parse ast'.format(filename))
         print()
         print('\t' + traceback.format_exc().replace('\n', '\n\t'))
         print()
@@ -47,7 +47,7 @@ def check_file_for_debug_statements(filename):
     if visitor.debug_import_statements:
         for debug_statement in visitor.debug_import_statements:
             print(
-                '{0}:{1}:{2} - {3} imported'.format(
+                '{}:{}:{} - {} imported'.format(
                     filename,
                     debug_statement.line,
                     debug_statement.col,

@@ -26,7 +26,7 @@ def validate_files(argv=None):
         ):
             retcode = 1
             print(
-                '{0} does not match pattern "{1}"'.format(
+                '{} does not match pattern "{}"'.format(
                     filename, test_name_pattern
                 )
             )
