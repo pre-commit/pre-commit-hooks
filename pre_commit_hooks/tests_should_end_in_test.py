@@ -16,7 +16,7 @@ def validate_files(argv=None):
     args = parser.parse_args(argv)
 
     retcode = 0
-    test_name_pattern = 'test_.*.py' if args.django else '.*_test.py'
+    test_name_pattern = 'test.*.py' if args.django else '.*_test.py'
     for filename in args.filenames:
         base = basename(filename)
         if (
