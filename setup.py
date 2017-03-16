@@ -55,6 +55,7 @@ setup(
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
             'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:fix_trailing_whitespace',
+            'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
         ],
     },
 )
