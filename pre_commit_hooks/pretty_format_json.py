@@ -1,13 +1,15 @@
 from __future__ import print_function
 
 import argparse
+import io
 import sys
 from collections import OrderedDict
 
 import simplejson
+import six
 
 
-def _get_pretty_format(contents, indent, sort_keys=True, top_keys=[]):
+def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_keys=[]):
     def pairs_first(pairs):
         before = [pair for pair in pairs if pair[0] in top_keys]
         before = sorted(before, key=lambda x: top_keys.index(x[0]))
@@ -15,18 +17,19 @@ def _get_pretty_format(contents, indent, sort_keys=True, top_keys=[]):
         if sort_keys:
             after = sorted(after, key=lambda x: x[0])
         return OrderedDict(before + after)
-    return simplejson.dumps(
+    return six.text_type(simplejson.dumps(
         simplejson.loads(
             contents,
             object_pairs_hook=pairs_first,
         ),
-        indent=indent
-    ) + "\n"  # dumps don't end with a newline
+        indent=indent,
+        ensure_ascii=ensure_ascii
+    )) + "\n"  # dumps don't end with a newline
 
 
-def _autofix(filename, new_contents):
+def _autofix(filename, new_contents, encoding=None):
     print("Fixing file {}".format(filename))
-    with open(filename, 'w') as f:
+    with io.open(filename, 'w', encoding=encoding) as f:
         f.write(new_contents)
 
 
@@ -70,6 +73,13 @@ def pretty_format_json(argv=None):
         help='String used as delimiter for one indentation level',
     )
     parser.add_argument(
+        '--no-ensure-ascii',
+        action='store_true',
+        dest='no_ensure_ascii',
+        default=False,
+        help='Do NOT convert non-ASCII characters to Unicode escape sequences (\\uXXXX)',
+    )
+    parser.add_argument(
         '--no-sort-keys',
         action='store_true',
         dest='no_sort_keys',
@@ -90,20 +100,23 @@ def pretty_format_json(argv=None):
     status = 0
 
     for json_file in args.filenames:
-        with open(json_file) as f:
+        with io.open(json_file, encoding='utf-8') as f:
             contents = f.read()
 
         try:
             pretty_contents = _get_pretty_format(
-                contents, args.indent, sort_keys=not args.no_sort_keys,
-                top_keys=args.top_keys
+                contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
+                sort_keys=not args.no_sort_keys, top_keys=args.top_keys
             )
 
             if contents != pretty_contents:
                 print("File {} is not pretty-formatted".format(json_file))
 
                 if args.autofix:
-                    _autofix(json_file, pretty_contents)
+                    _autofix(
+                        json_file, pretty_contents,
+                        encoding='utf-8' if args.no_ensure_ascii else None
+                    )
 
                 status = 1
 
