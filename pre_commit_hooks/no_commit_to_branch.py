@@ -3,12 +3,12 @@ from __future__ import print_function
 import argparse
 import sys
 
-import util
+from pre_commit_hooks.util import cmd_output
 
 
 def is_on_branch(protected):
     retval = False
-    branch = util.cmd_output('git', 'symbolic-ref', 'HEAD')
+    branch = cmd_output('git', 'symbolic-ref', 'HEAD')
     chunks = branch.strip().split('/')
     if chunks[2] == protected:
         retval = True
