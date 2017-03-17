@@ -1,8 +1,9 @@
 from __future__ import print_function
 
 import argparse
-
+import sys
 import util
+
 
 def is_on_branch(protected):
     retval = False
@@ -12,9 +13,11 @@ def is_on_branch(protected):
         retval = True
     return retval
 
+
 def main(argv=None):
     parser = argparse.ArgumentParser()
-    parser.add_argument('-b', default='master', help='branch to disallow commits to')
+    parser.add_argument(
+        '-b', default='master', help='branch to disallow commits to')
     parser.add_argument('filenames', nargs='*', help='filenames to check.')
     args = parser.parse_args(argv)
 
