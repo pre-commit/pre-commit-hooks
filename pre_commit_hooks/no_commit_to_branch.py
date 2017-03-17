@@ -7,26 +7,19 @@ from pre_commit_hooks.util import cmd_output
 
 
 def is_on_branch(protected):
-    retval = False
     branch = cmd_output('git', 'symbolic-ref', 'HEAD')
     chunks = branch.strip().split('/')
-    if chunks[2] == protected:
-        retval = True
-    return retval
+    return chunks[2] == protected
 
 
-def main(argv=None):
+def main(argv=[]):
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '-b', default='master', help='branch to disallow commits to')
-    parser.add_argument('filenames', nargs='*', help='filenames to check.')
+        '-b', '--branch', default='master', help='branch to disallow commits to')
     args = parser.parse_args(argv)
 
-    if is_on_branch(args.b):
-        return 1
-    else:
-        return 0
+    return int(is_on_branch(args.branch))
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    sys.exit(main(sys.argv))

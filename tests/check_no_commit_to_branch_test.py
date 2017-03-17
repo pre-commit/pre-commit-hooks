@@ -17,10 +17,16 @@ def test_master_branch(temp_git_dir):
         assert is_on_branch('master') is True
 
 
-def test_main_other_call(temp_git_dir):
+def test_main_b_call(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'other')
         assert main(['-b', 'other']) == 1
+
+
+def test_main_branch_call(temp_git_dir):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'checkout', '-b', 'other')
+        assert main(['--branch', 'other']) == 1
 
 
 def test_main_default_call(temp_git_dir):
