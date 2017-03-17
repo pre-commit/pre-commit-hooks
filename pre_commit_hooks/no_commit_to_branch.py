@@ -5,6 +5,13 @@ import sys
 
 import util
 
+def is_on_branch(protected):
+    retval = False
+    branch = util.cmd_output('git', 'symbolic-ref', 'HEAD')
+    chunks = branch.strip().split('/')
+    if chunks[2] == protected:
+        retval = True
+    return retval
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
@@ -12,12 +19,10 @@ def main(argv=None):
     parser.add_argument('filenames', nargs='*', help='filenames to check.')
     args = parser.parse_args(argv)
 
-    retval = 0
-    branch = util.cmd_output('git', 'symbolic-ref', 'HEAD')
-    chunks = branch.strip().split('/')
-    if chunks[2] == args.b:
-        retval = -1
-    return retval
+    if is_on_branch(args.b):
+        return 1
+    else:
+        return 0
 
 
 if __name__ == '__main__':
