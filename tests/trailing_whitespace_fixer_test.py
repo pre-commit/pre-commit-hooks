@@ -20,6 +20,22 @@ def test_fixes_trailing_whitespace(input_s, expected, tmpdir):
     assert path.read() == expected
 
 
+def test_ok_with_dos_line_endings(tmpdir):
+    filename = tmpdir.join('f')
+    filename.write_binary(b'foo\r\nbar\r\nbaz\r\n')
+    ret = fix_trailing_whitespace((filename.strpath,))
+    assert filename.read_binary() == b'foo\r\nbar\r\nbaz\r\n'
+    assert ret == 0
+
+
+def test_markdown_ok(tmpdir):
+    filename = tmpdir.join('foo.md')
+    filename.write_binary(b'foo  \n')
+    ret = fix_trailing_whitespace((filename.strpath,))
+    assert filename.read_binary() == b'foo  \n'
+    assert ret == 0
+
+
 # filename, expected input, expected output
 MD_TESTS_1 = (
     ('foo.md', 'foo  \nbar \n  ', 'foo  \nbar\n\n'),

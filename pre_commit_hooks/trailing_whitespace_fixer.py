@@ -10,10 +10,14 @@ from pre_commit_hooks.util import cmd_output
 def _fix_file(filename, is_markdown):
     with open(filename, mode='rb') as file_processed:
         lines = file_processed.readlines()
-    lines = [_process_line(line, is_markdown) for line in lines]
-    with open(filename, mode='wb') as file_processed:
-        for line in lines:
-            file_processed.write(line)
+    newlines = [_process_line(line, is_markdown) for line in lines]
+    if newlines != lines:
+        with open(filename, mode='wb') as file_processed:
+            for line in newlines:
+                file_processed.write(line)
+        return True
+    else:
+        return False
 
 
 def _process_line(line, is_markdown):
@@ -55,24 +59,26 @@ def fix_trailing_whitespace(argv=None):
         parser.error('--markdown-linebreak-ext requires a non-empty argument')
     all_markdown = '*' in md_args
     # normalize all extensions; split at ',', lowercase, and force 1 leading '.'
-    md_exts = ['.' + x.lower().lstrip('.')
-               for x in ','.join(md_args).split(',')]
+    md_exts = [
+        '.' + x.lower().lstrip('.') for x in ','.join(md_args).split(',')
+    ]
 
     # reject probable "eaten" filename as extension (skip leading '.' with [1:])
     for ext in md_exts:
         if any(c in ext[1:] for c in r'./\:'):
             parser.error(
-                "bad --markdown-linebreak-ext extension '{0}' (has . / \\ :)\n"
+                "bad --markdown-linebreak-ext extension '{}' (has . / \\ :)\n"
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
                 .format(ext)
             )
 
     return_code = 0
     for bad_whitespace_file in bad_whitespace_files:
-        print('Fixing {0}'.format(bad_whitespace_file))
         _, extension = os.path.splitext(bad_whitespace_file.lower())
-        _fix_file(bad_whitespace_file, all_markdown or extension in md_exts)
-        return_code = 1
+        md = all_markdown or extension in md_exts
+        if _fix_file(bad_whitespace_file, md):
+            print('Fixing {}'.format(bad_whitespace_file))
+            return_code = 1
     return return_code
 
 

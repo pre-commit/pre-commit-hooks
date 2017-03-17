@@ -1,5 +1,5 @@
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    sha: 9ba5af45ce2d29b64c9a348a6fcff5553eea1f2c
+    sha: v0.7.0
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
@@ -13,12 +13,16 @@
     -   id: requirements-txt-fixer
     -   id: flake8
 -   repo: https://github.com/pre-commit/pre-commit
-    sha: 8dba3281d5051060755459dcf88e28fc26c27526
+    sha: v0.12.2
     hooks:
     -   id: validate_config
     -   id: validate_manifest
 -   repo: https://github.com/asottile/reorder_python_imports
-    sha: 3d86483455ab5bd06cc1069fdd5ac57be5463f10
+    sha: v0.3.1
     hooks:
     -   id: reorder-python-imports
         language_version: python2.7
+-   repo: https://github.com/asottile/pyupgrade
+    sha: v1.0.0
+    hooks:
+    -   id: pyupgrade

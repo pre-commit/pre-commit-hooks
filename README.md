@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/pre-commit/pre-commit-hooks.svg?branch=master)](https://travis-ci.org/pre-commit/pre-commit-hooks)
-[![Coverage Status](https://img.shields.io/coveralls/pre-commit/pre-commit-hooks.svg?branch=master)](https://coveralls.io/r/pre-commit/pre-commit-hooks)
+[![Coverage Status](https://coveralls.io/repos/github/pre-commit/pre-commit-hooks/badge.svg?branch=master)](https://coveralls.io/github/pre-commit/pre-commit-hooks?branch=master)
 [![Build status](https://ci.appveyor.com/api/projects/status/dfcpng35u4g0r0t1/branch/master?svg=true)](https://ci.appveyor.com/project/asottile/pre-commit-hooks/branch/master)
 
 pre-commit-hooks
@@ -15,7 +15,7 @@ See also: https://github.com/pre-commit/pre-commit
 Add this to your `.pre-commit-config.yaml`
 
     -   repo: git://github.com/pre-commit/pre-commit-hooks
-        sha: ''  # Use the sha you want to point at
+        sha: v0.7.1  # Use the ref you want to point at
         hooks:
         -   id: trailing-whitespace
         # -   id: ...

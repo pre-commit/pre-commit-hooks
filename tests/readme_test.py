@@ -10,4 +10,4 @@ def test_readme_contains_all_hooks():
     readme_contents = io.open('README.md').read()
     hooks = yaml.load(io.open('hooks.yaml').read())
     for hook in hooks:
-        assert '`{0}`'.format(hook['id']) in readme_contents
+        assert '`{}`'.format(hook['id']) in readme_contents
