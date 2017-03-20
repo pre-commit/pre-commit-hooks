@@ -12,6 +12,18 @@ def test_other_branch(temp_git_dir):
         assert is_on_branch('master') is False
 
 
+def test_multi_branch(temp_git_dir):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'checkout', '-b', 'another/branch')
+        assert is_on_branch('master') is False
+
+
+def test_multi_branch_fail(temp_git_dir):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'checkout', '-b', 'another/branch')
+        assert is_on_branch('another/branch') is True
+
+
 def test_master_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
         assert is_on_branch('master') is True

@@ -9,7 +9,7 @@ from pre_commit_hooks.util import cmd_output
 def is_on_branch(protected):
     branch = cmd_output('git', 'symbolic-ref', 'HEAD')
     chunks = branch.strip().split('/')
-    return chunks[2] == protected
+    return '/'.join(chunks[2:]) == protected
 
 
 def main(argv=[]):
