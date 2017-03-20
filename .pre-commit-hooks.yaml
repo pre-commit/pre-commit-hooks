@@ -129,6 +129,12 @@
     entry: name-tests-test
     language: python
     files: tests/.+\.py$
+-   id: no-commit-to-branch
+    name: "Don't commit to branch"
+    entry: no-commit-to-branch
+    language: python
+    files: .*
+    always_run: true
 -   id: pyflakes
     name: Pyflakes (DEPRECATED, use flake8)
     description: This hook runs pyflakes. (This is deprecated, use flake8).
