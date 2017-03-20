@@ -1,9 +1,9 @@
 from __future__ import print_function
 
 import argparse
+import io
+import json
 import sys
-
-import simplejson
 
 
 def check_json(argv=None):
@@ -14,8 +14,8 @@ def check_json(argv=None):
     retval = 0
     for filename in args.filenames:
         try:
-            simplejson.load(open(filename))
-        except (simplejson.JSONDecodeError, UnicodeDecodeError) as exc:
+            json.load(io.open(filename, encoding='UTF-8'))
+        except (ValueError, UnicodeDecodeError) as exc:
             print('{}: Failed to json decode ({})'.format(filename, exc))
             retval = 1
     return retval
