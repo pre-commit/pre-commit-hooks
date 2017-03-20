@@ -27,9 +27,9 @@ def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_
     )) + "\n"  # dumps does not end with a newline
 
 
-def _autofix(filename, new_contents, encoding=None):
+def _autofix(filename, new_contents):
     print("Fixing file {}".format(filename))
-    with io.open(filename, 'w', encoding=encoding) as f:
+    with io.open(filename, 'w', encoding='UTF-8') as f:
         f.write(new_contents)
 
 
@@ -100,7 +100,7 @@ def pretty_format_json(argv=None):
     status = 0
 
     for json_file in args.filenames:
-        with io.open(json_file, encoding='utf-8') as f:
+        with io.open(json_file, encoding='UTF-8') as f:
             contents = f.read()
 
         try:
@@ -113,10 +113,7 @@ def pretty_format_json(argv=None):
                 print("File {} is not pretty-formatted".format(json_file))
 
                 if args.autofix:
-                    _autofix(
-                        json_file, pretty_contents,
-                        encoding='utf-8' if args.no_ensure_ascii else None,
-                    )
+                    _autofix(json_file, pretty_contents)
 
                 status = 1
 
