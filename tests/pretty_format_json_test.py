@@ -20,6 +20,7 @@ def test_parse_indent():
 @pytest.mark.parametrize(('filename', 'expected_retval'), (
     ('not_pretty_formatted_json.json', 1),
     ('unsorted_pretty_formatted_json.json', 1),
+    ('non_ascii_pretty_formatted_json.json', 1),
     ('pretty_formatted_json.json', 0),
 ))
 def test_pretty_format_json(filename, expected_retval):
@@ -30,6 +31,7 @@ def test_pretty_format_json(filename, expected_retval):
 @pytest.mark.parametrize(('filename', 'expected_retval'), (
     ('not_pretty_formatted_json.json', 1),
     ('unsorted_pretty_formatted_json.json', 0),
+    ('non_ascii_pretty_formatted_json.json', 1),
     ('pretty_formatted_json.json', 0),
 ))
 def test_unsorted_pretty_format_json(filename, expected_retval):
@@ -40,12 +42,18 @@ def test_unsorted_pretty_format_json(filename, expected_retval):
 @pytest.mark.parametrize(('filename', 'expected_retval'), (
     ('not_pretty_formatted_json.json', 1),
     ('unsorted_pretty_formatted_json.json', 1),
+    ('non_ascii_pretty_formatted_json.json', 1),
     ('pretty_formatted_json.json', 1),
     ('tab_pretty_formatted_json.json', 0),
 ))
 def test_tab_pretty_format_json(filename, expected_retval):
     ret = pretty_format_json(['--indent', '\t', get_resource_path(filename)])
     assert ret == expected_retval
+
+
+def test_non_ascii_pretty_format_json():
+    ret = pretty_format_json(['--no-ensure-ascii', get_resource_path('non_ascii_pretty_formatted_json.json')])
+    assert ret == 0
 
 
 def test_autofix_pretty_format_json(tmpdir):
