@@ -23,8 +23,8 @@ def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_
             object_pairs_hook=pairs_first,
         ),
         indent=indent,
-        ensure_ascii=ensure_ascii
-    )) + "\n"  # dumps don't end with a newline
+        ensure_ascii=ensure_ascii,
+    )) + "\n"  # dumps does not end with a newline
 
 
 def _autofix(filename, new_contents, encoding=None):
@@ -106,7 +106,7 @@ def pretty_format_json(argv=None):
         try:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
-                sort_keys=not args.no_sort_keys, top_keys=args.top_keys
+                sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
             )
 
             if contents != pretty_contents:
@@ -115,7 +115,7 @@ def pretty_format_json(argv=None):
                 if args.autofix:
                     _autofix(
                         json_file, pretty_contents,
-                        encoding='utf-8' if args.no_ensure_ascii else None
+                        encoding='utf-8' if args.no_ensure_ascii else None,
                     )
 
                 status = 1
