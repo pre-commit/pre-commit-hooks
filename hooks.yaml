@@ -115,7 +115,7 @@
     name: Flake8
     description: This hook runs flake8.
     entry: flake8
-    language: python
+    language: system
     files: \.py$
 -   id: forbid-new-submodules
     name: Forbid new submodules
