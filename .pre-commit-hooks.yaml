@@ -133,7 +133,6 @@
     name: "Don't commit to branch"
     entry: no-commit-to-branch
     language: python
-    files: .*
     always_run: true
 -   id: pyflakes
     name: Pyflakes (DEPRECATED, use flake8)
