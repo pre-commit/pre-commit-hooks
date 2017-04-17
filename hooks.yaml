@@ -43,6 +43,12 @@
     entry: check-json
     language: python
     files: \.json$
+-   id: check-rubocop
+    name: Check Rubocop
+    description: This hook checks ruby files for syntax/style
+    entry: check-rubocop
+    language: python
+    files: \.rb$
 -   id: pretty-format-json
     name: Pretty format JSON
     description: This hook sets a standard for formatting JSON files.
