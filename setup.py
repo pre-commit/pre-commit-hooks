@@ -26,6 +26,7 @@ setup(
 
     packages=find_packages('.', exclude=('tests*', 'testing*')),
     install_requires=[
+        'setuptools<36.0.0',
         # quickfix to prevent pep8 conflicts
         'flake8!=2.5.3',
         'argparse',
