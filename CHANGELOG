@@ -1,3 +1,10 @@
+0.8.0
+=====
+- Add flag allowing missing keys to `detect-aws-credentials`
+- Handle django default `tests.py` in `name-tests-test`
+- Add `--no-ensure-ascii` option to `pretty-format-json`
+- Add `no-commit-to-branch` hook
+
 0.7.1
 =====
 - Don't false positive on files where trailing whitespace isn't changed.
