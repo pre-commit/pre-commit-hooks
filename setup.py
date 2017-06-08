@@ -54,6 +54,7 @@ setup(
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
             'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
+            'pretty-format-yaml = pre_commit_hooks.pretty_format_yaml:pretty_format_yaml',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
             'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:fix_trailing_whitespace',
         ],

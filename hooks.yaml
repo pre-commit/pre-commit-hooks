@@ -49,6 +49,12 @@
     entry: pretty-format-json
     language: python
     files: \.json$
+-   id: pretty-format-yaml
+    name: Pretty format YAML
+    description: This hook sets a standard for formatting YAML files.
+    entry: pretty-format-yaml
+    language: python
+    files: \.(yaml|yml|eyaml)$
 -   id: check-merge-conflict
     name: Check for merge conflicts
     description: Check for files that contain merge conflict strings.
