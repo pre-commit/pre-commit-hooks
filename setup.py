@@ -1,8 +1,17 @@
-from setuptools import find_packages
+fom setuptools import find_packages
 from setuptools import setup
 
+i
 
+
+
+
+#123123
 setup(
+
+
+
+
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
@@ -33,6 +42,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
+            'pep8-check = pre_commit_hooks.pep8_check:main',
             'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',
             'check-added-large-files = pre_commit_hooks.check_added_large_files:main',
             'check-ast = pre_commit_hooks.check_ast:check_ast',
