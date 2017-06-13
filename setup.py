@@ -33,6 +33,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
+            'pep8-check = pre_commit_hooks.pep8_check:main',
             'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',
             'check-added-large-files = pre_commit_hooks.check_added_large_files:main',
             'check-ast = pre_commit_hooks.check_ast:check_ast',

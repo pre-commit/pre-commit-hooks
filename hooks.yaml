@@ -1,3 +1,10 @@
+-   id: pep8-check
+    name: pep8 check
+    description: "demo"
+    entry: pep8-check
+    language: python
+    files: \.py$
+    args: [-i]
 -   id: autopep8-wrapper
     name: autopep8 wrapper
     description: "Runs autopep8 over python source.  If you configure additional arguments you'll want to at least include -i."
