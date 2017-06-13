@@ -191,6 +191,15 @@
     # for backward compatibility
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: mixed-line-ending
+    name: Mixed line ending
+    description: Replaces or checks mixed line ending
+    entry: mixed-line-ending
+    language: python
+    types: [text]
+    # for backward compatibility
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly

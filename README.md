@@ -58,6 +58,11 @@ Add this to your `.pre-commit-config.yaml`
 - `file-contents-sorter` - Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input to it. Note that this hook WILL remove blank lines and does NOT respect any comments.
 - `flake8` - Run flake8 on your python files.
 - `forbid-new-submodules` - Prevent addition of new git submodules.
+- `mixed-line-ending` - Replaces or checks mixed line ending.
+    - `--fix={auto,crlf,lf,no}`
+        - `auto` - Replaces automatically the most frequent line ending. This is the default argument.
+        - `crlf`, `lf` - Forces to replace line ending by respectively CRLF and LF.
+        - `no` - Checks if there is any mixed line ending without modifying any file.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `no-commit-to-branch` - Protect specific branches from direct checkins.
