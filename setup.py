@@ -1,8 +1,17 @@
-from setuptools import find_packages
+fom setuptools import find_packages
 from setuptools import setup
 
+i
 
+
+
+
+#123123
 setup(
+
+
+
+
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
