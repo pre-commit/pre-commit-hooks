@@ -1,13 +1,25 @@
 import argparse
 import sys
 
+from enum import Enum
+
+
+class LineEnding(Enum):
+    CRLF = '\r\n', '\\r\\n', 'crlf'
+    LF = '\n', '\\n', 'lf'
+
+    def __init__(self, str, strPrint, optName):
+        self.str = str
+        self.strPrint = strPrint
+        self.optName = optName
+
 
 def mixed_line_ending(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-f',
         '--fix',
-        choices=['auto', 'crlf', 'lf', 'no'],
+        choices=['auto', 'no'] + [m.optName for m in LineEnding],
         default='auto',
         help='Replace line ending with the specified. Default is "auto"',
         nargs=1)
