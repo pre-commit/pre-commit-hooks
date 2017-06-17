@@ -4,14 +4,26 @@ import sys
 from enum import Enum
 
 
-class LineEnding(Enum):
+class CLIOption(Enum):
+    def __init__(self, optName):
+        self.optName = optName
+
+
+class LineEnding(CLIOption):
     CRLF = '\r\n', '\\r\\n', 'crlf'
     LF = '\n', '\\n', 'lf'
 
-    def __init__(self, str, strPrint, optName):
-        self.str = str
+    def __init__(self, string, strPrint, optName):
+        self.string = string
         self.strPrint = strPrint
         self.optName = optName
+
+
+class MixedLineEndingOption(CLIOption):
+    AUTO = 'auto'
+    NO = 'no'
+    CRLF = LineEnding.CRLF.optName
+    LF = LineEnding.LF.optName
 
 
 def mixed_line_ending(argv=None):
@@ -19,7 +31,7 @@ def mixed_line_ending(argv=None):
     parser.add_argument(
         '-f',
         '--fix',
-        choices=['auto', 'no'] + [m.optName for m in LineEnding],
+        choices=[m.optName for m in MixedLineEndingOption],
         default='auto',
         help='Replace line ending with the specified. Default is "auto"',
         nargs=1)
