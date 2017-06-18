@@ -27,6 +27,14 @@ class MixedLineEndingOption(CLIOption):
 
 
 def mixed_line_ending(argv=None):
+    args = _parse_arguments(argv)
+
+    print(args.fix)
+
+    return 0
+
+
+def _parse_arguments(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-f',
@@ -42,9 +50,7 @@ def mixed_line_ending(argv=None):
         help='Increase output verbosity')
     args = parser.parse_args(argv)
 
-    print(args.fix)
-
-    return 0
+    return args
 
 
 if __name__ == '__main__':
