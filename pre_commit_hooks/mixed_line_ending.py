@@ -41,8 +41,7 @@ def _parse_arguments(argv=None):
         '--fix',
         choices=[m.optName for m in MixedLineEndingOption],
         default='auto',
-        help='Replace line ending with the specified. Default is "auto"',
-        nargs=1)
+        help='Replace line ending with the specified. Default is "auto"')
     parser.add_argument(
         '-v',
         '--verbose',
