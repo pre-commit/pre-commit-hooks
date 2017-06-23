@@ -6,21 +6,17 @@ from pre_commit_hooks.file_contents_sorter import parse_commandline_input
 from pre_commit_hooks.file_contents_sorter import PASS
 
 
-def _n(*strs):
-    return b'\n'.join(strs) + b'\n'
-
-
 # Input, expected return value, expected output
 TESTS = (
     (b'', PASS, b''),
-    (_n(b'lonesome'), PASS, _n(b'lonesome')),
+    (b'lonesome\n', PASS, b'lonesome\n'),
     (b'missing_newline', PASS, b'missing_newline'),
-    (_n(b'alpha', b'beta'), PASS, _n(b'alpha', b'beta')),
-    (_n(b'beta', b'alpha'), FAIL, _n(b'alpha', b'beta')),
-    (_n(b'C', b'c'), PASS, _n(b'C', b'c')),
-    (_n(b'c', b'C'), FAIL, _n(b'C', b'c')),
-    (_n(b'mag ical ', b' tre vor'), FAIL, _n(b' tre vor', b'mag ical ')),
-    (_n(b'@', b'-', b'_', b'#'), FAIL, _n(b'#', b'-', b'@', b'_')),
+    (b'alpha\nbeta\n', PASS, b'alpha\nbeta\n'),
+    (b'beta\nalpha\n', FAIL, b'alpha\nbeta\n'),
+    (b'C\nc\n', PASS, b'C\nc\n'),
+    (b'c\nC\n', FAIL, b'C\nc\n'),
+    (b'mag ical \n tre vor\n', FAIL, b' tre vor\nmag ical \n'),
+    (b'@\n-\n_\n#\n', FAIL, b'#\n-\n@\n_\n'),
 )
 
 

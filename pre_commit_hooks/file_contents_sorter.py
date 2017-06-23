@@ -18,7 +18,7 @@ FAIL = 1
 
 
 def sort_file_contents(f):
-    before = [line for line in f]
+    before = list(f)
     after = sorted(before)
 
     before_string = b''.join(before)
