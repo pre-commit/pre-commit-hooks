@@ -110,7 +110,7 @@
     description: Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
     entry: file-contents-sorter
     language: python
-    files: ''
+    files: '^$'
 -   id: fix-encoding-pragma
     name: Fix python encoding pragma
     language: python
