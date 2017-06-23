@@ -2,6 +2,7 @@
 
 coverage
 flake8
+ipdb
 mock
 pre-commit
 pytest
