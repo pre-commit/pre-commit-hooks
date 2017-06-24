@@ -5,6 +5,8 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
 
 # Input, expected return value, expected output
 TESTS = (
+    (b'', 0, b''),
+    (b'\n', 0, b'\n'),
     (b'foo\nbar\n', 1, b'bar\nfoo\n'),
     (b'bar\nfoo\n', 0, b'bar\nfoo\n'),
     (b'#comment1\nfoo\n#comment2\nbar\n', 1, b'#comment2\nbar\n#comment1\nfoo\n'),
