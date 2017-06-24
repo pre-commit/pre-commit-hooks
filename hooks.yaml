@@ -147,6 +147,12 @@
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
+-   id: sort-simple-yaml
+    name: Sort simple YAML files
+    language: python
+    entry: sort-simple-yaml
+    description: Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
+    files: '^$'
 -   id: trailing-whitespace
     name: Trim Trailing Whitespace
     description: This hook trims trailing whitespace.
