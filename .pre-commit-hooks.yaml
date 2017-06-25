@@ -105,6 +105,12 @@
     entry: end-of-file-fixer
     language: python
     files: \.(asciidoc|adoc|coffee|cpp|css|c|ejs|erb|groovy|h|haml|hh|hpp|hxx|html|in|j2|jade|json|js|less|markdown|md|ml|mli|pp|py|rb|rs|R|scala|scss|sh|slim|tex|tmpl|ts|txt|yaml|yml)$
+-   id: file-contents-sorter
+    name: File Contents Sorter
+    description: Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
+    entry: file-contents-sorter
+    language: python
+    files: '^$'
 -   id: fix-encoding-pragma
     name: Fix python encoding pragma
     language: python

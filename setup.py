@@ -49,6 +49,7 @@ setup(
             'detect-private-key = pre_commit_hooks.detect_private_key:detect_private_key',
             'double-quote-string-fixer = pre_commit_hooks.string_fixer:main',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
+            'file-contents-sorter = pre_commit_hooks.file_contents_sorter:main',
             'fix-encoding-pragma = pre_commit_hooks.fix_encoding_pragma:main',
             'forbid-new-submodules = pre_commit_hooks.forbid_new_submodules:main',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
