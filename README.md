@@ -51,7 +51,7 @@ Add this to your `.pre-commit-config.yaml`
   with single quoted strings.
 - `end-of-file-fixer` - Makes sure files end in a newline and only a newline.
 - `fix-encoding-pragma` - Add `# -*- coding: utf-8 -*-` to the top of python files.
-- `file-contents-sorter` - Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input to it.
+- `file-contents-sorter` - Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input to it. Note that this hook WILL remove blank lines and does NOT respect any comments.
     - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
 - `flake8` - Run flake8 on your python files.
 - `forbid-new-submodules` - Prevent addition of new git submodules.
