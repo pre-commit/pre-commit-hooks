@@ -30,21 +30,25 @@ class Requirement(object):
 
 def fix_requirements(f):
     requirements = []
-    before = []
+    before = list(f)
     after = []
 
-    for line in f:
-        before.append(line)
+    before_string = b''.join(before)
 
-        # If the most recent requirement object has a value, then it's time to
-        # start building the next requirement object.
+    # If the file is empty (i.e. only whitespace/newlines) exit early
+    if before_string.strip() == b'':
+        return 0
+
+    for line in before:
+        # If the most recent requirement object has a value, then it's
+        # time to start building the next requirement object.
         if not len(requirements) or requirements[-1].value is not None:
             requirements.append(Requirement())
 
         requirement = requirements[-1]
 
-        # If we see a newline before any requirements, then this is a top of
-        # file comment.
+        # If we see a newline before any requirements, then this is a
+        # top of file comment.
         if len(requirements) == 1 and line.strip() == b'':
             if len(requirement.comments) and requirement.comments[0].startswith(b'#'):
                 requirement.value = b'\n'
@@ -60,7 +64,6 @@ def fix_requirements(f):
             after.append(comment)
         after.append(requirement.value)
 
-    before_string = b''.join(before)
     after_string = b''.join(after)
 
     if before_string == after_string:
