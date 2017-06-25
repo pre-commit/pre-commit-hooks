@@ -18,7 +18,7 @@ FAIL = 1
 
 
 def sort_file_contents(f):
-    before = list(f)
+    before = tuple(f)
     after = sorted(before)
 
     before_string = b''.join(before)
@@ -33,15 +33,10 @@ def sort_file_contents(f):
         return FAIL
 
 
-def parse_commandline_input(argv):
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Files to sort')
     args = parser.parse_args(argv)
-    return args
-
-
-def main(argv=None):
-    args = parse_commandline_input(argv)
 
     retv = PASS
 
