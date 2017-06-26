@@ -42,6 +42,7 @@ def _parse_arguments(argv=None):
         choices=[m.optName for m in MixedLineEndingOption],
         default='auto',
         help='Replace line ending with the specified. Default is "auto"')
+    parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     parser.add_argument(
         '-v',
         '--verbose',
@@ -59,7 +60,7 @@ def _parse_arguments(argv=None):
     elif args.fix == 'lf':
         fix = MixedLineEndingOption.LF
 
-    options = {'fix': fix, 'verbose': args.verbose}
+    options = {'fix': fix, 'filenames': args.filenames, 'verbose': args.verbose}
 
     return options
 
