@@ -18,18 +18,19 @@ FAIL = 1
 
 
 def sort_file_contents(f):
-    before = [line.strip(b'\n\r') for line in f if line.strip()]
-    after = sorted(before)
+    before = list(f)
+    after = sorted([line.strip(b'\n\r') for line in before if line.strip()])
 
-    if before == after:
-        return PASS
-
+    before_string = b''.join(before)
     after_string = b'\n'.join(after) + b'\n'
 
-    f.seek(0)
-    f.write(after_string)
-    f.truncate()
-    return FAIL
+    if before_string == after_string:
+        return PASS
+    else:
+        f.seek(0)
+        f.write(after_string)
+        f.truncate()
+        return FAIL
 
 
 def main(argv=None):
