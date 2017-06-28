@@ -12,14 +12,15 @@ class CLIOption(Enum):
 
 
 class LineEnding(CLIOption):
-    CR = '\r', '\\r', 'cr'
-    CRLF = '\r\n', '\\r\\n', 'crlf'
-    LF = '\n', '\\n', 'lf'
+    CR = '\r', '\\r', 'cr', re.compile(r'\r', re.DOTALL)
+    CRLF = '\r\n', '\\r\\n', 'crlf', re.compile(r'\r\n', re.DOTALL)
+    LF = '\n', '\\n', 'lf', re.compile(r'(?<!\r)\n', re.DOTALL)
 
-    def __init__(self, string, strPrint, optName):
+    def __init__(self, string, strPrint, optName, regex):
         self.string = string
         self.strPrint = strPrint
         self.optName = optName
+        self.regex = regex
 
 
 class MixedLineEndingOption(CLIOption):
@@ -40,10 +41,17 @@ class MixedLineDetection(Enum):
         self.line_ending_char = line_ending_char
 
 
-# Matches CRLF
-CRLF_PATTERN = re.compile(LineEnding.CRLF.string, re.DOTALL)
-# Matches LF (without preceding CR)
-LF_PATTERN = re.compile('(?<!' + LineEnding.CR.strPrint + ')' + LineEnding.LF.strPrint, re.DOTALL)
+ANY_LINE_ENDING_PATTERN = re.compile(
+    # match either
+    '(' +
+    # \r\n
+    LineEnding.CRLF.regex.pattern +
+    # or \n
+    '|' + LineEnding.LF.regex.pattern +
+    # or \r
+    '|' + LineEnding.CR.regex.pattern +
+    ')'
+)
 
 
 def mixed_line_ending(argv=None):
@@ -54,7 +62,10 @@ def mixed_line_ending(argv=None):
     _check_filenames(options['filenames'])
 
     for filename in options['filenames']:
-        print(_detect_line_ending(filename))
+        detect_result = _detect_line_ending(filename)
+
+        if detect_result.conversion:
+            _convert_line_ending(filename, detect_result.line_ending_char)
 
     return 0
 
@@ -99,9 +110,10 @@ def _check_filenames(filenames):
 def _detect_line_ending(filename):
     f = open(filename, 'r')
     buf = f.read()
+    f.close()
 
-    crlf_nb = len(CRLF_PATTERN.findall(buf))
-    lf_nb = len(LF_PATTERN.findall(buf))
+    crlf_nb = len(LineEnding.CRLF.regex.findall(buf))
+    lf_nb = len(LineEnding.LF.regex.findall(buf))
 
     crlf_found = crlf_nb > 0
     lf_found = lf_nb > 0
@@ -116,6 +128,21 @@ def _detect_line_ending(filename):
         return MixedLineDetection.MIXED_MOSTLY_CRLF
     else:
         return MixedLineDetection.MIXED_MOSTLY_LF
+
+
+def _convert_line_ending(filename, line_ending):
+    # read the file
+    fin = open(filename, 'r')
+    bufin = fin.read()
+    fin.close()
+
+    # convert line ending
+    bufout = ANY_LINE_ENDING_PATTERN.sub(line_ending, bufin)
+
+    # write the result in the file
+    fout = open(filename, 'w')
+    fout.write(bufout)
+    fout.close()
 
 
 if __name__ == '__main__':
