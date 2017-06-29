@@ -6,28 +6,23 @@ import sys
 from enum import Enum
 
 
-class CLIOption(Enum):
-    def __init__(self, optName):
-        self.optName = optName
-
-
-class LineEnding(CLIOption):
+class LineEnding(Enum):
     CR = '\r', '\\r', 'cr', re.compile(r'\r', re.DOTALL)
     CRLF = '\r\n', '\\r\\n', 'crlf', re.compile(r'\r\n', re.DOTALL)
     LF = '\n', '\\n', 'lf', re.compile(r'(?<!\r)\n', re.DOTALL)
 
-    def __init__(self, string, strPrint, optName, regex):
+    def __init__(self, string, str_print, opt_name, regex):
         self.string = string
-        self.strPrint = strPrint
-        self.optName = optName
+        self.str_print = str_print
+        self.opt_name = opt_name
         self.regex = regex
 
 
-class MixedLineEndingOption(CLIOption):
+class MixedLineEndingOption(Enum):
     AUTO = 'auto', None
     NO = 'no', None
-    CRLF = LineEnding.CRLF.optName, LineEnding.CRLF
-    LF = LineEnding.LF.optName, LineEnding.LF
+    CRLF = LineEnding.CRLF.opt_name, LineEnding.CRLF
+    LF = LineEnding.LF.opt_name, LineEnding.LF
 
     def __init__(self, opt_name, line_ending_enum):
         self.opt_name = opt_name
