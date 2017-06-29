@@ -1,4 +1,5 @@
 import argparse
+import logging
 import os
 import re
 import sys
@@ -30,14 +31,21 @@ class MixedLineEndingOption(Enum):
 
 
 class MixedLineDetection(Enum):
-    MIXED_MOSTLY_CRLF = True, LineEnding.CRLF.string
-    MIXED_MOSTLY_LF = True, LineEnding.LF.string
+    MIXED_MOSTLY_CRLF = True, LineEnding.CRLF
+    MIXED_MOSTLY_LF = True, LineEnding.LF
     NOT_MIXED = False, None
     UNKNOWN = False, None
 
-    def __init__(self, conversion, line_ending_char):
+    def __init__(self, conversion, line_ending_enum):
         self.conversion = conversion
-        self.line_ending_char = line_ending_char
+        self.line_ending_enum = line_ending_enum
+
+
+VERBOSE_OPTION_TO_LOGGING_SEVERITY = {
+    0: logging.WARNING,
+    1: logging.INFO,
+    2: logging.DEBUG,
+}
 
 
 ANY_LINE_ENDING_PATTERN = re.compile(
@@ -56,23 +64,43 @@ ANY_LINE_ENDING_PATTERN = re.compile(
 def mixed_line_ending(argv=None):
     options = _parse_arguments(argv)
 
-    print(options)
+    logging.basicConfig(format='%(levelname)s: %(message)s',
+                        level=options['logging_severity'])
+    logging.debug('mixed_line_ending: options = %s', options)
 
     _check_filenames(options['filenames'])
 
     fix_option = options['fix']
 
     if fix_option == MixedLineEndingOption.NO:
+        logging.info('No conversion asked')
         pass
     elif fix_option == MixedLineEndingOption.AUTO:
         for filename in options['filenames']:
             detect_result = _detect_line_ending(filename)
 
+            logging.debug('mixed_line_ending: detect_result = %s',
+                          detect_result)
+
             if detect_result.conversion:
-                _convert_line_ending(filename, detect_result.line_ending_char)
+                le_enum = detect_result.line_ending_enum
+
+                logging.info('The file %s has mixed line ending with a '
+                             'majority of "%s". Converting to "%s"', filename,
+                             le_enum.str_print, le_enum.str_print)
+
+                _convert_line_ending(filename, le_enum.string)
+            elif detect_result == MixedLineDetection.NOT_MIXED:
+                logging.info('The file %s has no mixed line ending', filename)
+            elif detect_result == MixedLineDetection.UNKNOWN:
+                logging.info('Could not define most frequent line ending in '
+                             'file %s. File skiped.', filename)
+
     # when a line ending character is forced with --fix option
     else:
         line_ending_enum = fix_option.line_ending_enum
+
+        logging.info('Force line ending to "%s"', line_ending_enum.str_print)
 
         for filename in options['filenames']:
             _convert_line_ending(filename, line_ending_enum.string)
@@ -92,7 +120,8 @@ def _parse_arguments(argv=None):
     parser.add_argument(
         '-v',
         '--verbose',
-        action="store_true",
+        action="count",
+        default=0,
         help='Increase output verbosity')
     args = parser.parse_args(argv)
 
@@ -106,12 +135,18 @@ def _parse_arguments(argv=None):
     elif args.fix == MixedLineEndingOption.LF.opt_name:
         fix = MixedLineEndingOption.LF
 
-    options = {'fix': fix, 'filenames': args.filenames, 'verbose': args.verbose}
+    args.verbose = min(args.verbose, 2)
+    severity = VERBOSE_OPTION_TO_LOGGING_SEVERITY.get(args.verbose)
+
+    options = {'fix': fix, 'filenames': args.filenames,
+               'logging_severity': severity}
 
     return options
 
 
 def _check_filenames(filenames):
+    logging.debug('_check_filenames: filenames = %s', filenames)
+
     for filename in filenames:
         if not os.path.isfile(filename):
             raise IOError('The file "{}" does not exist'.format(filename))
@@ -127,6 +162,10 @@ def _detect_line_ending(filename):
 
     crlf_found = crlf_nb > 0
     lf_found = lf_nb > 0
+
+    logging.debug('_detect_line_ending: crlf_nb = %d, lf_nb = %d, '
+                  'crlf_found = %s, lf_found = %s',
+                  crlf_nb, lf_nb, crlf_found, lf_found)
 
     if crlf_nb == lf_nb:
         return MixedLineDetection.UNKNOWN
