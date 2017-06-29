@@ -24,10 +24,14 @@ class LineEnding(CLIOption):
 
 
 class MixedLineEndingOption(CLIOption):
-    AUTO = 'auto'
-    NO = 'no'
-    CRLF = LineEnding.CRLF.optName
-    LF = LineEnding.LF.optName
+    AUTO = 'auto', None
+    NO = 'no', None
+    CRLF = LineEnding.CRLF.optName, LineEnding.CRLF
+    LF = LineEnding.LF.optName, LineEnding.LF
+
+    def __init__(self, opt_name, line_ending_enum):
+        self.opt_name = opt_name
+        self.line_ending_enum = line_ending_enum
 
 
 class MixedLineDetection(Enum):
@@ -61,11 +65,22 @@ def mixed_line_ending(argv=None):
 
     _check_filenames(options['filenames'])
 
-    for filename in options['filenames']:
-        detect_result = _detect_line_ending(filename)
+    fix_option = options['fix']
 
-        if detect_result.conversion:
-            _convert_line_ending(filename, detect_result.line_ending_char)
+    if fix_option == MixedLineEndingOption.NO:
+        pass
+    elif fix_option == MixedLineEndingOption.AUTO:
+        for filename in options['filenames']:
+            detect_result = _detect_line_ending(filename)
+
+            if detect_result.conversion:
+                _convert_line_ending(filename, detect_result.line_ending_char)
+    # when a line ending character is forced with --fix option
+    else:
+        line_ending_enum = fix_option.line_ending_enum
+
+        for filename in options['filenames']:
+            _convert_line_ending(filename, line_ending_enum.string)
 
     return 0
 
@@ -75,7 +90,7 @@ def _parse_arguments(argv=None):
     parser.add_argument(
         '-f',
         '--fix',
-        choices=[m.optName for m in MixedLineEndingOption],
+        choices=[m.opt_name for m in MixedLineEndingOption],
         default='auto',
         help='Replace line ending with the specified. Default is "auto"')
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
