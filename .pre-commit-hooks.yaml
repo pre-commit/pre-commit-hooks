@@ -51,6 +51,15 @@
     # for backward compatibility
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: check-executables-have-shebangs
+    name: Check that executables have shebangs
+    description: Ensures that (non-binary) executables have a shebang.
+    entry: check-executables-have-shebangs
+    language: python
+    types: [text, executable]
+    # for backward compatibility
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-json
     name: Check JSON
     description: This hook checks json files for parseable syntax.

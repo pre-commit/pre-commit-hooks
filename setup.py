@@ -39,6 +39,7 @@ setup(
             'check-byte-order-marker = pre_commit_hooks.check_byte_order_marker:main',
             'check-case-conflict = pre_commit_hooks.check_case_conflict:main',
             'check-docstring-first = pre_commit_hooks.check_docstring_first:main',
+            'check-executables-have-shebangs = pre_commit_hooks.check_executables_have_shebangs:main',
             'check-json = pre_commit_hooks.check_json:check_json',
             'check-merge-conflict = pre_commit_hooks.check_merge_conflict:detect_merge_conflict',
             'check-symlinks = pre_commit_hooks.check_symlinks:check_symlinks',
