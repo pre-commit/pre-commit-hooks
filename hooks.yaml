@@ -63,6 +63,7 @@
     language: python
     # Match all files
     files: ''
+    types: [symlink]
 -   id: check-xml
     name: Check Xml
     description: This hook checks xml files for parseable syntax.
