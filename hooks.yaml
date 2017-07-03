@@ -1,168 +1,162 @@
 -   id: autopep8-wrapper
-    name: autopep8 wrapper
-    description: "Runs autopep8 over python source.  If you configure additional arguments you'll want to at least include -i."
-    entry: autopep8-wrapper
-    language: python
-    files: \.py$
-    args: [-i]
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-added-large-files
-    name: Check for added large files
-    description: Prevent giant files from being committed
-    entry: check-added-large-files
-    language: python
-    # Match all files
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
     files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-ast
-    name: Check python ast
-    description: Simply check whether the files parse as valid python.
-    entry: check-ast
-    language: python
-    files: '\.py$'
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-byte-order-marker
-    name: Check for byte-order marker
-    description: Forbid files which have a UTF-8 byte-order marker
-    entry: check-byte-order-marker
-    language: python
-    files: '\.py$'
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-case-conflict
-    name: Check for case conflicts
-    description: Check for files that would conflict in case-insensitive filesystems
-    entry: check-case-conflict
-    language: python
-    # Match all files
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
     files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-docstring-first
-    name: Check docstring is first
-    description: Checks a common error of defining a docstring after code.
-    entry: check-docstring-first
-    language: python
-    files: \.py$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-json
-    name: Check JSON
-    description: This hook checks json files for parseable syntax.
-    entry: check-json
-    language: python
-    files: \.json$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: pretty-format-json
-    name: Pretty format JSON
-    description: This hook sets a standard for formatting JSON files.
-    entry: pretty-format-json
-    language: python
-    files: \.json$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-merge-conflict
-    name: Check for merge conflicts
-    description: Check for files that contain merge conflict strings.
-    entry: check-merge-conflict
-    language: python
-    # Match all files
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
     files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-symlinks
-    name: Check for broken symlinks
-    description: Checks for symlinks which do not point to anything.
-    entry: check-symlinks
-    language: python
-    # Match all files
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
     files: ''
-    types: [symlink]
+    minimum_pre_commit_version: 0.15.0
 -   id: check-xml
-    name: Check Xml
-    description: This hook checks xml files for parseable syntax.
-    entry: check-xml
-    language: python
-    files: \.xml$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-yaml
-    name: Check Yaml
-    description: This hook checks yaml files for parseable syntax.
-    entry: check-yaml
-    language: python
-    files: \.(yaml|yml|eyaml)$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: debug-statements
-    name: Debug Statements (Python)
-    description: This hook checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
-    entry: debug-statement-hook
-    language: python
-    files: \.py$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: detect-aws-credentials
-    name: Detect AWS Credentials
-    description: Detects *your* aws credentials from the aws cli credentials file
-    entry: detect-aws-credentials
-    language: python
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
     files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: detect-private-key
-    name: Detect Private Key
-    description: Detects the presence of private keys
-    entry: detect-private-key
-    language: python
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
     files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: double-quote-string-fixer
-    name: Fix double quoted strings
-    description: This hook replaces double quoted strings with single quoted strings
-    entry: double-quote-string-fixer
-    language: python
-    files: \.py$
--   id: end-of-file-fixer
-    name: Fix End of Files
-    description: Ensures that a file is either empty, or ends with one newline.
-    entry: end-of-file-fixer
-    language: python
-    files: \.(asciidoc|adoc|coffee|cpp|css|c|ejs|erb|groovy|h|haml|hh|hpp|hxx|html|in|j2|jade|json|js|less|markdown|md|ml|mli|pp|py|rb|rs|R|scala|scss|sh|slim|tex|tmpl|ts|txt|yaml|yml)$
--   id: file-contents-sorter
-    name: File Contents Sorter
-    description: Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
-    entry: file-contents-sorter
-    language: python
-    files: '^$'
--   id: fix-encoding-pragma
-    name: Fix python encoding pragma
-    language: python
-    entry: fix-encoding-pragma
-    description: 'Add # -*- coding: utf-8 -*- to the top of python files'
-    files: \.py$
--   id: flake8
-    name: Flake8
-    description: This hook runs flake8.
-    entry: flake8
-    language: python
-    files: \.py$
--   id: forbid-new-submodules
-    name: Forbid new submodules
-    language: python
-    entry: forbid-new-submodules
-    description: Prevent addition of new git submodules
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
     files: ''
+    minimum_pre_commit_version: 0.15.0
+-   id: end-of-file-fixer
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
+-   id: file-contents-sorter
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
+-   id: fix-encoding-pragma
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
+-   id: flake8
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
+-   id: forbid-new-submodules
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: name-tests-test
-    name: Tests should end in _test.py
-    description: This verifies that test files are named correctly
-    entry: name-tests-test
-    language: python
-    files: tests/.+\.py$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: no-commit-to-branch
-    name: "Don't commit to branch"
-    entry: no-commit-to-branch
-    language: python
-    files: .*
-    always_run: true
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: pyflakes
-    name: Pyflakes (DEPRECATED, use flake8)
-    description: This hook runs pyflakes. (This is deprecated, use flake8).
-    entry: pyflakes
-    language: python
-    files: \.py$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: requirements-txt-fixer
-    name: Fix requirements.txt
-    description: Sorts entries in requirements.txt
-    entry: requirements-txt-fixer
-    language: python
-    files: requirements.*\.txt$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: sort-simple-yaml
-    name: Sort simple YAML files
-    language: python
-    entry: sort-simple-yaml
-    description: Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
-    files: '^$'
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: trailing-whitespace
-    name: Trim Trailing Whitespace
-    description: This hook trims trailing whitespace.
-    entry: trailing-whitespace-fixer
-    language: python
-    files: \.(asciidoc|adoc|coffee|cpp|css|c|ejs|erb|groovy|h|haml|hh|hpp|hxx|html|in|j2|jade|json|js|less|markdown|md|ml|mli|pp|py|rb|rs|R|scala|scss|sh|slim|tex|tmpl|ts|txt|yaml|yml)$
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
