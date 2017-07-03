@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import os
 import sys
 
 BLACKLIST = [
@@ -19,6 +20,8 @@ def detect_private_key(argv=None):
     private_key_files = []
 
     for filename in args.filenames:
+        if os.path.isdir(filename):
+            continue
         with open(filename, 'rb') as f:
             content = f.read()
             if any(line in content for line in BLACKLIST):
