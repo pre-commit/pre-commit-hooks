@@ -54,6 +54,14 @@ def f1_is_a_conflict_file(tmpdir):
             '=======\n'
             'parent\n'
             '>>>>>>>'
+        ) or f1.startswith(
+            # .gitconfig with [pull] rebase = preserve causes a rebase which
+            # flips parent / child
+            '<<<<<<< HEAD\n'
+            'parent\n'
+            '=======\n'
+            'child\n'
+            '>>>>>>>'
         )
         assert os.path.exists(os.path.join('.git', 'MERGE_MSG'))
         yield
@@ -85,7 +93,7 @@ def repository_is_pending_merge(tmpdir):
         repo2_f2.write('child\n')
         cmd_output('git', 'add', '--', repo2_f2.strpath)
         cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'clone commit2')
-        cmd_output('git', 'pull', '--no-commit')
+        cmd_output('git', 'pull', '--no-commit', '--no-rebase')
         # We should end up in a pending merge
         assert repo2_f1.read() == 'parent\n'
         assert repo2_f2.read() == 'child\n'
