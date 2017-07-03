@@ -13,7 +13,7 @@
     -   id: requirements-txt-fixer
     -   id: flake8
 -   repo: https://github.com/pre-commit/pre-commit
-    sha: v0.12.2
+    sha: v0.15.0
     hooks:
     -   id: validate_config
     -   id: validate_manifest
