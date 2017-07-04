@@ -24,3 +24,27 @@ def test_mixed_line_ending_fix_auto(input_s, expected_retval, output, tmpdir):
 
     assert ret == expected_retval
     assert path.read() == output
+
+
+# Input, expected return value, expected output
+TESTS_NO_FIX = (
+    # only 'LF'
+    (b'foo\nbar\nbaz\n', 0, b'foo\nbar\nbaz\n'),
+    # only 'CRLF'
+    (b'foo\r\nbar\r\nbaz\r\n', 0, b'foo\r\nbar\r\nbaz\r\n'),
+    # mixed with majority of 'LF'
+    (b'foo\r\nbar\nbaz\n', 1, b'foo\r\nbar\nbaz\n'),
+    # mixed with majority of 'CRLF'
+    (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\nbaz\r\n'),
+)
+
+
+@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'),
+                         TESTS_NO_FIX)
+def test_detect_mixed_line_ending(input_s, expected_retval, output, tmpdir):
+    path = tmpdir.join('file.txt')
+    path.write(input_s)
+    ret = mixed_line_ending(('--fix=no', '-vv', path.strpath))
+
+    assert ret == expected_retval
+    assert path.read() == output

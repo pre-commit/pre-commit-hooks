@@ -68,14 +68,13 @@ def mixed_line_ending(argv=None):
                         level=options['logging_severity'])
     logging.debug('mixed_line_ending: options = %s', options)
 
-    _check_filenames(options['filenames'])
-
+    filenames = options['filenames']
     fix_option = options['fix']
 
-    if fix_option == MixedLineEndingOption.NO:
-        logging.info('No conversion asked')
+    _check_filenames(filenames)
 
-        return 0
+    if fix_option == MixedLineEndingOption.NO:
+        return _process_no_fix(filenames)
     elif fix_option == MixedLineEndingOption.AUTO:
         for filename in options['filenames']:
             detect_result = _detect_line_ending(filename)
@@ -186,6 +185,30 @@ def _detect_line_ending(filename):
         return MixedLineDetection.MIXED_MOSTLY_CRLF
     else:
         return MixedLineDetection.MIXED_MOSTLY_LF
+
+
+def _process_no_fix(filenames):
+    logging.info('Checking if the files have mixed line ending.')
+
+    mle_found = False
+    mle_filenames = []
+    for filename in filenames:
+        detect_result = _detect_line_ending(filename)
+        logging.debug('mixed_line_ending: detect_result = %s',
+                      detect_result)
+
+        if detect_result.mle_found:
+            mle_found = True
+            mle_filenames.append(filename)
+            logging.debug(filename)
+
+    logging.debug(mle_found)
+    logging.debug(str(mle_filenames))
+    if mle_filenames:
+        logging.info('The following files have mixed line endings:\n\t%s',
+                     '\n\t'.join(mle_filenames))
+
+    return 1 if mle_found else 0
 
 
 def _convert_line_ending(filename, line_ending):
