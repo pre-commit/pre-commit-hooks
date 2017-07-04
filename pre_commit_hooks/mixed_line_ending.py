@@ -31,12 +31,14 @@ class MixedLineEndingOption(Enum):
 
 
 class MixedLineDetection(Enum):
-    MIXED_MOSTLY_CRLF = True, LineEnding.CRLF
-    MIXED_MOSTLY_LF = True, LineEnding.LF
-    NOT_MIXED = False, None
-    UNKNOWN = False, None
+    MIXED_MOSTLY_CRLF = 1, True, LineEnding.CRLF
+    MIXED_MOSTLY_LF = 2, True, LineEnding.LF
+    NOT_MIXED = 3, False, None
+    UNKNOWN = 4, False, None
 
-    def __init__(self, mle_found, line_ending_enum):
+    def __init__(self, index, mle_found, line_ending_enum):
+        # TODO hack to prevent enum overriding
+        self.index = index
         self.mle_found = mle_found
         self.line_ending_enum = line_ending_enum
 
@@ -81,8 +83,6 @@ def mixed_line_ending(argv=None):
     else:
         return _process_fix_force(filenames, fix_option.line_ending_enum)
 
-    return 0
-
 
 def _parse_arguments(argv=None):
     parser = argparse.ArgumentParser()
@@ -102,14 +102,14 @@ def _parse_arguments(argv=None):
     args = parser.parse_args(argv)
 
     fix = None
-    if args.fix == MixedLineEndingOption.AUTO.opt_name:
-        fix = MixedLineEndingOption.AUTO
-    elif args.fix == MixedLineEndingOption.NO.opt_name:
+    if args.fix == MixedLineEndingOption.NO.opt_name:
         fix = MixedLineEndingOption.NO
     elif args.fix == MixedLineEndingOption.CRLF.opt_name:
         fix = MixedLineEndingOption.CRLF
     elif args.fix == MixedLineEndingOption.LF.opt_name:
         fix = MixedLineEndingOption.LF
+    else:
+        fix = MixedLineEndingOption.AUTO
 
     args.verbose = min(args.verbose, 2)
     severity = VERBOSE_OPTION_TO_LOGGING_SEVERITY.get(args.verbose)
@@ -180,7 +180,7 @@ def _process_no_fix(filenames):
 
 
 def _process_fix_auto(filenames):
-    converted_found = False
+    mle_found = False
 
     for filename in filenames:
         detect_result = _detect_line_ending(filename)
@@ -188,7 +188,16 @@ def _process_fix_auto(filenames):
         logging.debug('mixed_line_ending: detect_result = %s',
                       detect_result)
 
-        if detect_result.mle_found:
+        if detect_result == MixedLineDetection.NOT_MIXED:
+            logging.info('The file %s has no mixed line ending', filename)
+
+            mle_found |= False
+        elif detect_result == MixedLineDetection.UNKNOWN:
+            logging.info('Could not define most frequent line ending in '
+                         'file %s. File skiped.', filename)
+
+            mle_found = True
+        else:
             le_enum = detect_result.line_ending_enum
 
             logging.info('The file %s has mixed line ending with a '
@@ -196,22 +205,12 @@ def _process_fix_auto(filenames):
                          le_enum.str_print)
 
             _convert_line_ending(filename, le_enum.string)
-            converted_found = True
+            mle_found = True
 
             logging.info('The file %s has been converted to "%s" line '
                          'ending.', filename, le_enum.str_print)
 
-        elif detect_result == MixedLineDetection.NOT_MIXED:
-            logging.info('The file %s has no mixed line ending', filename)
-
-            converted_found |= False
-        elif detect_result == MixedLineDetection.UNKNOWN:
-            logging.info('Could not define most frequent line ending in '
-                         'file %s. File skiped.', filename)
-
-            converted_found |= False
-
-    return 1 if converted_found else 0
+    return 1 if mle_found else 0
 
 
 def _process_fix_force(filenames, line_ending_enum):

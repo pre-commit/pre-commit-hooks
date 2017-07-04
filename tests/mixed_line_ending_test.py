@@ -12,6 +12,8 @@ TESTS_FIX_AUTO = (
     (b'foo\r\nbar\nbaz\n', 1, b'foo\nbar\nbaz\n'),
     # mixed with majority of 'CRLF'
     (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
+    # mixed with as much 'LF' as 'CRLF'
+    (b'foo\r\nbar\nbaz', 1, b'foo\r\nbar\nbaz'),
 )
 
 
@@ -98,3 +100,8 @@ def test_mixed_line_ending_fix_force_crlf(input_s, expected_retval, output,
 
     assert ret == expected_retval
     assert path.read() == output
+
+
+def test_check_filenames():
+    with pytest.raises(IOError):
+        mixed_line_ending(['/dev/null'])
