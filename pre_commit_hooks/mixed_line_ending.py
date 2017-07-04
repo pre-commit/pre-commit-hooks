@@ -215,10 +215,11 @@ def _process_fix_auto(filenames):
 
 
 def _process_fix_force(filenames, line_ending_enum):
-    logging.info('Force line ending to "%s"', line_ending_enum.str_print)
-
     for filename in filenames:
         _convert_line_ending(filename, line_ending_enum.string)
+
+        logging.info('The file %s has been forced to "%s" line ending.',
+                     filename, line_ending_enum.str_print)
 
     return 1
 
