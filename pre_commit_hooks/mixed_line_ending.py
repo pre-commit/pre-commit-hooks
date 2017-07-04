@@ -79,14 +79,7 @@ def mixed_line_ending(argv=None):
         return _process_fix_auto(filenames)
     # when a line ending character is forced with --fix option
     else:
-        line_ending_enum = fix_option.line_ending_enum
-
-        logging.info('Force line ending to "%s"', line_ending_enum.str_print)
-
-        for filename in options['filenames']:
-            _convert_line_ending(filename, line_ending_enum.string)
-
-        return 1
+        return _process_fix_force(filenames, fix_option.line_ending_enum)
 
     return 0
 
@@ -219,6 +212,15 @@ def _process_fix_auto(filenames):
             converted_found |= False
 
     return 1 if converted_found else 0
+
+
+def _process_fix_force(filenames, line_ending_enum):
+    logging.info('Force line ending to "%s"', line_ending_enum.str_print)
+
+    for filename in filenames:
+        _convert_line_ending(filename, line_ending_enum.string)
+
+    return 1
 
 
 def _convert_line_ending(filename, line_ending):
