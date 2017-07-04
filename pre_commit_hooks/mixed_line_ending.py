@@ -77,7 +77,6 @@ def mixed_line_ending(argv=None):
         return _process_no_fix(filenames)
     elif fix_option == MixedLineEndingOption.AUTO:
         return _process_fix_auto(filenames)
-
     # when a line ending character is forced with --fix option
     else:
         line_ending_enum = fix_option.line_ending_enum
@@ -188,6 +187,8 @@ def _process_no_fix(filenames):
 
 
 def _process_fix_auto(filenames):
+    converted_found = False
+
     for filename in filenames:
         detect_result = _detect_line_ending(filename)
 
@@ -198,21 +199,26 @@ def _process_fix_auto(filenames):
             le_enum = detect_result.line_ending_enum
 
             logging.info('The file %s has mixed line ending with a '
-                         'majority of "%s". Converting to "%s"', filename,
-                         le_enum.str_print, le_enum.str_print)
+                         'majority of "%s". Converting...', filename,
+                         le_enum.str_print)
 
             _convert_line_ending(filename, le_enum.string)
+            converted_found = True
 
-            return 1
+            logging.info('The file %s has been converted to "%s" line '
+                         'ending.', filename, le_enum.str_print)
+
         elif detect_result == MixedLineDetection.NOT_MIXED:
             logging.info('The file %s has no mixed line ending', filename)
 
-            return 0
+            converted_found |= False
         elif detect_result == MixedLineDetection.UNKNOWN:
             logging.info('Could not define most frequent line ending in '
                          'file %s. File skiped.', filename)
 
-            return 0
+            converted_found |= False
+
+    return 1 if converted_found else 0
 
 
 def _convert_line_ending(filename, line_ending):
