@@ -36,8 +36,8 @@ class MixedLineDetection(Enum):
     NOT_MIXED = False, None
     UNKNOWN = False, None
 
-    def __init__(self, conversion, line_ending_enum):
-        self.conversion = conversion
+    def __init__(self, mle_found, line_ending_enum):
+        self.mle_found = mle_found
         self.line_ending_enum = line_ending_enum
 
 
@@ -83,7 +83,7 @@ def mixed_line_ending(argv=None):
             logging.debug('mixed_line_ending: detect_result = %s',
                           detect_result)
 
-            if detect_result.conversion:
+            if detect_result.mle_found:
                 le_enum = detect_result.line_ending_enum
 
                 logging.info('The file %s has mixed line ending with a '
