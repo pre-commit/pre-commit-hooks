@@ -23,6 +23,6 @@ def test_main_failing(tmpdir, input_src, expected_ret, output_src):
 
 def test_respects_config_file(tmpdir):
     with tmpdir.as_cwd():
-        tmpdir.join('setup.cfg').write('[pep8]\nignore=E221')
+        tmpdir.join('setup.cfg').write('[pycodestyle]\nignore=E221')
         tmpdir.join('test.py').write('print(1    + 2)\n')
         assert main(['test.py', '-i', '-v']) == 0
