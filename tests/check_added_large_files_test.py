@@ -81,12 +81,7 @@ def test_allows_gitlfs(temp_git_dir):  # pragma: no cover
     with temp_git_dir.as_cwd():
         # Work around https://github.com/github/git-lfs/issues/913
         cmd_output(
-            'git',
-            'commit',
-            '--no-gpg-sign',
-            '--allow-empty',
-            '-m',
-            'foo',
+            'git', 'commit', '--no-gpg-sign', '--allow-empty', '-m', 'foo',
         )
         cmd_output('git', 'lfs', 'install')
         temp_git_dir.join('f.py').write('a' * 10000)
