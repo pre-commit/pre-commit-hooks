@@ -23,6 +23,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ### Hooks available
 
+- `auto-indent` - Checks and fixes indentation of function calls.
 - `autopep8-wrapper` - Runs autopep8 over python source.
     - Ignore PEP 8 violation types with `args: ['-i', '--ignore=E000,...']` or
       through configuration of the `[pycodestyle]` section in
