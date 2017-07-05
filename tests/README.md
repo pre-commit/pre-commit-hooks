@@ -16,3 +16,9 @@ Running the tests
 ```shell-session
 $ make test
 ```
+
+If the tests failed whereas [the ones from the last tag](https://travis-ci.org/pre-commit/pre-commit-hooks) did not, your Git configuration might interfere with `pre-commit-hooks`. In this case, you can ignore your current Git configuration by setting a temporary environment variable:
+
+```shell-session
+$ env HOME=/tmp make test
+```
