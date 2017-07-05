@@ -7,7 +7,7 @@ Installing the test environment
 ### Debian-based distributions
 
 ```shell-session
-$ sudo apt install pypy python-tox
+$ sudo apt install pypy python2.7 python3.5 python3.6 python-tox
 ```
 
 Running the tests
