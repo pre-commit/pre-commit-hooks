@@ -2,6 +2,7 @@
 *.iml
 *.py[co]
 .*.sw[a-z]
+.cache/
 .coverage
 .idea
 .project
