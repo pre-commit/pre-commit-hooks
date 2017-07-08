@@ -158,7 +158,6 @@ def _detect_line_ending(filename):
 def _process_no_fix(filenames):
     logging.info('Checking if the files have mixed line ending.')
 
-    mle_found = False
     mle_filenames = []
     for filename in filenames:
         detect_result = _detect_line_ending(filename)
@@ -166,13 +165,11 @@ def _process_no_fix(filenames):
                       detect_result)
 
         if detect_result.mle_found:
-            mle_found = True
             mle_filenames.append(filename)
-            logging.debug(filename)
 
-    logging.debug(mle_found)
-    logging.debug(str(mle_filenames))
-    if mle_filenames:
+    mle_found = len(mle_filenames) > 0
+
+    if mle_found:
         logging.info('The following files have mixed line endings:\n\t%s',
                      '\n\t'.join(mle_filenames))
 
