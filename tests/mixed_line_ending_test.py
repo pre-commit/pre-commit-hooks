@@ -25,7 +25,7 @@ def test_mixed_line_ending_fix_auto(input_s, expected_retval, output, tmpdir):
     ret = mixed_line_ending(('--fix=auto', '-vv', path.strpath))
 
     assert ret == expected_retval
-    assert path.read() == output
+    assert path.read_binary() == output
 
 
 # Input, expected return value, expected output
@@ -49,7 +49,7 @@ def test_detect_mixed_line_ending(input_s, expected_retval, output, tmpdir):
     ret = mixed_line_ending(('--fix=no', '-vv', path.strpath))
 
     assert ret == expected_retval
-    assert path.read() == output
+    assert path.read_binary() == output
 
 
 # Input, expected return value, expected output
@@ -74,7 +74,7 @@ def test_mixed_line_ending_fix_force_lf(input_s, expected_retval, output,
     ret = mixed_line_ending(('--fix=lf', '-vv', path.strpath))
 
     assert ret == expected_retval
-    assert path.read() == output
+    assert path.read_binary() == output
 
 
 # Input, expected return value, expected output
@@ -99,7 +99,7 @@ def test_mixed_line_ending_fix_force_crlf(input_s, expected_retval, output,
     ret = mixed_line_ending(('--fix=crlf', '-vv', path.strpath))
 
     assert ret == expected_retval
-    assert path.read() == output
+    assert path.read_binary() == output
 
 
 def test_check_filenames():
