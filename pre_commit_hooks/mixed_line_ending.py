@@ -129,30 +129,29 @@ def _check_filenames(filenames):
 
 
 def _detect_line_ending(filename):
-    f = open(filename, 'rb')
-    buf = f.read()
-    f.close()
+    with open(filename, 'rb') as f:
+        buf = f.read()
 
-    crlf_nb = len(LineEnding.CRLF.regex.findall(buf))
-    lf_nb = len(LineEnding.LF.regex.findall(buf))
+        crlf_nb = len(LineEnding.CRLF.regex.findall(buf))
+        lf_nb = len(LineEnding.LF.regex.findall(buf))
 
-    crlf_found = crlf_nb > 0
-    lf_found = lf_nb > 0
+        crlf_found = crlf_nb > 0
+        lf_found = lf_nb > 0
 
-    logging.debug('_detect_line_ending: crlf_nb = %d, lf_nb = %d, '
-                  'crlf_found = %s, lf_found = %s',
-                  crlf_nb, lf_nb, crlf_found, lf_found)
+        logging.debug('_detect_line_ending: crlf_nb = %d, lf_nb = %d, '
+                      'crlf_found = %s, lf_found = %s',
+                      crlf_nb, lf_nb, crlf_found, lf_found)
 
-    if crlf_nb == lf_nb:
-        return MixedLineDetection.UNKNOWN
+        if crlf_nb == lf_nb:
+            return MixedLineDetection.UNKNOWN
 
-    if crlf_found ^ lf_found:
-        return MixedLineDetection.NOT_MIXED
+        if crlf_found ^ lf_found:
+            return MixedLineDetection.NOT_MIXED
 
-    if crlf_nb > lf_nb:
-        return MixedLineDetection.MIXED_MOSTLY_CRLF
-    else:
-        return MixedLineDetection.MIXED_MOSTLY_LF
+        if crlf_nb > lf_nb:
+            return MixedLineDetection.MIXED_MOSTLY_CRLF
+        else:
+            return MixedLineDetection.MIXED_MOSTLY_LF
 
 
 def _process_no_fix(filenames):
@@ -222,17 +221,16 @@ def _process_fix_force(filenames, line_ending_enum):
 
 def _convert_line_ending(filename, line_ending):
     # read the file
-    fin = open(filename, 'rb')
-    bufin = fin.read()
-    fin.close()
+    with open(filename, 'rb+') as f:
+        bufin = f.read()
 
-    # convert line ending
-    bufout = ANY_LINE_ENDING_PATTERN.sub(line_ending, bufin)
+        # convert line ending
+        bufout = ANY_LINE_ENDING_PATTERN.sub(line_ending, bufin)
 
-    # write the result in the file
-    fout = open(filename, 'wb')
-    fout.write(bufout)
-    fout.close()
+        # write the result in the file
+        f.seek(0)
+        f.write(bufout)
+        f.truncate()
 
 
 if __name__ == '__main__':
