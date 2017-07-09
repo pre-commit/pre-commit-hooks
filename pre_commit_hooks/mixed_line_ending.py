@@ -8,9 +8,9 @@ from enum import Enum
 
 
 class LineEnding(Enum):
-    CR = '\r', '\\r', 'cr', re.compile(r'\r', re.DOTALL)
-    CRLF = '\r\n', '\\r\\n', 'crlf', re.compile(r'\r\n', re.DOTALL)
-    LF = '\n', '\\n', 'lf', re.compile(r'(?<!\r)\n', re.DOTALL)
+    CR = b'\r', '\\r', 'cr', re.compile(b'\r', re.DOTALL)
+    CRLF = b'\r\n', '\\r\\n', 'crlf', re.compile(b'\r\n', re.DOTALL)
+    LF = b'\n', '\\n', 'lf', re.compile(b'(?<!\r)\n', re.DOTALL)
 
     def __init__(self, string, str_print, opt_name, regex):
         self.string = string
@@ -52,14 +52,14 @@ VERBOSE_OPTION_TO_LOGGING_SEVERITY = {
 
 ANY_LINE_ENDING_PATTERN = re.compile(
     # match either
-    '(' +
+    b'(' +
     # \r\n
     LineEnding.CRLF.regex.pattern +
     # or \n
-    '|' + LineEnding.LF.regex.pattern +
+    b'|' + LineEnding.LF.regex.pattern +
     # or \r
-    '|' + LineEnding.CR.regex.pattern +
-    ')'
+    b'|' + LineEnding.CR.regex.pattern +
+    b')'
 )
 
 
@@ -129,7 +129,7 @@ def _check_filenames(filenames):
 
 
 def _detect_line_ending(filename):
-    f = open(filename, 'r')
+    f = open(filename, 'rb')
     buf = f.read()
     f.close()
 
@@ -222,7 +222,7 @@ def _process_fix_force(filenames, line_ending_enum):
 
 def _convert_line_ending(filename, line_ending):
     # read the file
-    fin = open(filename, 'r')
+    fin = open(filename, 'rb')
     bufin = fin.read()
     fin.close()
 
@@ -230,7 +230,7 @@ def _convert_line_ending(filename, line_ending):
     bufout = ANY_LINE_ENDING_PATTERN.sub(line_ending, bufin)
 
     # write the result in the file
-    fout = open(filename, 'w')
+    fout = open(filename, 'wb')
     fout.write(bufout)
     fout.close()
 
