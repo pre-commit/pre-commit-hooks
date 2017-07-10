@@ -8,7 +8,7 @@ from enum import Enum
 
 
 class LineEnding(Enum):
-    CR = b'\r', '\\r', 'cr', re.compile(b'\r', re.DOTALL)
+    CR = b'\r', '\\r', 'cr', re.compile(b'\r(?!\n)', re.DOTALL)
     CRLF = b'\r\n', '\\r\\n', 'crlf', re.compile(b'\r\n', re.DOTALL)
     LF = b'\n', '\\n', 'lf', re.compile(b'(?<!\r)\n', re.DOTALL)
 
@@ -132,26 +132,38 @@ def _detect_line_ending(filename):
     with open(filename, 'rb') as f:
         buf = f.read()
 
-        crlf_nb = len(LineEnding.CRLF.regex.findall(buf))
-        lf_nb = len(LineEnding.LF.regex.findall(buf))
+        le_counts = {}
+        for le_enum in LineEnding:
+            le_counts[le_enum] = len(le_enum.regex.findall(buf))
 
-        crlf_found = crlf_nb > 0
-        lf_found = lf_nb > 0
+        logging.debug('_detect_line_ending: le_counts = ' + str(le_counts))
 
-        logging.debug('_detect_line_ending: crlf_nb = %d, lf_nb = %d, '
-                      'crlf_found = %s, lf_found = %s',
-                      crlf_nb, lf_nb, crlf_found, lf_found)
+        mixed = False
+        le_found_previously = False
+        most_le = None
+        max_le_count = 0
 
-        if crlf_nb == lf_nb:
-            return MixedLineDetection.UNKNOWN
+        for le, le_count in le_counts.items():
+            le_found_cur = le_count > 0
 
-        if crlf_found ^ lf_found:
+            mixed |= le_found_previously and le_found_cur
+            le_found_previously |= le_found_cur
+
+            if le_count == max_le_count:
+                most_le = None
+            elif le_count > max_le_count:
+                max_le_count = le_count
+                most_le = le
+
+        if not mixed:
             return MixedLineDetection.NOT_MIXED
 
-        if crlf_nb > lf_nb:
-            return MixedLineDetection.MIXED_MOSTLY_CRLF
-        else:
-            return MixedLineDetection.MIXED_MOSTLY_LF
+        for mld in MixedLineDetection:
+            if mld.line_ending_enum is not None \
+               and mld.line_ending_enum == most_le:
+                return mld
+
+        return MixedLineDetection.UNKNOWN
 
 
 def _process_no_fix(filenames):
