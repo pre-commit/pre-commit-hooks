@@ -31,10 +31,11 @@ class MixedLineEndingOption(Enum):
 
 
 class MixedLineDetection(Enum):
-    MIXED_MOSTLY_CRLF = 1, True, LineEnding.CRLF
-    MIXED_MOSTLY_LF = 2, True, LineEnding.LF
-    NOT_MIXED = 3, False, None
-    UNKNOWN = 4, False, None
+    NOT_MIXED = 1, False, None
+    UNKNOWN = 2, False, None
+    MIXED_MOSTLY_CRLF = 3, True, LineEnding.CRLF
+    MIXED_MOSTLY_LF = 4, True, LineEnding.LF
+    MIXED_MOSTLY_CR = 5, True, LineEnding.CR
 
     def __init__(self, index, mle_found, line_ending_enum):
         # TODO hack to prevent enum overriding

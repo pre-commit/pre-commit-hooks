@@ -8,12 +8,22 @@ TESTS_FIX_AUTO = (
     (b'foo\nbar\nbaz\n', 0, b'foo\nbar\nbaz\n'),
     # only 'CRLF'
     (b'foo\r\nbar\r\nbaz\r\n', 0, b'foo\r\nbar\r\nbaz\r\n'),
+    # only 'CR'
+    (b'foo\rbar\rbaz\r', 0, b'foo\rbar\rbaz\r'),
     # mixed with majority of 'LF'
     (b'foo\r\nbar\nbaz\n', 1, b'foo\nbar\nbaz\n'),
     # mixed with majority of 'CRLF'
     (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
+    # mixed with majority of 'CR'
+    (b'foo\rbar\nbaz\r', 1, b'foo\rbar\rbaz\r'),
     # mixed with as much 'LF' as 'CRLF'
     (b'foo\r\nbar\nbaz', 1, b'foo\r\nbar\nbaz'),
+    # mixed with as much 'LF' as 'CR'
+    (b'foo\rbar\nbaz', 1, b'foo\rbar\nbaz'),
+    # mixed with as much 'CRLF' as 'CR'
+    (b'foo\r\nbar\nbaz', 1, b'foo\r\nbar\nbaz'),
+    # mixed with as much 'CRLF' as 'LF' as 'CR'
+    (b'foo\r\nbar\nbaz\r', 1, b'foo\r\nbar\nbaz\r'),
 )
 
 
@@ -34,10 +44,20 @@ TESTS_NO_FIX = (
     (b'foo\nbar\nbaz\n', 0, b'foo\nbar\nbaz\n'),
     # only 'CRLF'
     (b'foo\r\nbar\r\nbaz\r\n', 0, b'foo\r\nbar\r\nbaz\r\n'),
+    # only 'CR'
+    (b'foo\rbar\rbaz\r', 0, b'foo\rbar\rbaz\r'),
     # mixed with majority of 'LF'
     (b'foo\r\nbar\nbaz\n', 1, b'foo\r\nbar\nbaz\n'),
     # mixed with majority of 'CRLF'
     (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\nbaz\r\n'),
+    # mixed with majority of 'CR'
+    (b'foo\rbar\nbaz\r', 1, b'foo\rbar\nbaz\r'),
+    # mixed with as much 'LF' as 'CR'
+    (b'foo\rbar\nbaz', 0, b'foo\rbar\nbaz'),
+    # mixed with as much 'CRLF' as 'CR'
+    (b'foo\r\nbar\nbaz', 0, b'foo\r\nbar\nbaz'),
+    # mixed with as much 'CRLF' as 'LF' as 'CR'
+    (b'foo\r\nbar\nbaz\r', 0, b'foo\r\nbar\nbaz\r'),
 )
 
 
@@ -58,10 +78,20 @@ TESTS_FIX_FORCE_LF = (
     (b'foo\nbar\nbaz\n', 1, b'foo\nbar\nbaz\n'),
     # only 'CRLF'
     (b'foo\r\nbar\r\nbaz\r\n', 1, b'foo\nbar\nbaz\n'),
+    # only 'CR'
+    (b'foo\rbar\rbaz\r', 1, b'foo\nbar\nbaz\n'),
     # mixed with majority of 'LF'
     (b'foo\r\nbar\nbaz\n', 1, b'foo\nbar\nbaz\n'),
     # mixed with majority of 'CRLF'
     (b'foo\r\nbar\nbaz\r\n', 1, b'foo\nbar\nbaz\n'),
+    # mixed with majority of 'CR'
+    (b'foo\rbar\nbaz\r', 1, b'foo\nbar\nbaz\n'),
+    # mixed with as much 'LF' as 'CR'
+    (b'foo\rbar\nbaz', 1, b'foo\nbar\nbaz'),
+    # mixed with as much 'CRLF' as 'CR'
+    (b'foo\r\nbar\nbaz', 1, b'foo\nbar\nbaz'),
+    # mixed with as much 'CRLF' as 'LF' as 'CR'
+    (b'foo\r\nbar\nbaz\r', 1, b'foo\nbar\nbaz\n'),
 )
 
 
@@ -83,10 +113,20 @@ TESTS_FIX_FORCE_CRLF = (
     (b'foo\nbar\nbaz\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
     # only 'CRLF'
     (b'foo\r\nbar\r\nbaz\r\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
+    # only 'CR'
+    (b'foo\rbar\rbaz\r', 1, b'foo\r\nbar\r\nbaz\r\n'),
     # mixed with majority of 'LF'
     (b'foo\r\nbar\nbaz\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
     # mixed with majority of 'CRLF'
     (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
+    # mixed with majority of 'CR'
+    (b'foo\rbar\nbaz\r', 1, b'foo\r\nbar\r\nbaz\r\n'),
+    # mixed with as much 'LF' as 'CR'
+    (b'foo\rbar\nbaz', 1, b'foo\r\nbar\r\nbaz'),
+    # mixed with as much 'CRLF' as 'CR'
+    (b'foo\r\nbar\nbaz', 1, b'foo\r\nbar\r\nbaz'),
+    # mixed with as much 'CRLF' as 'LF' as 'CR'
+    (b'foo\r\nbar\nbaz\r', 1, b'foo\r\nbar\r\nbaz\r\n'),
 )
 
 
