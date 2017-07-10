@@ -123,6 +123,12 @@
     entry: forbid-new-submodules
     description: Prevent addition of new git submodules
     files: ''
+-   id: mixed-line-ending
+    name: Mixed line ending
+    language: python
+    entry: mixed-line-ending
+    description: Replaces or checks mixed line ending
+    files: ''
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly

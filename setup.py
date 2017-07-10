@@ -51,6 +51,7 @@ setup(
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
             'fix-encoding-pragma = pre_commit_hooks.fix_encoding_pragma:main',
             'forbid-new-submodules = pre_commit_hooks.forbid_new_submodules:main',
+            'mixed-line-ending = pre_commit_hooks.mixed_line_ending:mixed_line_ending',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
             'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',

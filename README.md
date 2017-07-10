@@ -54,6 +54,11 @@ Add this to your `.pre-commit-config.yaml`
     - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
 - `flake8` - Run flake8 on your python files.
 - `forbid-new-submodules` - Prevent addition of new git submodules.
+- `mixed-line-ending` - Replaces or checks mixed line ending.
+    - `--fix={auto,crlf,lf,no}`
+        - `auto` - Replace automatically the most frequent line ending.
+        - `crlf`, `lf` - Force to replace line ending by respectively CRLF and LF.
+        - `no` - Checks if there is any mixed line ending.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `no-commit-to-branch` - Protect specific branches from direct checkins.
