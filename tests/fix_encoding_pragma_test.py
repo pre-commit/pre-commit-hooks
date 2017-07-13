@@ -56,7 +56,7 @@ def test_integration_remove_ok(tmpdir):
             b'# -*- coding: utf-8 -*-\n'
             b'foo = "bar"\n'
         ),
-    )
+    ),
 )
 def test_ok_inputs(input_str):
     bytesio = io.BytesIO(input_str)
@@ -100,7 +100,7 @@ def test_ok_inputs(input_str):
         (b'#!/usr/bin/env python\n', b''),
         (b'#!/usr/bin/env python\n#coding: utf8\n', b''),
         (b'#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n', b''),
-    )
+    ),
 )
 def test_not_ok_inputs(input_str, output):
     bytesio = io.BytesIO(input_str)

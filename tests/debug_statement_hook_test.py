@@ -46,7 +46,7 @@ def test_returns_one_form_1(ast_with_debug_import_form_1):
     visitor = ImportStatementParser()
     visitor.visit(ast_with_debug_import_form_1)
     assert visitor.debug_import_statements == [
-        DebugStatement('ipdb', 3, 0)
+        DebugStatement('ipdb', 3, 0),
     ]
 
 
@@ -54,7 +54,7 @@ def test_returns_one_form_2(ast_with_debug_import_form_2):
     visitor = ImportStatementParser()
     visitor.visit(ast_with_debug_import_form_2)
     assert visitor.debug_import_statements == [
-        DebugStatement('pudb', 3, 0)
+        DebugStatement('pudb', 3, 0),
     ]
 
 

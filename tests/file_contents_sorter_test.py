@@ -21,7 +21,7 @@ from pre_commit_hooks.file_contents_sorter import PASS
         (b'@\n-\n_\n#\n', FAIL, b'#\n-\n@\n_\n'),
         (b'extra\n\n\nwhitespace\n', FAIL, b'extra\nwhitespace\n'),
         (b'whitespace\n\n\nextra\n', FAIL, b'extra\nwhitespace\n'),
-    )
+    ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')

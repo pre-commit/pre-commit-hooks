@@ -69,7 +69,7 @@ def test_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
     path = tmpdir.join(filename)
     path.write(input_s)
     ret = fix_trailing_whitespace((
-        '--markdown-linebreak-ext=TxT', path.strpath
+        '--markdown-linebreak-ext=TxT', path.strpath,
     ))
     assert ret == 1
     assert path.read() == output

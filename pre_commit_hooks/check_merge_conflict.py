@@ -7,7 +7,7 @@ CONFLICT_PATTERNS = [
     b'<<<<<<< ',
     b'======= ',
     b'=======\n',
-    b'>>>>>>> '
+    b'>>>>>>> ',
 ]
 WARNING_MSG = 'Merge conflict string "{0}" found in {1}:{2}'
 

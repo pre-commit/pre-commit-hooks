@@ -24,9 +24,9 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
         (
             b'-e git+ssh://git_url@tag#egg=ocflib\nDjango\nPyMySQL\n',
             FAIL,
-            b'Django\n-e git+ssh://git_url@tag#egg=ocflib\nPyMySQL\n'
+            b'Django\n-e git+ssh://git_url@tag#egg=ocflib\nPyMySQL\n',
         ),
-    )
+    ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')

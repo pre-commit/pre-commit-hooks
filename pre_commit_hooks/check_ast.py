@@ -26,7 +26,7 @@ def check_ast(argv=None):
                 sys.version.partition(' ')[0],
             ))
             print('\n{}'.format(
-                '    ' + traceback.format_exc().replace('\n', '\n    ')
+                '    ' + traceback.format_exc().replace('\n', '\n    '),
             ))
             retval = 1
     return retval
