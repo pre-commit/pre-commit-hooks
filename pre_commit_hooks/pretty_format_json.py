@@ -120,7 +120,7 @@ def pretty_format_json(argv=None):
         except simplejson.JSONDecodeError:
             print(
                 "Input File {} is not a valid JSON, consider using check-json"
-                .format(json_file)
+                .format(json_file),
             )
             return 1
 

@@ -45,7 +45,7 @@ def f1_is_a_conflict_file(tmpdir):
             'child\n'
             '=======\n'
             'parent\n'
-            '>>>>>>>'
+            '>>>>>>>',
         ) or f1.startswith(
             '<<<<<<< HEAD\n'
             'child\n'
@@ -53,7 +53,7 @@ def f1_is_a_conflict_file(tmpdir):
             '||||||| merged common ancestors\n'
             '=======\n'
             'parent\n'
-            '>>>>>>>'
+            '>>>>>>>',
         ) or f1.startswith(
             # .gitconfig with [pull] rebase = preserve causes a rebase which
             # flips parent / child
@@ -61,7 +61,7 @@ def f1_is_a_conflict_file(tmpdir):
             'parent\n'
             '=======\n'
             'child\n'
-            '>>>>>>>'
+            '>>>>>>>',
         )
         assert os.path.exists(os.path.join('.git', 'MERGE_MSG'))
         yield
