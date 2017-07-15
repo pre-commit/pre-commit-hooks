@@ -22,16 +22,20 @@ TESTS = (
     # Docstring
     ('""" Foo """', '""" Foo """', 0),
     (
-        textwrap.dedent("""
+        textwrap.dedent(
+            """
         x = " \\
         foo \\
         "\n
-        """),
-        textwrap.dedent("""
+        """,
+        ),
+        textwrap.dedent(
+            """
         x = ' \\
         foo \\
         '\n
-        """),
+        """,
+        ),
         1,
     ),
     ('"foo""bar"', "'foo''bar'", 1),

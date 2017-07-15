@@ -69,8 +69,10 @@ def test_get_aws_secrets_from_env(env_vars, values):
             {'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb'},
         ),
         ('aws_config_with_session_token.ini', {'foo'}),
-        ('aws_config_with_secret_and_session_token.ini',
-         {'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb', 'foo'}),
+        (
+            'aws_config_with_secret_and_session_token.ini',
+            {'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb', 'foo'},
+        ),
         (
             'aws_config_with_multiple_sections.ini',
             {
