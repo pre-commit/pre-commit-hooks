@@ -39,7 +39,7 @@ If you are developing a new hook or adding features to an existing one, you may 
 $ tox tests/<your_test>.py
 ```
 
-If you want to run your test for a specific Python version (for a quicker execution), you can specify it with the `-e` option of `tox`. At the moment, the supported Python versions are `2.7` (`-e py27`), `3.4` (`-e py34`), and `3.5` (`-e py35`). For example:
+If you want to run your test for a specific Python version (for a quicker execution), you can specify it with the `-e` option of `tox`. At the moment, the supported Python versions are `2.7` (`-e py27`), `3.5` (`-e py35`), and `3.6` (`-e py36`). For example:
 
 ```shell-session
 $ tox -e py27 tests/<your_test>.py
