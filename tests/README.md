@@ -1,10 +1,16 @@
 Testing
 =======
 
+The test will run with the following environments:
+- Python version 2.7
+- Python version 3.5
+- Python version 3.6
+- PyPy
+
 Installing the test environment
 -------------------------------
 
-### Debian-based distributions
+### Debian-based distributions (Ubuntu, Mint, etc.)
 
 ```shell-session
 $ sudo apt install pypy python2.7 python3.5 python3.6 python-tox
