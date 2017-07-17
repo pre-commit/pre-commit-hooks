@@ -56,8 +56,8 @@ Add this to your `.pre-commit-config.yaml`
 - `forbid-new-submodules` - Prevent addition of new git submodules.
 - `mixed-line-ending` - Replaces or checks mixed line ending.
     - `--fix={auto,crlf,lf,no}`
-        - `auto` - Replace automatically the most frequent line ending.
-        - `crlf`, `lf` - Force to replace line ending by respectively CRLF and LF.
+        - `auto` - Replaces automatically the most frequent line ending. This is the default argument.
+        - `crlf`, `lf` - Forces to replace line ending by respectively CRLF and LF.
         - `no` - Checks if there is any mixed line ending.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
