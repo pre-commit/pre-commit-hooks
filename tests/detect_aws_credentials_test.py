@@ -23,14 +23,14 @@ from testing.util import get_resource_path
                 'AWS_DUMMY_KEY': '/foo', 'AWS_CONFIG_FILE': '/bar',
                 'AWS_CREDENTIAL_FILE': '/baz',
             },
-            {'/bar', '/baz'}
+            {'/bar', '/baz'},
         ),
         (
             {
                 'AWS_CONFIG_FILE': '/foo', 'AWS_CREDENTIAL_FILE': '/bar',
                 'AWS_SHARED_CREDENTIALS_FILE': '/baz',
             },
-            {'/foo', '/bar', '/baz'}
+            {'/foo', '/bar', '/baz'},
         ),
     ),
 )
