@@ -27,8 +27,10 @@ TESTS_FIX_AUTO = (
 )
 
 
-@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'),
-                         TESTS_FIX_AUTO)
+@pytest.mark.parametrize(
+    ('input_s', 'expected_retval', 'output'),
+    TESTS_FIX_AUTO,
+)
 def test_mixed_line_ending_fix_auto(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write(input_s)
@@ -61,8 +63,10 @@ TESTS_NO_FIX = (
 )
 
 
-@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'),
-                         TESTS_NO_FIX)
+@pytest.mark.parametrize(
+    ('input_s', 'expected_retval', 'output'),
+    TESTS_NO_FIX,
+)
 def test_detect_mixed_line_ending(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write(input_s)
@@ -95,10 +99,14 @@ TESTS_FIX_FORCE_LF = (
 )
 
 
-@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'),
-                         TESTS_FIX_FORCE_LF)
-def test_mixed_line_ending_fix_force_lf(input_s, expected_retval, output,
-                                        tmpdir):
+@pytest.mark.parametrize(
+    ('input_s', 'expected_retval', 'output'),
+    TESTS_FIX_FORCE_LF,
+)
+def test_mixed_line_ending_fix_force_lf(
+    input_s, expected_retval, output,
+    tmpdir,
+):
     path = tmpdir.join('file.txt')
     path.write(input_s)
     ret = mixed_line_ending(('--fix=lf', '-vv', path.strpath))
@@ -130,10 +138,14 @@ TESTS_FIX_FORCE_CRLF = (
 )
 
 
-@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'),
-                         TESTS_FIX_FORCE_CRLF)
-def test_mixed_line_ending_fix_force_crlf(input_s, expected_retval, output,
-                                          tmpdir):
+@pytest.mark.parametrize(
+    ('input_s', 'expected_retval', 'output'),
+    TESTS_FIX_FORCE_CRLF,
+)
+def test_mixed_line_ending_fix_force_crlf(
+    input_s, expected_retval, output,
+    tmpdir,
+):
     path = tmpdir.join('file.txt')
     path.write(input_s)
     ret = mixed_line_ending(('--fix=crlf', '-vv', path.strpath))

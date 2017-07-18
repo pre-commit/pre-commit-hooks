@@ -60,15 +60,17 @@ ANY_LINE_ENDING_PATTERN = re.compile(
     b'|' + LineEnding.LF.regex.pattern +
     # or \r
     b'|' + LineEnding.CR.regex.pattern +
-    b')'
+    b')',
 )
 
 
 def mixed_line_ending(argv=None):
     options = _parse_arguments(argv)
 
-    logging.basicConfig(format='%(levelname)s: %(message)s',
-                        level=options['logging_severity'])
+    logging.basicConfig(
+        format='%(levelname)s: %(message)s',
+        level=options['logging_severity'],
+    )
     logging.debug('mixed_line_ending: options = %s', options)
 
     filenames = options['filenames']
@@ -92,14 +94,16 @@ def _parse_arguments(argv=None):
         '--fix',
         choices=[m.opt_name for m in MixedLineEndingOption],
         default=MixedLineEndingOption.AUTO.opt_name,
-        help='Replace line ending with the specified. Default is "auto"')
+        help='Replace line ending with the specified. Default is "auto"',
+    )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     parser.add_argument(
         '-v',
         '--verbose',
         action="count",
         default=0,
-        help='Increase output verbosity')
+        help='Increase output verbosity',
+    )
     args = parser.parse_args(argv)
 
     fix = None
@@ -115,8 +119,10 @@ def _parse_arguments(argv=None):
     args.verbose = min(args.verbose, 2)
     severity = VERBOSE_OPTION_TO_LOGGING_SEVERITY.get(args.verbose)
 
-    options = {'fix': fix, 'filenames': args.filenames,
-               'logging_severity': severity}
+    options = {
+        'fix': fix, 'filenames': args.filenames,
+        'logging_severity': severity,
+    }
 
     return options
 
@@ -173,8 +179,10 @@ def _process_no_fix(filenames):
     mle_filenames = []
     for filename in filenames:
         detect_result = _detect_line_ending(filename)
-        logging.debug('mixed_line_ending: detect_result = %s',
-                      detect_result)
+        logging.debug(
+            'mixed_line_ending: detect_result = %s',
+            detect_result,
+        )
 
         if detect_result.mle_found:
             mle_filenames.append(filename)
@@ -182,8 +190,10 @@ def _process_no_fix(filenames):
     mle_found = len(mle_filenames) > 0
 
     if mle_found:
-        logging.info('The following files have mixed line endings:\n\t%s',
-                     '\n\t'.join(mle_filenames))
+        logging.info(
+            'The following files have mixed line endings:\n\t%s',
+            '\n\t'.join(mle_filenames),
+        )
 
     return 1 if mle_found else 0
 
@@ -194,30 +204,38 @@ def _process_fix_auto(filenames):
     for filename in filenames:
         detect_result = _detect_line_ending(filename)
 
-        logging.debug('mixed_line_ending: detect_result = %s',
-                      detect_result)
+        logging.debug(
+            'mixed_line_ending: detect_result = %s',
+            detect_result,
+        )
 
         if detect_result == MixedLineDetection.NOT_MIXED:
             logging.info('The file %s has no mixed line ending', filename)
 
             mle_found |= False
         elif detect_result == MixedLineDetection.UNKNOWN:
-            logging.info('Could not define most frequent line ending in '
-                         'file %s. File skiped.', filename)
+            logging.info(
+                'Could not define most frequent line ending in '
+                'file %s. File skiped.', filename,
+            )
 
             mle_found = True
         else:
             le_enum = detect_result.line_ending_enum
 
-            logging.info('The file %s has mixed line ending with a '
-                         'majority of "%s". Converting...', filename,
-                         le_enum.str_print)
+            logging.info(
+                'The file %s has mixed line ending with a '
+                'majority of "%s". Converting...', filename,
+                le_enum.str_print,
+            )
 
             _convert_line_ending(filename, le_enum.string)
             mle_found = True
 
-            logging.info('The file %s has been converted to "%s" line '
-                         'ending.', filename, le_enum.str_print)
+            logging.info(
+                'The file %s has been converted to "%s" line '
+                'ending.', filename, le_enum.str_print,
+            )
 
     return 1 if mle_found else 0
 
@@ -226,8 +244,10 @@ def _process_fix_force(filenames, line_ending_enum):
     for filename in filenames:
         _convert_line_ending(filename, line_ending_enum.string)
 
-        logging.info('The file %s has been forced to "%s" line ending.',
-                     filename, line_ending_enum.str_print)
+        logging.info(
+            'The file %s has been forced to "%s" line ending.',
+            filename, line_ending_enum.str_print,
+        )
 
     return 1
 
