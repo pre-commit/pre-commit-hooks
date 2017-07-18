@@ -51,7 +51,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',
-        help='Filenames pre-commit believes are changed.'
+        help='Filenames pre-commit believes are changed.',
     )
     parser.add_argument(
         '--maxkb', type=int, default=500,

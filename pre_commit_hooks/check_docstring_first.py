@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
@@ -30,7 +31,7 @@ def check_docstring_first(src, filename='<unknown>'):
                     '{}:{} Multiple module docstrings '
                     '(first docstring on line {}).'.format(
                         filename, sline, found_docstring_line,
-                    )
+                    ),
                 )
                 return 1
             elif found_code_line is not None:
@@ -38,7 +39,7 @@ def check_docstring_first(src, filename='<unknown>'):
                     '{}:{} Module docstring appears after code '
                     '(code seen on line {}).'.format(
                         filename, sline, found_code_line,
-                    )
+                    ),
                 )
                 return 1
             else:

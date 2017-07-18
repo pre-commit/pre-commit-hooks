@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 import argparse
 import ast
-import os.path
+import platform
 import sys
 import traceback
 
@@ -14,19 +14,19 @@ def check_ast(argv=None):
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)
 
-    _, interpreter = os.path.split(sys.executable)
-
     retval = 0
     for filename in args.filenames:
 
         try:
             ast.parse(open(filename, 'rb').read(), filename=filename)
         except SyntaxError:
-            print('{}: failed parsing with {}:'.format(
-                filename, interpreter,
+            print('{}: failed parsing with {} {}:'.format(
+                filename,
+                platform.python_implementation(),
+                sys.version.partition(' ')[0],
             ))
             print('\n{}'.format(
-                '    ' + traceback.format_exc().replace('\n', '\n    ')
+                '    ' + traceback.format_exc().replace('\n', '\n    '),
             ))
             retval = 1
     return retval

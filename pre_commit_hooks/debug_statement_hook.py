@@ -29,7 +29,7 @@ class ImportStatementParser(ast.NodeVisitor):
     def visit_ImportFrom(self, node):
         if node.module in DEBUG_STATEMENTS:
             self.debug_import_statements.append(
-                DebugStatement(node.module, node.lineno, node.col_offset)
+                DebugStatement(node.module, node.lineno, node.col_offset),
             )
 
 
@@ -52,7 +52,7 @@ def check_file_for_debug_statements(filename):
                     debug_statement.line,
                     debug_statement.col,
                     debug_statement.name,
-                )
+                ),
             )
         return 1
     else:

@@ -15,7 +15,7 @@ See also: https://github.com/pre-commit/pre-commit
 Add this to your `.pre-commit-config.yaml`
 
     -   repo: git://github.com/pre-commit/pre-commit-hooks
-        sha: v0.8.0  # Use the ref you want to point at
+        sha: v0.9.1  # Use the ref you want to point at
         hooks:
         -   id: trailing-whitespace
         # -   id: ...
@@ -25,7 +25,8 @@ Add this to your `.pre-commit-config.yaml`
 
 - `autopep8-wrapper` - Runs autopep8 over python source.
     - Ignore PEP 8 violation types with `args: ['-i', '--ignore=E000,...']` or
-      through configuration of the `[pep8]` section in setup.cfg / tox.ini.
+      through configuration of the `[pycodestyle]` section in
+      setup.cfg / tox.ini.
 - `check-added-large-files` - Prevent giant files from being committed.
     - Specify what is "too large" with `args: ['--maxkb=123']` (default=500kB).
 - `check-ast` - Simply check whether files parse as valid python.
@@ -34,6 +35,8 @@ Add this to your `.pre-commit-config.yaml`
   case-insensitive filesystem like MacOS HFS+ or Windows FAT.
 - `check-docstring-first` - Checks for a common error of placing code before
   the docstring.
+- `check-executables-have-shebangs` - Checks that non-binary executables have a
+  proper shebang.
 - `check-json` - Attempts to load all json files to verify syntax.
 - `check-merge-conflict` - Check for files that contain merge conflict strings.
 - `check-symlinks` - Checks for symlinks which do not point to anything.
@@ -51,6 +54,7 @@ Add this to your `.pre-commit-config.yaml`
   with single quoted strings.
 - `end-of-file-fixer` - Makes sure files end in a newline and only a newline.
 - `fix-encoding-pragma` - Add `# -*- coding: utf-8 -*-` to the top of python files.
+- `file-contents-sorter` - Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input to it. Note that this hook WILL remove blank lines and does NOT respect any comments.
     - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
 - `flake8` - Run flake8 on your python files.
 - `forbid-new-submodules` - Prevent addition of new git submodules.
@@ -72,6 +76,7 @@ Add this to your `.pre-commit-config.yaml`
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
     - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
+- `sort-simple-yaml` - Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
 - `trailing-whitespace` - Trims trailing whitespace.
     - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;
       use `args: ['--markdown-linebreak-ext=txt,text']` to add other extensions,

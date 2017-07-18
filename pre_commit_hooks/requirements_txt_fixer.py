@@ -3,6 +3,10 @@ from __future__ import print_function
 import argparse
 
 
+PASS = 0
+FAIL = 1
+
+
 class Requirement(object):
 
     def __init__(self):
@@ -30,21 +34,25 @@ class Requirement(object):
 
 def fix_requirements(f):
     requirements = []
-    before = []
+    before = tuple(f)
     after = []
 
-    for line in f:
-        before.append(line)
+    before_string = b''.join(before)
 
-        # If the most recent requirement object has a value, then it's time to
-        # start building the next requirement object.
+    # If the file is empty (i.e. only whitespace/newlines) exit early
+    if before_string.strip() == b'':
+        return PASS
+
+    for line in before:
+        # If the most recent requirement object has a value, then it's
+        # time to start building the next requirement object.
         if not len(requirements) or requirements[-1].value is not None:
             requirements.append(Requirement())
 
         requirement = requirements[-1]
 
-        # If we see a newline before any requirements, then this is a top of
-        # file comment.
+        # If we see a newline before any requirements, then this is a
+        # top of file comment.
         if len(requirements) == 1 and line.strip() == b'':
             if len(requirement.comments) and requirement.comments[0].startswith(b'#'):
                 requirement.value = b'\n'
@@ -56,20 +64,18 @@ def fix_requirements(f):
             requirement.value = line
 
     for requirement in sorted(requirements):
-        for comment in requirement.comments:
-            after.append(comment)
+        after.extend(requirement.comments)
         after.append(requirement.value)
 
-    before_string = b''.join(before)
     after_string = b''.join(after)
 
     if before_string == after_string:
-        return 0
+        return PASS
     else:
         f.seek(0)
         f.write(after_string)
         f.truncate()
-        return 1
+        return FAIL
 
 
 def fix_requirements_txt(argv=None):
@@ -77,7 +83,7 @@ def fix_requirements_txt(argv=None):
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
-    retv = 0
+    retv = PASS
 
     for arg in args.filenames:
         with open(arg, 'rb+') as file_obj:

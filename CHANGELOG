@@ -1,3 +1,17 @@
+0.9.1
+=====
+- Add `check-executables-have-shebangs` hook.
+
+0.9.0
+=====
+- Add `sort-simple-yaml` hook
+- Fix `requirements-txt-fixer` for empty files
+- Add `file-contents-sorter` hook for sorting flat files
+- `check-merge-conflict` now recognizes rebase conflicts
+- Metadata now uses `types` (and therefore requires pre-commit 0.15.0).  This
+  allows the text processing hooks to match *all* text files (and to match
+  files which would only be classifiable by their shebangs).
+
 0.8.0
 =====
 - Add flag allowing missing keys to `detect-aws-credentials`

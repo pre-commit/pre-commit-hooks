@@ -6,7 +6,7 @@ setup(
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
-    version='0.8.0',
+    version='0.9.1',
 
     author='Anthony Sottile',
     author_email='asottile@umich.edu',
@@ -24,9 +24,9 @@ setup(
 
     packages=find_packages(exclude=('tests*', 'testing*')),
     install_requires=[
-        # quickfix to prevent pep8 conflicts
+        # quickfix to prevent pycodestyle conflicts
         'flake8!=2.5.3',
-        'autopep8>=1.1',
+        'autopep8>=1.3',
         'pyyaml',
         'simplejson',
         'six',
@@ -39,6 +39,7 @@ setup(
             'check-byte-order-marker = pre_commit_hooks.check_byte_order_marker:main',
             'check-case-conflict = pre_commit_hooks.check_case_conflict:main',
             'check-docstring-first = pre_commit_hooks.check_docstring_first:main',
+            'check-executables-have-shebangs = pre_commit_hooks.check_executables_have_shebangs:main',
             'check-json = pre_commit_hooks.check_json:check_json',
             'check-merge-conflict = pre_commit_hooks.check_merge_conflict:detect_merge_conflict',
             'check-symlinks = pre_commit_hooks.check_symlinks:check_symlinks',
@@ -49,6 +50,7 @@ setup(
             'detect-private-key = pre_commit_hooks.detect_private_key:detect_private_key',
             'double-quote-string-fixer = pre_commit_hooks.string_fixer:main',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
+            'file-contents-sorter = pre_commit_hooks.file_contents_sorter:main',
             'fix-encoding-pragma = pre_commit_hooks.fix_encoding_pragma:main',
             'forbid-new-submodules = pre_commit_hooks.forbid_new_submodules:main',
             'mixed-line-ending = pre_commit_hooks.mixed_line_ending:mixed_line_ending',
@@ -56,6 +58,7 @@ setup(
             'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
+            'sort-simple-yaml = pre_commit_hooks.sort_simple_yaml:main',
             'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:fix_trailing_whitespace',
         ],
     },

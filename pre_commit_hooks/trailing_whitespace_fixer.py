@@ -36,7 +36,7 @@ def fix_trailing_whitespace(argv=None):
         const=[],
         default=argparse.SUPPRESS,
         dest='markdown_linebreak_ext',
-        help='Do not preserve linebreak spaces in Markdown'
+        help='Do not preserve linebreak spaces in Markdown',
     )
     parser.add_argument(
         '--markdown-linebreak-ext',
@@ -45,7 +45,7 @@ def fix_trailing_whitespace(argv=None):
         default=['md,markdown'],
         metavar='*|EXT[,EXT,...]',
         nargs='?',
-        help='Markdown extensions (or *) for linebreak spaces'
+        help='Markdown extensions (or *) for linebreak spaces',
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -69,7 +69,7 @@ def fix_trailing_whitespace(argv=None):
             parser.error(
                 "bad --markdown-linebreak-ext extension '{}' (has . / \\ :)\n"
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
-                .format(ext)
+                .format(ext),
             )
 
     return_code = 0
