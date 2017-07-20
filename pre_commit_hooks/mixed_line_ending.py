@@ -94,35 +94,38 @@ def _detect_line_ending(filename):
         buf = f.read()
 
         le_counts = {}
-        for le_enum in LineEnding:
-            le_counts[le_enum] = len(le_enum.regex.findall(buf))
 
-        mixed = False
-        le_found_previously = False
-        most_le = None
-        max_le_count = 0
+    for le_enum in LineEnding:
+        le_counts[le_enum] = len(le_enum.regex.findall(buf))
 
-        for le, le_count in le_counts.items():
-            le_found_cur = le_count > 0
+    mixed = False
+    le_found_previously = False
+    most_le = None
+    max_le_count = 0
 
-            mixed |= le_found_previously and le_found_cur
-            le_found_previously |= le_found_cur
+    for le, le_count in le_counts.items():
+        le_found_cur = le_count > 0
 
-            if le_count == max_le_count:
-                most_le = None
-            elif le_count > max_le_count:
-                max_le_count = le_count
-                most_le = le
+        mixed |= le_found_previously and le_found_cur
+        le_found_previously |= le_found_cur
 
-        if not mixed:
-            return MixedLineDetection.NOT_MIXED
+        if le_count == max_le_count:
+            most_le = None
+        elif le_count > max_le_count:
+            max_le_count = le_count
+            most_le = le
 
-        for mld in MixedLineDetection:
-            if mld.line_ending_enum is not None \
-               and mld.line_ending_enum == most_le:
-                return mld
+    if not mixed:
+        return MixedLineDetection.NOT_MIXED
 
-        return MixedLineDetection.UNKNOWN
+    for mld in MixedLineDetection:
+        if (
+                mld.line_ending_enum is not None and
+                mld.line_ending_enum == most_le
+        ):
+            return mld
+
+    return MixedLineDetection.UNKNOWN
 
 
 def _process_no_fix(filenames):
@@ -154,8 +157,6 @@ def _process_fix_auto(filenames):
 
         if detect_result == MixedLineDetection.NOT_MIXED:
             print('The file %s has no mixed line ending', filename)
-
-            mle_found |= False
         elif detect_result == MixedLineDetection.UNKNOWN:
             print(
                 'Could not define most frequent line ending in '
