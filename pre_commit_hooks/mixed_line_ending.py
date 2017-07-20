@@ -1,5 +1,4 @@
 import argparse
-import os
 import re
 import sys
 
@@ -56,8 +55,6 @@ def mixed_line_ending(argv=None):
     filenames = options['filenames']
     fix_option = options['fix']
 
-    _check_filenames(filenames)
-
     if fix_option == MixedLineEndingOption.NO:
         return _process_no_fix(filenames)
     elif fix_option == MixedLineEndingOption.AUTO:
@@ -90,12 +87,6 @@ def _parse_arguments(argv=None):
     }
 
     return options
-
-
-def _check_filenames(filenames):
-    for filename in filenames:
-        if not os.path.isfile(filename):
-            raise IOError('The file "{}" does not exist'.format(filename))
 
 
 def _detect_line_ending(filename):

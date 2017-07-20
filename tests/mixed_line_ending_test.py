@@ -152,8 +152,3 @@ def test_mixed_line_ending_fix_force_crlf(
 
     assert ret == expected_retval
     assert path.read_binary() == output
-
-
-def test_check_filenames():
-    with pytest.raises(IOError):
-        mixed_line_ending(['/dev/null'])
