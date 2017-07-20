@@ -100,15 +100,11 @@ def _parse_arguments(argv=None):
     )
     args = parser.parse_args(argv)
 
-    fix = None
-    if args.fix == MixedLineEndingOption.NO.opt_name:
-        fix = MixedLineEndingOption.NO
-    elif args.fix == MixedLineEndingOption.CRLF.opt_name:
-        fix = MixedLineEndingOption.CRLF
-    elif args.fix == MixedLineEndingOption.LF.opt_name:
-        fix = MixedLineEndingOption.LF
-    else:
-        fix = MixedLineEndingOption.AUTO
+    fix, = (
+        member for name, member
+        in MixedLineEndingOption.__members__.items()
+        if member.opt_name == args.fix
+    )
 
     args.verbose = min(args.verbose, 2)
     severity = VERBOSE_OPTION_TO_LOGGING_SEVERITY.get(args.verbose)
