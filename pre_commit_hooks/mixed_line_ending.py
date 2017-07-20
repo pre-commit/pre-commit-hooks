@@ -8,13 +8,13 @@ from enum import Enum
 
 
 class LineEnding(Enum):
-    CR = b'\r', '\\r', 'cr', re.compile(b'\r(?!\n)', re.DOTALL)
-    CRLF = b'\r\n', '\\r\\n', 'crlf', re.compile(b'\r\n', re.DOTALL)
-    LF = b'\n', '\\n', 'lf', re.compile(b'(?<!\r)\n', re.DOTALL)
+    CR = b'\r', 'cr', re.compile(b'\r(?!\n)', re.DOTALL)
+    CRLF = b'\r\n', 'crlf', re.compile(b'\r\n', re.DOTALL)
+    LF = b'\n', 'lf', re.compile(b'(?<!\r)\n', re.DOTALL)
 
-    def __init__(self, string, str_print, opt_name, regex):
+    def __init__(self, string, opt_name, regex):
         self.string = string
-        self.str_print = str_print
+        self.str_print = repr(string)
         self.opt_name = opt_name
         self.regex = regex
 
@@ -225,16 +225,15 @@ def _process_fix_auto(filenames):
 
             logging.info(
                 'The file %s has mixed line ending with a '
-                'majority of "%s". Converting...', filename,
-                le_enum.str_print,
+                'majority of %s. Converting...', filename, le_enum.str_print,
             )
 
             _convert_line_ending(filename, le_enum.string)
             mle_found = True
 
             logging.info(
-                'The file %s has been converted to "%s" line '
-                'ending.', filename, le_enum.str_print,
+                'The file %s has been converted to %s line ending.',
+                filename, le_enum.str_print,
             )
 
     return 1 if mle_found else 0
@@ -245,7 +244,7 @@ def _process_fix_force(filenames, line_ending_enum):
         _convert_line_ending(filename, line_ending_enum.string)
 
         logging.info(
-            'The file %s has been forced to "%s" line ending.',
+            'The file %s has been forced to %s line ending.',
             filename, line_ending_enum.str_print,
         )
 
