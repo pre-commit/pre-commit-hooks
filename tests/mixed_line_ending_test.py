@@ -34,7 +34,7 @@ TESTS_FIX_AUTO = (
 def test_mixed_line_ending_fix_auto(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write(input_s)
-    ret = mixed_line_ending(('--fix=auto', '-vv', path.strpath))
+    ret = mixed_line_ending(('--fix=auto', path.strpath))
 
     assert ret == expected_retval
     assert path.read_binary() == output
@@ -70,7 +70,7 @@ TESTS_NO_FIX = (
 def test_detect_mixed_line_ending(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write(input_s)
-    ret = mixed_line_ending(('--fix=no', '-vv', path.strpath))
+    ret = mixed_line_ending(('--fix=no', path.strpath))
 
     assert ret == expected_retval
     assert path.read_binary() == output
@@ -109,7 +109,7 @@ def test_mixed_line_ending_fix_force_lf(
 ):
     path = tmpdir.join('file.txt')
     path.write(input_s)
-    ret = mixed_line_ending(('--fix=lf', '-vv', path.strpath))
+    ret = mixed_line_ending(('--fix=lf', path.strpath))
 
     assert ret == expected_retval
     assert path.read_binary() == output
@@ -148,7 +148,7 @@ def test_mixed_line_ending_fix_force_crlf(
 ):
     path = tmpdir.join('file.txt')
     path.write(input_s)
-    ret = mixed_line_ending(('--fix=crlf', '-vv', path.strpath))
+    ret = mixed_line_ending(('--fix=crlf', path.strpath))
 
     assert ret == expected_retval
     assert path.read_binary() == output
