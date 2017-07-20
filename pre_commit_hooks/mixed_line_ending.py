@@ -52,15 +52,9 @@ VERBOSE_OPTION_TO_LOGGING_SEVERITY = {
 
 
 ANY_LINE_ENDING_PATTERN = re.compile(
-    # match either
-    b'(' +
-    # \r\n
-    LineEnding.CRLF.regex.pattern +
-    # or \n
+    b'(' + LineEnding.CRLF.regex.pattern +
     b'|' + LineEnding.LF.regex.pattern +
-    # or \r
-    b'|' + LineEnding.CR.regex.pattern +
-    b')',
+    b'|' + LineEnding.CR.regex.pattern + b')',
 )
 
 
@@ -252,14 +246,13 @@ def _process_fix_force(filenames, line_ending_enum):
 
 
 def _convert_line_ending(filename, line_ending):
-    # read the file
     with open(filename, 'rb+') as f:
         bufin = f.read()
 
         # convert line ending
         bufout = ANY_LINE_ENDING_PATTERN.sub(line_ending, bufin)
 
-        # write the result in the file
+        # write the result in the file replacing the existing content
         f.seek(0)
         f.write(bufout)
         f.truncate()
