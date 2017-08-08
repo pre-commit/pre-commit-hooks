@@ -191,6 +191,15 @@
     # for backward compatibility
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: mypy
+    name: mypy
+    description: This hook runs mypy.
+    entry: mypy
+    language: python
+    types: [python]
+    # for backward compatibility
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly
