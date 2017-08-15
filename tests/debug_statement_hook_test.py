@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 import ast
 
 import pytest
@@ -77,3 +81,9 @@ def test_returns_zero_for_passing_file():
 def test_syntaxerror_file():
     ret = debug_statement_hook([get_resource_path('cannot_parse_ast.notpy')])
     assert ret == 1
+
+
+def test_non_utf8_file(tmpdir):
+    f_py = tmpdir.join('f.py')
+    f_py.write_binary('# -*- coding: cp1252 -*-\nx = "€"\n'.encode('cp1252'))
+    assert debug_statement_hook((f_py.strpath,)) == 0
