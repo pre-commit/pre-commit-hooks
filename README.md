@@ -58,6 +58,9 @@ Add this to your `.pre-commit-config.yaml`
 - `file-contents-sorter` - Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input to it. Note that this hook WILL remove blank lines and does NOT respect any comments.
 - `flake8` - Run flake8 on your python files.
 - `forbid-new-submodules` - Prevent addition of new git submodules.
+- `mypy` - Run mypy on your python files.
+    - Use `files: ^my_package/.+\.py$` to exclude test and other files from being checked.
+    - Use `args: ['--config-file', 'mypy-pre-commit.ini']` to use a custom mypy configuration for this pre-commit hook.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `no-commit-to-branch` - Protect specific branches from direct checkins.
