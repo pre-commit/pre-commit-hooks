@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import argparse
 import io
 import tokenize
+import traceback
 
 
 double_quote_starts = tuple(s for s in tokenize.single_quoted if '"' in s)
@@ -32,7 +33,14 @@ def get_line_offsets_by_line_no(src):
 
 
 def fix_strings(filename):
-    contents = io.open(filename).read()
+    try:
+        contents = io.open(filename).read()
+    except Exception:
+        print('{} - Caught exception while reading file'.format(filename))
+        print()
+        print('\t' + traceback.format_exc().replace('\n', '\n\t'))
+        print()
+        return 1
     line_offsets = get_line_offsets_by_line_no(contents)
 
     # Basically a mutable string
