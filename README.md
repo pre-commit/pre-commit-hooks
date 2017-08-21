@@ -15,7 +15,7 @@ See also: https://github.com/pre-commit/pre-commit
 Add this to your `.pre-commit-config.yaml`
 
     -   repo: git://github.com/pre-commit/pre-commit-hooks
-        sha: v0.9.1  # Use the ref you want to point at
+        sha: v0.9.2  # Use the ref you want to point at
         hooks:
         -   id: trailing-whitespace
         # -   id: ...
