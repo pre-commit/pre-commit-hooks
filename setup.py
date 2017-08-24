@@ -31,6 +31,7 @@ setup(
         'simplejson',
         'six',
     ],
+    extras_require={':python_version=="2.7"': ['enum34']},
     entry_points={
         'console_scripts': [
             'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',
@@ -53,6 +54,7 @@ setup(
             'file-contents-sorter = pre_commit_hooks.file_contents_sorter:main',
             'fix-encoding-pragma = pre_commit_hooks.fix_encoding_pragma:main',
             'forbid-new-submodules = pre_commit_hooks.forbid_new_submodules:main',
+            'mixed-line-ending = pre_commit_hooks.mixed_line_ending:mixed_line_ending',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
             'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
