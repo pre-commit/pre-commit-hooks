@@ -31,7 +31,6 @@ setup(
         'simplejson',
         'six',
     ],
-    extras_require={':python_version=="2.7"': ['enum34']},
     entry_points={
         'console_scripts': [
             'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',

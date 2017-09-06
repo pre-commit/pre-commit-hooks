@@ -1,154 +1,103 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 import pytest
 
-from pre_commit_hooks.mixed_line_ending import mixed_line_ending
-
-# Input, expected return value, expected output
-TESTS_FIX_AUTO = (
-    # only 'LF'
-    (b'foo\nbar\nbaz\n', 0, b'foo\nbar\nbaz\n'),
-    # only 'CRLF'
-    (b'foo\r\nbar\r\nbaz\r\n', 0, b'foo\r\nbar\r\nbaz\r\n'),
-    # only 'CR'
-    (b'foo\rbar\rbaz\r', 0, b'foo\rbar\rbaz\r'),
-    # mixed with majority of 'LF'
-    (b'foo\r\nbar\nbaz\n', 1, b'foo\nbar\nbaz\n'),
-    # mixed with majority of 'CRLF'
-    (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
-    # mixed with majority of 'CR'
-    (b'foo\rbar\nbaz\r', 1, b'foo\rbar\rbaz\r'),
-    # mixed with as much 'LF' as 'CRLF'
-    (b'foo\r\nbar\nbaz', 1, b'foo\r\nbar\nbaz'),
-    # mixed with as much 'LF' as 'CR'
-    (b'foo\rbar\nbaz', 1, b'foo\rbar\nbaz'),
-    # mixed with as much 'CRLF' as 'CR'
-    (b'foo\r\nbar\nbaz', 1, b'foo\r\nbar\nbaz'),
-    # mixed with as much 'CRLF' as 'LF' as 'CR'
-    (b'foo\r\nbar\nbaz\r', 1, b'foo\r\nbar\nbaz\r'),
-)
+from pre_commit_hooks.mixed_line_ending import main
 
 
 @pytest.mark.parametrize(
-    ('input_s', 'expected_retval', 'output'),
-    TESTS_FIX_AUTO,
+    ('input_s', 'output'),
+    (
+        # mixed with majority of 'LF'
+        (b'foo\r\nbar\nbaz\n', b'foo\nbar\nbaz\n'),
+        # mixed with majority of 'CRLF'
+        (b'foo\r\nbar\nbaz\r\n', b'foo\r\nbar\r\nbaz\r\n'),
+        # mixed with majority of 'CR'
+        (b'foo\rbar\nbaz\r', b'foo\rbar\rbaz\r'),
+        # mixed with as much 'LF' as 'CRLF'
+        (b'foo\r\nbar\n', b'foo\nbar\n'),
+        # mixed with as much 'LF' as 'CR'
+        (b'foo\rbar\n', b'foo\nbar\n'),
+        # mixed with as much 'CRLF' as 'CR'
+        (b'foo\r\nbar\r', b'foo\r\nbar\r\n'),
+        # mixed with as much 'CRLF' as 'LF' as 'CR'
+        (b'foo\r\nbar\nbaz\r', b'foo\nbar\nbaz\n'),
+    ),
 )
-def test_mixed_line_ending_fix_auto(input_s, expected_retval, output, tmpdir):
+def test_mixed_line_ending_fixes_auto(input_s, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write_binary(input_s)
-    ret = mixed_line_ending(('--fix=auto', path.strpath))
+    ret = main((path.strpath,))
 
-    assert ret == expected_retval
+    assert ret == 1
     assert path.read_binary() == output
 
 
-# Input, expected return value, expected output
-TESTS_NO_FIX = (
-    # only 'LF'
-    (b'foo\nbar\nbaz\n', 0, b'foo\nbar\nbaz\n'),
-    # only 'CRLF'
-    (b'foo\r\nbar\r\nbaz\r\n', 0, b'foo\r\nbar\r\nbaz\r\n'),
-    # only 'CR'
-    (b'foo\rbar\rbaz\r', 0, b'foo\rbar\rbaz\r'),
-    # mixed with majority of 'LF'
-    (b'foo\r\nbar\nbaz\n', 1, b'foo\r\nbar\nbaz\n'),
-    # mixed with majority of 'CRLF'
-    (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\nbaz\r\n'),
-    # mixed with majority of 'CR'
-    (b'foo\rbar\nbaz\r', 1, b'foo\rbar\nbaz\r'),
-    # mixed with as much 'LF' as 'CR'
-    (b'foo\rbar\nbaz', 0, b'foo\rbar\nbaz'),
-    # mixed with as much 'CRLF' as 'CR'
-    (b'foo\r\nbar\nbaz', 0, b'foo\r\nbar\nbaz'),
-    # mixed with as much 'CRLF' as 'LF' as 'CR'
-    (b'foo\r\nbar\nbaz\r', 0, b'foo\r\nbar\nbaz\r'),
-)
+def test_non_mixed_no_newline_end_of_file(tmpdir):
+    path = tmpdir.join('f.txt')
+    path.write_binary(b'foo\nbar\nbaz')
+    assert not main((path.strpath,))
+    # the hook *could* fix the end of the file, but leaves it alone
+    # this is mostly to document the current behaviour
+    assert path.read_binary() == b'foo\nbar\nbaz'
+
+
+def test_mixed_no_newline_end_of_file(tmpdir):
+    path = tmpdir.join('f.txt')
+    path.write_binary(b'foo\r\nbar\nbaz')
+    assert main((path.strpath,))
+    # the hook rewrites the end of the file, this is slightly inconsistent
+    # with the non-mixed case but I think this is the better behaviour
+    # this is mostly to document the current behaviour
+    assert path.read_binary() == b'foo\nbar\nbaz\n'
 
 
 @pytest.mark.parametrize(
-    ('input_s', 'expected_retval', 'output'),
-    TESTS_NO_FIX,
+    ('fix_option', 'input_s'),
+    (
+        # All --fix=auto with uniform line endings should be ok
+        ('--fix=auto', b'foo\r\nbar\r\nbaz\r\n'),
+        ('--fix=auto', b'foo\rbar\rbaz\r'),
+        ('--fix=auto', b'foo\nbar\nbaz\n'),
+        # --fix=crlf with crlf endings
+        ('--fix=crlf', b'foo\r\nbar\r\nbaz\r\n'),
+        # --fix=lf with lf endings
+        ('--fix=lf', b'foo\nbar\nbaz\n'),
+    ),
 )
-def test_detect_mixed_line_ending(input_s, expected_retval, output, tmpdir):
-    path = tmpdir.join('file.txt')
+def test_line_endings_ok(fix_option, input_s, tmpdir):
+    path = tmpdir.join('input.txt')
     path.write_binary(input_s)
-    ret = mixed_line_ending(('--fix=no', path.strpath))
+    ret = main((fix_option, path.strpath))
 
-    assert ret == expected_retval
-    assert path.read_binary() == output
-
-
-# Input, expected return value, expected output
-TESTS_FIX_FORCE_LF = (
-    # only 'LF'
-    (b'foo\nbar\nbaz\n', 1, b'foo\nbar\nbaz\n'),
-    # only 'CRLF'
-    (b'foo\r\nbar\r\nbaz\r\n', 1, b'foo\nbar\nbaz\n'),
-    # only 'CR'
-    (b'foo\rbar\rbaz\r', 1, b'foo\nbar\nbaz\n'),
-    # mixed with majority of 'LF'
-    (b'foo\r\nbar\nbaz\n', 1, b'foo\nbar\nbaz\n'),
-    # mixed with majority of 'CRLF'
-    (b'foo\r\nbar\nbaz\r\n', 1, b'foo\nbar\nbaz\n'),
-    # mixed with majority of 'CR'
-    (b'foo\rbar\nbaz\r', 1, b'foo\nbar\nbaz\n'),
-    # mixed with as much 'LF' as 'CR'
-    (b'foo\rbar\nbaz', 1, b'foo\nbar\nbaz'),
-    # mixed with as much 'CRLF' as 'CR'
-    (b'foo\r\nbar\nbaz', 1, b'foo\nbar\nbaz'),
-    # mixed with as much 'CRLF' as 'LF' as 'CR'
-    (b'foo\r\nbar\nbaz\r', 1, b'foo\nbar\nbaz\n'),
-)
+    assert ret == 0
+    assert path.read_binary() == input_s
 
 
-@pytest.mark.parametrize(
-    ('input_s', 'expected_retval', 'output'),
-    TESTS_FIX_FORCE_LF,
-)
-def test_mixed_line_ending_fix_force_lf(
-    input_s, expected_retval, output,
-    tmpdir,
-):
-    path = tmpdir.join('file.txt')
-    path.write_binary(input_s)
-    ret = mixed_line_ending(('--fix=lf', path.strpath))
+def test_no_fix_does_not_modify(tmpdir):
+    path = tmpdir.join('input.txt')
+    contents = b'foo\r\nbar\rbaz\nwomp\n'
+    path.write_binary(contents)
+    ret = main(('--fix=no', path.strpath))
 
-    assert ret == expected_retval
-    assert path.read_binary() == output
+    assert ret == 1
+    assert path.read_binary() == contents
 
 
-# Input, expected return value, expected output
-TESTS_FIX_FORCE_CRLF = (
-    # only 'LF'
-    (b'foo\nbar\nbaz\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
-    # only 'CRLF'
-    (b'foo\r\nbar\r\nbaz\r\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
-    # only 'CR'
-    (b'foo\rbar\rbaz\r', 1, b'foo\r\nbar\r\nbaz\r\n'),
-    # mixed with majority of 'LF'
-    (b'foo\r\nbar\nbaz\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
-    # mixed with majority of 'CRLF'
-    (b'foo\r\nbar\nbaz\r\n', 1, b'foo\r\nbar\r\nbaz\r\n'),
-    # mixed with majority of 'CR'
-    (b'foo\rbar\nbaz\r', 1, b'foo\r\nbar\r\nbaz\r\n'),
-    # mixed with as much 'LF' as 'CR'
-    (b'foo\rbar\nbaz', 1, b'foo\r\nbar\r\nbaz'),
-    # mixed with as much 'CRLF' as 'CR'
-    (b'foo\r\nbar\nbaz', 1, b'foo\r\nbar\r\nbaz'),
-    # mixed with as much 'CRLF' as 'LF' as 'CR'
-    (b'foo\r\nbar\nbaz\r', 1, b'foo\r\nbar\r\nbaz\r\n'),
-)
+def test_fix_lf(tmpdir):
+    path = tmpdir.join('input.txt')
+    path.write_binary(b'foo\r\nbar\rbaz\n')
+    ret = main(('--fix=lf', path.strpath))
+
+    assert ret == 1
+    assert path.read_binary() == b'foo\nbar\nbaz\n'
 
 
-@pytest.mark.parametrize(
-    ('input_s', 'expected_retval', 'output'),
-    TESTS_FIX_FORCE_CRLF,
-)
-def test_mixed_line_ending_fix_force_crlf(
-    input_s, expected_retval, output,
-    tmpdir,
-):
-    path = tmpdir.join('file.txt')
-    path.write_binary(input_s)
-    ret = mixed_line_ending(('--fix=crlf', path.strpath))
+def test_fix_crlf(tmpdir):
+    path = tmpdir.join('input.txt')
+    path.write_binary(b'foo\r\nbar\rbaz\n')
+    ret = main(('--fix=crlf', path.strpath))
 
-    assert ret == expected_retval
-    assert path.read_binary() == output
+    assert ret == 1
+    assert path.read_binary() == b'foo\r\nbar\r\nbaz\r\n'
