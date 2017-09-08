@@ -15,7 +15,6 @@
 -   repo: https://github.com/pre-commit/pre-commit
     sha: v0.16.3
     hooks:
-    -   id: validate_config
     -   id: validate_manifest
 -   repo: https://github.com/asottile/reorder_python_imports
     sha: v0.3.5
