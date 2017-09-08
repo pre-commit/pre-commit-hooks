@@ -18,5 +18,5 @@ after_success: coveralls
 cache:
     directories:
         - $HOME/.cache/pip
-        - $HOME/.pre-commit
+        - $HOME/.cache/pre-commit
         - /tmp/git-lfs
