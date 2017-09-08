@@ -1,3 +1,7 @@
+0.9.3
+=====
+- New hook: `mixed-line-ending`
+
 0.9.2
 =====
 - Report full python version in `check-ast`.
