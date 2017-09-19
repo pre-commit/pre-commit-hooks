@@ -1,3 +1,7 @@
+0.9.4
+=====
+- Fix entry point for `mixed-line-ending`
+
 0.9.3
 =====
 - New hook: `mixed-line-ending`
