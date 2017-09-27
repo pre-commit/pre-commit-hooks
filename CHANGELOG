@@ -1,3 +1,7 @@
+0.9.5
+=====
+- Fix mixed-line-endings `--fix=...` when whole file is a different ending
+
 0.9.4
 =====
 - Fix entry point for `mixed-line-ending`
