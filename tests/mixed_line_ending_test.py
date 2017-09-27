@@ -101,3 +101,13 @@ def test_fix_crlf(tmpdir):
 
     assert ret == 1
     assert path.read_binary() == b'foo\r\nbar\r\nbaz\r\n'
+
+
+def test_fix_lf_all_crlf(tmpdir):
+    """Regression test for #239"""
+    path = tmpdir.join('input.txt')
+    path.write_binary(b'foo\r\nbar\r\n')
+    ret = main(('--fix=lf', path.strpath))
+
+    assert ret == 1
+    assert path.read_binary() == b'foo\nbar\n'

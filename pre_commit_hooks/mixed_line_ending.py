@@ -55,7 +55,8 @@ def fix_filename(filename, fix):
     else:
         target_ending = FIX_TO_LINE_ENDING[fix]
         # find if there are lines with *other* endings
-        del counts[target_ending]
+        # It's possible there's no line endings of the target type
+        counts.pop(target_ending, None)
         other_endings = bool(sum(counts.values()))
         if other_endings:
             _fix(filename, contents, target_ending)
