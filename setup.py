@@ -43,6 +43,7 @@ setup(
             'check-json = pre_commit_hooks.check_json:check_json',
             'check-merge-conflict = pre_commit_hooks.check_merge_conflict:detect_merge_conflict',
             'check-symlinks = pre_commit_hooks.check_symlinks:check_symlinks',
+            'check-vcs-permalinks = pre_commit_hooks.check_vcs_permalinks:main',
             'check-xml = pre_commit_hooks.check_xml:check_xml',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',

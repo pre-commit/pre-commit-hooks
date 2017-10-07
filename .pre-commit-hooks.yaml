@@ -96,6 +96,15 @@
     # for backward compatibility
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: check-vcs-permalinks
+    name: Check vcs permalinks
+    description: Ensures that links to vcs websites are permalinks.
+    entry: check-vcs-permalinks
+    language: python
+    types: [text]
+    # for backward compatibility
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-xml
     name: Check Xml
     description: This hook checks xml files for parseable syntax.

@@ -40,6 +40,7 @@ Add this to your `.pre-commit-config.yaml`
 - `check-json` - Attempts to load all json files to verify syntax.
 - `check-merge-conflict` - Check for files that contain merge conflict strings.
 - `check-symlinks` - Checks for symlinks which do not point to anything.
+- `check-vcs-permalinks` - Ensures that links to vcs websites are permalinks.
 - `check-xml` - Attempts to load all xml files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.
