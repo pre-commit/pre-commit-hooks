@@ -64,6 +64,12 @@
     entry: upgrade-your-pre-commit-version
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: check-vcs-permalinks
+    language: system
+    name: upgrade-your-pre-commit-version
+    entry: upgrade-your-pre-commit-version
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-xml
     language: system
     name: upgrade-your-pre-commit-version
