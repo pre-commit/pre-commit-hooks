@@ -3,6 +3,7 @@
 ### Features:
 - New hook: `check-vcs-permalinks` for ensuring permalinked github urls.
     - #241 PR by @asottile.
+
 ### Fixes:
 - Fix `trailing-whitespace` for non-utf8 files on macos
     - #242 PR by @asottile.
