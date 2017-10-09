@@ -63,9 +63,16 @@ def fix_requirements(f):
         else:
             requirement.value = line
 
+    # if a file ends in a comment, preserve it at the end
+    if requirements[-1].value is None:
+        rest = requirements.pop().comments
+    else:
+        rest = []
+
     for requirement in sorted(requirements):
         after.extend(requirement.comments)
         after.append(requirement.value)
+    after.extend(rest)
 
     after_string = b''.join(after)
 
