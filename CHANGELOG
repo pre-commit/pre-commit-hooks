@@ -1,3 +1,14 @@
+1.0.0
+=====
+### Features:
+- New hook: `check-vcs-permalinks` for ensuring permalinked github urls.
+    - #241 PR by @asottile.
+### Fixes:
+- Fix `trailing-whitespace` for non-utf8 files on macos
+    - #242 PR by @asottile.
+- Fix `requirements-txt-fixer` for files ending in comments
+    - #243 PR by @asottile.
+
 0.9.5
 =====
 - Fix mixed-line-endings `--fix=...` when whole file is a different ending
