@@ -1,3 +1,12 @@
+1.1.0
+=====
+### Features:
+- `check-yaml` gains a `--allow-multiple-documents` (`-m`) argument to allow
+  linting of files using the
+  [multi document syntax](http://www.yaml.org/spec/1.2/spec.html#YAML)
+    - pre-commit/pre-commit#635 issue by @geekobi.
+    - #244 PR by @asottile.
+
 1.0.0
 =====
 ### Features:
