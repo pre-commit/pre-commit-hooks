@@ -43,6 +43,8 @@ Add this to your `.pre-commit-config.yaml`
 - `check-vcs-permalinks` - Ensures that links to vcs websites are permalinks.
 - `check-xml` - Attempts to load all xml files to verify syntax.
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
+    - `--allow-multiple-documents` - allow yaml files which use the
+      [multi-document syntax](http://www.yaml.org/spec/1.2/spec.html#YAML)
 - `debug-statements` - Check for pdb / ipdb / pudb statements in code.
 - `detect-aws-credentials` - Checks for the existence of AWS secrets that you
   have set up with the AWS CLI.
