@@ -11,15 +11,24 @@ except ImportError:  # pragma: no cover (no libyaml-dev / pypy)
     Loader = yaml.SafeLoader
 
 
+def _load_all(*args, **kwargs):
+    # need to exhaust the generator
+    return tuple(yaml.load_all(*args, **kwargs))
+
+
 def check_yaml(argv=None):
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-m', '--allow-multiple-documents', dest='yaml_load_fn',
+        action='store_const', const=_load_all, default=yaml.load,
+    )
     parser.add_argument('filenames', nargs='*', help='Yaml filenames to check.')
     args = parser.parse_args(argv)
 
     retval = 0
     for filename in args.filenames:
         try:
-            yaml.load(open(filename), Loader=Loader)
+            args.yaml_load_fn(open(filename), Loader=Loader)
         except yaml.YAMLError as exc:
             print(exc)
             retval = 1

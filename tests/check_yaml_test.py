@@ -1,3 +1,6 @@
+from __future__ import absolute_import
+from __future__ import unicode_literals
+
 import pytest
 
 from pre_commit_hooks.check_yaml import check_yaml
@@ -13,3 +16,20 @@ from testing.util import get_resource_path
 def test_check_yaml(filename, expected_retval):
     ret = check_yaml([get_resource_path(filename)])
     assert ret == expected_retval
+
+
+def test_check_yaml_allow_multiple_documents(tmpdir):
+    f = tmpdir.join('test.yaml')
+    f.write('---\nfoo\n---\nbar\n')
+
+    # should failw without the setting
+    assert check_yaml((f.strpath,))
+
+    # should pass when we allow multiple documents
+    assert not check_yaml(('--allow-multiple-documents', f.strpath))
+
+
+def test_fails_even_with_allow_multiple_documents(tmpdir):
+    f = tmpdir.join('test.yaml')
+    f.write('[')
+    assert check_yaml(('--allow-multiple-documents', f.strpath))
