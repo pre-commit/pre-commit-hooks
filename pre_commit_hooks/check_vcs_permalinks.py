@@ -18,6 +18,7 @@ def _check_filename(filename):
         for i, line in enumerate(f, 1):
             if GITHUB_NON_PERMALINK.search(line):
                 sys.stdout.write('{}:{}:'.format(filename, i))
+                sys.stdout.flush()
                 getattr(sys.stdout, 'buffer', sys.stdout).write(line)
                 retv = 1
     return retv
