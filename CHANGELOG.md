@@ -1,3 +1,9 @@
+1.1.1
+=====
+### Fixes:
+- Fix output interleaving in `check-vcs-permalinks` under python3.
+    - #245 PR by @asottile.
+
 1.1.0
 =====
 ### Features:
