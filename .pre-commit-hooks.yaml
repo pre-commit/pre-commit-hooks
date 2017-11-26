@@ -34,6 +34,15 @@
     # for backward compatibility
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: check-builtin-literals
+    name: Check builtin type constructor use
+    description: Require literal syntax when initializing empty or zero Python builtin types.
+    entry: check-builtin-literals
+    language: python
+    types: [python]
+    # for backward compatibility
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: check-case-conflict
     name: Check for case conflicts
     description: Check for files that would conflict in case-insensitive filesystems
