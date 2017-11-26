@@ -36,6 +36,7 @@ setup(
             'autopep8-wrapper = pre_commit_hooks.autopep8_wrapper:main',
             'check-added-large-files = pre_commit_hooks.check_added_large_files:main',
             'check-ast = pre_commit_hooks.check_ast:check_ast',
+            'check-builtin-literals = pre_commit_hooks.check_builtin_literals:main',
             'check-byte-order-marker = pre_commit_hooks.check_byte_order_marker:main',
             'check-case-conflict = pre_commit_hooks.check_case_conflict:main',
             'check-docstring-first = pre_commit_hooks.check_docstring_first:main',
