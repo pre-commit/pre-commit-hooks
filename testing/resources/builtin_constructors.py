@@ -1,5 +1,4 @@
-# flake8 checks imports; `builtins` does not exist in Python 2.
-# flake8: noqa
+from six.moves import builtins
 
 c1 = complex()
 d1 = dict()
