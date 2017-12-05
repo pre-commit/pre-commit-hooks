@@ -29,6 +29,8 @@ Add this to your `.pre-commit-config.yaml`
       setup.cfg / tox.ini.
 - `check-added-large-files` - Prevent giant files from being committed.
     - Specify what is "too large" with `args: ['--maxkb=123']` (default=500kB).
+    - If `git-lfs` is installed, lfs files will be skipped
+      (requires `git-lfs>=2.2.1`)
 - `check-ast` - Simply check whether files parse as valid python.
 - `check-builtin-literals` - Require literal syntax when initializing empty or zero Python builtin types.
     - Allows calling constructors with positional arguments (e.g., `list('abc')`).
