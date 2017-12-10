@@ -33,24 +33,12 @@ def _autofix(filename, new_contents):
         f.write(new_contents)
 
 
-def parse_indent(s):
-    # type: (str) -> str
+def parse_num_to_int(s):
+    """Convert string numbers to int, leaving strings as is."""
     try:
-        int_indentation_spec = int(s)
+        return int(s)
     except ValueError:
-        if not s.strip():
-            return s
-        else:
-            raise ValueError(
-                'Non-whitespace JSON indentation delimiter supplied. ',
-            )
-    else:
-        if int_indentation_spec >= 0:
-            return int_indentation_spec * ' '
-        else:
-            raise ValueError(
-                'Negative integer supplied to construct JSON indentation delimiter. ',
-            )
+        return s
 
 
 def parse_topkeys(s):
@@ -68,9 +56,12 @@ def pretty_format_json(argv=None):
     )
     parser.add_argument(
         '--indent',
-        type=parse_indent,
-        default='  ',
-        help='String used as delimiter for one indentation level',
+        type=parse_num_to_int,
+        default='2',
+        help=(
+            'The number of indent spaces or a string to be used as delimiter'
+            ' for indentation level e.g. 4 or "\t" (Default: 2)'
+        ),
     )
     parser.add_argument(
         '--no-ensure-ascii',

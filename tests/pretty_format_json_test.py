@@ -3,20 +3,16 @@ import shutil
 import pytest
 from six import PY2
 
-from pre_commit_hooks.pretty_format_json import parse_indent
+from pre_commit_hooks.pretty_format_json import parse_num_to_int
 from pre_commit_hooks.pretty_format_json import pretty_format_json
 from testing.util import get_resource_path
 
 
-def test_parse_indent():
-    assert parse_indent('0') == ''
-    assert parse_indent('2') == '  '
-    assert parse_indent('\t') == '\t'
-    with pytest.raises(ValueError):
-        parse_indent('a')
-    with pytest.raises(ValueError):
-        parse_indent('-2')
-
+def test_parse_num_to_int():
+    assert parse_num_to_int('0') == 0
+    assert parse_num_to_int('2') == 2
+    assert parse_num_to_int('\t') == '\t'
+    assert parse_num_to_int('  ') == '  '
 
 
 @pytest.mark.parametrize(
