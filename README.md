@@ -34,6 +34,7 @@ Add this to your `.pre-commit-config.yaml`
 - `check-ast` - Simply check whether files parse as valid python.
 - `check-builtin-literals` - Require literal syntax when initializing empty or zero Python builtin types.
     - Allows calling constructors with positional arguments (e.g., `list('abc')`).
+    - Allows calling constructors from the `builtins` (`__builtin__`) namespace (`builtins.list()`).
     - Ignore this requirement for specific builtin types with `--ignore=type1,type2,…`.
     - Forbid `dict` keyword syntax with `--no-allow-dict-kwargs`.
 - `check-byte-order-marker` - Forbid files which have a UTF-8 byte-order marker

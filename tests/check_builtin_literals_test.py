@@ -21,31 +21,36 @@ def visitor():
         ("complex()", [BuiltinTypeCall('complex', 1, 0)]),
         ("complex(0, 0)", []),
         ("complex('0+0j')", []),
+        ('builtins.complex()', []),
         # float
         ("0.0", []),
         ("float()", [BuiltinTypeCall('float', 1, 0)]),
         ("float('0.0')", []),
+        ('builtins.float()', []),
         # int
         ("0", []),
         ("int()", [BuiltinTypeCall('int', 1, 0)]),
         ("int('0')", []),
+        ('builtins.int()', []),
         # list
         ("[]", []),
         ("list()", [BuiltinTypeCall('list', 1, 0)]),
         ("list('abc')", []),
         ("list([c for c in 'abc'])", []),
         ("list(c for c in 'abc')", []),
+        ('builtins.list()', []),
         # str
         ("''", []),
         ("str()", [BuiltinTypeCall('str', 1, 0)]),
         ("str('0')", []),
-        ("[]", []),
+        ('builtins.str()', []),
         # tuple
         ("()", []),
         ("tuple()", [BuiltinTypeCall('tuple', 1, 0)]),
         ("tuple('abc')", []),
         ("tuple([c for c in 'abc'])", []),
         ("tuple(c for c in 'abc')", []),
+        ('builtins.tuple()', []),
     ],
 )
 def test_non_dict_exprs(visitor, expression, calls):
@@ -62,6 +67,7 @@ def test_non_dict_exprs(visitor, expression, calls):
         ("dict(**{'a': 1, 'b': 2, 'c': 3})", []),
         ("dict([(k, v) for k, v in [('a', 1), ('b', 2), ('c', 3)]])", []),
         ("dict((k, v) for k, v in [('a', 1), ('b', 2), ('c', 3)])", []),
+        ('builtins.dict()', []),
     ],
 )
 def test_dict_allow_kwargs_exprs(visitor, expression, calls):
@@ -75,6 +81,7 @@ def test_dict_allow_kwargs_exprs(visitor, expression, calls):
         ("dict()", [BuiltinTypeCall('dict', 1, 0)]),
         ("dict(a=1, b=2, c=3)", [BuiltinTypeCall('dict', 1, 0)]),
         ("dict(**{'a': 1, 'b': 2, 'c': 3})", [BuiltinTypeCall('dict', 1, 0)]),
+        ('builtins.dict()', []),
     ],
 )
 def test_dict_no_allow_kwargs_exprs(expression, calls):
