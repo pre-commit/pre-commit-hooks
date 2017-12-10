@@ -1,6 +1,7 @@
 import shutil
 
 import pytest
+from six import PY2
 
 from pre_commit_hooks.pretty_format_json import parse_indent
 from pre_commit_hooks.pretty_format_json import pretty_format_json
@@ -15,6 +16,7 @@ def test_parse_indent():
         parse_indent('a')
     with pytest.raises(ValueError):
         parse_indent('-2')
+
 
 
 @pytest.mark.parametrize(
@@ -43,6 +45,7 @@ def test_unsorted_pretty_format_json(filename, expected_retval):
     assert ret == expected_retval
 
 
+@pytest.mark.skipif(PY2, reason="Requires Python3")
 @pytest.mark.parametrize(
     ('filename', 'expected_retval'), (
         ('not_pretty_formatted_json.json', 1),
@@ -52,7 +55,7 @@ def test_unsorted_pretty_format_json(filename, expected_retval):
         ('tab_pretty_formatted_json.json', 0),
     ),
 )
-def test_tab_pretty_format_json(filename, expected_retval):
+def test_tab_pretty_format_json(filename, expected_retval):  # pragma: no cover
     ret = pretty_format_json(['--indent', '\t', get_resource_path(filename)])
     assert ret == expected_retval
 
