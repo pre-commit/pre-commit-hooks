@@ -28,7 +28,6 @@ setup(
         'flake8!=2.5.3',
         'autopep8>=1.3',
         'pyyaml',
-        'simplejson',
         'six',
     ],
     entry_points={

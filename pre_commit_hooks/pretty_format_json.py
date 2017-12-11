@@ -2,11 +2,11 @@ from __future__ import print_function
 
 import argparse
 import io
+import json
 import sys
 from collections import OrderedDict
 
-import simplejson
-import six
+from six import text_type
 
 
 def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_keys=[]):
@@ -17,40 +17,28 @@ def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_
         if sort_keys:
             after = sorted(after, key=lambda x: x[0])
         return OrderedDict(before + after)
-    return six.text_type(simplejson.dumps(
-        simplejson.loads(
-            contents,
-            object_pairs_hook=pairs_first,
-        ),
+    json_pretty = json.dumps(
+        json.loads(contents, object_pairs_hook=pairs_first),
         indent=indent,
         ensure_ascii=ensure_ascii,
-    )) + "\n"  # dumps does not end with a newline
+        separators=(',', ': '),  # Workaround for https://bugs.python.org/issue16333
+    )
+    # Ensure unicode (Py2) and add the newline that dumps does not end with.
+    return text_type(json_pretty) + '\n'
 
 
 def _autofix(filename, new_contents):
-    print("Fixing file {}".format(filename))
+    print('Fixing file {}'.format(filename))
     with io.open(filename, 'w', encoding='UTF-8') as f:
         f.write(new_contents)
 
 
-def parse_indent(s):
-    # type: (str) -> str
+def parse_num_to_int(s):
+    """Convert string numbers to int, leaving strings as is."""
     try:
-        int_indentation_spec = int(s)
+        return int(s)
     except ValueError:
-        if not s.strip():
-            return s
-        else:
-            raise ValueError(
-                'Non-whitespace JSON indentation delimiter supplied. ',
-            )
-    else:
-        if int_indentation_spec >= 0:
-            return int_indentation_spec * ' '
-        else:
-            raise ValueError(
-                'Negative integer supplied to construct JSON indentation delimiter. ',
-            )
+        return s
 
 
 def parse_topkeys(s):
@@ -68,9 +56,12 @@ def pretty_format_json(argv=None):
     )
     parser.add_argument(
         '--indent',
-        type=parse_indent,
-        default='  ',
-        help='String used as delimiter for one indentation level',
+        type=parse_num_to_int,
+        default='2',
+        help=(
+            'The number of indent spaces or a string to be used as delimiter'
+            ' for indentation level e.g. 4 or "\t" (Default: 2)'
+        ),
     )
     parser.add_argument(
         '--no-ensure-ascii',
@@ -110,16 +101,15 @@ def pretty_format_json(argv=None):
             )
 
             if contents != pretty_contents:
-                print("File {} is not pretty-formatted".format(json_file))
+                print('File {} is not pretty-formatted'.format(json_file))
 
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
 
                 status = 1
-
-        except simplejson.JSONDecodeError:
+        except ValueError:
             print(
-                "Input File {} is not a valid JSON, consider using check-json"
+                'Input File {} is not a valid JSON, consider using check-json'
                 .format(json_file),
             )
             return 1
