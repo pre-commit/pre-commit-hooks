@@ -1,3 +1,14 @@
+1.2.0
+=====
+### Features:
+- Add new `check-builtin-literals` hook.
+    - #249 #251 PR by @benwebber.
+- `pretty-format-json` no longer depends on `simplejson`.
+    - #254 PR by @cas--.
+- `detect-private-key` now detects gcp keys.
+    - #255 issue by @SaMnCo @nicain.
+    - #256 PR by @nicain.
+
 1.1.1
 =====
 ### Fixes:
