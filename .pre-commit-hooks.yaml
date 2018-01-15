@@ -247,6 +247,13 @@
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
+-   id: python-import-sorter
+    name: Sort python imports
+    description: This hook sorts python imports.
+    entry: python-import-sorter
+    language: python
+    files: \.py$
+    minimum_pre_commit_version: 0.15.0
 -   id: sort-simple-yaml
     name: Sort simple YAML files
     language: python

@@ -26,6 +26,7 @@ setup(
     install_requires=[
         # quickfix to prevent pycodestyle conflicts
         'flake8!=2.5.3',
+        'isort>=4.1.1,<4.3',
         'autopep8>=1.3',
         'pyyaml',
         'six',
@@ -58,6 +59,7 @@ setup(
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
             'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
+            'python-import-sorter = pre_commit_hooks.sort_python_imports:main',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
             'sort-simple-yaml = pre_commit_hooks.sort_simple_yaml:main',
             'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:fix_trailing_whitespace',
