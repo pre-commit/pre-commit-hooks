@@ -78,6 +78,7 @@ Add this to your `.pre-commit-config.yaml`
 - `no-commit-to-branch` - Protect specific branches from direct checkins.
     - Use `args: -b <branch> ` to set the branch. `master` is the default if no argument is set.
 - `pyflakes` - Run pyflakes on your python files.
+- `python-import-sorter` - Sorts Python imports with isort.
 - `pretty-format-json` - Checks that all your JSON files are pretty.  "Pretty"
   here means that keys are sorted and indented.  You can configure this with
   the following commandline options:
