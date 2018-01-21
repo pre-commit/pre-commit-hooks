@@ -12,7 +12,7 @@ from testing.util import get_resource_path
 from testing.util import write_file
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def f1_is_a_conflict_file(tmpdir):
     # Make a merge conflict
     repo1 = tmpdir.join('repo1')
@@ -67,7 +67,7 @@ def f1_is_a_conflict_file(tmpdir):
         yield
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def repository_is_pending_merge(tmpdir):
     # Make a (non-conflicting) merge
     repo1 = tmpdir.join('repo1')
