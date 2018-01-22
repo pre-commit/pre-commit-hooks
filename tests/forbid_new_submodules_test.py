@@ -6,7 +6,7 @@ from pre_commit.util import cmd_output
 from pre_commit_hooks.forbid_new_submodules import main
 
 
-@pytest.yield_fixture
+@pytest.fixture
 def git_dir_with_git_dir(tmpdir):
     with tmpdir.as_cwd():
         cmd_output('git', 'init', '.')
