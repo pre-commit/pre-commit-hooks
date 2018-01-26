@@ -53,7 +53,9 @@ def get_aws_secrets_from_file(credentials_file):
             'aws_session_token',
         ):
             try:
-                keys.add(parser.get(section, var))
+                key = parser.get(section, var).strip()
+                if key:
+                    keys.add(key)
             except configparser.NoOptionError:
                 pass
     return keys
