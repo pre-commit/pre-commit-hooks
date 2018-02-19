@@ -1,3 +1,13 @@
+1.2.1
+=====
+### Fixes:
+- `detect-aws-credentials` false positive when key was empty
+    - #258 issue by @PVSec.
+    - #260 PR by @PVSec.
+- `no-commit-to-branch` no longer crashes when not on a branch
+    - #265 issue by @hectorv.
+    - #266 PR by @asottile.
+
 1.2.0
 =====
 ### Features:
