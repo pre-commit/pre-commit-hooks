@@ -1,3 +1,13 @@
+1.2.1-1
+=======
+
+(Note: this is a tag-only release as no code changes occurred)
+
+### Fixes:
+- Don't pass filenames for `no-commit-to-branch`
+    - #268 issue by @dongyuzheng.
+    - #269 PR by @asottile.
+
 1.2.1
 =====
 ### Fixes:
