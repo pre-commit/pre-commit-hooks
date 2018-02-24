@@ -228,6 +228,7 @@
     name: "Don't commit to branch"
     entry: no-commit-to-branch
     language: python
+    pass_filenames: false
     always_run: true
     # for backward compatibility
     files: ''
