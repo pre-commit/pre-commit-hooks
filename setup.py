@@ -57,6 +57,7 @@ setup(
             'mixed-line-ending = pre_commit_hooks.mixed_line_ending:main',
             'name-tests-test = pre_commit_hooks.tests_should_end_in_test:validate_files',
             'no-commit-to-branch = pre_commit_hooks.no_commit_to_branch:main',
+            'print-message = pre_commit_hooks.print_message:main',
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
             'sort-simple-yaml = pre_commit_hooks.sort_simple_yaml:main',

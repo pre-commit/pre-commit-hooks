@@ -85,6 +85,9 @@ Add this to your `.pre-commit-config.yaml`
     - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 4 spaces.
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
     - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
+- `print-message` - Print a message and optionally fail when triggered.
+    - `--message ...` - The message to print.
+    - `--fail` - Whether to fail the pre-commit check.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt
 - `sort-simple-yaml` - Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
 - `trailing-whitespace` - Trims trailing whitespace.
