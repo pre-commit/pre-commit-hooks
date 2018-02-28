@@ -19,14 +19,19 @@ def _fix_file(filename, is_markdown):
 
 
 def _process_line(line, is_markdown):
+    if line[-2:] == b'\r\n':
+        eol = b'\r\n'
+    elif line[-1:] == b'\n':
+        eol = b'\n'
+    else:
+        eol = b''
     # preserve trailing two-space for non-blank lines in markdown files
-    eol = b'\r\n' if line[-2:] == b'\r\n' else b'\n'
     if is_markdown and (not line.isspace()) and line.endswith(b'  ' + eol):
         return line.rstrip() + b'  ' + eol
     return line.rstrip() + eol
 
 
-def fix_trailing_whitespace(argv=None):
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--no-markdown-linebreak-ext',
@@ -77,4 +82,4 @@ def fix_trailing_whitespace(argv=None):
 
 
 if __name__ == '__main__':
-    sys.exit(fix_trailing_whitespace())
+    sys.exit(main())
