@@ -60,7 +60,7 @@ setup(
             'pretty-format-json = pre_commit_hooks.pretty_format_json:pretty_format_json',
             'requirements-txt-fixer = pre_commit_hooks.requirements_txt_fixer:fix_requirements_txt',
             'sort-simple-yaml = pre_commit_hooks.sort_simple_yaml:main',
-            'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:fix_trailing_whitespace',
+            'trailing-whitespace-fixer = pre_commit_hooks.trailing_whitespace_fixer:main',
         ],
     },
 )
