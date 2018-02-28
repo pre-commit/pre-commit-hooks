@@ -1,3 +1,10 @@
+1.2.3
+=====
+
+### Fixes
+- `trailing-whitespace` entrypoint was incorrect.
+    - f6780b9 by @asottile.
+
 1.2.2
 =====
 
