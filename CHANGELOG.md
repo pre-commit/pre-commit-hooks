@@ -1,3 +1,11 @@
+1.2.2
+=====
+
+### Fixes
+- `trailing-whitespace` no longer adds a missing newline at end-of-file
+    - #270 issue by @fractos.
+    - #271 PR by @asottile.
+
 1.2.1-1
 =======
 
