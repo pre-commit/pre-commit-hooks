@@ -52,7 +52,7 @@ Add this to your `.pre-commit-config.yaml`
 - `check-yaml` - Attempts to load all yaml files to verify syntax.
     - `--allow-multiple-documents` - allow yaml files which use the
       [multi-document syntax](http://www.yaml.org/spec/1.2/spec.html#YAML)
-    - `--unsafe` - Instaed of loading the files, simply parse them for syntax.
+    - `--unsafe` - Instead of loading the files, simply parse them for syntax.
       A syntax-only check enables extensions and unsafe constructs which would
       otherwise be forbidden.  Using this option removes all guarantees of
       portability to other yaml implementations.
