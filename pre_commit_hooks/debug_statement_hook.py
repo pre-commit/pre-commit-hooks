@@ -42,6 +42,12 @@ def check_file_for_debug_statements(filename):
         print('\t' + traceback.format_exc().replace('\n', '\n\t'))
         print()
         return 1
+    except Exception:
+        print('{} - Caught exception while reading file'.format(filename))
+        print()
+        print('\t' + traceback.format_exc().replace('\n', '\n\t'))
+        print()
+        return 1
     visitor = ImportStatementParser()
     visitor.visit(ast_obj)
     if visitor.debug_import_statements:
