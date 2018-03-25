@@ -28,6 +28,8 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             FAIL,
             b'Django\n-e git+ssh://git_url@tag#egg=ocflib\nPyMySQL\n',
         ),
+        (b'bar\npkg-resources==0.0.0\nfoo\n', FAIL, b'bar\nfoo\n'),
+        (b'foo\npkg-resources==0.0.0\nbar\n', FAIL, b'bar\nfoo\n'),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):

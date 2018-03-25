@@ -69,6 +69,11 @@ def fix_requirements(f):
     else:
         rest = []
 
+    for requirement in requirements:
+        if b'pkg-resources' in requirement.name:
+            if b'0.0.0' in requirement.value:
+                requirements.remove(requirement)
+
     for requirement in sorted(requirements):
         after.extend(requirement.comments)
         after.append(requirement.value)
