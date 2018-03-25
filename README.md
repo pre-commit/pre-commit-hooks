@@ -90,7 +90,7 @@ Add this to your `.pre-commit-config.yaml`
     - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 4 spaces.
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
     - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
-- `requirements-txt-fixer` - Sorts entries in requirements.txt
+- `requirements-txt-fixer` - Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
 - `sort-simple-yaml` - Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
 - `trailing-whitespace` - Trims trailing whitespace.
     - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;
