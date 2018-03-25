@@ -72,8 +72,8 @@ def fix_requirements(f):
     # find and remove pkg-resources==0.0.0
     # which is automatically added by broken pip package under Debian
     requirements = [
-        requirement for requirement in requirements
-        if requirement.value != b'pkg-resources==0.0.0\n'
+        req for req in requirements
+        if req.value != b'pkg-resources==0.0.0\n'
     ]
 
     for requirement in sorted(requirements):
