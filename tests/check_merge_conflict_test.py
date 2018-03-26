@@ -9,7 +9,6 @@ import pytest
 from pre_commit_hooks.check_merge_conflict import detect_merge_conflict
 from pre_commit_hooks.util import cmd_output
 from testing.util import get_resource_path
-from testing.util import write_file
 
 
 @pytest.fixture
@@ -64,11 +63,11 @@ def f1_is_a_conflict_file(tmpdir):
             '>>>>>>>',
         )
         assert os.path.exists(os.path.join('.git', 'MERGE_MSG'))
-        yield
+        yield repo2
 
 
 @pytest.fixture
-def repository_is_pending_merge(tmpdir):
+def repository_pending_merge(tmpdir):
     # Make a (non-conflicting) merge
     repo1 = tmpdir.join('repo1')
     repo1_f1 = repo1.join('f1')
@@ -98,7 +97,7 @@ def repository_is_pending_merge(tmpdir):
         assert repo2_f1.read() == 'parent\n'
         assert repo2_f2.read() == 'child\n'
         assert os.path.exists(os.path.join('.git', 'MERGE_HEAD'))
-        yield
+        yield repo2
 
 
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
@@ -107,20 +106,18 @@ def test_merge_conflicts_git():
 
 
 @pytest.mark.parametrize(
-    'failing_contents', ('<<<<<<< HEAD\n', '=======\n', '>>>>>>> master\n'),
+    'contents', (b'<<<<<<< HEAD\n', b'=======\n', b'>>>>>>> master\n'),
 )
-@pytest.mark.usefixtures('repository_is_pending_merge')
-def test_merge_conflicts_failing(failing_contents):
-    write_file('f2', failing_contents)
+def test_merge_conflicts_failing(contents, repository_pending_merge):
+    repository_pending_merge.join('f2').write_binary(contents)
     assert detect_merge_conflict(['f2']) == 1
 
 
 @pytest.mark.parametrize(
-    'ok_contents', ('# <<<<<<< HEAD\n', '# =======\n', 'import my_module', ''),
+    'contents', (b'# <<<<<<< HEAD\n', b'# =======\n', b'import mod', b''),
 )
-@pytest.mark.usefixtures('f1_is_a_conflict_file')
-def test_merge_conflicts_ok(ok_contents):
-    write_file('f1', ok_contents)
+def test_merge_conflicts_ok(contents, f1_is_a_conflict_file):
+    f1_is_a_conflict_file.join('f1').write_binary(contents)
     assert detect_merge_conflict(['f1']) == 0
 
 
