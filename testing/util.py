@@ -14,5 +14,5 @@ def get_resource_path(path):
 
 def write_file(filename, contents):
     """Hax because coveragepy chokes on nested context managers."""
-    with io.open(filename, 'w', newline='') as file_obj:
+    with io.open(filename, 'w', encoding='UTF-8', newline='') as file_obj:
         file_obj.write(contents)

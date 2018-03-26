@@ -32,7 +32,7 @@ def get_line_offsets_by_line_no(src):
 
 
 def fix_strings(filename):
-    contents = io.open(filename).read()
+    contents = io.open(filename, encoding='UTF-8').read()
     line_offsets = get_line_offsets_by_line_no(contents)
 
     # Basically a mutable string
@@ -52,7 +52,7 @@ def fix_strings(filename):
 
     new_contents = ''.join(splitcontents)
     if contents != new_contents:
-        with io.open(filename, 'w') as write_handle:
+        with io.open(filename, 'w', encoding='UTF-8') as write_handle:
             write_handle.write(new_contents)
         return 1
     else:

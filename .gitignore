@@ -12,3 +12,5 @@
 /venv*
 coverage-html
 dist
+# SublimeText project/workspace files
+*.sublime-*
