@@ -12,9 +12,9 @@ def _assert_parseable_in_old_pre_commit(hooks):
 
 
 def test_legacy_hooks():
-    with io.open('hooks.yaml') as legacy_file:
+    with io.open('hooks.yaml', encoding='UTF-8') as legacy_file:
         legacy = yaml.load(legacy_file.read())
-    with io.open('.pre-commit-hooks.yaml') as hooks_file:
+    with io.open('.pre-commit-hooks.yaml', encoding='UTF-8') as hooks_file:
         hooks = yaml.load(hooks_file.read())
 
     # The same set of hooks should be defined in both files
