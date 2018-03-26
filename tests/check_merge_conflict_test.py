@@ -37,7 +37,7 @@ def f1_is_a_conflict_file(tmpdir):
     with repo2.as_cwd():
         repo2_f1.write('child\n')
         cmd_output('git', 'commit', '--no-gpg-sign', '-am', 'clone commit2')
-        cmd_output('git', 'pull', retcode=None)
+        cmd_output('git', 'pull', '--no-rebase', retcode=None)
         # We should end up in a merge conflict!
         f1 = repo2_f1.read()
         assert f1.startswith(
