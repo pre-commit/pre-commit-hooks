@@ -46,7 +46,7 @@ setup(
             'check-vcs-permalinks = pre_commit_hooks.check_vcs_permalinks:main',
             'check-xml = pre_commit_hooks.check_xml:check_xml',
             'check-yaml = pre_commit_hooks.check_yaml:check_yaml',
-            'debug-statement-hook = pre_commit_hooks.debug_statement_hook:debug_statement_hook',
+            'debug-statement-hook = pre_commit_hooks.debug_statement_hook:main',
             'detect-aws-credentials = pre_commit_hooks.detect_aws_credentials:main',
             'detect-private-key = pre_commit_hooks.detect_private_key:detect_private_key',
             'double-quote-string-fixer = pre_commit_hooks.string_fixer:main',
