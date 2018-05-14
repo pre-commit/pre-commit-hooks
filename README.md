@@ -57,7 +57,8 @@ Add this to your `.pre-commit-config.yaml`
       otherwise be forbidden.  Using this option removes all guarantees of
       portability to other yaml implementations.
       Implies `--allow-multiple-documents`.
-- `debug-statements` - Check for pdb / ipdb / pudb statements in code.
+- `debug-statements` - Check for debugger imports and py37+ `breakpoint()`
+  calls in python source.
 - `detect-aws-credentials` - Checks for the existence of AWS secrets that you
   have set up with the AWS CLI.
   The following arguments are available:

@@ -134,7 +134,7 @@
     minimum_pre_commit_version: 0.15.0
 -   id: debug-statements
     name: Debug Statements (Python)
-    description: This hook checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
+    description: Check for debugger imports and py37+ `breakpoint()` calls in python source.
     entry: debug-statement-hook
     language: python
     types: [python]
