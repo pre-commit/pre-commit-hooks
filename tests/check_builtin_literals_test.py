@@ -16,6 +16,8 @@ def visitor():
 @pytest.mark.parametrize(
     ('expression', 'calls'),
     [
+        # see #285
+        ('x[0]()', []),
         # complex
         ("0j", []),
         ("complex()", [BuiltinTypeCall('complex', 1, 0)]),

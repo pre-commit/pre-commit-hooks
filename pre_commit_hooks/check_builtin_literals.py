@@ -30,7 +30,7 @@ class BuiltinTypeVisitor(ast.NodeVisitor):
         return self.allow_dict_kwargs and (getattr(node, 'kwargs', None) or getattr(node, 'keywords', None))
 
     def visit_Call(self, node):
-        if isinstance(node.func, ast.Attribute):
+        if not isinstance(node.func, ast.Name):
             # Ignore functions that are object attributes (`foo.bar()`).
             # Assume that if the user calls `builtins.list()`, they know what
             # they're doing.
