@@ -1,3 +1,25 @@
+1.3.0
+=====
+
+### Features
+- Add an `--unsafe` argument to `check-yaml` to allow custom yaml tags
+    - #273 issue by @blackillzone.
+    - #274 PR by @asottile.
+- Automatically remove `pkg-resources==0.0.0` in `requirements-txt-fixer`
+    - #275 PR by @nvtkaszpir.
+- Detect `breakpoint()` (python3.7+) in `debug-statements` hook.
+    - #283 PR by @asottile.
+- Detect sshcom and putty hooks in `detect-private-key`
+    - #287 PR by @vin01.
+
+### Fixes
+- Open files as UTF-8 (`autopep8-wrapper`, `check-docstring-first`,
+  `double-quote-string-fixer`)
+    - #279 PR by @nvtkaszpir.
+- Fix `AttributeError` in `check-builtin-literals` for some functions
+    - #285 issue by @EgoWumpus.
+    - #286 PR by @asottile.
+
 1.2.3
 =====
 
