@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
+import pytest
+
 from pre_commit_hooks.check_vcs_permalinks import main
 
 
@@ -20,17 +22,27 @@ def test_passing(tmpdir):
     assert not main((f.strpath,))
 
 
-def test_failing(tmpdir, capsys):
+@pytest.mark.parametrize(
+    'contents',
+    (
+        'http://github.com/asottile/test/blob/master/foo#L1',
+        'http://www.github.com/asottile/test/blob/master/foo#L1',
+        'https://github.com/asottile/test/blob/master/foo#L1',
+        'https://www.github.com/asottile/test/blob/master/foo#L1',
+        'https://www.github.com/asottile/test/blob/master/foo#my-anchor',
+    ),
+)
+def test_failing(contents, tmpdir, capsys):
     with tmpdir.as_cwd():
         tmpdir.join('f.txt').write_binary(
-            b'https://github.com/asottile/test/blob/master/foo#L1\n',
+            '{}\n'.format(contents).encode('utf-8'),
         )
 
         assert main(('f.txt',))
         out, _ = capsys.readouterr()
         assert out == (
-            'f.txt:1:https://github.com/asottile/test/blob/master/foo#L1\n'
+            'f.txt:1:{}\n'
             '\n'
             'Non-permanent github link detected.\n'
-            'On any page on github press [y] to load a permalink.\n'
+            'On any page on github press [y] to load a permalink.\n'.format(contents)
         )
