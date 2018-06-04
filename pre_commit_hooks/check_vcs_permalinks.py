@@ -8,7 +8,7 @@ import sys
 
 
 GITHUB_NON_PERMALINK = re.compile(
-    b'https://github.com/[^/]+/[^/]+/blob/master/[^# ]+#L\d+',
+    b'https://github.com/[^/ ]+/[^/ ]+/blob/master/[^# ]+#L\d+',
 )
 
 
