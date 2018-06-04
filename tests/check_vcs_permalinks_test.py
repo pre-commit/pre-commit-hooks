@@ -15,7 +15,9 @@ def test_passing(tmpdir):
         # permalinks are ok
         b'https://github.com/asottile/test/blob/649e6/foo%20bar#L1\n'
         # links to files but not line numbers are ok
-        b'https://github.com/asottile/test/blob/master/foo%20bar\n',
+        b'https://github.com/asottile/test/blob/master/foo%20bar\n'
+        # regression test for overly-greedy regex
+        b'https://github.com/ yes / no ? /blob/master/foo#L1\n',
     )
     assert not main((f.strpath,))
 
