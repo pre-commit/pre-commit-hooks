@@ -12,18 +12,19 @@ def is_on_branch(protected):
     except CalledProcessError:
         return False
     chunks = branch.strip().split('/')
-    return '/'.join(chunks[2:]) == protected
+    return '/'.join(chunks[2:]) in protected
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        '-b', '--branch', default='master',
-        help='branch to disallow commits to',
+        '-b', '--branch', action='append',
+        help='branch to disallow commits to, may be specified multiple times',
     )
     args = parser.parse_args(argv)
 
-    return int(is_on_branch(args.branch))
+    protected = set(args.branch or ('master',))
+    return int(is_on_branch(protected))
 
 
 if __name__ == '__main__':
