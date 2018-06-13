@@ -27,6 +27,7 @@ setup(
         # quickfix to prevent pycodestyle conflicts
         'flake8==3.0.4',
         'autopep8==1.3.5',
+        'pycodestyle==2.4.0',
         'pyyaml',
         'six',
     ],
@@ -40,7 +41,7 @@ setup(
             'check-case-conflict = pre_commit_hooks.check_case_conflict:main',
             'check-docstring-first = pre_commit_hooks.check_docstring_first:main',
             'check-executables-have-shebangs = pre_commit_hooks.check_executables_have_shebangs:main',
-            'check-json = pre_commit_hooks.check_json:check_json',
+            'check-json = pre_commit_check.hooks_json:check_json',
             'check-merge-conflict = pre_commit_hooks.check_merge_conflict:detect_merge_conflict',
             'check-symlinks = pre_commit_hooks.check_symlinks:check_symlinks',
             'check-vcs-permalinks = pre_commit_hooks.check_vcs_permalinks:main',
