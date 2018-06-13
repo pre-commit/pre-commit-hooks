@@ -23,11 +23,18 @@ setup(
     ],
 
     packages=find_packages(exclude=('tests*', 'testing*')),
+    # install_requires=[
+    #     # quickfix to prevent pycodestyle conflicts
+    #     'flake8==3.5.0',
+    #     'autopep8==1.3.5',
+    #     'pycodestyle==2.4.0',
+    #     'pyyaml',
+    #     'six',
+    # ],
     install_requires=[
         # quickfix to prevent pycodestyle conflicts
-        'flake8==3.5.0',
-        'autopep8==1.3.5',
-        'pycodestyle==2.4.0',
+        'flake8!=2.5.3',
+        'autopep8>=1.3',
         'pyyaml',
         'six',
     ],
