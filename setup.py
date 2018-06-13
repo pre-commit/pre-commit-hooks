@@ -33,10 +33,11 @@ setup(
     # ],
     install_requires=[
         # quickfix to prevent pycodestyle conflicts
-        'flake8!=2.5.3',
-        'autopep8>=1.3',
-        'pyyaml',
-        'six',
+        'flake8==3.5.0',
+        'autopep8==1.3.5',
+        'pycodestyle==2.3.1',
+        'pyyaml==3.12',
+        'six==1.11.0',
     ],
     entry_points={
         'console_scripts': [
