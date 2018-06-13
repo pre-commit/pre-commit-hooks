@@ -26,7 +26,7 @@ setup(
     install_requires=[
         # quickfix to prevent pycodestyle conflicts
         'flake8==3.0.4',
-        'autopep8==1.3',
+        'autopep8==1.3.5',
         'pyyaml',
         'six',
     ],
