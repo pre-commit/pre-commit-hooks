@@ -7,69 +7,66 @@ import collections
 import traceback
 
 
-DEBUG_STATEMENTS = set(['pdb', 'ipdb', 'pudb', 'q', 'rdb'])
+DEBUG_STATEMENTS = {'pdb', 'ipdb', 'pudb', 'q', 'rdb'}
+Debug = collections.namedtuple('Debug', ('line', 'col', 'name', 'reason'))
 
 
-DebugStatement = collections.namedtuple(
-    'DebugStatement', ['name', 'line', 'col'],
-)
-
-
-class ImportStatementParser(ast.NodeVisitor):
+class DebugStatementParser(ast.NodeVisitor):
     def __init__(self):
-        self.debug_import_statements = []
+        self.breakpoints = []
 
     def visit_Import(self, node):
-        for node_name in node.names:
-            if node_name.name in DEBUG_STATEMENTS:
-                self.debug_import_statements.append(
-                    DebugStatement(node_name.name, node.lineno, node.col_offset),
-                )
+        for name in node.names:
+            if name.name in DEBUG_STATEMENTS:
+                st = Debug(node.lineno, node.col_offset, name.name, 'imported')
+                self.breakpoints.append(st)
 
     def visit_ImportFrom(self, node):
         if node.module in DEBUG_STATEMENTS:
-            self.debug_import_statements.append(
-                DebugStatement(node.module, node.lineno, node.col_offset)
-            )
+            st = Debug(node.lineno, node.col_offset, node.module, 'imported')
+            self.breakpoints.append(st)
+
+    def visit_Call(self, node):
+        """python3.7+ breakpoint()"""
+        if isinstance(node.func, ast.Name) and node.func.id == 'breakpoint':
+            st = Debug(node.lineno, node.col_offset, node.func.id, 'called')
+            self.breakpoints.append(st)
+        self.generic_visit(node)
 
 
-def check_file_for_debug_statements(filename):
+def check_file(filename):
     try:
-        ast_obj = ast.parse(open(filename).read(), filename=filename)
+        ast_obj = ast.parse(open(filename, 'rb').read(), filename=filename)
     except SyntaxError:
-        print('{0} - Could not parse ast'.format(filename))
+        print('{} - Could not parse ast'.format(filename))
         print()
         print('\t' + traceback.format_exc().replace('\n', '\n\t'))
         print()
         return 1
-    visitor = ImportStatementParser()
+
+    visitor = DebugStatementParser()
     visitor.visit(ast_obj)
-    if visitor.debug_import_statements:
-        for debug_statement in visitor.debug_import_statements:
-            print(
-                '{0}:{1}:{2} - {3} imported'.format(
-                    filename,
-                    debug_statement.line,
-                    debug_statement.col,
-                    debug_statement.name,
-                )
-            )
-        return 1
-    else:
-        return 0
+
+    for bp in visitor.breakpoints:
+        print(
+            '{}:{}:{} - {} {}'.format(
+                filename, bp.line, bp.col, bp.name, bp.reason,
+            ),
+        )
+
+    return int(bool(visitor.breakpoints))
 
 
-def debug_statement_hook(argv=None):
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to run')
     args = parser.parse_args(argv)
 
     retv = 0
     for filename in args.filenames:
-        retv |= check_file_for_debug_statements(filename)
-
+        retv |= check_file(filename)
     return retv
 
 
 if __name__ == '__main__':
-    exit(debug_statement_hook())
+    exit(main())

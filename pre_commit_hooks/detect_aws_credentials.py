@@ -12,7 +12,7 @@ def get_aws_credential_files_from_env():
     files = set()
     for env_var in (
         'AWS_CONFIG_FILE', 'AWS_CREDENTIAL_FILE', 'AWS_SHARED_CREDENTIALS_FILE',
-        'BOTO_CONFIG'
+        'BOTO_CONFIG',
     ):
         if env_var in os.environ:
             files.add(os.environ[env_var])
@@ -23,7 +23,7 @@ def get_aws_secrets_from_env():
     """Extract AWS secrets from environment variables."""
     keys = set()
     for env_var in (
-        'AWS_SECRET_ACCESS_KEY', 'AWS_SECURITY_TOKEN', 'AWS_SESSION_TOKEN'
+        'AWS_SECRET_ACCESS_KEY', 'AWS_SECURITY_TOKEN', 'AWS_SESSION_TOKEN',
     ):
         if env_var in os.environ:
             keys.add(os.environ[env_var])
@@ -50,10 +50,12 @@ def get_aws_secrets_from_file(credentials_file):
     for section in parser.sections():
         for var in (
             'aws_secret_access_key', 'aws_security_token',
-            'aws_session_token'
+            'aws_session_token',
         ):
             try:
-                keys.add(parser.get(section, var))
+                key = parser.get(section, var).strip()
+                if key:
+                    keys.add(key)
             except configparser.NoOptionError:
                 pass
     return keys
@@ -93,13 +95,13 @@ def main(argv=None):
         help=(
             'Location of additional AWS credential files from which to get '
             'secret keys from'
-        )
+        ),
     )
     parser.add_argument(
         '--allow-missing-credentials',
         dest='allow_missing_credentials',
         action='store_true',
-        help='Allow hook to pass when no credentials are detected.'
+        help='Allow hook to pass when no credentials are detected.',
     )
     args = parser.parse_args(argv)
 
@@ -124,7 +126,7 @@ def main(argv=None):
         print(
             'No AWS keys were found in the configured credential files and '
             'environment variables.\nPlease ensure you have the correct '
-            'setting for --credentials-file'
+            'setting for --credentials-file',
         )
         return 2
 

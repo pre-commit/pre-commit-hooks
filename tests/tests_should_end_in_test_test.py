@@ -12,7 +12,7 @@ def test_validate_files_one_fails():
 
 
 def test_validate_files_django_all_pass():
-    ret = validate_files(['--django', 'test_foo.py', 'test_bar.py', 'tests/test_baz.py'])
+    ret = validate_files(['--django', 'tests.py', 'test_foo.py', 'test_bar.py', 'tests/test_baz.py'])
     assert ret == 0
 
 

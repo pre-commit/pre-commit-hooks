@@ -8,6 +8,9 @@ BLACKLIST = [
     b'BEGIN DSA PRIVATE KEY',
     b'BEGIN EC PRIVATE KEY',
     b'BEGIN OPENSSH PRIVATE KEY',
+    b'BEGIN PRIVATE KEY',
+    b'PuTTY-User-Key-File-2',
+    b'BEGIN SSH2 ENCRYPTED PRIVATE KEY',
 ]
 
 
@@ -26,7 +29,7 @@ def detect_private_key(argv=None):
 
     if private_key_files:
         for private_key_file in private_key_files:
-            print('Private key found: {0}'.format(private_key_file))
+            print('Private key found: {}'.format(private_key_file))
         return 1
     else:
         return 0

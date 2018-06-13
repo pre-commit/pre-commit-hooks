@@ -19,7 +19,7 @@ TESTS = (
         '"foo"\n',
         1,
         '{filename}:2 Module docstring appears after code '
-        '(code seen on line 1).\n'
+        '(code seen on line 1).\n',
     ),
     # Test double docstring
     (
@@ -28,7 +28,7 @@ TESTS = (
         '"fake docstring"\n',
         1,
         '{filename}:3 Multiple module docstrings '
-        '(first docstring on line 1).\n'
+        '(first docstring on line 1).\n',
     ),
     # Test multiple lines of code above
     (

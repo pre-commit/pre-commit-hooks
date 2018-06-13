@@ -4,6 +4,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
+import json
 import math
 import os
 
@@ -13,23 +14,13 @@ from pre_commit_hooks.util import cmd_output
 
 
 def lfs_files():
-    try:  # pragma: no cover (no git-lfs)
-        lines = cmd_output('git', 'lfs', 'status', '--porcelain').splitlines()
+    try:
+        # Introduced in git-lfs 2.2.0, first working in 2.2.1
+        lfs_ret = cmd_output('git', 'lfs', 'status', '--json')
     except CalledProcessError:  # pragma: no cover (with git-lfs)
-        lines = []
+        lfs_ret = '{"files":{}}'
 
-    modes_and_fileparts = [
-        (line[:3].strip(), line[3:].rpartition(' ')[0]) for line in lines
-    ]
-
-    def to_file_part(mode, filepart):  # pragma: no cover (no git-lfs)
-        assert mode in ('A', 'R')
-        return filepart if mode == 'A' else filepart.split(' -> ')[1]
-
-    return set(
-        to_file_part(mode, filepart) for mode, filepart in modes_and_fileparts
-        if mode in ('A', 'R')
-    )
+    return set(json.loads(lfs_ret)['files'])
 
 
 def find_large_added_files(filenames, maxkb):
@@ -41,7 +32,7 @@ def find_large_added_files(filenames, maxkb):
     for filename in filenames:
         kb = int(math.ceil(os.stat(filename).st_size / 1024))
         if kb > maxkb:
-            print('{0} ({1} KB) exceeds {2} KB.'.format(filename, kb, maxkb))
+            print('{} ({} KB) exceeds {} KB.'.format(filename, kb, maxkb))
             retv = 1
 
     return retv
@@ -51,7 +42,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',
-        help='Filenames pre-commit believes are changed.'
+        help='Filenames pre-commit believes are changed.',
     )
     parser.add_argument(
         '--maxkb', type=int, default=500,

@@ -16,7 +16,7 @@ def main(argv=None):
         with open(filename, 'rb') as f:
             if f.read(3) == b'\xef\xbb\xbf':
                 retv = 1
-                print('{0}: Has a byte-order marker'.format(filename))
+                print('{}: Has a byte-order marker'.format(filename))
 
     return retv
 

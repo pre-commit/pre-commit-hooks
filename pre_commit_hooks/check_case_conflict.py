@@ -9,7 +9,7 @@ from pre_commit_hooks.util import cmd_output
 
 
 def lower_set(iterable):
-    return set(x.lower() for x in iterable)
+    return {x.lower() for x in iterable}
 
 
 def find_conflicting_filenames(filenames):
@@ -35,7 +35,7 @@ def find_conflicting_filenames(filenames):
             if x.lower() in conflicts
         ]
         for filename in sorted(conflicting_files):
-            print('Case-insensitivity conflict found: {0}'.format(filename))
+            print('Case-insensitivity conflict found: {}'.format(filename))
         retv = 1
 
     return retv
@@ -45,7 +45,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',
-        help='Filenames pre-commit believes are changed.'
+        help='Filenames pre-commit believes are changed.',
     )
 
     args = parser.parse_args(argv)
