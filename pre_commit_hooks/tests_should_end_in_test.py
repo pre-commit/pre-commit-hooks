@@ -11,12 +11,12 @@ def validate_files(argv=None):
     parser.add_argument('filenames', nargs='*')
     parser.add_argument(
         '--django', default=False, action='store_true',
-        help='Use Django-style test naming pattern (test*.py)'
+        help='Use Django-style test naming pattern (test*.py)',
     )
     args = parser.parse_args(argv)
 
     retcode = 0
-    test_name_pattern = 'test_.*.py' if args.django else '.*_test.py'
+    test_name_pattern = 'test.*.py' if args.django else '.*_test.py'
     for filename in args.filenames:
         base = basename(filename)
         if (
@@ -26,9 +26,9 @@ def validate_files(argv=None):
         ):
             retcode = 1
             print(
-                '{0} does not match pattern "{1}"'.format(
-                    filename, test_name_pattern
-                )
+                '{} does not match pattern "{}"'.format(
+                    filename, test_name_pattern,
+                ),
             )
 
     return retcode

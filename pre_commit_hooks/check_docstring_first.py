@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
@@ -27,18 +28,18 @@ def check_docstring_first(src, filename='<unknown>'):
         if tok_type == tokenize.STRING and scol == 0:
             if found_docstring_line is not None:
                 print(
-                    '{0}:{1} Multiple module docstrings '
-                    '(first docstring on line {2}).'.format(
+                    '{}:{} Multiple module docstrings '
+                    '(first docstring on line {}).'.format(
                         filename, sline, found_docstring_line,
-                    )
+                    ),
                 )
                 return 1
             elif found_code_line is not None:
                 print(
-                    '{0}:{1} Module docstring appears after code '
-                    '(code seen on line {2}).'.format(
+                    '{}:{} Module docstring appears after code '
+                    '(code seen on line {}).'.format(
                         filename, sline, found_code_line,
-                    )
+                    ),
                 )
                 return 1
             else:
@@ -57,7 +58,7 @@ def main(argv=None):
     retv = 0
 
     for filename in args.filenames:
-        contents = io.open(filename).read()
+        contents = io.open(filename, encoding='UTF-8').read()
         retv |= check_docstring_first(contents, filename=filename)
 
     return retv

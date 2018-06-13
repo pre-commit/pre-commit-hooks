@@ -58,7 +58,7 @@ def end_of_file_fixer(argv=None):
         with open(filename, 'rb+') as file_obj:
             ret_for_file = fix_file(file_obj)
             if ret_for_file:
-                print('Fixing {0}'.format(filename))
+                print('Fixing {}'.format(filename))
             retv |= ret_for_file
 
     return retv

@@ -5,11 +5,12 @@ source =
 omit =
     .tox/*
     /usr/*
-    */tmp*
     setup.py
     get-git-lfs.py
 
 [report]
+show_missing = True
+skip_covered = True
 exclude_lines =
     # Have to re-enable the standard pragma
     \#\s*pragma: no cover

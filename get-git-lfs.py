@@ -8,9 +8,9 @@ from urllib.request import urlopen
 
 DOWNLOAD_PATH = (
     'https://github.com/github/git-lfs/releases/download/'
-    'v1.1.0/git-lfs-linux-amd64-1.1.0.tar.gz'
+    'v2.2.1/git-lfs-linux-amd64-2.2.1.tar.gz'
 )
-PATH_IN_TAR = 'git-lfs-1.1.0/git-lfs'
+PATH_IN_TAR = 'git-lfs-2.2.1/git-lfs'
 DEST_PATH = '/tmp/git-lfs/git-lfs'
 DEST_DIR = os.path.dirname(DEST_PATH)
 

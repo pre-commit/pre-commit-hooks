@@ -7,7 +7,9 @@ import yaml
 
 
 def test_readme_contains_all_hooks():
-    readme_contents = io.open('README.md').read()
-    hooks = yaml.load(io.open('hooks.yaml').read())
+    with io.open('README.md', encoding='UTF-8') as f:
+        readme_contents = f.read()
+    with io.open('.pre-commit-hooks.yaml', encoding='UTF-8') as f:
+        hooks = yaml.load(f)
     for hook in hooks:
-        assert '`{0}`'.format(hook['id']) in readme_contents
+        assert '`{}`'.format(hook['id']) in readme_contents

@@ -14,12 +14,12 @@ def main(argv=None):
 
     retv = 0
     for filename in args.files:
-        original_contents = io.open(filename).read()
+        original_contents = io.open(filename, encoding='UTF-8').read()
         new_contents = autopep8.fix_code(original_contents, args)
         if original_contents != new_contents:
-            print('Fixing {0}'.format(filename))
+            print('Fixing {}'.format(filename))
             retv = 1
-            with io.open(filename, 'w') as output_file:
+            with io.open(filename, 'w', encoding='UTF-8') as output_file:
                 output_file.write(new_contents)
 
     return retv

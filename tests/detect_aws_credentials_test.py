@@ -21,16 +21,16 @@ from testing.util import get_resource_path
         (
             {
                 'AWS_DUMMY_KEY': '/foo', 'AWS_CONFIG_FILE': '/bar',
-                'AWS_CREDENTIAL_FILE': '/baz'
+                'AWS_CREDENTIAL_FILE': '/baz',
             },
-            {'/bar', '/baz'}
+            {'/bar', '/baz'},
         ),
         (
             {
                 'AWS_CONFIG_FILE': '/foo', 'AWS_CREDENTIAL_FILE': '/bar',
-                'AWS_SHARED_CREDENTIALS_FILE': '/baz'
+                'AWS_SHARED_CREDENTIALS_FILE': '/baz',
             },
-            {'/foo', '/bar', '/baz'}
+            {'/foo', '/bar', '/baz'},
         ),
     ),
 )
@@ -51,7 +51,7 @@ def test_get_aws_credentials_file_from_env(env_vars, values):
         ({'AWS_DUMMY_KEY': 'foo', 'AWS_SECRET_ACCESS_KEY': 'bar'}, {'bar'}),
         (
             {'AWS_SECRET_ACCESS_KEY': 'foo', 'AWS_SECURITY_TOKEN': 'bar'},
-            {'foo', 'bar'}
+            {'foo', 'bar'},
         ),
     ),
 )
@@ -66,21 +66,24 @@ def test_get_aws_secrets_from_env(env_vars, values):
     (
         (
             'aws_config_with_secret.ini',
-            {'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb'}
+            {'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb'},
         ),
         ('aws_config_with_session_token.ini', {'foo'}),
-        ('aws_config_with_secret_and_session_token.ini',
-         {'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb', 'foo'}),
+        (
+            'aws_config_with_secret_and_session_token.ini',
+            {'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb', 'foo'},
+        ),
         (
             'aws_config_with_multiple_sections.ini',
             {
                 '7xebzorgm5143ouge9gvepxb2z70bsb2rtrh099e',
                 'z2rpgs5uit782eapz5l1z0y2lurtsyyk6hcfozlb',
                 'ixswosj8gz3wuik405jl9k3vdajsnxfhnpui38ez',
-                'foo'
-            }
+                'foo',
+            },
         ),
         ('aws_config_without_secrets.ini', set()),
+        ('aws_config_without_secrets_with_spaces.ini', set()),
         ('nonsense.txt', set()),
         ('ok_json.json', set()),
     ),
@@ -98,6 +101,7 @@ def test_get_aws_secrets_from_file(filename, expected_keys):
         ('aws_config_with_session_token.ini', 1),
         ('aws_config_with_multiple_sections.ini', 1),
         ('aws_config_without_secrets.ini', 0),
+        ('aws_config_without_secrets_with_spaces.ini', 0),
         ('nonsense.txt', 0),
         ('ok_json.json', 0),
     ),
@@ -121,7 +125,7 @@ def test_non_existent_credentials(mock_secrets_env, mock_secrets_file, capsys):
     mock_secrets_file.return_value = set()
     ret = main((
         get_resource_path('aws_config_without_secrets.ini'),
-        "--credentials-file=testing/resources/credentailsfilethatdoesntexist"
+        "--credentials-file=testing/resources/credentailsfilethatdoesntexist",
     ))
     assert ret == 2
     out, _ = capsys.readouterr()
@@ -141,6 +145,6 @@ def test_non_existent_credentials_with_allow_flag(mock_secrets_env, mock_secrets
     ret = main((
         get_resource_path('aws_config_without_secrets.ini'),
         "--credentials-file=testing/resources/credentailsfilethatdoesntexist",
-        "--allow-missing-credentials"
+        "--allow-missing-credentials",
     ))
     assert ret == 0

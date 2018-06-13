@@ -1,5 +1,6 @@
+repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    sha: v0.7.0
+    rev: v1.3.0
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
@@ -13,12 +14,19 @@
     -   id: requirements-txt-fixer
     -   id: flake8
 -   repo: https://github.com/pre-commit/pre-commit
-    sha: v0.12.2
+    rev: v1.7.0
     hooks:
-    -   id: validate_config
     -   id: validate_manifest
 -   repo: https://github.com/asottile/reorder_python_imports
-    sha: v0.3.1
+    rev: v1.0.1
     hooks:
     -   id: reorder-python-imports
         language_version: python2.7
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v1.2.0
+    hooks:
+    -   id: pyupgrade
+-   repo: https://github.com/asottile/add-trailing-comma
+    rev: v0.6.4
+    hooks:
+    -   id: add-trailing-comma
