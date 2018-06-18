@@ -47,7 +47,8 @@ class BuiltinTypeVisitor(ast.NodeVisitor):
 
 
 def check_file_for_builtin_type_constructors(filename, ignore=None, allow_dict_kwargs=True):
-    tree = ast.parse(open(filename, 'rb').read(), filename=filename)
+    with open(filename, 'rb') as f:
+        tree = ast.parse(f.read(), filename=filename)
     visitor = BuiltinTypeVisitor(ignore=ignore, allow_dict_kwargs=allow_dict_kwargs)
     visitor.visit(tree)
     return visitor.builtin_type_calls

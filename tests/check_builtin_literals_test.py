@@ -94,7 +94,8 @@ def test_dict_no_allow_kwargs_exprs(expression, calls):
 
 def test_ignore_constructors():
     visitor = BuiltinTypeVisitor(ignore=('complex', 'dict', 'float', 'int', 'list', 'str', 'tuple'))
-    visitor.visit(ast.parse(open(get_resource_path('builtin_constructors.py'), 'rb').read(), 'builtin_constructors.py'))
+    with open(get_resource_path('builtin_constructors.py'), 'rb') as f:
+        visitor.visit(ast.parse(f.read(), 'builtin_constructors.py'))
     assert visitor.builtin_type_calls == []
 
 

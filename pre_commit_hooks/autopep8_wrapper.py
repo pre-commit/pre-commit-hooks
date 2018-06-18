@@ -14,7 +14,8 @@ def main(argv=None):
 
     retv = 0
     for filename in args.files:
-        original_contents = io.open(filename, encoding='UTF-8').read()
+        with io.open(filename, encoding='UTF-8') as f:
+            original_contents = f.read()
         new_contents = autopep8.fix_code(original_contents, args)
         if original_contents != new_contents:
             print('Fixing {}'.format(filename))
