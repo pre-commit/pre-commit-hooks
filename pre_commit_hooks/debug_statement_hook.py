@@ -36,7 +36,8 @@ class DebugStatementParser(ast.NodeVisitor):
 
 def check_file(filename):
     try:
-        ast_obj = ast.parse(open(filename, 'rb').read(), filename=filename)
+        with open(filename, 'rb') as f:
+            ast_obj = ast.parse(f.read(), filename=filename)
     except SyntaxError:
         print('{} - Could not parse ast'.format(filename))
         print()

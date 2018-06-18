@@ -18,7 +18,8 @@ def check_ast(argv=None):
     for filename in args.filenames:
 
         try:
-            ast.parse(open(filename, 'rb').read(), filename=filename)
+            with open(filename, 'rb') as f:
+                ast.parse(f.read(), filename=filename)
         except SyntaxError:
             print('{}: failed parsing with {} {}:'.format(
                 filename,

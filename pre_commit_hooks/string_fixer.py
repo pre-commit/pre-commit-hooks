@@ -32,7 +32,8 @@ def get_line_offsets_by_line_no(src):
 
 
 def fix_strings(filename):
-    contents = io.open(filename, encoding='UTF-8').read()
+    with io.open(filename, encoding='UTF-8') as f:
+        contents = f.read()
     line_offsets = get_line_offsets_by_line_no(contents)
 
     # Basically a mutable string
