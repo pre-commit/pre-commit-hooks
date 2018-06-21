@@ -49,8 +49,13 @@ def check_yaml(argv=None):
             'Implies --allow-multiple-documents'
         ),
     )
+    parser.add_argument('--ignore-tags', type=lambda s: s.split(','), default=[],
+                        help='Custom tags to ignore.')
     parser.add_argument('filenames', nargs='*', help='Yaml filenames to check.')
     args = parser.parse_args(argv)
+
+    for tag in args.ignore_tags:
+        Loader.add_constructor(tag, lambda *a, **k: None)
 
     load_fn = LOAD_FNS[Key(multi=args.multi, unsafe=args.unsafe)]
 
