@@ -128,5 +128,12 @@ def test_ignores_binary_files():
 
 
 def test_does_not_care_when_not_in_a_merge(tmpdir):
-    tmpdir.join('README.md').write('problem\n=======\n')
-    assert detect_merge_conflict(['README.md']) == 0
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n=======\n')
+    assert detect_merge_conflict([str(f.realpath())]) == 0
+
+
+def test_care_when_assumed_merge(tmpdir):
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n=======\n')
+    assert detect_merge_conflict([str(f.realpath()), '--assume-in-merge']) == 1

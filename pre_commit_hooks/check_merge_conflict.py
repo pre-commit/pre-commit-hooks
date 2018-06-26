@@ -26,9 +26,10 @@ def is_in_merge():
 def detect_merge_conflict(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
+    parser.add_argument('--assume-in-merge', action='store_true')
     args = parser.parse_args(argv)
 
-    if not is_in_merge():
+    if not is_in_merge() and not args.assume_in_merge:
         return 0
 
     retcode = 0
