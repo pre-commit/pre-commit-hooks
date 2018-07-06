@@ -27,7 +27,7 @@ setup(
         # quickfix to prevent pycodestyle conflicts
         'flake8!=2.5.3',
         'autopep8>=1.3',
-        'pyyaml>=4.2b4',
+        'pyyaml>=3.13',
         'six',
     ],
     entry_points={
