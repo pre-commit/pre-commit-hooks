@@ -1,3 +1,27 @@
+1.4.0
+=====
+
+### Features
+- `no-commit-to-branch`: allow `--branch` to be specified multiple times
+    - #190 PR by @moas.
+    - #294 PR by @asottile.
+- `check-merge-conflict`: add `--assume-in-merge` to force checks outside of a
+  merge commit situation
+    - #300 issue by @vinayinvicible.
+    - #301 PR by @vinayinvicible.
+
+### Fixes
+- Don't match whitespace in VCS urls
+    - #293 PR by @asottile.
+- Fix invalid escape sequences
+    - #296 PR by @asottile.
+- Fix `ResourcesWarning`s
+    - #297 PR by @asottile.
+
+### Misc
+- Test against python3.7
+    - #304 PR by @expobrain.
+
 1.3.0
 =====
 
