@@ -263,3 +263,9 @@
     # for backward compatibility
     files: ''
     minimum_pre_commit_version: 0.15.0
+-   id: forbid-type-hints
+    name: Forbid Type Hints
+    description: Prevent type hints. Use type annotations instead.
+    entry: '# type.*(?<!: ignore)$'
+    language: pygrep
+    types: [python]
