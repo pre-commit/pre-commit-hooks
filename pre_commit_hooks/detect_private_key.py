@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import os
 import sys
 
 BLACKLIST = [
@@ -22,10 +23,11 @@ def detect_private_key(argv=None):
     private_key_files = []
 
     for filename in args.filenames:
-        with open(filename, 'rb') as f:
-            content = f.read()
-            if any(line in content for line in BLACKLIST):
-                private_key_files.append(filename)
+        if os.path.isfile(filename):
+            with open(filename, 'rb') as f:
+                content = f.read()
+                if any(line in content for line in BLACKLIST):
+                    private_key_files.append(filename)
 
     if private_key_files:
         for private_key_file in private_key_files:
