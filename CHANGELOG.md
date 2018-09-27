@@ -1,3 +1,13 @@
+1.4.0-1
+=======
+
+(Note: this is a tag-only release as no code changes occurred)
+
+### Fixes
+- Don't run `end-of-file-fixer` during `commit-msg` stage
+    - #315 issue by @revolter.
+    - #317 PR by @revolter.
+
 1.4.0
 =====
 
