@@ -174,9 +174,9 @@
     entry: end-of-file-fixer
     language: python
     types: [text]
+    stages: [commit, push, manual]
     # for backward compatibility
     files: ''
-    stages: [commit, push, manual]
     minimum_pre_commit_version: 0.15.0
 -   id: file-contents-sorter
     name: File Contents Sorter
