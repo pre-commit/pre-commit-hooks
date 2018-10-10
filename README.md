@@ -82,8 +82,8 @@ Add this to your `.pre-commit-config.yaml`
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `no-commit-to-branch` - Protect specific branches from direct checkins.
-    - Use `args: ['staging', 'master']` to set the branch. `master` is the
-      default if no argument is set.
+    - Use `args: [--branch, staging, --branch, master]` to set the branch.
+      `master` is the default if no argument is set.
     - `-b` / `--branch` may be specified multiple times to protect multiple
       branches.
 - `pyflakes` - Run pyflakes on your python files.
