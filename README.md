@@ -23,10 +23,6 @@ Add this to your `.pre-commit-config.yaml`
 
 ### Hooks available
 
-- `autopep8-wrapper` - Runs autopep8 over python source.
-    - Ignore PEP 8 violation types with `args: ['-i', '--ignore=E000,...']` or
-      through configuration of the `[pycodestyle]` section in
-      setup.cfg / tox.ini.
 - `check-added-large-files` - Prevent giant files from being committed.
     - Specify what is "too large" with `args: ['--maxkb=123']` (default=500kB).
     - If `git-lfs` is installed, lfs files will be skipped
@@ -86,7 +82,6 @@ Add this to your `.pre-commit-config.yaml`
       `master` is the default if no argument is set.
     - `-b` / `--branch` may be specified multiple times to protect multiple
       branches.
-- `pyflakes` - Run pyflakes on your python files.
 - `pretty-format-json` - Checks that all your JSON files are pretty.  "Pretty"
   here means that keys are sorted and indented.  You can configure this with
   the following commandline options:
@@ -101,6 +96,12 @@ Add this to your `.pre-commit-config.yaml`
       use `args: ['--markdown-linebreak-ext=txt,text']` to add other extensions,
       `args: ['--markdown-linebreak-ext=*']` to preserve them for all files,
       or `args: ['--no-markdown-linebreak-ext']` to disable and always trim.
+
+### Deprecated / replaced hooks
+
+- `autopep8-wrapper`: instead use
+  [mirrors-autopep8](https://github.com/pre-commit/mirrors-autopep8)
+- `pyflakes`: instead use `flake8`
 
 ### As a standalone package
 

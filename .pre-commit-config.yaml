@@ -4,7 +4,6 @@ repos:
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
-    -   id: autopep8-wrapper
     -   id: check-docstring-first
     -   id: check-json
     -   id: check-added-large-files
@@ -13,6 +12,10 @@ repos:
     -   id: name-tests-test
     -   id: requirements-txt-fixer
     -   id: flake8
+-   repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v1.4
+    hooks:
+    -   id: autopep8
 -   repo: https://github.com/pre-commit/pre-commit
     rev: v1.7.0
     hooks:
