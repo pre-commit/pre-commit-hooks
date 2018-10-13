@@ -15,13 +15,13 @@ def fix_file(file_obj):
         return 0
     last_character = file_obj.read(1)
     # last_character will be '' for an empty file
-    if last_character != b'\n' and last_character != b'':
+    if last_character not in {b'\n', b'\r'} and last_character != b'':
         # Needs this seek for windows, otherwise IOError
         file_obj.seek(0, os.SEEK_END)
         file_obj.write(b'\n')
         return 1
 
-    while last_character == b'\n':
+    while last_character in {b'\n', b'\r'}:
         # Deal with the beginning of the file
         if file_obj.tell() == 1:
             # If we've reached the beginning of the file and it is all
@@ -35,13 +35,16 @@ def fix_file(file_obj):
         last_character = file_obj.read(1)
 
     # Our current position is at the end of the file just before any amount of
-    # newlines.  If we read two characters and get two newlines back we know
-    # there are extraneous newlines at the ned of the file.  Then backtrack and
-    # trim the end off.
-    if len(file_obj.read(2)) == 2:
-        file_obj.seek(-1, os.SEEK_CUR)
-        file_obj.truncate()
-        return 1
+    # newlines.  If we find extraneous newlines, then backtrack and trim them.
+    position = file_obj.tell()
+    remaining = file_obj.read()
+    for sequence in (b'\n', b'\r\n', b'\r'):
+        if remaining == sequence:
+            return 0
+        elif remaining.startswith(sequence):
+            file_obj.seek(position + len(sequence))
+            file_obj.truncate()
+            return 1
 
     return 0
 
