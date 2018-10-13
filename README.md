@@ -97,10 +97,10 @@ Add this to your `.pre-commit-config.yaml`
 - `requirements-txt-fixer` - Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
 - `sort-simple-yaml` - Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
 - `trailing-whitespace` - Trims trailing whitespace.
-    - Markdown linebreak trailing spaces preserved for `.md` and`.markdown`;
-      use `args: ['--markdown-linebreak-ext=txt,text']` to add other extensions,
-      `args: ['--markdown-linebreak-ext=*']` to preserve them for all files,
-      or `args: ['--no-markdown-linebreak-ext']` to disable and always trim.
+    - To preserve Markdown [hard linebreaks](https://github.github.com/gfm/#hard-line-break)
+      use `args: [--markdown-linebreak-ext=md]` (or other extensions used
+      by your markdownfiles).  If for some reason you want to treat all files
+      as markdown, use `--markdown-linebreak-ext=*`.
 
 ### As a standalone package
 
