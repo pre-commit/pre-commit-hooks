@@ -35,14 +35,14 @@ def fix_file(file_obj):
         last_character = file_obj.read(1)
 
     # Our current position is at the end of the file just before any amount of
-    # newlines.  If we read two characters and get two newlines back we know
-    # there are extraneous newlines at the ned of the file.  Then backtrack and
-    # trim the end off.
-    if len(file_obj.read(2)) == 2:
-        file_obj.seek(-2, os.SEEK_CUR)
-        file_obj.truncate()
-        file_obj.write(b'\n')
-        return 1
+    # newlines.  If we find extraneous newlines, then backtrack and trim them.
+    position = file_obj.tell()
+    remaining = file_obj.read()
+    for sequence in [b'\n', b'\r\n']:
+        if remaining.startswith(sequence) and len(remaining) > len(sequence):
+            file_obj.seek(position + len(sequence))
+            file_obj.truncate()
+            return 1
 
     return 0
 
