@@ -21,7 +21,7 @@ def fix_file(file_obj):
         file_obj.write(b'\n')
         return 1
 
-    while last_character == b'\n':
+    while last_character == b'\n' or last_character == b'\r':
         # Deal with the beginning of the file
         if file_obj.tell() == 1:
             # If we've reached the beginning of the file and it is all
@@ -39,8 +39,9 @@ def fix_file(file_obj):
     # there are extraneous newlines at the ned of the file.  Then backtrack and
     # trim the end off.
     if len(file_obj.read(2)) == 2:
-        file_obj.seek(-1, os.SEEK_CUR)
+        file_obj.seek(-2, os.SEEK_CUR)
         file_obj.truncate()
+        file_obj.write(b'\n')
         return 1
 
     return 0

@@ -15,6 +15,8 @@ TESTS = (
     (b'foo', 1, b'foo\n'),
     (b'foo\n\n\n', 1, b'foo\n'),
     (b'\xe2\x98\x83', 1, b'\xe2\x98\x83\n'),
+    (b'foo\r\n', 1, b'foo\n'),
+    (b'foo\r\n\r\n', 1, b'foo\n'),
 )
 
 
