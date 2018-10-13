@@ -5,169 +5,112 @@
     language: python
     types: [python]
     args: [-i]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-added-large-files
     name: Check for added large files
     description: Prevent giant files from being committed
     entry: check-added-large-files
     language: python
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-ast
     name: Check python ast
     description: Simply check whether the files parse as valid python.
     entry: check-ast
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-byte-order-marker
     name: Check for byte-order marker
     description: Forbid files which have a UTF-8 byte-order marker
     entry: check-byte-order-marker
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-builtin-literals
     name: Check builtin type constructor use
     description: Require literal syntax when initializing empty or zero Python builtin types.
     entry: check-builtin-literals
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-case-conflict
     name: Check for case conflicts
     description: Check for files that would conflict in case-insensitive filesystems
     entry: check-case-conflict
     language: python
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-docstring-first
     name: Check docstring is first
     description: Checks a common error of defining a docstring after code.
     entry: check-docstring-first
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-executables-have-shebangs
     name: Check that executables have shebangs
     description: Ensures that (non-binary) executables have a shebang.
     entry: check-executables-have-shebangs
     language: python
     types: [text, executable]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-json
     name: Check JSON
     description: This hook checks json files for parseable syntax.
     entry: check-json
     language: python
     types: [json]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: pretty-format-json
     name: Pretty format JSON
     description: This hook sets a standard for formatting JSON files.
     entry: pretty-format-json
     language: python
     types: [json]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-merge-conflict
     name: Check for merge conflicts
     description: Check for files that contain merge conflict strings.
     entry: check-merge-conflict
     language: python
     types: [text]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-symlinks
     name: Check for broken symlinks
     description: Checks for symlinks which do not point to anything.
     entry: check-symlinks
     language: python
     types: [symlink]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-vcs-permalinks
     name: Check vcs permalinks
     description: Ensures that links to vcs websites are permalinks.
     entry: check-vcs-permalinks
     language: python
     types: [text]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-xml
     name: Check Xml
     description: This hook checks xml files for parseable syntax.
     entry: check-xml
     language: python
     types: [xml]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: check-yaml
     name: Check Yaml
     description: This hook checks yaml files for parseable syntax.
     entry: check-yaml
     language: python
     types: [yaml]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: debug-statements
     name: Debug Statements (Python)
     description: Check for debugger imports and py37+ `breakpoint()` calls in python source.
     entry: debug-statement-hook
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: detect-aws-credentials
     name: Detect AWS Credentials
     description: Detects *your* aws credentials from the aws cli credentials file
     entry: detect-aws-credentials
     language: python
     types: [text]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: detect-private-key
     name: Detect Private Key
     description: Detects the presence of private keys
     entry: detect-private-key
     language: python
     types: [text]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: double-quote-string-fixer
     name: Fix double quoted strings
     description: This hook replaces double quoted strings with single quoted strings
     entry: double-quote-string-fixer
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: end-of-file-fixer
     name: Fix End of Files
     description: Ensures that a file is either empty, or ends with one newline.
@@ -175,9 +118,6 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: file-contents-sorter
     name: File Contents Sorter
     description: Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
@@ -190,35 +130,23 @@
     entry: fix-encoding-pragma
     description: 'Add # -*- coding: utf-8 -*- to the top of python files'
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: flake8
     name: Flake8
     description: This hook runs flake8.
     entry: flake8
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: forbid-new-submodules
     name: Forbid new submodules
     language: python
     entry: forbid-new-submodules
     description: Prevent addition of new git submodules
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: mixed-line-ending
     name: Mixed line ending
     description: Replaces or checks mixed line ending
     entry: mixed-line-ending
     language: python
     types: [text]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: name-tests-test
     name: Tests should end in _test.py
     description: This verifies that test files are named correctly
@@ -231,18 +159,12 @@
     language: python
     pass_filenames: false
     always_run: true
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: pyflakes
     name: Pyflakes (DEPRECATED, use flake8)
     description: This hook runs pyflakes. (This is deprecated, use flake8).
     entry: pyflakes
     language: python
     types: [python]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
 -   id: requirements-txt-fixer
     name: Fix requirements.txt
     description: Sorts entries in requirements.txt
@@ -261,6 +183,3 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
-    # for backward compatibility
-    files: ''
-    minimum_pre_commit_version: 0.15.0
