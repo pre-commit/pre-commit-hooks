@@ -35,23 +35,24 @@ def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--no-markdown-linebreak-ext',
-        action='store_const',
-        const=[],
-        default=argparse.SUPPRESS,
-        dest='markdown_linebreak_ext',
-        help='Do not preserve linebreak spaces in Markdown',
+        action='store_true',
+        help=argparse.SUPPRESS,
     )
     parser.add_argument(
         '--markdown-linebreak-ext',
         action='append',
-        const='',
-        default=['md,markdown'],
+        default=[],
         metavar='*|EXT[,EXT,...]',
-        nargs='?',
-        help='Markdown extensions (or *) for linebreak spaces',
+        help=(
+            'Markdown extensions (or *) to not strip linebreak spaces.  '
+            'default: %(default)s'
+        ),
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
+
+    if args.no_markdown_linebreak_ext:
+        print('--no-markdown-linebreak-ext now does nothing!')
 
     md_args = args.markdown_linebreak_ext
     if '' in md_args:
@@ -66,7 +67,7 @@ def main(argv=None):
     for ext in md_exts:
         if any(c in ext[1:] for c in r'./\:'):
             parser.error(
-                "bad --markdown-linebreak-ext extension '{}' (has . / \\ :)\n"
+                "bad --markdown-linebreak-ext extension {!r} (has . / \\ :)\n"
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
                 .format(ext),
             )

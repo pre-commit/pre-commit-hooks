@@ -14,7 +14,7 @@ from pre_commit_hooks.trailing_whitespace_fixer import main
     ),
 )
 def test_fixes_trailing_whitespace(input_s, expected, tmpdir):
-    path = tmpdir.join('file.txt')
+    path = tmpdir.join('file.md')
     path.write(input_s)
     assert main((path.strpath,)) == 1
     assert path.read() == expected
@@ -36,89 +36,39 @@ def test_ok_with_dos_line_endings(tmpdir):
     assert ret == 0
 
 
-def test_markdown_ok(tmpdir):
-    filename = tmpdir.join('foo.md')
-    filename.write_binary(b'foo  \n')
-    ret = main((filename.strpath,))
-    assert filename.read_binary() == b'foo  \n'
-    assert ret == 0
-
-
-# filename, expected input, expected output
-MD_TESTS_1 = (
-    ('foo.md', 'foo  \nbar \n  ', 'foo  \nbar\n'),
-    ('bar.Markdown', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
-    ('.md', 'baz   \nquux  \t\n\t\n', 'baz\nquux\n\n'),
-    ('txt', 'foo   \nbaz \n\t\n', 'foo\nbaz\n\n'),
-)
-
-
-@pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_1)
-def test_fixes_trailing_markdown_whitespace(filename, input_s, output, tmpdir):
-    path = tmpdir.join(filename)
-    path.write(input_s)
-    ret = main([path.strpath])
+@pytest.mark.parametrize('ext', ('md', 'Md', '.md', '*'))
+def test_fixes_markdown_files(tmpdir, ext):
+    path = tmpdir.join('test.md')
+    path.write(
+        'foo  \n'  # leaves alone
+        'bar \n'  # less than two so it is removed
+        'baz    \n'  # more than two so it becomes two spaces
+        '\t\n'  # trailing tabs are stripped anyway
+        '\n  ',  # whitespace at the end of the file is removed
+    )
+    ret = main((path.strpath, '--markdown-linebreak-ext={}'.format(ext)))
     assert ret == 1
-    assert path.read() == output
+    assert path.read() == (
+        'foo  \n'
+        'bar\n'
+        'baz  \n'
+        '\n'
+        '\n'
+    )
 
 
-# filename, expected input, expected output
-MD_TESTS_2 = (
-    ('foo.txt', 'foo  \nbar \n  \n', 'foo  \nbar\n\n'),
-    ('bar.Markdown', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
-    ('bar.MD', 'bar   \nbaz\t   \n\t\n', 'bar  \nbaz  \n\n'),
-    ('.txt', 'baz   \nquux  \t\n\t\n', 'baz\nquux\n\n'),
-    ('txt', 'foo   \nbaz \n\t\n', 'foo\nbaz\n\n'),
-)
-
-
-@pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_2)
-def test_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
-    path = tmpdir.join(filename)
-    path.write(input_s)
-    ret = main(('--markdown-linebreak-ext=TxT', path.strpath))
-    assert ret == 1
-    assert path.read() == output
-
-
-# filename, expected input, expected output
-MD_TESTS_3 = (
-    ('foo.baz', 'foo  \nbar \n  ', 'foo  \nbar\n'),
-    ('bar', 'bar   \nbaz\t\n\t\n', 'bar  \nbaz\n\n'),
-)
-
-
-@pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_3)
-def test_markdown_linebreak_ext_opt_all(filename, input_s, output, tmpdir):
-    path = tmpdir.join(filename)
-    path.write(input_s)
-    # need to make sure filename is not treated as argument to option
-    ret = main(('--markdown-linebreak-ext=*', path.strpath))
-    assert ret == 1
-    assert path.read() == output
-
-
-@pytest.mark.parametrize(('arg'), ('--', 'a.b', 'a/b'))
+@pytest.mark.parametrize('arg', ('--', 'a.b', 'a/b', ''))
 def test_markdown_linebreak_ext_badopt(arg):
     with pytest.raises(SystemExit) as excinfo:
         main(['--markdown-linebreak-ext', arg])
     assert excinfo.value.code == 2
 
 
-# filename, expected input, expected output
-MD_TESTS_4 = (
-    ('bar.md', 'bar   \nbaz\t   \n\t\n', 'bar\nbaz\n\n'),
-    ('bar.markdown', 'baz   \nquux  \n', 'baz\nquux\n'),
-)
-
-
-@pytest.mark.parametrize(('filename', 'input_s', 'output'), MD_TESTS_4)
-def test_no_markdown_linebreak_ext_opt(filename, input_s, output, tmpdir):
-    path = tmpdir.join(filename)
-    path.write(input_s)
-    ret = main(['--no-markdown-linebreak-ext', path.strpath])
-    assert ret == 1
-    assert path.read() == output
+def test_prints_warning_with_no_markdown_ext(capsys, tmpdir):
+    f = tmpdir.join('f').ensure()
+    assert main((f.strpath, '--no-markdown-linebreak-ext')) == 0
+    out, _ = capsys.readouterr()
+    assert out == '--no-markdown-linebreak-ext now does nothing!\n'
 
 
 def test_preserve_non_utf8_file(tmpdir):
