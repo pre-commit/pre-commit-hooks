@@ -2,28 +2,12 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import io
-import sys
-
-import autopep8
-
 
 def main(argv=None):
-    argv = argv if argv is not None else sys.argv[1:]
-    args = autopep8.parse_args(argv, apply_config=True)
-
-    retv = 0
-    for filename in args.files:
-        with io.open(filename, encoding='UTF-8') as f:
-            original_contents = f.read()
-        new_contents = autopep8.fix_code(original_contents, args)
-        if original_contents != new_contents:
-            print('Fixing {}'.format(filename))
-            retv = 1
-            with io.open(filename, 'w', encoding='UTF-8') as output_file:
-                output_file.write(new_contents)
-
-    return retv
+    raise SystemExit(
+        'autopep8-wrapper is deprecated.  Instead use autopep8 directly via '
+        'https://github.com/pre-commit/mirrors-autopep8',
+    )
 
 
 if __name__ == '__main__':

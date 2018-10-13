@@ -6,23 +6,8 @@ import pytest
 from pre_commit_hooks.autopep8_wrapper import main
 
 
-@pytest.mark.parametrize(
-    ('input_src', 'expected_ret', 'output_src'),
-    (
-        ('print(1    + 2)\n', 1, 'print(1 + 2)\n'),
-        ('print(1 + 2)\n', 0, 'print(1 + 2)\n'),
-    ),
-)
-def test_main_failing(tmpdir, input_src, expected_ret, output_src):
-    path = tmpdir.join('test.py')
-    path.write(input_src)
-    ret = main([path.strpath, '-i', '-v'])
-    assert ret == expected_ret
-    assert path.read() == output_src
-
-
-def test_respects_config_file(tmpdir):
-    with tmpdir.as_cwd():
-        tmpdir.join('setup.cfg').write('[pycodestyle]\nignore=E221')
-        tmpdir.join('test.py').write('print(1    + 2)\n')
-        assert main(['test.py', '-i', '-v']) == 0
+def test_invariantly_fails():
+    with pytest.raises(SystemExit) as excinfo:
+        main()
+    msg, = excinfo.value.args
+    assert 'https://github.com/pre-commit/mirrors-autopep8' in msg
