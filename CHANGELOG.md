@@ -1,3 +1,35 @@
+2.0.0
+=====
+
+### Breaking changes
+
+- `autopep8-wrapper` has been moved to
+  [pre-commit/mirrors-autopep8][mirrors-autopep8]
+    - #92 issue by @asottile.
+    - #319 issue by @blaggacao.
+    - #321 PR by @asottile.
+- `trailing-whitespace` defaults to `--no-markdown-linebreak-ext`
+    - #310 issue by @asottile.
+    - #324 PR by @asottile.
+- `hooks.yaml` (legacy pre-commit hook metadata) deleted
+    - #323 PR by @asottile.
+- pre-`types` compatibility metadata removed
+    - #323 PR @asottile.
+
+### Docs
+
+- Correct documentation for `no-commit-to-branch`
+    - #318 PR by @milin.
+
+### Updating
+
+- Minimum supported version of `pre-commit` is now 0.15.0
+- Use `autopep8` from [pre-commit/mirrors-autopep8][mirrors-autopep8]
+- To keep mardown hard linebreaks, for `trailing-whitespace` use
+  `args: [--markdown-linebreak-ext=md,markdown]` (the previous default value)
+
+[mirrors-autopep8]: https://github.com/pre-commit/mirrors-autopep8
+
 1.4.0-1
 =======
 
