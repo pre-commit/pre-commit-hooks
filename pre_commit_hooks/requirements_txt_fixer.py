@@ -61,6 +61,9 @@ def fix_requirements(f):
         elif line.startswith(b'#') or line.strip() == b'':
             requirement.comments.append(line)
         else:
+            # Automatically fix 'package=version' to 'package==version'
+            if b'=' in line and b'==' not in line and b'egg=' not in line:
+                line = line.replace(b'=', b'==')
             requirement.value = line
 
     # if a file ends in a comment, preserve it at the end

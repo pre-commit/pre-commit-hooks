@@ -30,6 +30,7 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
         ),
         (b'bar\npkg-resources==0.0.0\nfoo\n', FAIL, b'bar\nfoo\n'),
         (b'foo\npkg-resources==0.0.0\nbar\n', FAIL, b'bar\nfoo\n'),
+        (b'foo=1\n', FAIL, b'foo==1\n'),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):
