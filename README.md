@@ -58,7 +58,7 @@ Add this to your `.pre-commit-config.yaml`
 - `detect-aws-credentials` - Checks for the existence of AWS secrets that you
   have set up with the AWS CLI.
   The following arguments are available:
-  - `--credentials-file CREDENTIAL_FILES` - additional AWS CLI style
+  - `--credentials-file CREDENTIALS_FILE` - additional AWS CLI style
     configuration file in a non-standard location to fetch configured
     credentials from. Can be repeated multiple times.
   - `--allow-missing-credentials` - Allow hook to pass when no credentials are

@@ -87,7 +87,7 @@ def main(argv=None):
     parser.add_argument('filenames', nargs='+', help='Filenames to run')
     parser.add_argument(
         '--credentials-file',
-        dest='credential_files',
+        dest='credentials_file',
         action='append',
         default=[
             '~/.aws/config', '~/.aws/credentials', '/etc/boto.cfg', '~/.boto',
@@ -105,7 +105,7 @@ def main(argv=None):
     )
     args = parser.parse_args(argv)
 
-    credential_files = set(args.credential_files)
+    credential_files = set(args.credentials_file)
 
     # Add the credentials files configured via environment variables to the set
     # of files to to gather AWS secrets from.
