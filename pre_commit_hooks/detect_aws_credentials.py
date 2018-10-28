@@ -93,8 +93,8 @@ def main(argv=None):
             '~/.aws/config', '~/.aws/credentials', '/etc/boto.cfg', '~/.boto',
         ],
         help=(
-            'Location of additional AWS credential files from which to get '
-            'secret keys from'
+            'Location of additional AWS credential file from which to get '
+            'secret keys. Can be passed multiple times.'
         ),
     )
     parser.add_argument(
