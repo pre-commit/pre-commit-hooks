@@ -6,7 +6,7 @@ setup(
     name='pre_commit_hooks',
     description='Some out-of-the-box hooks for pre-commit.',
     url='https://github.com/pre-commit/pre-commit-hooks',
-    version='2.0.0',
+    version='2.1.0',
 
     author='Anthony Sottile',
     author_email='asottile@umich.edu',
@@ -47,6 +47,8 @@ setup(
             'debug-statement-hook = pre_commit_hooks.debug_statement_hook:main',
             'detect-aws-credentials = pre_commit_hooks.detect_aws_credentials:main',
             'detect-private-key = pre_commit_hooks.detect_private_key:detect_private_key',
+            'detect-datetime-raw-manipulation = '
+            'pre_commit_hooks.detect_datetime_raw_manipulation:detect_datetime_raw_manipulation',
             'double-quote-string-fixer = pre_commit_hooks.string_fixer:main',
             'end-of-file-fixer = pre_commit_hooks.end_of_file_fixer:end_of_file_fixer',
             'file-contents-sorter = pre_commit_hooks.file_contents_sorter:main',

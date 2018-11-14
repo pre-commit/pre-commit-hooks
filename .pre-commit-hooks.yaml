@@ -105,6 +105,12 @@
     entry: detect-private-key
     language: python
     types: [text]
+-   id: detect-datetime-raw-manipulation
+    name: Detect Raw datetime manipulation
+    description: Detects the raw manipulation of datetime.
+    entry: detect-datetime-raw-manipulation
+    language: python
+    types: [text]
 -   id: double-quote-string-fixer
     name: Fix double quoted strings
     description: This hook replaces double quoted strings with single quoted strings

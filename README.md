@@ -64,6 +64,7 @@ Add this to your `.pre-commit-config.yaml`
   - `--allow-missing-credentials` - Allow hook to pass when no credentials are
     detected.
 - `detect-private-key` - Checks for the existence of private keys.
+- `detect-datetime-raw-manipulation` - Check for raw manipulation of datetime.
 - `double-quote-string-fixer` - This hook replaces double quoted strings
   with single quoted strings.
 - `end-of-file-fixer` - Makes sure files end in a newline and only a newline.
