@@ -1,6 +1,6 @@
 -   id: autopep8-wrapper
     name: autopep8 wrapper
-    description: "This is deprecated, use pre-commit/mirrors-autopep8."
+    description: This is deprecated, use pre-commit/mirrors-autopep8 instead.
     entry: autopep8-wrapper
     language: python
     types: [python]
