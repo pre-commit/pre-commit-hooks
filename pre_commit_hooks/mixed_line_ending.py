@@ -37,8 +37,14 @@ def fix_filename(filename, fix):
     # Some amount of mixed line endings
     mixed = sum(bool(x) for x in counts.values()) > 1
 
-    if fix == 'no' or (fix == 'auto' and not mixed):
+    if fix == 'no':
+        if mixed:
+            # Not fixing, just report problematic file
+            print('Mixed line endings: {filename}'.format(filename=filename))
         return mixed
+
+    if fix == 'auto' and not mixed:
+        return False
 
     if fix == 'auto':
         max_ending = LF
