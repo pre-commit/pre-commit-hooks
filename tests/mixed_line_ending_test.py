@@ -66,16 +66,18 @@ def test_mixed_no_newline_end_of_file(tmpdir):
         ('--fix=lf', b'foo\nbar\nbaz\n'),
     ),
 )
-def test_line_endings_ok(fix_option, input_s, tmpdir):
+def test_line_endings_ok(fix_option, input_s, tmpdir, capsys):
     path = tmpdir.join('input.txt')
     path.write_binary(input_s)
     ret = main((fix_option, path.strpath))
 
     assert ret == 0
     assert path.read_binary() == input_s
+    out, _ = capsys.readouterr()
+    assert out == ''
 
 
-def test_no_fix_does_not_modify(tmpdir):
+def test_no_fix_does_not_modify(tmpdir, capsys):
     path = tmpdir.join('input.txt')
     contents = b'foo\r\nbar\rbaz\nwomp\n'
     path.write_binary(contents)
@@ -83,15 +85,19 @@ def test_no_fix_does_not_modify(tmpdir):
 
     assert ret == 1
     assert path.read_binary() == contents
+    out, _ = capsys.readouterr()
+    assert out == '{}: mixed line endings\n'.format(path)
 
 
-def test_fix_lf(tmpdir):
+def test_fix_lf(tmpdir, capsys):
     path = tmpdir.join('input.txt')
     path.write_binary(b'foo\r\nbar\rbaz\n')
     ret = main(('--fix=lf', path.strpath))
 
     assert ret == 1
     assert path.read_binary() == b'foo\nbar\nbaz\n'
+    out, _ = capsys.readouterr()
+    assert out == '{}: fixed mixed line endings\n'.format(path)
 
 
 def test_fix_crlf(tmpdir):
