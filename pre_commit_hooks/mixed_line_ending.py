@@ -76,7 +76,12 @@ def main(argv=None):
 
     retv = 0
     for filename in args.filenames:
-        retv |= fix_filename(filename, args.fix)
+        if fix_filename(filename, args.fix):
+            if args.fix == 'no':
+                print('{}: mixed line endings'.format(filename))
+            else:
+                print('{}: fixed mixed line endings'.format(filename))
+            retv = 1
     return retv
 
 
