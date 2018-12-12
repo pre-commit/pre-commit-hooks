@@ -53,12 +53,13 @@ def check_docstring_first(src, filename='<unknown>'):
 def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
+    parser.add_argument('--encoding', default='UTF-8')
     args = parser.parse_args(argv)
 
     retv = 0
 
     for filename in args.filenames:
-        with io.open(filename, encoding='UTF-8') as f:
+        with io.open(filename, encoding=args.encoding) as f:
             contents = f.read()
         retv |= check_docstring_first(contents, filename=filename)
 
