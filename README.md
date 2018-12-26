@@ -98,6 +98,7 @@ Add this to your `.pre-commit-config.yaml`
       use `args: [--markdown-linebreak-ext=md]` (or other extensions used
       by your markdownfiles).  If for some reason you want to treat all files
       as markdown, use `--markdown-linebreak-ext=*`.
+- `prepend-ticket-number-to-commit-msg` - Use it to prepend your commits with info from your branch, like ticket numbers. For e.g. if you name your branch `JIRA-1234_awesome_feature` and commit `Fix some bug`, the commit will be updated to `JIRA-1234 Fix some bug`. Pass `--regex=` or update `args: [--regex=<custom regex>]` in your .yaml file if you have custom ticket regex. By default its `[A-Z]+-\d+`.
 
 ### Deprecated / replaced hooks
 

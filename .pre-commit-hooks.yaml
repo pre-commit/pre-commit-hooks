@@ -183,3 +183,9 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
+-  id: prepend-ticket-number-to-commit-msg
+   name: prepend-ticket-number-to-commit-msg
+   entry: prepend-ticket-number-to-commit-msg
+   language: python
+   stages: [commit-msg]
+   description: prepend-ticket-number-to-commit-msg - Use it to prepend your commits with info from your branch. See Readme for info.
