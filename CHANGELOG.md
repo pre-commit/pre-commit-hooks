@@ -1,3 +1,25 @@
+2.1.0
+=====
+
+### Features
+- Detect PGP/GPG private keys in `detect-private-key`
+    - #329 PR by @rpdelaney.
+- Report filenames when fixing files in `mixed-line-endings`
+    - #341 PR by @gimbo.
+    - #340 issuey by @gimbo.
+
+### Fixes
+- Handle CRLF / CR line endings in `end-of-file-fixer`
+    - #327 PR by @mtkennerly.
+
+### Docs
+
+- Clarify and document arguments for `detect-aws-credentials`
+    - #333 PR by @rpdelaney.
+- Clarify `autopep8-wrapper` is deprecated in description
+    - #343 PR by @TheKevJames.
+
+
 2.0.0
 =====
 
