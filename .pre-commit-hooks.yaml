@@ -130,6 +130,15 @@
     entry: fix-encoding-pragma
     description: 'Add # -*- coding: utf-8 -*- to the top of python files'
     types: [python]
+-   id: fix-yaml
+    name: Fix YAML files
+    language: python
+    entry: fix-yaml
+    description: 'Add --- header to yaml files'
+    types: [yaml]
+    # for backward compatibility
+    files: ''
+    minimum_pre_commit_version: 0.15.0
 -   id: flake8
     name: Flake8
     description: This hook runs flake8.
