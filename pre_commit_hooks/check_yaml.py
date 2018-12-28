@@ -4,12 +4,9 @@ import argparse
 import collections
 import sys
 
-import yaml
+import ruamel.yaml
 
-try:
-    from yaml.cyaml import CSafeLoader as Loader
-except ImportError:  # pragma: no cover (no libyaml-dev / pypy)
-    Loader = yaml.SafeLoader
+yaml = ruamel.yaml.YAML(typ='safe')
 
 
 def _exhaust(gen):
@@ -57,8 +54,9 @@ def check_yaml(argv=None):
     retval = 0
     for filename in args.filenames:
         try:
-            load_fn(open(filename), Loader=Loader)
-        except yaml.YAMLError as exc:
+            with open(filename) as f:
+                load_fn(f)
+        except ruamel.yaml.YAMLError as exc:
             print(exc)
             retval = 1
     return retval

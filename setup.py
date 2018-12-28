@@ -25,7 +25,7 @@ setup(
     packages=find_packages(exclude=('tests*', 'testing*')),
     install_requires=[
         'flake8',
-        'pyyaml',
+        'ruamel.yaml>=0.15',
         'six',
     ],
     entry_points={
