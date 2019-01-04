@@ -183,3 +183,8 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
+-   id: format-sql
+    name: Format SQL Files
+    description: This hook formats SQL files
+    entry: sql-formatter
+    language: python
