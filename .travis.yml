@@ -1,5 +1,4 @@
 language: python
-sudo: false
 matrix:
     include:  # These should match the tox env list
     -   env: TOXENV=py27
@@ -7,7 +6,6 @@ matrix:
         python: 3.6
     -   env: TOXENV=py37
         python: 3.7
-        sudo: required
         dist: xenial
     -   env: TOXENV=pypy
         python: pypy-5.7.1
