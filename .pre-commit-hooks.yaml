@@ -136,6 +136,7 @@
     entry: flake8
     language: python
     types: [python]
+    require_serial: true
 -   id: forbid-new-submodules
     name: Forbid new submodules
     language: python
