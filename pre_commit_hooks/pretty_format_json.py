@@ -42,7 +42,6 @@ def parse_num_to_int(s):
 
 
 def parse_topkeys(s):
-    # type: (str) -> array
     return s.split(',')
 
 
