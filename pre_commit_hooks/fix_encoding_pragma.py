@@ -4,11 +4,15 @@ from __future__ import unicode_literals
 
 import argparse
 import collections
+from typing import IO
+from typing import Optional
+from typing import Sequence
+from typing import Union
 
 DEFAULT_PRAGMA = b'# -*- coding: utf-8 -*-\n'
 
 
-def has_coding(line):
+def has_coding(line):  # type: (bytes) -> bool
     if not line.strip():
         return False
     return (
@@ -33,15 +37,16 @@ class ExpectedContents(collections.namedtuple(
     __slots__ = ()
 
     @property
-    def has_any_pragma(self):
+    def has_any_pragma(self):  # type: () -> bool
         return self.pragma_status is not False
 
-    def is_expected_pragma(self, remove):
+    def is_expected_pragma(self, remove):  # type: (bool) -> bool
         expected_pragma_status = not remove
         return self.pragma_status is expected_pragma_status
 
 
 def _get_expected_contents(first_line, second_line, rest, expected_pragma):
+    # type: (bytes, bytes, bytes, bytes) -> ExpectedContents
     if first_line.startswith(b'#!'):
         shebang = first_line
         potential_coding = second_line
@@ -51,7 +56,7 @@ def _get_expected_contents(first_line, second_line, rest, expected_pragma):
         rest = second_line + rest
 
     if potential_coding == expected_pragma:
-        pragma_status = True
+        pragma_status = True  # type: Optional[bool]
     elif has_coding(potential_coding):
         pragma_status = None
     else:
@@ -64,6 +69,7 @@ def _get_expected_contents(first_line, second_line, rest, expected_pragma):
 
 
 def fix_encoding_pragma(f, remove=False, expected_pragma=DEFAULT_PRAGMA):
+    # type: (IO[bytes], bool, bytes) -> int
     expected = _get_expected_contents(
         f.readline(), f.readline(), f.read(), expected_pragma,
     )
@@ -93,17 +99,17 @@ def fix_encoding_pragma(f, remove=False, expected_pragma=DEFAULT_PRAGMA):
     return 1
 
 
-def _normalize_pragma(pragma):
+def _normalize_pragma(pragma):  # type: (Union[bytes, str]) -> bytes
     if not isinstance(pragma, bytes):
         pragma = pragma.encode('UTF-8')
     return pragma.rstrip() + b'\n'
 
 
-def _to_disp(pragma):
+def _to_disp(pragma):  # type: (bytes) -> str
     return pragma.decode().rstrip()
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser('Fixes the encoding pragma of python files')
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     parser.add_argument(

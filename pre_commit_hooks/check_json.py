@@ -4,9 +4,11 @@ import argparse
 import io
 import json
 import sys
+from typing import Optional
+from typing import Sequence
 
 
-def check_json(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='JSON filenames to check.')
     args = parser.parse_args(argv)
@@ -22,4 +24,4 @@ def check_json(argv=None):
 
 
 if __name__ == '__main__':
-    sys.exit(check_json())
+    sys.exit(main())

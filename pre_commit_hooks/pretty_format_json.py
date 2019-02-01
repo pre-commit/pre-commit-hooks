@@ -5,12 +5,20 @@ import io
 import json
 import sys
 from collections import OrderedDict
+from typing import List
+from typing import Mapping
+from typing import Optional
+from typing import Sequence
+from typing import Tuple
+from typing import Union
 
 from six import text_type
 
 
-def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_keys=[]):
+def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_keys=()):
+    # type: (str, str, bool, bool, Sequence[str]) -> str
     def pairs_first(pairs):
+        # type: (Sequence[Tuple[str, str]]) -> Mapping[str, str]
         before = [pair for pair in pairs if pair[0] in top_keys]
         before = sorted(before, key=lambda x: top_keys.index(x[0]))
         after = [pair for pair in pairs if pair[0] not in top_keys]
@@ -27,13 +35,13 @@ def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_
     return text_type(json_pretty) + '\n'
 
 
-def _autofix(filename, new_contents):
+def _autofix(filename, new_contents):  # type: (str, str) -> None
     print('Fixing file {}'.format(filename))
     with io.open(filename, 'w', encoding='UTF-8') as f:
         f.write(new_contents)
 
 
-def parse_num_to_int(s):
+def parse_num_to_int(s):  # type: (str) -> Union[int, str]
     """Convert string numbers to int, leaving strings as is."""
     try:
         return int(s)
@@ -41,11 +49,11 @@ def parse_num_to_int(s):
         return s
 
 
-def parse_topkeys(s):
+def parse_topkeys(s):  # type: (str) -> List[str]
     return s.split(',')
 
 
-def pretty_format_json(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--autofix',
@@ -117,4 +125,4 @@ def pretty_format_json(argv=None):
 
 
 if __name__ == '__main__':
-    sys.exit(pretty_format_json())
+    sys.exit(main())

@@ -6,7 +6,7 @@ import shutil
 
 import pytest
 
-from pre_commit_hooks.check_merge_conflict import detect_merge_conflict
+from pre_commit_hooks.check_merge_conflict import main
 from pre_commit_hooks.util import cmd_output
 from testing.util import get_resource_path
 
@@ -102,7 +102,7 @@ def repository_pending_merge(tmpdir):
 
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
 def test_merge_conflicts_git():
-    assert detect_merge_conflict(['f1']) == 1
+    assert main(['f1']) == 1
 
 
 @pytest.mark.parametrize(
@@ -110,7 +110,7 @@ def test_merge_conflicts_git():
 )
 def test_merge_conflicts_failing(contents, repository_pending_merge):
     repository_pending_merge.join('f2').write_binary(contents)
-    assert detect_merge_conflict(['f2']) == 1
+    assert main(['f2']) == 1
 
 
 @pytest.mark.parametrize(
@@ -118,22 +118,22 @@ def test_merge_conflicts_failing(contents, repository_pending_merge):
 )
 def test_merge_conflicts_ok(contents, f1_is_a_conflict_file):
     f1_is_a_conflict_file.join('f1').write_binary(contents)
-    assert detect_merge_conflict(['f1']) == 0
+    assert main(['f1']) == 0
 
 
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
 def test_ignores_binary_files():
     shutil.copy(get_resource_path('img1.jpg'), 'f1')
-    assert detect_merge_conflict(['f1']) == 0
+    assert main(['f1']) == 0
 
 
 def test_does_not_care_when_not_in_a_merge(tmpdir):
     f = tmpdir.join('README.md')
     f.write_binary(b'problem\n=======\n')
-    assert detect_merge_conflict([str(f.realpath())]) == 0
+    assert main([str(f.realpath())]) == 0
 
 
 def test_care_when_assumed_merge(tmpdir):
     f = tmpdir.join('README.md')
     f.write_binary(b'problem\n=======\n')
-    assert detect_merge_conflict([str(f.realpath()), '--assume-in-merge']) == 1
+    assert main([str(f.realpath()), '--assume-in-merge']) == 1

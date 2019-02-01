@@ -1,6 +1,6 @@
 import pytest
 
-from pre_commit_hooks.check_json import check_json
+from pre_commit_hooks.check_json import main
 from testing.util import get_resource_path
 
 
@@ -11,8 +11,8 @@ from testing.util import get_resource_path
         ('ok_json.json', 0),
     ),
 )
-def test_check_json(capsys, filename, expected_retval):
-    ret = check_json([get_resource_path(filename)])
+def test_main(capsys, filename, expected_retval):
+    ret = main([get_resource_path(filename)])
     assert ret == expected_retval
     if expected_retval == 1:
         stdout, _ = capsys.readouterr()

@@ -12,12 +12,15 @@ conflicts and keep the file nicely ordered.
 from __future__ import print_function
 
 import argparse
+from typing import IO
+from typing import Optional
+from typing import Sequence
 
 PASS = 0
 FAIL = 1
 
 
-def sort_file_contents(f):
+def sort_file_contents(f):  # type: (IO[bytes]) -> int
     before = list(f)
     after = sorted([line.strip(b'\n\r') for line in before if line.strip()])
 
@@ -33,7 +36,7 @@ def sort_file_contents(f):
         return FAIL
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Files to sort')
     args = parser.parse_args(argv)

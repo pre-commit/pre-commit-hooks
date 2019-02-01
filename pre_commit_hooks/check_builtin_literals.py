@@ -4,6 +4,10 @@ import argparse
 import ast
 import collections
 import sys
+from typing import List
+from typing import Optional
+from typing import Sequence
+from typing import Set
 
 
 BUILTIN_TYPES = {
@@ -22,14 +26,17 @@ BuiltinTypeCall = collections.namedtuple('BuiltinTypeCall', ['name', 'line', 'co
 
 class BuiltinTypeVisitor(ast.NodeVisitor):
     def __init__(self, ignore=None, allow_dict_kwargs=True):
-        self.builtin_type_calls = []
+        # type: (Optional[Sequence[str]], bool) -> None
+        self.builtin_type_calls = []  # type: List[BuiltinTypeCall]
         self.ignore = set(ignore) if ignore else set()
         self.allow_dict_kwargs = allow_dict_kwargs
 
-    def _check_dict_call(self, node):
+    def _check_dict_call(self, node):  # type: (ast.Call) -> bool
+
         return self.allow_dict_kwargs and (getattr(node, 'kwargs', None) or getattr(node, 'keywords', None))
 
-    def visit_Call(self, node):
+    def visit_Call(self, node):  # type: (ast.Call) -> None
+
         if not isinstance(node.func, ast.Name):
             # Ignore functions that are object attributes (`foo.bar()`).
             # Assume that if the user calls `builtins.list()`, they know what
@@ -47,6 +54,7 @@ class BuiltinTypeVisitor(ast.NodeVisitor):
 
 
 def check_file_for_builtin_type_constructors(filename, ignore=None, allow_dict_kwargs=True):
+    # type: (str, Optional[Sequence[str]], bool) -> List[BuiltinTypeCall]
     with open(filename, 'rb') as f:
         tree = ast.parse(f.read(), filename=filename)
     visitor = BuiltinTypeVisitor(ignore=ignore, allow_dict_kwargs=allow_dict_kwargs)
@@ -54,24 +62,22 @@ def check_file_for_builtin_type_constructors(filename, ignore=None, allow_dict_k
     return visitor.builtin_type_calls
 
 
-def parse_args(argv):
-    def parse_ignore(value):
-        return set(value.split(','))
+def parse_ignore(value):  # type: (str) -> Set[str]
+    return set(value.split(','))
 
+
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument('--ignore', type=parse_ignore, default=set())
 
-    allow_dict_kwargs = parser.add_mutually_exclusive_group(required=False)
-    allow_dict_kwargs.add_argument('--allow-dict-kwargs', action='store_true')
-    allow_dict_kwargs.add_argument('--no-allow-dict-kwargs', dest='allow_dict_kwargs', action='store_false')
-    allow_dict_kwargs.set_defaults(allow_dict_kwargs=True)
+    mutex = parser.add_mutually_exclusive_group(required=False)
+    mutex.add_argument('--allow-dict-kwargs', action='store_true')
+    mutex.add_argument('--no-allow-dict-kwargs', dest='allow_dict_kwargs', action='store_false')
+    mutex.set_defaults(allow_dict_kwargs=True)
 
-    return parser.parse_args(argv)
+    args = parser.parse_args(argv)
 
-
-def main(argv=None):
-    args = parse_args(argv)
     rc = 0
     for filename in args.filenames:
         calls = check_file_for_builtin_type_constructors(

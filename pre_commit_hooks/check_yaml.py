@@ -3,22 +3,26 @@ from __future__ import print_function
 import argparse
 import collections
 import sys
+from typing import Any
+from typing import Generator
+from typing import Optional
+from typing import Sequence
 
 import ruamel.yaml
 
 yaml = ruamel.yaml.YAML(typ='safe')
 
 
-def _exhaust(gen):
+def _exhaust(gen):  # type: (Generator[str, None, None]) -> None
     for _ in gen:
         pass
 
 
-def _parse_unsafe(*args, **kwargs):
+def _parse_unsafe(*args, **kwargs):  # type: (*Any, **Any) -> None
     _exhaust(yaml.parse(*args, **kwargs))
 
 
-def _load_all(*args, **kwargs):
+def _load_all(*args, **kwargs):  # type: (*Any, **Any) -> None
     _exhaust(yaml.load_all(*args, **kwargs))
 
 
@@ -31,7 +35,7 @@ LOAD_FNS = {
 }
 
 
-def check_yaml(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-m', '--multi', '--allow-multiple-documents', action='store_true',
@@ -63,4 +67,4 @@ def check_yaml(argv=None):
 
 
 if __name__ == '__main__':
-    sys.exit(check_yaml())
+    sys.exit(main())

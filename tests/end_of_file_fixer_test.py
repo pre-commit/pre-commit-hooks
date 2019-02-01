@@ -2,8 +2,8 @@ import io
 
 import pytest
 
-from pre_commit_hooks.end_of_file_fixer import end_of_file_fixer
 from pre_commit_hooks.end_of_file_fixer import fix_file
+from pre_commit_hooks.end_of_file_fixer import main
 
 
 # Input, expected return value, expected output
@@ -35,7 +35,7 @@ def test_integration(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write_binary(input_s)
 
-    ret = end_of_file_fixer([path.strpath])
+    ret = main([path.strpath])
     file_output = path.read_binary()
 
     assert file_output == output

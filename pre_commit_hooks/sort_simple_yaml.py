@@ -21,12 +21,15 @@ complicated YAML files.
 from __future__ import print_function
 
 import argparse
+from typing import List
+from typing import Optional
+from typing import Sequence
 
 
 QUOTES = ["'", '"']
 
 
-def sort(lines):
+def sort(lines):  # type: (List[str]) -> List[str]
     """Sort a YAML file in alphabetical order, keeping blocks together.
 
     :param lines: array of strings (without newlines)
@@ -44,7 +47,7 @@ def sort(lines):
     return new_lines
 
 
-def parse_block(lines, header=False):
+def parse_block(lines, header=False):  # type: (List[str], bool) -> List[str]
     """Parse and return a single block, popping off the start of `lines`.
 
     If parsing a header block, we stop after we reach a line that is not a
@@ -60,7 +63,7 @@ def parse_block(lines, header=False):
     return block_lines
 
 
-def parse_blocks(lines):
+def parse_blocks(lines):  # type: (List[str]) -> List[List[str]]
     """Parse and return all possible blocks, popping off the start of `lines`.
 
     :param lines: list of lines
@@ -77,7 +80,7 @@ def parse_blocks(lines):
     return blocks
 
 
-def first_key(lines):
+def first_key(lines):  # type: (List[str]) -> str
     """Returns a string representing the sort key of a block.
 
     The sort key is the first YAML key we encounter, ignoring comments, and
@@ -95,9 +98,11 @@ def first_key(lines):
         if any(line.startswith(quote) for quote in QUOTES):
             return line[1:]
         return line
+    else:
+        return ''  # not actually reached in reality
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

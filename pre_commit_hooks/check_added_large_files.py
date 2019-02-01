@@ -7,13 +7,17 @@ import argparse
 import json
 import math
 import os
+from typing import Iterable
+from typing import Optional
+from typing import Sequence
+from typing import Set
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import CalledProcessError
 from pre_commit_hooks.util import cmd_output
 
 
-def lfs_files():
+def lfs_files():  # type: () -> Set[str]
     try:
         # Introduced in git-lfs 2.2.0, first working in 2.2.1
         lfs_ret = cmd_output('git', 'lfs', 'status', '--json')
@@ -24,6 +28,7 @@ def lfs_files():
 
 
 def find_large_added_files(filenames, maxkb):
+    # type: (Iterable[str], int) -> int
     # Find all added files that are also in the list of files pre-commit tells
     # us about
     filenames = (added_files() & set(filenames)) - lfs_files()
@@ -38,7 +43,7 @@ def find_large_added_files(filenames, maxkb):
     return retv
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',

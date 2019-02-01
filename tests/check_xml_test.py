@@ -1,6 +1,6 @@
 import pytest
 
-from pre_commit_hooks.check_xml import check_xml
+from pre_commit_hooks.check_xml import main
 from testing.util import get_resource_path
 
 
@@ -10,6 +10,6 @@ from testing.util import get_resource_path
         ('ok_xml.xml', 0),
     ),
 )
-def test_check_xml(filename, expected_retval):
-    ret = check_xml([get_resource_path(filename)])
+def test_main(filename, expected_retval):
+    ret = main([get_resource_path(filename)])
     assert ret == expected_retval

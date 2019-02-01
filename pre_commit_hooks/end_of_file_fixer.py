@@ -4,9 +4,12 @@ from __future__ import unicode_literals
 import argparse
 import os
 import sys
+from typing import IO
+from typing import Optional
+from typing import Sequence
 
 
-def fix_file(file_obj):
+def fix_file(file_obj):  # type: (IO[bytes]) -> int
     # Test for newline at end of file
     # Empty files will throw IOError here
     try:
@@ -49,7 +52,7 @@ def fix_file(file_obj):
     return 0
 
 
-def end_of_file_fixer(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -68,4 +71,4 @@ def end_of_file_fixer(argv=None):
 
 
 if __name__ == '__main__':
-    sys.exit(end_of_file_fixer())
+    sys.exit(main())
