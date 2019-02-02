@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 import argparse
 import re
 import sys
+from typing import Optional
+from typing import Sequence
 
 
 GITHUB_NON_PERMALINK = re.compile(
@@ -12,7 +14,7 @@ GITHUB_NON_PERMALINK = re.compile(
 )
 
 
-def _check_filename(filename):
+def _check_filename(filename):  # type: (str) -> int
     retv = 0
     with open(filename, 'rb') as f:
         for i, line in enumerate(f, 1):
@@ -24,7 +26,7 @@ def _check_filename(filename):
     return retv
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)

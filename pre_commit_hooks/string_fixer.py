@@ -4,34 +4,39 @@ from __future__ import unicode_literals
 
 import argparse
 import io
+import re
 import tokenize
+from typing import List
+from typing import Optional
+from typing import Sequence
+
+START_QUOTE_RE = re.compile('^[a-zA-Z]*"')
 
 
-double_quote_starts = tuple(s for s in tokenize.single_quoted if '"' in s)
-
-
-def handle_match(token_text):
+def handle_match(token_text):  # type: (str) -> str
     if '"""' in token_text or "'''" in token_text:
         return token_text
 
-    for double_quote_start in double_quote_starts:
-        if token_text.startswith(double_quote_start):
-            meat = token_text[len(double_quote_start):-1]
-            if '"' in meat or "'" in meat:
-                break
-            return double_quote_start.replace('"', "'") + meat + "'"
-    return token_text
+    match = START_QUOTE_RE.match(token_text)
+    if match is not None:
+        meat = token_text[match.end():-1]
+        if '"' in meat or "'" in meat:
+            return token_text
+        else:
+            return match.group().replace('"', "'") + meat + "'"
+    else:
+        return token_text
 
 
-def get_line_offsets_by_line_no(src):
+def get_line_offsets_by_line_no(src):  # type: (str) -> List[int]
     # Padded so we can index with line number
-    offsets = [None, 0]
+    offsets = [-1, 0]
     for line in src.splitlines():
         offsets.append(offsets[-1] + len(line) + 1)
     return offsets
 
 
-def fix_strings(filename):
+def fix_strings(filename):  # type: (str) -> int
     with io.open(filename, encoding='UTF-8') as f:
         contents = f.read()
     line_offsets = get_line_offsets_by_line_no(contents)
@@ -60,7 +65,7 @@ def fix_strings(filename):
         return 0
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -74,3 +79,7 @@ def main(argv=None):
         retv |= return_value
 
     return retv
+
+
+if __name__ == '__main__':
+    exit(main())

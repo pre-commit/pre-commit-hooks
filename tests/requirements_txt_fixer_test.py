@@ -1,7 +1,7 @@
 import pytest
 
 from pre_commit_hooks.requirements_txt_fixer import FAIL
-from pre_commit_hooks.requirements_txt_fixer import fix_requirements_txt
+from pre_commit_hooks.requirements_txt_fixer import main
 from pre_commit_hooks.requirements_txt_fixer import PASS
 from pre_commit_hooks.requirements_txt_fixer import Requirement
 
@@ -36,7 +36,7 @@ def test_integration(input_s, expected_retval, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write_binary(input_s)
 
-    output_retval = fix_requirements_txt([path.strpath])
+    output_retval = main([path.strpath])
 
     assert path.read_binary() == output
     assert output_retval == expected_retval
@@ -44,7 +44,7 @@ def test_integration(input_s, expected_retval, output, tmpdir):
 
 def test_requirement_object():
     top_of_file = Requirement()
-    top_of_file.comments.append('#foo')
+    top_of_file.comments.append(b'#foo')
     top_of_file.value = b'\n'
 
     requirement_foo = Requirement()

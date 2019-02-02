@@ -4,7 +4,9 @@ import io
 import os.path
 import shutil
 import tarfile
-from urllib.request import urlopen
+import urllib.request
+from typing import cast
+from typing import IO
 
 DOWNLOAD_PATH = (
     'https://github.com/github/git-lfs/releases/download/'
@@ -15,7 +17,7 @@ DEST_PATH = '/tmp/git-lfs/git-lfs'
 DEST_DIR = os.path.dirname(DEST_PATH)
 
 
-def main():
+def main():  # type: () -> int
     if (
             os.path.exists(DEST_PATH) and
             os.path.isfile(DEST_PATH) and
@@ -27,12 +29,13 @@ def main():
     shutil.rmtree(DEST_DIR, ignore_errors=True)
     os.makedirs(DEST_DIR, exist_ok=True)
 
-    contents = io.BytesIO(urlopen(DOWNLOAD_PATH).read())
+    contents = io.BytesIO(urllib.request.urlopen(DOWNLOAD_PATH).read())
     with tarfile.open(fileobj=contents) as tar:
-        with tar.extractfile(PATH_IN_TAR) as src_file:
+        with cast(IO[bytes], tar.extractfile(PATH_IN_TAR)) as src_file:
             with open(DEST_PATH, 'wb') as dest_file:
                 shutil.copyfileobj(src_file, dest_file)
     os.chmod(DEST_PATH, 0o755)
+    return 0
 
 
 if __name__ == '__main__':

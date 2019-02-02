@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import pytest
 
-from pre_commit_hooks.check_yaml import check_yaml
+from pre_commit_hooks.check_yaml import main
 from testing.util import get_resource_path
 
 
@@ -13,29 +13,29 @@ from testing.util import get_resource_path
         ('ok_yaml.yaml', 0),
     ),
 )
-def test_check_yaml(filename, expected_retval):
-    ret = check_yaml([get_resource_path(filename)])
+def test_main(filename, expected_retval):
+    ret = main([get_resource_path(filename)])
     assert ret == expected_retval
 
 
-def test_check_yaml_allow_multiple_documents(tmpdir):
+def test_main_allow_multiple_documents(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write('---\nfoo\n---\nbar\n')
 
     # should fail without the setting
-    assert check_yaml((f.strpath,))
+    assert main((f.strpath,))
 
     # should pass when we allow multiple documents
-    assert not check_yaml(('--allow-multiple-documents', f.strpath))
+    assert not main(('--allow-multiple-documents', f.strpath))
 
 
 def test_fails_even_with_allow_multiple_documents(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write('[')
-    assert check_yaml(('--allow-multiple-documents', f.strpath))
+    assert main(('--allow-multiple-documents', f.strpath))
 
 
-def test_check_yaml_unsafe(tmpdir):
+def test_main_unsafe(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write(
         'some_foo: !vault |\n'
@@ -43,12 +43,12 @@ def test_check_yaml_unsafe(tmpdir):
         '    deadbeefdeadbeefdeadbeef\n',
     )
     # should fail "safe" check
-    assert check_yaml((f.strpath,))
+    assert main((f.strpath,))
     # should pass when we allow unsafe documents
-    assert not check_yaml(('--unsafe', f.strpath))
+    assert not main(('--unsafe', f.strpath))
 
 
-def test_check_yaml_unsafe_still_fails_on_syntax_errors(tmpdir):
+def test_main_unsafe_still_fails_on_syntax_errors(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write('[')
-    assert check_yaml(('--unsafe', f.strpath))
+    assert main(('--unsafe', f.strpath))

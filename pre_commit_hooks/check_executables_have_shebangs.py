@@ -6,9 +6,11 @@ from __future__ import unicode_literals
 import argparse
 import pipes
 import sys
+from typing import Optional
+from typing import Sequence
 
 
-def check_has_shebang(path):
+def check_has_shebang(path):  # type: (str) -> int
     with open(path, 'rb') as f:
         first_bytes = f.read(2)
 
@@ -27,7 +29,7 @@ def check_has_shebang(path):
         return 0
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)
@@ -38,3 +40,7 @@ def main(argv=None):
         retv |= check_has_shebang(filename)
 
     return retv
+
+
+if __name__ == '__main__':
+    exit(main())

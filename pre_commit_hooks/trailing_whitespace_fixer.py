@@ -3,9 +3,11 @@ from __future__ import print_function
 import argparse
 import os
 import sys
+from typing import Optional
+from typing import Sequence
 
 
-def _fix_file(filename, is_markdown):
+def _fix_file(filename, is_markdown):  # type: (str, bool) -> bool
     with open(filename, mode='rb') as file_processed:
         lines = file_processed.readlines()
     newlines = [_process_line(line, is_markdown) for line in lines]
@@ -18,7 +20,7 @@ def _fix_file(filename, is_markdown):
         return False
 
 
-def _process_line(line, is_markdown):
+def _process_line(line, is_markdown):  # type: (bytes, bool) -> bytes
     if line[-2:] == b'\r\n':
         eol = b'\r\n'
     elif line[-1:] == b'\n':
@@ -31,7 +33,7 @@ def _process_line(line, is_markdown):
     return line.rstrip() + eol
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--no-markdown-linebreak-ext',

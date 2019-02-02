@@ -1,12 +1,14 @@
 from __future__ import print_function
 
 import argparse
+import os.path
 import re
 import sys
-from os.path import basename
+from typing import Optional
+from typing import Sequence
 
 
-def validate_files(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument(
@@ -18,7 +20,7 @@ def validate_files(argv=None):
     retcode = 0
     test_name_pattern = 'test.*.py' if args.django else '.*_test.py'
     for filename in args.filenames:
-        base = basename(filename)
+        base = os.path.basename(filename)
         if (
                 not re.match(test_name_pattern, base) and
                 not base == '__init__.py' and
@@ -35,4 +37,4 @@ def validate_files(argv=None):
 
 
 if __name__ == '__main__':
-    sys.exit(validate_files())
+    sys.exit(main())

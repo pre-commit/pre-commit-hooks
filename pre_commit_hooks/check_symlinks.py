@@ -4,9 +4,11 @@ from __future__ import unicode_literals
 
 import argparse
 import os.path
+from typing import Optional
+from typing import Sequence
 
 
-def check_symlinks(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser(description='Checks for broken symlinks.')
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
@@ -25,4 +27,4 @@ def check_symlinks(argv=None):
 
 
 if __name__ == '__main__':
-    exit(check_symlinks())
+    exit(main())

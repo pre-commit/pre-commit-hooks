@@ -3,11 +3,16 @@ from __future__ import unicode_literals
 
 import argparse
 import os
+from typing import Dict
+from typing import List
+from typing import Optional
+from typing import Sequence
+from typing import Set
 
 from six.moves import configparser
 
 
-def get_aws_credential_files_from_env():
+def get_aws_credential_files_from_env():  # type: () -> Set[str]
     """Extract credential file paths from environment variables."""
     files = set()
     for env_var in (
@@ -19,7 +24,7 @@ def get_aws_credential_files_from_env():
     return files
 
 
-def get_aws_secrets_from_env():
+def get_aws_secrets_from_env():  # type: () -> Set[str]
     """Extract AWS secrets from environment variables."""
     keys = set()
     for env_var in (
@@ -30,7 +35,7 @@ def get_aws_secrets_from_env():
     return keys
 
 
-def get_aws_secrets_from_file(credentials_file):
+def get_aws_secrets_from_file(credentials_file):  # type: (str) -> Set[str]
     """Extract AWS secrets from configuration files.
 
     Read an ini-style configuration file and return a set with all found AWS
@@ -62,6 +67,7 @@ def get_aws_secrets_from_file(credentials_file):
 
 
 def check_file_for_aws_keys(filenames, keys):
+    # type: (Sequence[str], Set[str]) -> List[Dict[str, str]]
     """Check if files contain AWS secrets.
 
     Return a list of all files containing AWS secrets and keys found, with all
@@ -82,7 +88,7 @@ def check_file_for_aws_keys(filenames, keys):
     return bad_files
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Filenames to run')
     parser.add_argument(
@@ -111,7 +117,7 @@ def main(argv=None):
     # of files to to gather AWS secrets from.
     credential_files |= get_aws_credential_files_from_env()
 
-    keys = set()
+    keys = set()  # type: Set[str]
     for credential_file in credential_files:
         keys |= get_aws_secrets_from_file(credential_file)
 

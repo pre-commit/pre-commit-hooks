@@ -3,16 +3,20 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
+from typing import Iterable
+from typing import Optional
+from typing import Sequence
+from typing import Set
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import cmd_output
 
 
-def lower_set(iterable):
+def lower_set(iterable):  # type: (Iterable[str]) -> Set[str]
     return {x.lower() for x in iterable}
 
 
-def find_conflicting_filenames(filenames):
+def find_conflicting_filenames(filenames):  # type: (Sequence[str]) -> int
     repo_files = set(cmd_output('git', 'ls-files').splitlines())
     relevant_files = set(filenames) | added_files()
     repo_files -= relevant_files
@@ -41,7 +45,7 @@ def find_conflicting_filenames(filenames):
     return retv
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',

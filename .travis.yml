@@ -1,3 +1,4 @@
+dist: xenial
 language: python
 matrix:
     include:  # These should match the tox env list
@@ -6,9 +7,8 @@ matrix:
         python: 3.6
     -   env: TOXENV=py37
         python: 3.7
-        dist: xenial
     -   env: TOXENV=pypy
-        python: pypy-5.7.1
+        python: pypy2.7-5.10.0
 install: pip install coveralls tox
 script: tox
 before_install:

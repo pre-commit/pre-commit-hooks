@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 import argparse
 import io
 import tokenize
+from typing import Optional
+from typing import Sequence
 
 
 NON_CODE_TOKENS = frozenset((
@@ -13,6 +15,7 @@ NON_CODE_TOKENS = frozenset((
 
 
 def check_docstring_first(src, filename='<unknown>'):
+    # type: (str, str) -> int
     """Returns nonzero if the source has what looks like a docstring that is
     not at the beginning of the source.
 
@@ -50,7 +53,7 @@ def check_docstring_first(src, filename='<unknown>'):
     return 0
 
 
-def main(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)

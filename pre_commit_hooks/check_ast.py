@@ -7,9 +7,11 @@ import ast
 import platform
 import sys
 import traceback
+from typing import Optional
+from typing import Sequence
 
 
-def check_ast(argv=None):
+def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)
@@ -34,4 +36,4 @@ def check_ast(argv=None):
 
 
 if __name__ == '__main__':
-    exit(check_ast())
+    exit(main())

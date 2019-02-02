@@ -5,7 +5,35 @@ import pytest
 from pre_commit_hooks.check_builtin_literals import BuiltinTypeCall
 from pre_commit_hooks.check_builtin_literals import BuiltinTypeVisitor
 from pre_commit_hooks.check_builtin_literals import main
-from testing.util import get_resource_path
+
+BUILTIN_CONSTRUCTORS = '''\
+from six.moves import builtins
+
+c1 = complex()
+d1 = dict()
+f1 = float()
+i1 = int()
+l1 = list()
+s1 = str()
+t1 = tuple()
+
+c2 = builtins.complex()
+d2 = builtins.dict()
+f2 = builtins.float()
+i2 = builtins.int()
+l2 = builtins.list()
+s2 = builtins.str()
+t2 = builtins.tuple()
+'''
+BUILTIN_LITERALS = '''\
+c1 = 0j
+d1 = {}
+f1 = 0.0
+i1 = 0
+l1 = []
+s1 = ''
+t1 = ()
+'''
 
 
 @pytest.fixture
@@ -94,24 +122,26 @@ def test_dict_no_allow_kwargs_exprs(expression, calls):
 
 def test_ignore_constructors():
     visitor = BuiltinTypeVisitor(ignore=('complex', 'dict', 'float', 'int', 'list', 'str', 'tuple'))
-    with open(get_resource_path('builtin_constructors.py'), 'rb') as f:
-        visitor.visit(ast.parse(f.read(), 'builtin_constructors.py'))
+    visitor.visit(ast.parse(BUILTIN_CONSTRUCTORS))
     assert visitor.builtin_type_calls == []
 
 
-def test_failing_file():
-    rc = main([get_resource_path('builtin_constructors.py')])
+def test_failing_file(tmpdir):
+    f = tmpdir.join('f.py')
+    f.write(BUILTIN_CONSTRUCTORS)
+    rc = main([f.strpath])
     assert rc == 1
 
 
-def test_passing_file():
-    rc = main([get_resource_path('builtin_literals.py')])
+def test_passing_file(tmpdir):
+    f = tmpdir.join('f.py')
+    f.write(BUILTIN_LITERALS)
+    rc = main([f.strpath])
     assert rc == 0
 
 
-def test_failing_file_ignore_all():
-    rc = main([
-        '--ignore=complex,dict,float,int,list,str,tuple',
-        get_resource_path('builtin_constructors.py'),
-    ])
+def test_failing_file_ignore_all(tmpdir):
+    f = tmpdir.join('f.py')
+    f.write(BUILTIN_CONSTRUCTORS)
+    rc = main(['--ignore=complex,dict,float,int,list,str,tuple', f.strpath])
     assert rc == 0

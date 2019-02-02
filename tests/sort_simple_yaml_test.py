@@ -110,9 +110,9 @@ def test_first_key():
     lines = ['# some comment', '"a": 42', 'b: 17', '', 'c: 19']
     assert first_key(lines) == 'a": 42'
 
-    # no lines
+    # no lines (not a real situation)
     lines = []
-    assert first_key(lines) is None
+    assert first_key(lines) == ''
 
 
 @pytest.mark.parametrize('bad_lines,good_lines,_', TEST_SORTS)
