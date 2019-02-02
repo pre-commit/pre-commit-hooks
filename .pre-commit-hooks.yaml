@@ -45,6 +45,7 @@
     entry: check-executables-have-shebangs
     language: python
     types: [text, executable]
+    stages: [commit, push, manual]
 -   id: check-json
     name: Check JSON
     description: This hook checks json files for parseable syntax.
@@ -184,3 +185,4 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
+    stages: [commit, push, manual]
