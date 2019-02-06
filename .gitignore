@@ -7,5 +7,6 @@
 /.mypy_cache
 /.pytest_cache
 /venv*
+.vscode
 coverage-html
 dist

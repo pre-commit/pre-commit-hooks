@@ -15,6 +15,11 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         '--django', default=False, action='store_true',
         help='Use Django-style test naming pattern (test*.py)',
     )
+
+    parser.add_argument(
+        '--exclude', default='facto.*.py',
+        help='Use to exclude a certain pattern from check default to factory (fact*.py)',
+    )
     args = parser.parse_args(argv)
 
     retcode = 0
@@ -23,6 +28,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         base = os.path.basename(filename)
         if (
                 not re.match(test_name_pattern, base) and
+                not re.match(args.exclude, base) and
                 not base == '__init__.py' and
                 not base == 'conftest.py'
         ):

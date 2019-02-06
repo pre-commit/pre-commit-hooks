@@ -34,3 +34,18 @@ def test_main_not_django_fails():
 def test_main_django_fails():
     ret = main(['--django', 'foo_test.py', 'test_bar.py', 'test_baz.py'])
     assert ret == 1
+
+
+def test_exclude_default_factory_files():
+    ret = main(['--django', 'test_bar.py', 'test_baz.py', 'factory.py', 'factories.py'])
+    assert ret == 0
+
+
+def test_exclude_custom_files_files():
+    ret = main(['--django', '--exclude=tty.*.py', 'test_bar.py', 'test_baz.py', 'tty124.py', 'tty_file.py'])
+    assert ret == 0
+
+
+def test_exclude_no_match_files():
+    ret = main(['--django', 'test_bar.py', 'test_baz.py', 'tty_file.py'])
+    assert ret == 1
