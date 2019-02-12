@@ -50,7 +50,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             'Implies --allow-multiple-documents'
         ),
     )
-    parser.add_argument('filenames', nargs='*', help='Yaml filenames to check.')
+    parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)
 
     load_fn = LOAD_FNS[Key(multi=args.multi, unsafe=args.unsafe)]

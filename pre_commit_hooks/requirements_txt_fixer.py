@@ -61,7 +61,10 @@ def fix_requirements(f):  # type: (IO[bytes]) -> int
         # If we see a newline before any requirements, then this is a
         # top of file comment.
         if len(requirements) == 1 and line.strip() == b'':
-            if len(requirement.comments) and requirement.comments[0].startswith(b'#'):
+            if (
+                    len(requirement.comments) and
+                    requirement.comments[0].startswith(b'#')
+            ):
                 requirement.value = b'\n'
             else:
                 requirement.comments.append(line)

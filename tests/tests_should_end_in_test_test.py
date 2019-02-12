@@ -12,7 +12,10 @@ def test_main_one_fails():
 
 
 def test_main_django_all_pass():
-    ret = main(['--django', 'tests.py', 'test_foo.py', 'test_bar.py', 'tests/test_baz.py'])
+    ret = main((
+        '--django', 'tests.py', 'test_foo.py', 'test_bar.py',
+        'tests/test_baz.py',
+    ))
     assert ret == 0
 
 

@@ -110,7 +110,9 @@ def _to_disp(pragma):  # type: (bytes) -> str
 
 
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
-    parser = argparse.ArgumentParser('Fixes the encoding pragma of python files')
+    parser = argparse.ArgumentParser(
+        'Fixes the encoding pragma of python files',
+    )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     parser.add_argument(
         '--pragma', default=DEFAULT_PRAGMA, type=_normalize_pragma,

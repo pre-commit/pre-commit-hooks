@@ -12,16 +12,16 @@ from typing import Set
 from six.moves import configparser
 
 
-def get_aws_credential_files_from_env():  # type: () -> Set[str]
+def get_aws_cred_files_from_env():  # type: () -> Set[str]
     """Extract credential file paths from environment variables."""
-    files = set()
-    for env_var in (
-        'AWS_CONFIG_FILE', 'AWS_CREDENTIAL_FILE', 'AWS_SHARED_CREDENTIALS_FILE',
-        'BOTO_CONFIG',
-    ):
-        if env_var in os.environ:
-            files.add(os.environ[env_var])
-    return files
+    return {
+        os.environ[env_var]
+        for env_var in (
+            'AWS_CONFIG_FILE', 'AWS_CREDENTIAL_FILE',
+            'AWS_SHARED_CREDENTIALS_FILE', 'BOTO_CONFIG',
+        )
+        if env_var in os.environ
+    }
 
 
 def get_aws_secrets_from_env():  # type: () -> Set[str]
@@ -115,7 +115,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
 
     # Add the credentials files configured via environment variables to the set
     # of files to to gather AWS secrets from.
-    credential_files |= get_aws_credential_files_from_env()
+    credential_files |= get_aws_cred_files_from_env()
 
     keys = set()  # type: Set[str]
     for credential_file in credential_files:
