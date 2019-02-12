@@ -41,7 +41,7 @@ def test_unsorted_main(filename, expected_retval):
     assert ret == expected_retval
 
 
-@pytest.mark.skipif(PY2, reason="Requires Python3")
+@pytest.mark.skipif(PY2, reason='Requires Python3')
 @pytest.mark.parametrize(
     ('filename', 'expected_retval'), (
         ('not_pretty_formatted_json.json', 1),

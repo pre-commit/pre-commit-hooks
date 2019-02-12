@@ -147,5 +147,5 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     return retv
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     exit(main())

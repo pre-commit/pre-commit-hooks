@@ -69,7 +69,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     for ext in md_exts:
         if any(c in ext[1:] for c in r'./\:'):
             parser.error(
-                "bad --markdown-linebreak-ext extension {!r} (has . / \\ :)\n"
+                'bad --markdown-linebreak-ext extension {!r} (has . / \\ :)\n'
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
                 .format(ext),
             )

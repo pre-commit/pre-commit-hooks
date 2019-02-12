@@ -47,36 +47,36 @@ def visitor():
         # see #285
         ('x[0]()', []),
         # complex
-        ("0j", []),
-        ("complex()", [Call('complex', 1, 0)]),
-        ("complex(0, 0)", []),
+        ('0j', []),
+        ('complex()', [Call('complex', 1, 0)]),
+        ('complex(0, 0)', []),
         ("complex('0+0j')", []),
         ('builtins.complex()', []),
         # float
-        ("0.0", []),
-        ("float()", [Call('float', 1, 0)]),
+        ('0.0', []),
+        ('float()', [Call('float', 1, 0)]),
         ("float('0.0')", []),
         ('builtins.float()', []),
         # int
-        ("0", []),
-        ("int()", [Call('int', 1, 0)]),
+        ('0', []),
+        ('int()', [Call('int', 1, 0)]),
         ("int('0')", []),
         ('builtins.int()', []),
         # list
-        ("[]", []),
-        ("list()", [Call('list', 1, 0)]),
+        ('[]', []),
+        ('list()', [Call('list', 1, 0)]),
         ("list('abc')", []),
         ("list([c for c in 'abc'])", []),
         ("list(c for c in 'abc')", []),
         ('builtins.list()', []),
         # str
         ("''", []),
-        ("str()", [Call('str', 1, 0)]),
+        ('str()', [Call('str', 1, 0)]),
         ("str('0')", []),
         ('builtins.str()', []),
         # tuple
-        ("()", []),
-        ("tuple()", [Call('tuple', 1, 0)]),
+        ('()', []),
+        ('tuple()', [Call('tuple', 1, 0)]),
         ("tuple('abc')", []),
         ("tuple([c for c in 'abc'])", []),
         ("tuple(c for c in 'abc')", []),
@@ -91,9 +91,9 @@ def test_non_dict_exprs(visitor, expression, calls):
 @pytest.mark.parametrize(
     ('expression', 'calls'),
     [
-        ("{}", []),
-        ("dict()", [Call('dict', 1, 0)]),
-        ("dict(a=1, b=2, c=3)", []),
+        ('{}', []),
+        ('dict()', [Call('dict', 1, 0)]),
+        ('dict(a=1, b=2, c=3)', []),
         ("dict(**{'a': 1, 'b': 2, 'c': 3})", []),
         ("dict([(k, v) for k, v in [('a', 1), ('b', 2), ('c', 3)]])", []),
         ("dict((k, v) for k, v in [('a', 1), ('b', 2), ('c', 3)])", []),
@@ -108,8 +108,8 @@ def test_dict_allow_kwargs_exprs(visitor, expression, calls):
 @pytest.mark.parametrize(
     ('expression', 'calls'),
     [
-        ("dict()", [Call('dict', 1, 0)]),
-        ("dict(a=1, b=2, c=3)", [Call('dict', 1, 0)]),
+        ('dict()', [Call('dict', 1, 0)]),
+        ('dict(a=1, b=2, c=3)', [Call('dict', 1, 0)]),
         ("dict(**{'a': 1, 'b': 2, 'c': 3})", [Call('dict', 1, 0)]),
         ('builtins.dict()', []),
     ],

@@ -123,7 +123,7 @@ def test_non_existent_credentials(mock_secrets_env, mock_secrets_file, capsys):
     mock_secrets_file.return_value = set()
     ret = main((
         get_resource_path('aws_config_without_secrets.ini'),
-        "--credentials-file=testing/resources/credentailsfilethatdoesntexist",
+        '--credentials-file=testing/resources/credentailsfilethatdoesntexist',
     ))
     assert ret == 2
     out, _ = capsys.readouterr()
@@ -143,7 +143,7 @@ def test_non_existent_credentials_with_allow_flag(
     mock_secrets_file.return_value = set()
     ret = main((
         get_resource_path('aws_config_without_secrets.ini'),
-        "--credentials-file=testing/resources/credentailsfilethatdoesntexist",
-        "--allow-missing-credentials",
+        '--credentials-file=testing/resources/credentailsfilethatdoesntexist',
+        '--allow-missing-credentials',
     ))
     assert ret == 0
