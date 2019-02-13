@@ -15,8 +15,9 @@ from typing import Union
 from six import text_type
 
 
-def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_keys=()):
-    # type: (str, str, bool, bool, Sequence[str]) -> str
+def _get_pretty_format(
+        contents, indent, ensure_ascii=True, sort_keys=True, top_keys=(),
+):  # type: (str, str, bool, bool, Sequence[str]) -> str
     def pairs_first(pairs):
         # type: (Sequence[Tuple[str, str]]) -> Mapping[str, str]
         before = [pair for pair in pairs if pair[0] in top_keys]
@@ -29,7 +30,8 @@ def _get_pretty_format(contents, indent, ensure_ascii=True, sort_keys=True, top_
         json.loads(contents, object_pairs_hook=pairs_first),
         indent=indent,
         ensure_ascii=ensure_ascii,
-        separators=(',', ': '),  # Workaround for https://bugs.python.org/issue16333
+        # Workaround for https://bugs.python.org/issue16333
+        separators=(',', ': '),
     )
     # Ensure unicode (Py2) and add the newline that dumps does not end with.
     return text_type(json_pretty) + '\n'
@@ -75,7 +77,10 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         action='store_true',
         dest='no_ensure_ascii',
         default=False,
-        help='Do NOT convert non-ASCII characters to Unicode escape sequences (\\uXXXX)',
+        help=(
+            'Do NOT convert non-ASCII characters to Unicode escape sequences '
+            '(\\uXXXX)'
+        ),
     )
     parser.add_argument(
         '--no-sort-keys',

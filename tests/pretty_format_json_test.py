@@ -41,7 +41,7 @@ def test_unsorted_main(filename, expected_retval):
     assert ret == expected_retval
 
 
-@pytest.mark.skipif(PY2, reason="Requires Python3")
+@pytest.mark.skipif(PY2, reason='Requires Python3')
 @pytest.mark.parametrize(
     ('filename', 'expected_retval'), (
         ('not_pretty_formatted_json.json', 1),
@@ -57,7 +57,10 @@ def test_tab_main(filename, expected_retval):  # pragma: no cover
 
 
 def test_non_ascii_main():
-    ret = main(['--no-ensure-ascii', get_resource_path('non_ascii_pretty_formatted_json.json')])
+    ret = main((
+        '--no-ensure-ascii',
+        get_resource_path('non_ascii_pretty_formatted_json.json'),
+    ))
     assert ret == 0
 
 
@@ -79,17 +82,23 @@ def test_autofix_main(tmpdir):
 
 
 def test_orderfile_get_pretty_format():
-    ret = main(['--top-keys=alist', get_resource_path('pretty_formatted_json.json')])
+    ret = main((
+        '--top-keys=alist', get_resource_path('pretty_formatted_json.json'),
+    ))
     assert ret == 0
 
 
 def test_not_orderfile_get_pretty_format():
-    ret = main(['--top-keys=blah', get_resource_path('pretty_formatted_json.json')])
+    ret = main((
+        '--top-keys=blah', get_resource_path('pretty_formatted_json.json'),
+    ))
     assert ret == 1
 
 
 def test_top_sorted_get_pretty_format():
-    ret = main(['--top-keys=01-alist,alist', get_resource_path('top_sorted_json.json')])
+    ret = main((
+        '--top-keys=01-alist,alist', get_resource_path('top_sorted_json.json'),
+    ))
     assert ret == 0
 
 

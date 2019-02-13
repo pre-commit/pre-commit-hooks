@@ -45,7 +45,7 @@ def test_integration_good_bad_lines(tmpdir, bad_lines, good_lines, retval):
     file_path = os.path.join(tmpdir.strpath, 'foo.yaml')
 
     with open(file_path, 'w') as f:
-        f.write("\n".join(bad_lines) + "\n")
+        f.write('\n'.join(bad_lines) + '\n')
 
     assert main([file_path]) == retval
 

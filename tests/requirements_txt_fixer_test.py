@@ -15,13 +15,25 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
         (b'foo\n# comment at end\n', PASS, b'foo\n# comment at end\n'),
         (b'foo\nbar\n', FAIL, b'bar\nfoo\n'),
         (b'bar\nfoo\n', PASS, b'bar\nfoo\n'),
-        (b'#comment1\nfoo\n#comment2\nbar\n', FAIL, b'#comment2\nbar\n#comment1\nfoo\n'),
-        (b'#comment1\nbar\n#comment2\nfoo\n', PASS, b'#comment1\nbar\n#comment2\nfoo\n'),
+        (
+            b'#comment1\nfoo\n#comment2\nbar\n',
+            FAIL,
+            b'#comment2\nbar\n#comment1\nfoo\n',
+        ),
+        (
+            b'#comment1\nbar\n#comment2\nfoo\n',
+            PASS,
+            b'#comment1\nbar\n#comment2\nfoo\n',
+        ),
         (b'#comment\n\nfoo\nbar\n', FAIL, b'#comment\n\nbar\nfoo\n'),
         (b'#comment\n\nbar\nfoo\n', PASS, b'#comment\n\nbar\nfoo\n'),
         (b'\nfoo\nbar\n', FAIL, b'bar\n\nfoo\n'),
         (b'\nbar\nfoo\n', PASS, b'\nbar\nfoo\n'),
-        (b'pyramid==1\npyramid-foo==2\n', PASS, b'pyramid==1\npyramid-foo==2\n'),
+        (
+            b'pyramid==1\npyramid-foo==2\n',
+            PASS,
+            b'pyramid==1\npyramid-foo==2\n',
+        ),
         (b'ocflib\nDjango\nPyMySQL\n', FAIL, b'Django\nocflib\nPyMySQL\n'),
         (
             b'-e git+ssh://git_url@tag#egg=ocflib\nDjango\nPyMySQL\n',

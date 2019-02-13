@@ -60,16 +60,16 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     if '' in md_args:
         parser.error('--markdown-linebreak-ext requires a non-empty argument')
     all_markdown = '*' in md_args
-    # normalize all extensions; split at ',', lowercase, and force 1 leading '.'
+    # normalize extensions; split at ',', lowercase, and force 1 leading '.'
     md_exts = [
         '.' + x.lower().lstrip('.') for x in ','.join(md_args).split(',')
     ]
 
-    # reject probable "eaten" filename as extension (skip leading '.' with [1:])
+    # reject probable "eaten" filename as extension: skip leading '.' with [1:]
     for ext in md_exts:
         if any(c in ext[1:] for c in r'./\:'):
             parser.error(
-                "bad --markdown-linebreak-ext extension {!r} (has . / \\ :)\n"
+                'bad --markdown-linebreak-ext extension {!r} (has . / \\ :)\n'
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
                 .format(ext),
             )

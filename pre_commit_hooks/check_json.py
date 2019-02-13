@@ -10,7 +10,7 @@ from typing import Sequence
 
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
-    parser.add_argument('filenames', nargs='*', help='JSON filenames to check.')
+    parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)
 
     retval = 0

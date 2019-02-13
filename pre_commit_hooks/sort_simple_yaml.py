@@ -115,9 +115,9 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             new_lines = sort(lines)
 
             if lines != new_lines:
-                print("Fixing file `{filename}`".format(filename=filename))
+                print('Fixing file `{filename}`'.format(filename=filename))
                 f.seek(0)
-                f.write("\n".join(new_lines) + "\n")
+                f.write('\n'.join(new_lines) + '\n')
                 f.truncate()
                 retval = 1
 

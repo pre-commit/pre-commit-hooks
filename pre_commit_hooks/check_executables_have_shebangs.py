@@ -18,7 +18,8 @@ def check_has_shebang(path):  # type: (str) -> int
         print(
             '{path}: marked executable but has no (or invalid) shebang!\n'
             "  If it isn't supposed to be executable, try: chmod -x {quoted}\n"
-            '  If it is supposed to be executable, double-check its shebang.'.format(
+            '  If it is supposed to be executable, double-check its shebang.'
+            .format(
                 path=path,
                 quoted=pipes.quote(path),
             ),
