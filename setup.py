@@ -41,6 +41,7 @@ setup(
             'check-executables-have-shebangs = pre_commit_hooks.check_executables_have_shebangs:main',  # noqa: E501
             'check-json = pre_commit_hooks.check_json:main',
             'check-merge-conflict = pre_commit_hooks.check_merge_conflict:main',  # noqa: E501
+            'check-python-modules = pre_commit_hooks.check_python_modules:main',  # noqa: E501
             'check-symlinks = pre_commit_hooks.check_symlinks:main',
             'check-vcs-permalinks = pre_commit_hooks.check_vcs_permalinks:main',  # noqa: E501
             'check-xml = pre_commit_hooks.check_xml:main',

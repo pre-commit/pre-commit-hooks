@@ -64,6 +64,12 @@
     entry: check-merge-conflict
     language: python
     types: [text]
+-   id: check-python-modules
+    name: Check python modules
+    description: Ensure python modules have their __init__.py file.
+    entry: check-python-modules
+    language: python
+    types: [python]
 -   id: check-symlinks
     name: Check for broken symlinks
     description: Checks for symlinks which do not point to anything.
