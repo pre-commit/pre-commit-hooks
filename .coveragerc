@@ -6,7 +6,6 @@ omit =
     .tox/*
     /usr/*
     setup.py
-    get-git-lfs.py
 
 [report]
 show_missing = True

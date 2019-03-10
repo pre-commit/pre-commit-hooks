@@ -1,9 +1,8 @@
-[![Build Status](https://travis-ci.org/pre-commit/pre-commit-hooks.svg?branch=master)](https://travis-ci.org/pre-commit/pre-commit-hooks)
-[![Coverage Status](https://coveralls.io/repos/github/pre-commit/pre-commit-hooks/badge.svg?branch=master)](https://coveralls.io/github/pre-commit/pre-commit-hooks?branch=master)
-[![Build status](https://ci.appveyor.com/api/projects/status/dfcpng35u4g0r0t1/branch/master?svg=true)](https://ci.appveyor.com/project/asottile/pre-commit-hooks/branch/master)
+[![Build Status](https://asottile.visualstudio.com/asottile/_apis/build/status/pre-commit.pre-commit-hooks?branchName=master)](https://asottile.visualstudio.com/asottile/_build/latest?definitionId=17&branchName=master)
+[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/asottile/asottile/17/master.svg)](https://dev.azure.com/asottile/asottile/_build/latest?definitionId=17&branchName=master)
 
 pre-commit-hooks
-==========
+================
 
 Some out-of-the-box hooks for pre-commit.
 

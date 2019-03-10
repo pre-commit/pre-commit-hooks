@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 from __future__ import unicode_literals
 
-import subprocess
+import distutils.spawn
 
 import pytest
 
@@ -67,8 +67,7 @@ def test_integration(temp_git_dir):
 
 
 def has_gitlfs():
-    output = cmd_output('git', 'lfs', retcode=None, stderr=subprocess.STDOUT)
-    return 'git lfs status' in output
+    return distutils.spawn.find_executable('git-lfs') is not None
 
 
 xfailif_no_gitlfs = pytest.mark.xfail(
