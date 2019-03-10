@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import io
 
-import yaml
+from pre_commit_hooks.check_yaml import yaml
 
 
 def test_readme_contains_all_hooks():
