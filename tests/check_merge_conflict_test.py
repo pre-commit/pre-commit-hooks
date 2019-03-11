@@ -22,7 +22,7 @@ def f1_is_a_conflict_file(tmpdir):
     cmd_output('git', 'init', '--', repo1.strpath)
     with repo1.as_cwd():
         repo1_f1.ensure()
-        cmd_output('git', 'add', '--', repo1_f1.strpath)
+        cmd_output('git', 'add', '.')
         cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'commit1')
 
     cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
@@ -77,7 +77,7 @@ def repository_pending_merge(tmpdir):
     cmd_output('git', 'init', repo1.strpath)
     with repo1.as_cwd():
         repo1_f1.ensure()
-        cmd_output('git', 'add', '--', repo1_f1.strpath)
+        cmd_output('git', 'add', '.')
         cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'commit1')
 
     cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
@@ -90,7 +90,7 @@ def repository_pending_merge(tmpdir):
     # Commit in clone and pull without committing
     with repo2.as_cwd():
         repo2_f2.write('child\n')
-        cmd_output('git', 'add', '--', repo2_f2.strpath)
+        cmd_output('git', 'add', '.')
         cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'clone commit2')
         cmd_output('git', 'pull', '--no-commit', '--no-rebase')
         # We should end up in a pending merge

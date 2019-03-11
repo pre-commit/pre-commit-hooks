@@ -1,0 +1,25 @@
+trigger:
+  branches:
+    include: [master, test-me-*]
+
+resources:
+  repositories:
+    - repository: asottile
+      type: github
+      endpoint: asottile-github
+      name: asottile/azure-pipeline-templates
+      ref: refs/tags/v0.0.8
+
+jobs:
+- template: job--python-tox.yml@asottile
+  parameters:
+    toxenvs: [py27, py37]
+    os: windows
+    pre_test:
+    - script: git lfs
+- template: job--python-tox.yml@asottile
+  parameters:
+    toxenvs: [pypy, py27, py36, py37]
+    os: linux
+    pre_test:
+    - script: git lfs
