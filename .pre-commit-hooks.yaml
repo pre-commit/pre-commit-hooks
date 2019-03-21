@@ -21,7 +21,7 @@
     description: Forbid files which have a UTF-8 byte-order marker
     entry: check-byte-order-marker
     language: python
-    types: [python]
+    types: [text]
 -   id: check-builtin-literals
     name: Check builtin type constructor use
     description: Require literal syntax when initializing empty or zero Python builtin types.
