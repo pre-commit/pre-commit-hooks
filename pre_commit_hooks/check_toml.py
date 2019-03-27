@@ -5,7 +5,7 @@ import sys
 from typing import Optional
 from typing import Sequence
 
-import pytoml
+import toml
 
 
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
@@ -17,8 +17,8 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     for filename in args.filenames:
         try:
             with open(filename) as f:
-                pytoml.load(f)
-        except pytoml.TomlError as exc:
+                toml.load(f)
+        except toml.TomlDecodeError as exc:
             print(exc)
             retval = 1
     return retval
