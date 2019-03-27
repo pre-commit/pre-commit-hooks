@@ -70,6 +70,12 @@
     entry: check-symlinks
     language: python
     types: [symlink]
+-   id: check-toml
+    name: Check Toml
+    description: This hook checks toml files for parseable syntax.
+    entry: check-toml
+    language: python
+    types: [toml]
 -   id: check-vcs-permalinks
     name: Check vcs permalinks
     description: Ensures that links to vcs websites are permalinks.
