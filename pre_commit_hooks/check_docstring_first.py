@@ -8,14 +8,23 @@ import tokenize
 from typing import Optional
 from typing import Sequence
 
+import six
 
-NON_CODE_TOKENS = frozenset((
-    tokenize.COMMENT, tokenize.ENDMARKER, tokenize.NEWLINE, tokenize.NL,
-))
+if six.PY2:  # pragma: no cover (PY2)
+    from tokenize import generate_tokens as tokenize_tokenize
+    OTHER_NON_CODE = ()
+else:  # pragma: no cover (PY3)
+    from tokenize import tokenize as tokenize_tokenize
+    OTHER_NON_CODE = (tokenize.ENCODING,)
+
+NON_CODE_TOKENS = frozenset(
+    (tokenize.COMMENT, tokenize.ENDMARKER, tokenize.NEWLINE, tokenize.NL) +
+    OTHER_NON_CODE,
+)
 
 
 def check_docstring_first(src, filename='<unknown>'):
-    # type: (str, str) -> int
+    # type: (bytes, str) -> int
     """Returns nonzero if the source has what looks like a docstring that is
     not at the beginning of the source.
 
@@ -25,7 +34,7 @@ def check_docstring_first(src, filename='<unknown>'):
     found_docstring_line = None
     found_code_line = None
 
-    tok_gen = tokenize.generate_tokens(io.StringIO(src).readline)
+    tok_gen = tokenize_tokenize(io.BytesIO(src).readline)
     for tok_type, _, (sline, scol), _, _ in tok_gen:
         # Looks like a docstring!
         if tok_type == tokenize.STRING and scol == 0:
@@ -61,7 +70,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     retv = 0
 
     for filename in args.filenames:
-        with io.open(filename, encoding='UTF-8') as f:
+        with open(filename, 'rb') as f:
             contents = f.read()
         retv |= check_docstring_first(contents, filename=filename)
 
