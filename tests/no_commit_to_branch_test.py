@@ -44,6 +44,19 @@ def test_forbid_multiple_branches(temp_git_dir, branch_name):
         assert main(('--branch', 'b1', '--branch', 'b2'))
 
 
+def test_branch_wildcard_fail(temp_git_dir):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'checkout', '-b', 'another/branch')
+        assert is_on_branch({'another/*'}) is True
+
+
+@pytest.mark.parametrize('branch_name', ('master', 'another/branch'))
+def test_branch_wildcard_multiple_branches_fail(temp_git_dir, branch_name):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'checkout', '-b', branch_name)
+        assert main(('--branch', 'master', '--branch', 'another/*'))
+
+
 def test_main_default_call(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'anotherbranch')
