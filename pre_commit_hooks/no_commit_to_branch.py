@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import argparse
 import re
-from typing import FrozenSet
+from typing import AbstractSet
 from typing import Optional
 from typing import Sequence
 
@@ -11,7 +11,7 @@ from pre_commit_hooks.util import cmd_output
 
 
 def is_on_branch(protected, patterns=frozenset()):
-    # type: (FrozenSet[str], FrozenSet[str]) -> bool
+    # type: (AbstractSet[str], AbstractSet[str]) -> bool
     try:
         ref_name = cmd_output('git', 'symbolic-ref', 'HEAD')
     except CalledProcessError:
