@@ -79,10 +79,12 @@ Add this to your `.pre-commit-config.yaml`
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
 - `no-commit-to-branch` - Protect specific branches from direct checkins.
-    - Use `args: [--branch, staging, --branch, master, --branch, release/*]` to set the branch.
+    - Use `args: [--branch, staging, --branch, master]` to set the branch.
       `master` is the default if no argument is set.
     - `-b` / `--branch` may be specified multiple times to protect multiple
       branches.
+    - `-p` / `--pattern` can be used to protect branches that match a supplied regex
+     (e.g. `--pattern, release/.*`). May be specified multiple times.
 - `pretty-format-json` - Checks that all your JSON files are pretty.  "Pretty"
   here means that keys are sorted and indented.  You can configure this with
   the following commandline options:
