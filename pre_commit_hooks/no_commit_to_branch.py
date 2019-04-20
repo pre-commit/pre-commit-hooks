@@ -2,16 +2,16 @@ from __future__ import print_function
 
 import argparse
 import re
+from typing import FrozenSet
 from typing import Optional
 from typing import Sequence
-from typing import Set
 
 from pre_commit_hooks.util import CalledProcessError
 from pre_commit_hooks.util import cmd_output
 
 
-def is_on_branch(protected, patterns=set()):
-    # type: (Set[str], Set[str]) -> bool
+def is_on_branch(protected, patterns=frozenset()):
+    # type: (FrozenSet[str], FrozenSet[str]) -> bool
     try:
         ref_name = cmd_output('git', 'symbolic-ref', 'HEAD')
     except CalledProcessError:
@@ -33,13 +33,13 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         '-p', '--pattern', action='append',
         help=(
             'regex pattern for branch name to disallow commits to, '
-            'May be specified multiple times'
+            'may be specified multiple times'
         ),
     )
     args = parser.parse_args(argv)
 
-    protected = set(args.branch or ('master',))
-    patterns = set(args.pattern or ())
+    protected = frozenset(args.branch or ('master',))
+    patterns = frozenset(args.pattern or ())
     return int(is_on_branch(protected, patterns))
 
 
