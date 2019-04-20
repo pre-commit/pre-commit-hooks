@@ -84,7 +84,7 @@ Add this to your `.pre-commit-config.yaml`
     - `-b` / `--branch` may be specified multiple times to protect multiple
       branches.
     - `-p` / `--pattern` can be used to protect branches that match a supplied regex
-     (e.g. `--pattern, release/.*`). May be specified multiple times.
+      (e.g. `--pattern, release/.*`). May be specified multiple times.
 - `pretty-format-json` - Checks that all your JSON files are pretty.  "Pretty"
   here means that keys are sorted and indented.  You can configure this with
   the following commandline options:
