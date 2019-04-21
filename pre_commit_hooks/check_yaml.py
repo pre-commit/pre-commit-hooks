@@ -2,9 +2,8 @@ from __future__ import print_function
 
 import argparse
 import collections
-import sys
 import io
-
+import sys
 from typing import Any
 from typing import Generator
 from typing import Optional
