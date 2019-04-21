@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import argparse
 import collections
+import io
 import sys
 from typing import Any
 from typing import Generator
@@ -58,7 +59,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     retval = 0
     for filename in args.filenames:
         try:
-            with open(filename) as f:
+            with io.open(filename, encoding='UTF-8') as f:
                 load_fn(f)
         except ruamel.yaml.YAMLError as exc:
             print(exc)
