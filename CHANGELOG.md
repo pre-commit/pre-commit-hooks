@@ -1,3 +1,34 @@
+2.2.0
+=====
+
+### Features
+- Switch from `pyyaml` to `ruamel.yaml`
+    - This enforces (among other things) duplicate key checking in yaml.
+    - #351 PR by @asottile.
+- Add a new `--pattern` option to `no-commit-to-branch` for regex matching
+  branch names.
+    - #375 issue by @marcjay.
+    - #376 PR by @marcjay.
+
+### Fixes
+- Set `require_serial: true` for flake8
+    - flake8 internally uses multiprocessing.
+    - #358 PR by @asottile.
+- Don't run `check-executables-have-shebangs` / `trailing-whitespace` hooks
+  during the `commit-msg` stage.
+    - #361 issue by @revolter.
+    - #362 PR by @revolter.
+- Run `check-byte-order-marker` against `types: [text]`
+    - #371 PR by @tobywf.
+    - #372 PR by @tobywf.
+- Do not require UTF-8-encoded files for `check-docstring-first`
+    - #345 issue by @x007007007.
+    - #374 PR by @asottile.
+
+### Misc.
+- `pre-commit-hooks` now is type checked with mypy.
+    - #360 PR by @asottile.
+
 2.1.0
 =====
 
