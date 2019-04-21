@@ -1,3 +1,11 @@
+2.2.1
+=====
+
+### Fixes
+- Use UTF-8 to load yaml files
+    - #377 issue by @roottool.
+    - #378 PR by @roottool.
+
 2.2.0
 =====
 
