@@ -13,15 +13,12 @@ resources:
       ref: refs/tags/v0.0.8
 
 jobs:
+- template: job--pre-commit.yml@asottile
 - template: job--python-tox.yml@asottile
   parameters:
     toxenvs: [py27, py37]
     os: windows
-    pre_test:
-    - script: git lfs
 - template: job--python-tox.yml@asottile
   parameters:
-    toxenvs: [pypy, py27, py36, py37]
+    toxenvs: [pypy, pypy3, py27, py36, py37]
     os: linux
-    pre_test:
-    - script: git lfs
