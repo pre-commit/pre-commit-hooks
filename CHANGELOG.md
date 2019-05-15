@@ -1,3 +1,10 @@
+2.2.2
+=====
+
+### Fixes
+- Handle CRLF line endings in `fix-encoding-pragma`
+    - #384 PR by @asottile.
+
 2.2.1
 =====
 
