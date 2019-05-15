@@ -112,7 +112,7 @@ def test_not_ok_inputs(input_str, output):
 def test_ok_input_alternate_pragma():
     input_s = b'# coding: utf-8\nx = 1\n'
     bytesio = io.BytesIO(input_s)
-    ret = fix_encoding_pragma(bytesio, expected_pragma=b'# coding: utf-8\n')
+    ret = fix_encoding_pragma(bytesio, expected_pragma=b'# coding: utf-8')
     assert ret == 0
     bytesio.seek(0)
     assert bytesio.read() == input_s
@@ -120,7 +120,7 @@ def test_ok_input_alternate_pragma():
 
 def test_not_ok_input_alternate_pragma():
     bytesio = io.BytesIO(b'x = 1\n')
-    ret = fix_encoding_pragma(bytesio, expected_pragma=b'# coding: utf-8\n')
+    ret = fix_encoding_pragma(bytesio, expected_pragma=b'# coding: utf-8')
     assert ret == 1
     bytesio.seek(0)
     assert bytesio.read() == b'# coding: utf-8\nx = 1\n'
@@ -130,11 +130,11 @@ def test_not_ok_input_alternate_pragma():
     ('input_s', 'expected'),
     (
         # Python 2 cli parameters are bytes
-        (b'# coding: utf-8', b'# coding: utf-8\n'),
+        (b'# coding: utf-8', b'# coding: utf-8'),
         # Python 3 cli parameters are text
-        ('# coding: utf-8', b'# coding: utf-8\n'),
+        ('# coding: utf-8', b'# coding: utf-8'),
         # trailing whitespace
-        ('# coding: utf-8\n', b'# coding: utf-8\n'),
+        ('# coding: utf-8\n', b'# coding: utf-8'),
     ),
 )
 def test_normalize_pragma(input_s, expected):
@@ -150,3 +150,16 @@ def test_integration_alternate_pragma(tmpdir, capsys):
     assert f.read() == '# coding: utf-8\nx = 1\n'
     out, _ = capsys.readouterr()
     assert out == 'Added `# coding: utf-8` to {}\n'.format(f.strpath)
+
+
+def test_crlf_ok(tmpdir):
+    f = tmpdir.join('f.py')
+    f.write_binary(b'# -*- coding: utf-8 -*-\r\nx = 1\r\n')
+    assert not main((f.strpath,))
+
+
+def test_crfl_adds(tmpdir):
+    f = tmpdir.join('f.py')
+    f.write_binary(b'x = 1\r\n')
+    assert main((f.strpath,))
+    assert f.read_binary() == b'# -*- coding: utf-8 -*-\r\nx = 1\r\n'
