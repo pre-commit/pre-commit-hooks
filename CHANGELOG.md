@@ -1,3 +1,11 @@
+2.2.3
+=====
+
+### Fixes
+- Handle CRLF line endings in `double-quote-string-fixer`
+    - #385 issue by @Trim21.
+    - #386 PR by @asottile.
+
 2.2.2
 =====
 
