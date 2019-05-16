@@ -31,13 +31,13 @@ def handle_match(token_text):  # type: (str) -> str
 def get_line_offsets_by_line_no(src):  # type: (str) -> List[int]
     # Padded so we can index with line number
     offsets = [-1, 0]
-    for line in src.splitlines():
-        offsets.append(offsets[-1] + len(line) + 1)
+    for line in src.splitlines(True):
+        offsets.append(offsets[-1] + len(line))
     return offsets
 
 
 def fix_strings(filename):  # type: (str) -> int
-    with io.open(filename, encoding='UTF-8') as f:
+    with io.open(filename, encoding='UTF-8', newline='') as f:
         contents = f.read()
     line_offsets = get_line_offsets_by_line_no(contents)
 
@@ -58,8 +58,8 @@ def fix_strings(filename):  # type: (str) -> int
 
     new_contents = ''.join(splitcontents)
     if contents != new_contents:
-        with io.open(filename, 'w', encoding='UTF-8') as write_handle:
-            write_handle.write(new_contents)
+        with io.open(filename, 'w', encoding='UTF-8', newline='') as f:
+            f.write(new_contents)
         return 1
     else:
         return 0
