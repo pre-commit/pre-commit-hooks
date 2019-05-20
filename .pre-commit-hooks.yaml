@@ -186,3 +186,10 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: check-markdown
+    name: Markdownlint
+    description: This hook runs markdownlint on Markdown files.
+    entry: mdl
+    language: system
+    types: [text]
+    files: \.(md|mdown|markdown)$
