@@ -1,0 +1,6 @@
+In order to run automatic tests and know test coverage, following commands are suggested (notice that will run
+ALL pre_commit_hooks tests, not only Loaderon's):
+
+coverage erase
+coverage run --source pre_commit_hooks -m pytest
+coverage report --fail-under 100
