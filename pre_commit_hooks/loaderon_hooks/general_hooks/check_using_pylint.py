@@ -5,8 +5,8 @@ import re
 from pylint.lint import Run
 from pylint.reporters.text import TextReporter
 
-from pre_commit_logic.util.template_methods.file_checker_template_method import FileCheckerTemplateMethod
-from pre_commit_logic.util.file_helpers import find_file_starting_from_reference_file_directory
+from pre_commit_hooks.loaderon_hooks.util.file_helpers import find_file_starting_from_reference_file_directory
+from pre_commit_hooks.loaderon_hooks.util.template_methods.file_checker_template_method import FileCheckerTemplateMethod
 
 
 class PylintChecker(FileCheckerTemplateMethod):
@@ -39,7 +39,7 @@ class PylintChecker(FileCheckerTemplateMethod):
             Run([self.filename], reporter=TextReporter(self.pylint_output))
 
     def manage_pylint_result(self, exception):
-        print self.pylint_output.read()
+        print(self.pylint_output.read())
         if exception.code != 0:
             self.inform_check_failure('')
 

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from abc import abstractmethod
 
-from pre_commit_logic.util.template_methods.files_bunches_checker_template_method import \
+from pre_commit_hooks.loaderon_hooks.util.template_methods.files_bunches_checker_template_method import \
     FileBunchesCheckerTemplateMethod
-from pre_commit_logic.util.template_methods.lines_checker_template_method import LinesCheckerTemplateMethod
+from pre_commit_hooks.loaderon_hooks.util.template_methods.lines_checker_template_method import \
+    LinesCheckerTemplateMethod
 
 
 class FileBunchesLinesCheckerTemplateMethod(FileBunchesCheckerTemplateMethod, LinesCheckerTemplateMethod):

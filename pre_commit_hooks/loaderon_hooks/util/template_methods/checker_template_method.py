@@ -3,7 +3,7 @@ import argparse
 from abc import abstractmethod
 from argparse import ArgumentTypeError
 
-from pre_commit_logic.util.check_failed_exception import CheckFailedException
+from pre_commit_hooks.loaderon_hooks.util.check_failed_exception import CheckFailedException
 
 
 class CheckerTemplateMethod(object):
@@ -25,10 +25,10 @@ class CheckerTemplateMethod(object):
             self._perform_checks()
             return 0
         except ArgumentTypeError as ex:
-            print ex.message
+            print(ex.message)
             return 1
         except CheckFailedException as ex:
-            print ex.message
+            print(ex.message)
             return 2
 
     @abstractmethod

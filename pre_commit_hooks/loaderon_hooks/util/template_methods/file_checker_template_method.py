@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from abc import abstractmethod
 
-from pre_commit_logic.util.template_methods.checker_template_method import CheckerTemplateMethod
+from pre_commit_hooks.loaderon_hooks.util.template_methods.checker_template_method import CheckerTemplateMethod
 
 
 class FileCheckerTemplateMethod(CheckerTemplateMethod):

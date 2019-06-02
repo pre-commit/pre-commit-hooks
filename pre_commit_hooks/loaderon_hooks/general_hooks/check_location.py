@@ -3,8 +3,8 @@
 import os
 import re
 
-from pre_commit_logic.util.template_methods.file_checker_template_method import FileCheckerTemplateMethod
-from pre_commit_logic.util.string_helpers import matches_any_regexp
+from pre_commit_hooks.loaderon_hooks.util.string_helpers import matches_any_regexp
+from pre_commit_hooks.loaderon_hooks.util.template_methods.file_checker_template_method import FileCheckerTemplateMethod
 
 
 class LocationChecker(FileCheckerTemplateMethod):

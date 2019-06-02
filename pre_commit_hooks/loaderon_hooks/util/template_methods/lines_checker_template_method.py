@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from abc import abstractmethod
 
-from pre_commit_logic.util.template_methods.file_checker_template_method import FileCheckerTemplateMethod
-from pre_commit_logic.util.file_helpers import read_file_lines
+from pre_commit_hooks.loaderon_hooks.util.file_helpers import read_file_lines
+from pre_commit_hooks.loaderon_hooks.util.template_methods.file_checker_template_method import FileCheckerTemplateMethod
 
 
 class LinesCheckerTemplateMethod(FileCheckerTemplateMethod):

@@ -2,7 +2,7 @@
 import os
 import re
 
-from pre_commit_logic.util.template_methods.file_bunches_lines_checker_template_method import \
+from pre_commit_hooks.loaderon_hooks.util.template_methods.file_bunches_lines_checker_template_method import \
     FileBunchesLinesCheckerTemplateMethod
 
 

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from pre_commit_logic.general_hooks.check_branch_name import BranchNameChecker
-from pre_commit_logic.general_hooks.check_class_docstring import ClassDocstringChecker
-from pre_commit_logic.general_hooks.check_line import LinesChecker
-from pre_commit_logic.general_hooks.check_location import LocationChecker
-from pre_commit_logic.general_hooks.check_using_pylint import PylintChecker
-from pre_commit_logic.general_hooks.check_xml_encoding import XMLEncodingChecker
-from pre_commit_logic.odoo_specific_hooks.check_model_name import ModelNameAttributeChecker
+from pre_commit_hooks.loaderon_hooks.general_hooks.check_branch_name import BranchNameChecker
+from pre_commit_hooks.loaderon_hooks.general_hooks.check_class_docstring import ClassDocstringChecker
+from pre_commit_hooks.loaderon_hooks.general_hooks.check_line import LinesChecker
+from pre_commit_hooks.loaderon_hooks.general_hooks.check_location import LocationChecker
+from pre_commit_hooks.loaderon_hooks.general_hooks.check_using_pylint import PylintChecker
+from pre_commit_hooks.loaderon_hooks.general_hooks.check_xml_encoding import XMLEncodingChecker
+from pre_commit_hooks.loaderon_hooks.odoo_specific_hooks.check_model_name import ModelNameAttributeChecker
 
 
 def run_model_name_checker():
@@ -41,7 +41,7 @@ def run_line_checker():
     sys.argv.append('--line-to-check')
     sys.argv.append(r'class.+')
 
-    #Regexp for knowing how the line must be in order to be correct.
+    # Regexp for knowing how the line must be in order to be correct.
     sys.argv.append('--regexp-to-match')
     sys.argv.append(r'^(\t| )*<field name=".+"')
     sys.argv.append('--regexp-to-match')

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
-from pre_commit_logic.odoo_specific_hooks.check_view_fields_order import ViewFieldsOrderChecker
+from pre_commit_hooks.loaderon_hooks.odoo_specific_hooks.check_view_fields_order import ViewFieldsOrderChecker
 
 
 class ViewNameChecker(ViewFieldsOrderChecker):

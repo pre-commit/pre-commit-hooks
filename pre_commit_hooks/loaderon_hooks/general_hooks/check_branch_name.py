@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 
-from pre_commit_logic.util.template_methods.checker_template_method import CheckerTemplateMethod
-from pre_commit_logic.util.git_helpers import get_current_branch_name
+from pre_commit_hooks.loaderon_hooks.util.git_helpers import get_current_branch_name
+from pre_commit_hooks.loaderon_hooks.util.template_methods.checker_template_method import CheckerTemplateMethod
 
 
 class BranchNameChecker(CheckerTemplateMethod):

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import re
 
-from pre_commit_logic.util.template_methods.lines_checker_template_method import LinesCheckerTemplateMethod
+from pre_commit_hooks.loaderon_hooks.util.template_methods.lines_checker_template_method import \
+    LinesCheckerTemplateMethod
 
 
 class ClassDocstringChecker(LinesCheckerTemplateMethod):
