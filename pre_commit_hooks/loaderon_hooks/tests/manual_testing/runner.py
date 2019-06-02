@@ -10,19 +10,23 @@ from pre_commit_hooks.loaderon_hooks.general_hooks.check_xml_encoding import XML
 from pre_commit_hooks.loaderon_hooks.odoo_specific_hooks.check_model_name import ModelNameAttributeChecker
 
 
+xml_testing_file_path = r'C:\Users\Loaderon\Desktop\pre-commit-hooks\pre_commit_hooks\loaderon_hooks\tests\manual_testing\testing_view.xml'
+py_testing_file_path = r'C:\Users\Loaderon\Desktop\pre-commit-hooks\pre_commit_hooks\loaderon_hooks\tests\manual_testing\testing_class.py'
+
+
 def run_model_name_checker():
-    sys.argv.append('<filename>')
+    sys.argv.append(xml_testing_file_path)
     return ModelNameAttributeChecker(sys.argv).run()
 
 
 def run_branch_name_checker():
     sys.argv.append('--regex')
-    sys.argv.append('<branch regexp>')
+    sys.argv.append(r'\b(?!master)\b\S+')
     return BranchNameChecker(sys.argv).run()
 
 
 def run_docstring_checker():
-    sys.argv.append('<filename>')
+    sys.argv.append(py_testing_file_path)
     return ClassDocstringChecker(sys.argv).run()
 
 
@@ -55,7 +59,7 @@ def run_line_checker():
     sys.argv.append('--regexp-to-match')
     sys.argv.append(r'class ([A-Z]+[a-z0-9]+)+\(models.Model\):')
 
-    sys.argv.append('<filename>')
+    sys.argv.append(py_testing_file_path)
 
     return LinesChecker(sys.argv).run()
 
@@ -133,7 +137,7 @@ def run_location_checker():
     sys.argv.append('--files')
     sys.argv.append(r'.*\.py$ .*_views\.xml$')
 
-    sys.argv.append('<filename>')
+    sys.argv.append(py_testing_file_path)
 
     return LocationChecker(sys.argv).run()
 
@@ -143,7 +147,7 @@ def run_pylint_checker():
     sys.argv.append('--exclude')
     sys.argv.append(r'.*(\/)*__openerp__.py$')
 
-    sys.argv.append('<filename>')
+    sys.argv.append(py_testing_file_path)
 
     return PylintChecker(sys.argv).run()
 
@@ -153,18 +157,19 @@ def run_xml_encoding():
     sys.argv.append('--encoding')
     sys.argv.append(r'<?xml version="1.0" encoding="utf-8"?>')
 
-    sys.argv.append('<filename>')
+    sys.argv.append(xml_testing_file_path)
 
     return XMLEncodingChecker(sys.argv).run()
 
 
 def main():
+    # comment or remove a function no to be tested
     functions = [run_model_name_checker,
                  run_branch_name_checker,
                  run_docstring_checker,
                  run_line_checker,
                  run_location_checker,
-                 # run_pylint_checker, #comment or remove a function no to be tested
+                 run_pylint_checker,
                  run_xml_encoding]
     for function in functions:
         sys.argv = []
