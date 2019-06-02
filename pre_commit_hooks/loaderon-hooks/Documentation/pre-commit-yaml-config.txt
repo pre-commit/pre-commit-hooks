@@ -1,0 +1,79 @@
+This file show how to use loaderon-hooks, showing arguments examples when the corresponding hook needs it.
+
+Add from here to your project .pre-commit-config.yaml file:
+
+repos:
+  - repo: https://github.com/Loaderon/pre-commit-hooks
+    rev: v1.0
+    hooks:
+      # Loaderon hooks
+      - id: check-xml-encoding
+          args: [
+            --encoding, '<?xml version="1.0" encoding="utf-8"?>',
+          ]
+      - id: check-location
+        args: [
+          --directories, '^[^\/]+$',
+          --directories, '.*\/controllers$',
+          --directories, '.*\/data$',
+          --directories, '.*\/i18n$',
+          --directories, '.*\/models$',
+          --directories, '.*\/report$',
+          --directories, '.*\/security$',
+          --directories, '.*\/static\/img$',
+          --directories, '.*\/static\/lib\/external_lib$',
+          --directories, '.*\/static\/src\/js$',
+          --directories, '.*\/static\/src\/css$',
+          --directories, '.*\/static\/src\/less$',
+          --directories, '.*\/static\/src\/xml$',
+          --directories, '.*\/static\/tests$',
+          --directories, '.*[^\/static]\/tests$',
+          --directories, '.*\/views$',
+          --directories, '.*\/wizard$',
+
+          --files, '__init__.py$ __openerp__.py$',
+          --files, '__init__.py$ .*\.py$ main.py$',
+          --files, '.*_data\.xml$ .*_demo\.xml$',
+          --files, '.*\.po$',
+          --files, '__init__.py$ .*\.py$',
+          --files, '__init__.py$ .*\.py$ .*_views\.xml$ .*_reports\.xml$ .*_templates\.xml$',
+          --files, 'ir.model.access.csv$ .*_security\.xml$',
+          --files, '.*\.png$ .*\.jpg$',
+          --files, '.*\$',
+          --files, '.*\.js$',
+          --files, '.*\.css$',
+          --files, '.*\.less$',
+          --files, '.*\.xml$',
+          --files, '.*\.tour\.js$',
+          --files, '__init__.py$ test_.*\.py',
+          --files, '.*_templates\.xml$ .*_views\.xml$',
+          --files, '.*\.py$ .*_views\.xml$',
+        ]
+      - id: check-line
+        args: [
+          --line-to-check, '^(\t| )*<field.+',
+          --line-to-check, '^(\t| )*<record.+',
+          --line-to-check, '.+fields.Many2one.+',
+          --line-to-check, '.+fields.One2many.+',
+          --line-to-check, '.+fields.Many2many.+',
+          --line-to-check, 'class.+',
+
+          --regexp-to-match, '^(\t| )*<field name=".+"',
+          --regexp-to-match, '^(\t| )*<record id=".+"',
+          --regexp-to-match, '^(\t| )*.+_id = fields.Many2one\(',
+          --regexp-to-match, '^(\t| )*.+_ids = fields.One2many\(',
+          --regexp-to-match, '^(\t| )*.+_ids = fields.Many2many\(',
+          --regexp-to-match, 'class ([A-Z]+[a-z0-9]+)+\(.+\):',
+        ]
+      - id: check-model-name
+      - id: check-view-name
+      - id: check-view-fields-order
+      - id: check-using-pylint
+          args: [
+            --exclude, '.*(\/)*__openerp__.py$',
+          ]
+      - id: check-branch-name
+        args: [
+          --regex, 'develop\..+?\.(DEFECTO|INVES|MEJORA)\.\d+(_\d+)*'
+        ]
+      - id: check-class-docstring

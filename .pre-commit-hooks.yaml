@@ -186,3 +186,56 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+
+# Loaderon hooks:
+
+- id: check-xml-encoding
+  name: Checks .xml Files Encoding
+  description: Checks that xml files have required encoding as first line.
+  entry: check-xml-encoding
+  language: python
+  types: [xml]
+- id: check-location
+  name: Checks Files Location
+  description: Checks that specified files are located inside specified directories.
+  entry: check-location
+  language: python
+- id: check-using-pylint
+  name: Check Python Using Pylint
+  description: Checks python files using pylint.
+  entry: check-using-pylint
+  language: python
+  types: [python]
+- id: check-branch-name
+  name: Check Branch Name
+  description: Checks current branch name follows '--regex' style convention.
+  entry: check-branch-name
+  language: python
+  pass_filenames: false
+  always_run: true
+- id: check-line
+  name: Check Line
+  description: Checks desired lines are formatted as desired in python an xml files.
+  entry: check-line
+  language: python
+- id: check-model-name
+  name: Check Model Name
+  description: Checks that model name uses dot notation and has module name as prefix.
+  entry: check-model-name
+  language: python
+  types: [python]
+- id: check-class-docstring
+  name: Check Class Docstring
+  entry: check-class-docstring
+  language: python
+  types: [python]
+- id: check-view-name
+  name: Check View Name
+  entry: check-view-name
+  language: python
+  types: [xml]
+- id: check-view-fields-order
+  name: Check View Fields Order
+  entry: check-view-fields-order
+  language: python
+  types: [xml]
