@@ -3,7 +3,7 @@ ALL pre_commit_hooks tests, not only Loaderon's):
 
 coverage erase
 coverage run --source pre_commit_hooks -m pytest
-coverage report --fail-under 100
+coverage report
 
 #######################################################################################################################
 
