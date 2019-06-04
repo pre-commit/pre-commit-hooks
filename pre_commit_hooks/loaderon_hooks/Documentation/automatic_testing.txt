@@ -10,4 +10,4 @@ coverage report --fail-under 100
 Each automatic test method should have three stages:
 -Initialization: declaring and specification of all necessary variables and data for the test.
 -Execution: run all to-be-tested procedures.
--Verification: checking of obtained results.
+-Verification: checking of obtained results. Might not be necessary when an exception is expected.
