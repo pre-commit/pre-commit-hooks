@@ -13,7 +13,7 @@ def clean_sys_argv():
     yield
 
 
-def test_branch_name_ok():
+def test_docstring_ok():
     new_branch_name = str(uuid.uuid4())
     subprocess.check_output(['git', 'checkout', '-b', new_branch_name])
     sys.argv.append('--regex')
