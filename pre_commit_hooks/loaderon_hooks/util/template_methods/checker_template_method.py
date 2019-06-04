@@ -25,10 +25,10 @@ class CheckerTemplateMethod(object):
             self._perform_checks()
             return 0
         except ArgumentTypeError as ex:
-            print ex.message
+            print(ex.message)
             return 1
         except CheckFailedException as ex:
-            print ex.message
+            print(ex.message)
             return 2
 
     @abstractmethod
