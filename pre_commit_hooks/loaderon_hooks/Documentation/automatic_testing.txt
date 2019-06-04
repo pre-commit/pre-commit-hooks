@@ -4,3 +4,10 @@ ALL pre_commit_hooks tests, not only Loaderon's):
 coverage erase
 coverage run --source pre_commit_hooks -m pytest
 coverage report --fail-under 100
+
+#######################################################################################################################
+
+Each automatic test method should have three stages:
+-Initialization: declaring and specification of all necessary variables and data for the test.
+-Execution: run all to-be-tested procedures.
+-Verification: checking of obtained results.
