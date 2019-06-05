@@ -2,4 +2,4 @@
 
 
 class TestingClass(object):  # SHOULD PASS
-    """"""
+    """Hola mundo"""
