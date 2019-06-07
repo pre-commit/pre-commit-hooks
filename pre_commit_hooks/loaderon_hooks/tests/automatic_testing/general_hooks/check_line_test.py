@@ -43,3 +43,7 @@ def clean_sys_argv():
 
 def test_odoo_xml_field_and_record_declaration_ok():
     perform_test_on_file_expecting_result('check_line_samples/xml_lines_ok.xml', main)
+
+
+def test_odoo_xml_record_declaration_error():
+    perform_test_on_file_expecting_result('check_line_samples/xml_lines_error_1.xml', main, expected_result=2)
