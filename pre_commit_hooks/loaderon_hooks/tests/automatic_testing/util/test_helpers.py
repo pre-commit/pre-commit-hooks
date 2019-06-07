@@ -8,10 +8,10 @@ def get_sample_file_path(file_name):
     return testing_files_folder_path + file_name
 
 
-def perform_test_on_file_expecting_result(file_name, main_function, expected_result=0):
+def perform_test_on_file_expecting_result(file_name, test_function, expected_result=0):
     sample_file_path = get_sample_file_path(file_name)
     sys.argv.append(sample_file_path)
 
-    result = main_function(sys.argv)
+    result = test_function(sys.argv)
 
     assert result == expected_result
