@@ -22,7 +22,7 @@ def read_file_lines(file_path):
 
 
 def find_file_starting_from_reference_file_directory(reference_file, file_to_find):
-    """Attempts to find file_to_find by navigating through directories from reference_file parent directory."""
+    """Attempts to find file_to_find by navigating through directories from reference_file's parent directory."""
     file_path = os.path.realpath(reference_file)
     folder_path = os.path.dirname(file_path)
     for root, unused_dirs, files in os.walk(folder_path):
