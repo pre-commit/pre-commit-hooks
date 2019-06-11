@@ -99,6 +99,12 @@ Add this to your `.pre-commit-config.yaml`
       use `args: [--markdown-linebreak-ext=md]` (or other extensions used
       by your markdownfiles).  If for some reason you want to treat all files
       as markdown, use `--markdown-linebreak-ext=*`.
+- `check-xml-encoding` - Checks that xml files have required encoding as first line.
+    - To specify desired encoding use `args: [--encoding]`
+- `check-location` - Checks that specified files are located inside specified directories.
+    - To specify desired encoding use: `args: [--directories, --files]`
+    Number of specified directories must match number of specified files.
+    Order matters: First 'files' types found will be checked to be inside of first 'directories'.
 
 ### Deprecated / replaced hooks
 
