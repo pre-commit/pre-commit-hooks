@@ -155,6 +155,31 @@ Add this to your `.pre-commit-config.yaml`
           ]`
     
     Receives a regular expression
+- `check-branch-name` - Checks current branch name.
+    - To specify correct branch name use `args: [--regex]`. Example:
+    `args: [
+          --regex, 'develop\..+?\.(DEFECTO|INVES|MEJORA)\.\d+(_\d+)*'
+        ]`
+- `check-line` - Checks desired lines are formatted as desired in python and xml files.
+    - To specify correct branch name use `args: [--line-to-check, --regexp-to-match]`. Example:
+    `args: [
+          --line-to-check, '^(\t| )*<field.+',
+          --line-to-check, '^(\t| )*<record.+',
+          --line-to-check, '.+fields.Many2one.+',
+          --line-to-check, '.+fields.One2many.+',
+          --line-to-check, '.+fields.Many2many.+',
+          --line-to-check, 'class.+',
+          --regexp-to-match, '^(\t| )*<field name=".+"',
+          --regexp-to-match, '^(\t| )*<record id=".+"',
+          --regexp-to-match, '^(\t| )*.+_id = fields.Many2one\(',
+          --regexp-to-match, '^(\t| )*.+_ids = fields.One2many\(',
+          --regexp-to-match, '^(\t| )*.+_ids = fields.Many2many\(',
+          --regexp-to-match, 'class ([A-Z]+[a-z0-9]+)+\(.+\):',
+        ]`
+- `check-model-name` - Checks that odoo model name uses dot notation and has module name as prefix.
+- `check-class-docstring` - Checks that each python class has a docstring.
+- `check-view-name` - Checks that odoo views name follow odoo guidelines.
+- `check-view-fields-order` - Checks view fields order follow odoo guidelines.
 
 ### Deprecated / replaced hooks
 

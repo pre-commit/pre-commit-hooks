@@ -53,6 +53,10 @@ repos:
           args: [
             --exclude, '.*(\/)*__openerp__.py$',
           ]
+      - id: check-branch-name
+        args: [
+          --regex, 'develop\..+?\.(DEFECTO|INVES|MEJORA)\.\d+(_\d+)*'
+        ]
       - id: check-line
         args: [
           --line-to-check, '^(\t| )*<field.+',
@@ -72,8 +76,4 @@ repos:
       - id: check-model-name
       - id: check-view-name
       - id: check-view-fields-order
-      - id: check-branch-name
-        args: [
-          --regex, 'develop\..+?\.(DEFECTO|INVES|MEJORA)\.\d+(_\d+)*'
-        ]
       - id: check-class-docstring

@@ -215,7 +215,7 @@
   always_run: true
 - id: check-line
   name: Check Line
-  description: Checks desired lines are formatted as desired in python an xml files.
+  description: Checks desired lines are formatted as desired in python and xml files.
   entry: check-line
   language: python
 - id: check-model-name
@@ -226,16 +226,19 @@
   types: [python]
 - id: check-class-docstring
   name: Check Class Docstring
+  description: Checks that each python class has a docstring.
   entry: check-class-docstring
   language: python
   types: [python]
 - id: check-view-name
   name: Check View Name
+  description: Checks that odoo views name follow odoo guidelines.
   entry: check-view-name
   language: python
   types: [xml]
 - id: check-view-fields-order
   name: Check View Fields Order
+  description: Checks view fields order follow odoo guidelines.
   entry: check-view-fields-order
   language: python
   types: [xml]
