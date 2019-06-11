@@ -100,11 +100,61 @@ Add this to your `.pre-commit-config.yaml`
       by your markdownfiles).  If for some reason you want to treat all files
       as markdown, use `--markdown-linebreak-ext=*`.
 - `check-xml-encoding` - Checks that xml files have required encoding as first line.
-    - To specify desired encoding use `args: [--encoding]`
+    - To specify desired encoding use `args: [--encoding]`. Example:
+    `args: [
+            --encoding, '<?xml version="1.0" encoding="utf-8"?>',
+          ]`
 - `check-location` - Checks that specified files are located inside specified directories.
-    - To specify desired encoding use: `args: [--directories, --files]`
+    - To specify desired encoding use: `args: [--directories, --files]`. Example:
+    `args: [
+          --directories, '^[^\/]+$',
+          --directories, '.*\/controllers$',
+          --directories, '.*\/data$',
+          --directories, '.*\/i18n$',
+          --directories, '.*\/models$',
+          --directories, '.*\/report$',
+          --directories, '.*\/security$',
+          --directories, '.*\/static\/img$',
+          --directories, '.*\/static\/lib\/external_lib$',
+          --directories, '.*\/static\/src\/js$',
+          --directories, '.*\/static\/src\/css$',
+          --directories, '.*\/static\/src\/less$',
+          --directories, '.*\/static\/src\/xml$',
+          --directories, '.*\/static\/tests$',
+          --directories, '.*[^\/static]\/tests$',
+          --directories, '.*\/views$',
+          --directories, '.*\/wizard$',
+          --files, '__init__.py$ __openerp__.py$',
+          --files, '__init__.py$ .*\.py$ main.py$',
+          --files, '.*_data\.xml$ .*_demo\.xml$',
+          --files, '.*\.po$',
+          --files, '__init__.py$ .*\.py$',
+          --files, '__init__.py$ .*\.py$ .*_views\.xml$ .*_reports\.xml$ .*_templates\.xml$',
+          --files, 'ir.model.access.csv$ .*_security\.xml$',
+          --files, '.*\.png$ .*\.jpg$',
+          --files, '.*\$',
+          --files, '.*\.js$',
+          --files, '.*\.css$',
+          --files, '.*\.less$',
+          --files, '.*\.xml$',
+          --files, '.*\.tour\.js$',
+          --files, '__init__.py$ test_.*\.py',
+          --files, '.*_templates\.xml$ .*_views\.xml$',
+          --files, '.*\.py$ .*_views\.xml$',
+        ]`
+    
+    Both arguments receive a regular expression.
+    
     Number of specified directories must match number of specified files.
+    
     Order matters: First 'files' types found will be checked to be inside of first 'directories'.
+- `check-using-pylint` - Check Python Using Pylint.
+    - To exclude files from the check, use `args: [--exclude]`. Example:
+    `args: [
+            --exclude, '.*(\/)*__openerp__.py$',
+          ]`
+    
+    Receives a regular expression
 
 ### Deprecated / replaced hooks
 
