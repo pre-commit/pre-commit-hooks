@@ -17,6 +17,10 @@ def test_check_view_fields_order_ok():
     perform_test_on_file_expecting_result('check_view_fields_order_samples/ok.xml', main)
 
 
+def test_check_view_fields_order_multiple_records_ok():
+    perform_test_on_file_expecting_result('check_view_fields_order_samples/multiple_records_ok.xml', main)
+
+
 def test_check_view_fields_order_name_error():
     perform_test_on_file_expecting_result('check_view_fields_order_samples/first_field_not_name_error.xml', main, expected_result=2)
 
