@@ -1,2 +1,2 @@
 class SomeClass(object):
-    _name = "testing_files.some.model.name"
+    _name = "testing_samples.some.model.name"
