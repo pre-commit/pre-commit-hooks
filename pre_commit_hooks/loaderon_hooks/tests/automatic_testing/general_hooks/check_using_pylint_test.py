@@ -32,7 +32,7 @@ def test_with_pylint_error():
 
 
 def walk_return(folder_path):
-    root = '/home/administrador/Escritorio/pre-commit-hooks/pre_commit_hooks/loaderon_hooks/tests/automatic_testing/testing_files/check_using_pylint_samples'
+    root = '/home/administrador/Escritorio/pre-commit-hooks/pre_commit_hooks/loaderon_hooks/tests/automatic_testing/testing_samples/check_using_pylint_samples'
     unused_dirs = []
     files = ['.pylintrc']
     return [(root, unused_dirs, files)]

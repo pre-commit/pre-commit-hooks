@@ -6,7 +6,7 @@ omit =
     .tox/*
     /usr/*
     setup.py
-    pre_commit_hooks/loaderon_hooks/tests/automatic_testing/testing_files/*
+    pre_commit_hooks/loaderon_hooks/tests/automatic_testing/testing_samples/*
 
 [report]
 show_missing = True

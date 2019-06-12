@@ -4,7 +4,7 @@ import sys
 
 def get_sample_file_path(file_name):
     current_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    testing_files_folder_path = current_path + '/testing_files/'
+    testing_files_folder_path = current_path + '/testing_samples/'
     return testing_files_folder_path + file_name
 
 
