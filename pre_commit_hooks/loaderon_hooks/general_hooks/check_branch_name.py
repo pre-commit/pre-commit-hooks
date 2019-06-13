@@ -7,6 +7,7 @@ from pre_commit_hooks.loaderon_hooks.util.template_methods.checker_template_meth
 
 class BranchNameChecker(CheckerTemplateMethod):
     def _add_arguments_to_parser(self):
+        super(BranchNameChecker, self)._add_arguments_to_parser()
         self.parser.add_argument('-r', '--regex', help='Regex that git current branch must match.')
 
     def _perform_checks(self):

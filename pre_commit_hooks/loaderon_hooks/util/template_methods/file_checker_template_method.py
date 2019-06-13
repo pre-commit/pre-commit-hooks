@@ -10,6 +10,7 @@ class FileCheckerTemplateMethod(CheckerTemplateMethod):
         self.filename = ''
 
     def _add_arguments_to_parser(self):
+        super(FileCheckerTemplateMethod, self)._add_arguments_to_parser()
         self.parser.add_argument('filenames', nargs='*')
 
     def _perform_checks(self):
