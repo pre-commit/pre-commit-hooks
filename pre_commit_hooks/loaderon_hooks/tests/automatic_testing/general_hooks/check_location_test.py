@@ -57,6 +57,7 @@ def test_locations_arguments_size_mismatch_error():
 
 
 def test_locations_no_arguments_error():
+    sys.argv = []
     with pytest.raises(TypeError) as error:
         perform_test_on_file_expecting_result('check_location_samples/xml/correct_xml.xml', main)
     assert "'NoneType' object is not iterable" in str(error.value)
