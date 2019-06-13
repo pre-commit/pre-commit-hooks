@@ -16,6 +16,7 @@ class BranchNameChecker(CheckerTemplateMethod):
         self.parser.add_argument('-r', '--regex', help='Regex that git current branch must match.')
 
     def _perform_checks(self):
+        super(BranchNameChecker, self)._perform_checks()
         regular_expression = self.args.regex
         pattern = re.compile(regular_expression)
         current_branch_name = get_current_branch_name()

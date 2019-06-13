@@ -14,6 +14,7 @@ class FileCheckerTemplateMethod(CheckerTemplateMethod):
         self.parser.add_argument('filenames', nargs='*')
 
     def _perform_checks(self):
+        super(FileCheckerTemplateMethod, self)._perform_checks()
         """For each file, check it's location."""
         for self.filename in self.args.filenames:
             self._check_file()
