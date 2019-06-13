@@ -24,9 +24,6 @@ class CheckerTemplateMethod(object):
         try:
             self._perform_checks()
             return 0
-        except ArgumentTypeError as ex:
-            str(ex)
-            return 1
         except CheckFailedException as ex:
             str(ex)
             return 2
