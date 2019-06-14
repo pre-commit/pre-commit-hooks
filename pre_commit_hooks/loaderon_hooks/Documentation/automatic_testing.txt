@@ -4,12 +4,3 @@ ALL pre_commit_hooks tests, not only Loaderon's):
 coverage erase
 coverage run --source pre_commit_hooks -m pytest
 coverage report
-
-#######################################################################################################################
-
-Each automatic test method should have three stages:
--Initialization: declaring and specification of all necessary variables and data for the test.
--Execution: run all to-be-tested procedures.
--Restoration: Eventual undoing of actions that may have changed external configurations. So as to ensure unit testing
-isolation. Restoration should go before verification in case test fails.
--Verification: checking of obtained results. Might not be necessary when an exception is expected.

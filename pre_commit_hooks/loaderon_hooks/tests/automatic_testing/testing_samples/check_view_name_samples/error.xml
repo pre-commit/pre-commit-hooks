@@ -1,9 +1,0 @@
-<record id="an_id" model="ir.ui.view">
-    <field name="name">bad_name</field>
-    <field name="model">model_name</field>
-    <field name="arch" type="xml">
-        <search string="Some search conf">
-            <field name="some_field"/>
-        </search>
-    </field>
-</record>

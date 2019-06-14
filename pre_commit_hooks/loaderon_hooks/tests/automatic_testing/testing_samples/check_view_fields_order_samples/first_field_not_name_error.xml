@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data>
-        <record id="id" model="ir.ui.view">
-            <field name="not-name-tag">Jhon Doe</field>
-            <field name="model">some.model</field>
-        </record>
-    </data>
-</odoo>
