@@ -18,6 +18,7 @@ class ModelNameAttributeChecker(FileBunchesLinesCheckerTemplateMethod):
         self.__inherit_line = ''
 
     def _get_regexp(self):
+        super(ModelNameAttributeChecker, self)._get_regexp()
         return r'^(\t| )*class.+'
 
     def _check_file(self):
@@ -39,6 +40,7 @@ class ModelNameAttributeChecker(FileBunchesLinesCheckerTemplateMethod):
         We will use this inherited method (which runs through all file lines) in order to gather lines that are required
         to perform the lines bunch check.
         """
+        super(ModelNameAttributeChecker, self)._check_line()
         if self.__name_pattern.match(self._file_line):
             self.__name_line = self._file_line.strip('_name = ')
         if self.__inherit_pattern.match(self._file_line):

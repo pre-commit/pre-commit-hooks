@@ -17,9 +17,11 @@ class ViewFieldsOrderChecker(FileBunchesCheckerTemplateMethod):
         self._model_line = None
 
     def _get_regexp(self):
+        super(ViewFieldsOrderChecker, self)._get_regexp()
         return r'^(\t| )*<record id=.+ model="ir.ui.view">(\t| )*'
 
     def _check_bunch(self):
+        super(ViewFieldsOrderChecker, self)._check_bunch()
         self._record_line = self._bunch_of_lines[0].strip()
         self._name_line = self._bunch_of_lines[1]
         self._model_line = self._bunch_of_lines[2]

@@ -9,6 +9,7 @@ class XMLEncodingChecker(FileCheckerTemplateMethod):
         self.parser.add_argument('-e', '--encoding', help='Desired encoding.')
 
     def _check_file(self):
+        super(XMLEncodingChecker, self)._check_file()
         first_line = read_file_line(self.filename)
         desired_encoding = self.args.encoding.rstrip()
         first_line = first_line.rstrip('\n')

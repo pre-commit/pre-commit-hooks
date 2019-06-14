@@ -7,6 +7,7 @@ from pre_commit_hooks.loaderon_hooks.util.template_methods.lines_checker_templat
 
 class ClassDocstringChecker(LinesCheckerTemplateMethod):
     def _check_line(self):
+        super(ClassDocstringChecker, self)._check_line()
         regular_expression = r'^(\t| )*class .+\(.*\):'
         pattern = re.compile(regular_expression)
         if pattern.match(self._file_line):

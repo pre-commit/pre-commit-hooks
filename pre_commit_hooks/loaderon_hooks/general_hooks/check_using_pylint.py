@@ -19,6 +19,7 @@ class PylintChecker(FileCheckerTemplateMethod):
         self.parser.add_argument('-e', '--exclude', help='Excluded files to check.')
 
     def _check_file(self):
+        super(PylintChecker, self)._check_file()
         try:
             self.run_pylint_except_in_excluded_files()
         except SystemExit as exception:

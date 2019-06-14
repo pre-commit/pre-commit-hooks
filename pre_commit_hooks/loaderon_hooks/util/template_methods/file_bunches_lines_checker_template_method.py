@@ -17,9 +17,11 @@ class FileBunchesLinesCheckerTemplateMethod(FileBunchesCheckerTemplateMethod, Li
         This method uses LinesCheckerTemplateMethod's _check_lines. Which receives self._file_lines. In this case, our
         'file lines' will be the bunches of lines got by split_by_classes.
         """
+        super(FileBunchesLinesCheckerTemplateMethod, self)._check_bunch()
         self._file_lines = self._bunch_of_lines
         self._check_lines()
 
     @abstractmethod
     def _check_line(self):
+        super(FileBunchesLinesCheckerTemplateMethod, self)._check_line()
         pass

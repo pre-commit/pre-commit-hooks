@@ -11,6 +11,7 @@ class FileBunchesCheckerTemplateMethod(FileCheckerTemplateMethod):
         self._bunch_of_lines = []
 
     def _check_file(self):
+        super(FileBunchesCheckerTemplateMethod, self)._check_file()
         regexp = self._get_regexp()
         bunches_of_lines = split_by_regexp(self.filename, regexp)
         for self._bunch_of_lines in bunches_of_lines:

@@ -25,6 +25,7 @@ class LocationChecker(FileCheckerTemplateMethod):
 
     def _check_file(self):
         """Check filename location against enabled directories and their enabled files."""
+        super(LocationChecker, self)._check_file()
         self.check_arguments_size_match(self.args.directories, self.args.files)
         file_directory_path = os.path.dirname(self.filename)
         file_name = os.path.basename(self.filename)

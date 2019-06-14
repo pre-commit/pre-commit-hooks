@@ -15,6 +15,7 @@ class LinesChecker(LinesCheckerTemplateMethod):
         self.check_arguments_size_match(self.args.line_to_check, self.args.regexp_to_match)
 
     def _check_line(self):
+        super(LinesChecker, self)._check_line()
         for line_index, line_to_check in enumerate(self.args.line_to_check):
             line_to_check_pattern = re.compile(line_to_check)
             if line_to_check_pattern.match(self._file_line):

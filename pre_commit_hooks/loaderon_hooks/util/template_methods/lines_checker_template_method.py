@@ -13,6 +13,7 @@ class LinesCheckerTemplateMethod(FileCheckerTemplateMethod):
         self._file_line_index = 0
 
     def _check_file(self):
+        super(LinesCheckerTemplateMethod, self)._check_file()
         self._file_lines = read_file_lines(self.filename)
         self._check_lines()
 
