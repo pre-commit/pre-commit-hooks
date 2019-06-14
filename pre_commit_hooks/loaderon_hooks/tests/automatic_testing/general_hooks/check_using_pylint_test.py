@@ -1,12 +1,14 @@
+import os
+import sys
 import sys
 import unittest
 
 import mock
 import pytest
 
+from pre_commit_hooks.loaderon_hooks.general_hooks.check_using_pylint import main
 from pre_commit_hooks.loaderon_hooks.tests.automatic_testing.util.test_helpers import \
     perform_test_on_file_expecting_result
-from pre_commit_hooks.loaderon_hooks.general_hooks.check_using_pylint import main
 
 
 @pytest.fixture(autouse=True)
@@ -32,7 +34,8 @@ def test_with_pylint_error():
 
 
 def walk_return(folder_path):
-    root = '/home/administrador/Escritorio/pre-commit-hooks/pre_commit_hooks/loaderon_hooks/tests/automatic_testing/testing_samples/check_using_pylint_samples'
+    loaderon_hooks_folder = os.path.dirname(folder_path)
+    root = loaderon_hooks_folder + '/tests/automatic_testing/testing_samples/check_using_pylint_samples'
     unused_dirs = []
     files = ['.pylintrc']
     return [(root, unused_dirs, files)]
