@@ -10,7 +10,7 @@ from typing import Optional
 from typing import Sequence
 
 
-DEBUG_STATEMENTS = {'pdb', 'ipdb', 'pudb', 'q', 'rdb'}
+DEBUG_STATEMENTS = {'pdb', 'ipdb', 'pudb', 'q', 'rdb', 'rpdb'}
 Debug = collections.namedtuple('Debug', ('line', 'col', 'name', 'reason'))
 
 
