@@ -79,7 +79,7 @@ def check_file_for_aws_keys(filenames, keys):
     for filename in filenames:
         with io.open(filename, 'rb') as content:
             binary_body = content.read()
-            text_body = binary_body.decode(error='ignore')
+            text_body = binary_body.decode(errors='ignore')
             for key in keys:
                 # naively match the entire file, low chance of incorrect
                 # collision
