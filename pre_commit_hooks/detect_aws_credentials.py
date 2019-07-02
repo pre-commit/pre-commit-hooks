@@ -76,7 +76,7 @@ def check_file_for_aws_keys(filenames, keys):
     bad_files = []
 
     for filename in filenames:
-        with open(filename, 'r') as content:
+        with open(filename, 'r', errors='ignore') as content:
             text_body = content.read()
             for key in keys:
                 # naively match the entire file, low chance of incorrect
