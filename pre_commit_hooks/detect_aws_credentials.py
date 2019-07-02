@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import argparse
 import os
+import io
 from typing import Dict
 from typing import List
 from typing import Optional
