@@ -2,7 +2,6 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
-import os
 import io
 from typing import Dict
 from typing import List
