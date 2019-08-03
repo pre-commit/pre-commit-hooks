@@ -12,6 +12,7 @@ conflicts and keep the file nicely ordered.
 from __future__ import print_function
 
 import argparse
+import sys
 from typing import IO
 from typing import Optional
 from typing import Sequence
@@ -53,3 +54,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             retv |= ret_for_file
 
     return retv
+
+
+if __name__ == '__main__':
+    sys.exit(main())
