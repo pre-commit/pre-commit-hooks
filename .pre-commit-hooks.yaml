@@ -173,6 +173,12 @@
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
+-   id: remove-tabs
+    name: Check docstring is first
+    description: Remove tabs from files and replaces them with spaces.
+    entry: remove-tabs
+    language: python
+    types: [text]
 -   id: sort-simple-yaml
     name: Sort simple YAML files
     language: python
