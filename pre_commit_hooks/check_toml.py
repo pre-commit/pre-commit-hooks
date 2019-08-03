@@ -19,7 +19,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             with open(filename) as f:
                 toml.load(f)
         except toml.TomlDecodeError as exc:
-            print(exc)
+            print('{}: {}'.format(filename, exc))
             retval = 1
     return retval
 
