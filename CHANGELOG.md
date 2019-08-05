@@ -1,3 +1,22 @@
+2.3.0
+=====
+
+### Features
+- Add `rpdb` to detected debuggers in `debug-statements`
+    - #389 PR by @danlamanna.
+- Add `check-toml` hook
+    - #400 PR by @MarSoft.
+    - #400 PR by @ssbarnea.
+
+### Fixes
+- Add `__main__` block to `pre_commit.file_contents_sorter` so it can be
+  invoked using `python -m`
+    - #405 PR by @squeaky-pl.
+
+### Misc.
+- Fix `git-lfs` tests in azure pipelines
+    - #403 PR by @ssbarnea.
+
 2.2.3
 =====
 
