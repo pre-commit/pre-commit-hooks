@@ -115,6 +115,17 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             if contents != pretty_contents:
                 print('File {} is not pretty-formatted'.format(json_file))
 
+                contents_by_line = ''.join(contents).split('\n')
+                pretty_contents_by_line = ''.join(pretty_contents).split('\n')
+
+                diff = len(contents_by_line) - len(pretty_contents_by_line)
+                if diff > 0:
+                    pretty_contents_by_line.extend([''] * diff)
+
+                for line_num, line in enumerate(contents_by_line):
+                    if line != pretty_contents_by_line[line_num]:
+                        print('{}:{}'.format(json_file, line_num))
+
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
 
