@@ -4,6 +4,7 @@ import argparse
 import io
 import json
 import sys
+import difflib
 from collections import OrderedDict
 from typing import List
 from typing import Mapping
@@ -55,6 +56,14 @@ def parse_topkeys(s):  # type: (str) -> List[str]
     return s.split(',')
 
 
+def get_diff(source, target):
+    source_lines = ''.join(source).split('\n')
+    target_lines = ''.join(target).split('\n')
+    d = difflib.Differ()
+    diff = d.compare(source_lines, target_lines)
+    return '\n'.join(diff)
+
+
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -96,6 +105,13 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         default=[],
         help='Ordered list of keys to keep at the top of JSON hashes',
     )
+    parser.add_argument(
+        '--show-expected',
+        action='store_true',
+        dest='show_expected',
+        default=False,
+        help='Show a diff between the input file and expected (pretty) output',
+    )
 
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -115,16 +131,8 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             if contents != pretty_contents:
                 print('File {} is not pretty-formatted'.format(json_file))
 
-                contents_by_line = ''.join(contents).split('\n')
-                pretty_contents_by_line = ''.join(pretty_contents).split('\n')
-
-                diff = len(contents_by_line) - len(pretty_contents_by_line)
-                if diff > 0:
-                    pretty_contents_by_line.extend([''] * diff)
-
-                for line_num, line in enumerate(contents_by_line):
-                    if line != pretty_contents_by_line[line_num]:
-                        print('{}:{}'.format(json_file, line_num))
+                if args.show_expected:
+                    print(get_diff(contents, pretty_contents))
 
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
