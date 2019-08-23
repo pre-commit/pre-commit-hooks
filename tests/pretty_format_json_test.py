@@ -3,6 +3,7 @@ import shutil
 import pytest
 from six import PY2
 
+from pre_commit_hooks.pretty_format_json import get_diff
 from pre_commit_hooks.pretty_format_json import main
 from pre_commit_hooks.pretty_format_json import parse_num_to_int
 from testing.util import get_resource_path
@@ -105,3 +106,78 @@ def test_top_sorted_get_pretty_format():
 def test_badfile_main():
     ret = main([get_resource_path('ok_yaml.yaml')])
     assert ret == 1
+
+
+def test_diffing_output():
+    table_tests = [
+        {
+            'name': 'diff_test_1',
+            'source': """
+{
+    "key1": "val1",
+    "key2":   2,
+"array_key": [1, 2, 3],
+        "object":{
+        "bool_key": true
+      }
+}
+""",
+            'target': """
+{
+  "array_key": [
+    1,
+    2,
+    3
+  ],
+  "key1": "val1",
+  "key2": 2,
+  "object": {
+    "bool_key": true
+  }
+}
+""",
+            'expected': """
+{
++   "array_key": [
++     1,
++     2,
++     3
++   ],
+-     "key1": "val1",
+? --
+
++   "key1": "val1",
+-     "key2":   2,
+? --          --
+
++   "key2": 2,
+- "array_key": [1, 2, 3],
+-         "object":{
+? ------
+
++   "object": {
+?            +
+
+-         "bool_key": true
+? ----
+
++     "bool_key": true
+-       }
++   }
+  }
+""",
+        },
+        {
+            'name': 'diff_test_2',
+            'source': '',
+            'target': '',
+            'expected': '',
+        },
+
+    ]
+    for test in table_tests:
+        s = list(test['source'])
+        t = list(test['target'])
+        expected = test['expected'].strip()
+        actual = get_diff(s, t).strip()
+        assert actual == expected

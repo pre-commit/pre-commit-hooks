@@ -1,10 +1,10 @@
 from __future__ import print_function
 
 import argparse
+import difflib
 import io
 import json
 import sys
-import difflib
 from collections import OrderedDict
 from typing import List
 from typing import Mapping
@@ -56,7 +56,7 @@ def parse_topkeys(s):  # type: (str) -> List[str]
     return s.split(',')
 
 
-def get_diff(source, target):
+def get_diff(source, target):  # type: (List[str], List[str]) -> str
     source_lines = ''.join(source).split('\n')
     target_lines = ''.join(target).split('\n')
     d = difflib.Differ()
@@ -132,7 +132,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
                 print('File {} is not pretty-formatted'.format(json_file))
 
                 if args.show_expected:
-                    print(get_diff(contents, pretty_contents))
+                    print(get_diff(contents, list(pretty_contents)))
 
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
