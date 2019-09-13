@@ -126,21 +126,6 @@ def test_diffing_output(capsys):
 +   "foo": "bar"
   }
 
-  {
--     "foo":
--     "bar",
--         "alist": [2, 34, 234],
-+   "alist": [
-+     2,
-+     34,
-+     234
-+   ],
--   "blah": null
-+   "blah": null,
-?               +
-+   "foo": "bar"
-  }
-
 
 '''
     # output should include a line with the filepath, build it here

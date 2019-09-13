@@ -60,7 +60,6 @@ def get_diff(source, target):  # type: (str, str) -> str
     source_lines = source.splitlines(True)
     target_lines = target.splitlines(True)
     diff = ''.join(difflib.ndiff(source_lines, target_lines))
-    print(diff)
     return diff
 
 
