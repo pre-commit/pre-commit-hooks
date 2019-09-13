@@ -3,7 +3,6 @@ import shutil
 import pytest
 from six import PY2
 
-from pre_commit_hooks.pretty_format_json import get_diff
 from pre_commit_hooks.pretty_format_json import main
 from pre_commit_hooks.pretty_format_json import parse_num_to_int
 from testing.util import get_resource_path
@@ -108,76 +107,51 @@ def test_badfile_main():
     assert ret == 1
 
 
-def test_diffing_output():
-    table_tests = [
-        {
-            'name': 'diff_test_1',
-            'source': """
-{
-    "key1": "val1",
-    "key2":   2,
-"array_key": [1, 2, 3],
-        "object":{
-        "bool_key": true
-      }
-}
-""",
-            'target': """
-{
-  "array_key": [
-    1,
-    2,
-    3
-  ],
-  "key1": "val1",
-  "key2": 2,
-  "object": {
-    "bool_key": true
-  }
-}
-""",
-            'expected': """
-{
-+   "array_key": [
-+     1,
+def test_diffing_output(capsys):
+    resource_path = get_resource_path('not_pretty_formatted_json.json')
+    expected_retval = 1
+    expected_diff = '''
+  {
+-     "foo":
+-     "bar",
+-         "alist": [2, 34, 234],
++   "alist": [
 +     2,
-+     3
++     34,
++     234
 +   ],
--     "key1": "val1",
-? --
-
-+   "key1": "val1",
--     "key2":   2,
-? --          --
-
-+   "key2": 2,
-- "array_key": [1, 2, 3],
--         "object":{
-? ------
-
-+   "object": {
-?            +
-
--         "bool_key": true
-? ----
-
-+     "bool_key": true
--       }
-+   }
+-   "blah": null
++   "blah": null,
+?               +
++   "foo": "bar"
   }
-""",
-        },
-        {
-            'name': 'diff_test_2',
-            'source': '',
-            'target': '',
-            'expected': '',
-        },
 
-    ]
-    for test in table_tests:
-        s = list(test['source'])
-        t = list(test['target'])
-        expected = test['expected'].strip()
-        actual = get_diff(s, t).strip()
-        assert actual == expected
+  {
+-     "foo":
+-     "bar",
+-         "alist": [2, 34, 234],
++   "alist": [
++     2,
++     34,
++     234
++   ],
+-   "blah": null
++   "blah": null,
+?               +
++   "foo": "bar"
+  }
+
+
+'''
+    # output should include a line with the filepath, build it here
+    file_output_line = 'File {} is not pretty-formatted'.format(resource_path)
+    # prepend the above line to the diff
+    expected_output = file_output_line + expected_diff
+
+    actual_retval = main([resource_path])
+    actual_output = capsys.readouterr()
+
+    assert actual_retval == expected_retval
+
+    actual_output = '\n'.join(actual_output)
+    assert actual_output == expected_output

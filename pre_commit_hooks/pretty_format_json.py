@@ -56,12 +56,12 @@ def parse_topkeys(s):  # type: (str) -> List[str]
     return s.split(',')
 
 
-def get_diff(source, target):  # type: (List[str], List[str]) -> str
-    source_lines = ''.join(source).split('\n')
-    target_lines = ''.join(target).split('\n')
-    d = difflib.Differ()
-    diff = d.compare(source_lines, target_lines)
-    return '\n'.join(diff)
+def get_diff(source, target):  # type: (str, str) -> str
+    source_lines = source.splitlines(True)
+    target_lines = target.splitlines(True)
+    diff = ''.join(difflib.ndiff(source_lines, target_lines))
+    print(diff)
+    return diff
 
 
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
@@ -105,14 +105,6 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         default=[],
         help='Ordered list of keys to keep at the top of JSON hashes',
     )
-    parser.add_argument(
-        '--show-expected',
-        action='store_true',
-        dest='show_expected',
-        default=False,
-        help='Show a diff between the input file and expected (pretty) output',
-    )
-
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -131,11 +123,10 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             if contents != pretty_contents:
                 print('File {} is not pretty-formatted'.format(json_file))
 
-                if args.show_expected:
-                    print(get_diff(contents, list(pretty_contents)))
-
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
+                else:
+                    print(get_diff(''.join(contents), pretty_contents))
 
                 status = 1
         except ValueError:
