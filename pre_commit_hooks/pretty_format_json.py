@@ -124,6 +124,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
                     'File {} is not pretty-formatted'.format(json_file),
                     file=sys.stderr,
                 )
+                sys.stderr.flush()
 
                 if args.autofix:
                     _autofix(json_file, pretty_contents)

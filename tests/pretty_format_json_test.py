@@ -110,7 +110,8 @@ def test_badfile_main():
 def test_diffing_output(capsys):
     resource_path = get_resource_path('not_pretty_formatted_json.json')
     expected_retval = 1
-    expected_out = '''  {
+    expected_out = '''\
+  {
 -     "foo":
 -     "bar",
 -         "alist": [2, 34, 234],
