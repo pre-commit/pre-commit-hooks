@@ -111,22 +111,24 @@ def test_diffing_output(capsys):
     resource_path = get_resource_path('not_pretty_formatted_json.json')
     expected_retval = 1
     expected_out = '''\
-  {
--     "foo":
--     "bar",
--         "alist": [2, 34, 234],
-+   "alist": [
-+     2,
-+     34,
-+     234
-+   ],
--   "blah": null
-+   "blah": null,
-?               +
-+   "foo": "bar"
-  }
+---
++++
+@@ -1,6 +1,9 @@
+ {
+-    "foo":
+-    "bar",
+-        "alist": [2, 34, 234],
+-  "blah": null
++  "alist": [
++    2,
++    34,
++    234
++  ],
++  "blah": null,
++  "foo": "bar"
+ }
 
-'''
+'''  # noqa: W291
     expected_err = 'File {} is not pretty-formatted\n'.format(resource_path)
 
     actual_retval = main([resource_path])
