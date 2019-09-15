@@ -108,10 +108,8 @@ def test_badfile_main():
 
 
 def test_diffing_output(capsys):
-    resource_path = get_resource_path('not_pretty_formatted_json.json')
     expected_retval = 1
-    expected_diff = '''
-  {
+    expected_out = '''  {
 -     "foo":
 -     "bar",
 -         "alist": [2, 34, 234],
@@ -126,17 +124,10 @@ def test_diffing_output(capsys):
 +   "foo": "bar"
   }
 
-
 '''
-    # output should include a line with the filepath, build it here
-    file_output_line = 'File {} is not pretty-formatted'.format(resource_path)
-    # prepend the above line to the diff
-    expected_output = file_output_line + expected_diff
 
-    actual_retval = main([resource_path])
-    actual_output = capsys.readouterr()
+    actual_retval = main([get_resource_path('not_pretty_formatted_json.json')])
+    out, err = capsys.readouterr()
 
     assert actual_retval == expected_retval
-
-    actual_output = '\n'.join(actual_output)
-    assert actual_output == expected_output
+    assert out == expected_out
