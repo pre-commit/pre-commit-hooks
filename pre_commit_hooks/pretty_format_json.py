@@ -129,13 +129,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
                 else:
-                    print(
-                        get_diff(
-                            ''.join(contents),
-                            pretty_contents,
-                            json_file,
-                        ),
-                    )
+                    print(get_diff(contents, pretty_contents, json_file))
 
                 status = 1
         except ValueError:
