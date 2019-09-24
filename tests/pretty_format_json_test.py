@@ -130,7 +130,6 @@ def test_diffing_output(capsys):
 +  "blah": null,
 +  "foo": "bar"
  }}
-
 '''.format(a, b)
     expected_err = 'File {} is not pretty-formatted\n'.format(resource_path)
 
