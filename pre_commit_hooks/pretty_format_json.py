@@ -5,6 +5,7 @@ import io
 import json
 import sys
 from collections import OrderedDict
+from difflib import unified_diff
 from typing import List
 from typing import Mapping
 from typing import Optional
@@ -55,6 +56,13 @@ def parse_topkeys(s):  # type: (str) -> List[str]
     return s.split(',')
 
 
+def get_diff(source, target, file):  # type: (str, str, str) -> str
+    source_lines = source.splitlines(True)
+    target_lines = target.splitlines(True)
+    diff = unified_diff(source_lines, target_lines, fromfile=file, tofile=file)
+    return ''.join(diff)
+
+
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -96,7 +104,6 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         default=[],
         help='Ordered list of keys to keep at the top of JSON hashes',
     )
-
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -113,10 +120,19 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             )
 
             if contents != pretty_contents:
-                print('File {} is not pretty-formatted'.format(json_file))
+                print(
+                    'File {} is not pretty-formatted'.format(json_file),
+                    file=sys.stderr,
+                )
+                sys.stderr.flush()
 
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
+                else:
+                    print(
+                        get_diff(contents, pretty_contents, json_file),
+                        end='',
+                    )
 
                 status = 1
         except ValueError:

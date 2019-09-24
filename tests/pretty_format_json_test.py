@@ -1,3 +1,4 @@
+import os
 import shutil
 
 import pytest
@@ -105,3 +106,36 @@ def test_top_sorted_get_pretty_format():
 def test_badfile_main():
     ret = main([get_resource_path('ok_yaml.yaml')])
     assert ret == 1
+
+
+def test_diffing_output(capsys):
+    resource_path = get_resource_path('not_pretty_formatted_json.json')
+    expected_retval = 1
+    a = os.path.join('a', resource_path)
+    b = os.path.join('b', resource_path)
+    expected_out = '''\
+--- {}
++++ {}
+@@ -1,6 +1,9 @@
+ {{
+-    "foo":
+-    "bar",
+-        "alist": [2, 34, 234],
+-  "blah": null
++  "alist": [
++    2,
++    34,
++    234
++  ],
++  "blah": null,
++  "foo": "bar"
+ }}
+'''.format(a, b)
+    expected_err = 'File {} is not pretty-formatted\n'.format(resource_path)
+
+    actual_retval = main([resource_path])
+    actual_out, actual_err = capsys.readouterr()
+
+    assert actual_retval == expected_retval
+    assert actual_out == expected_out
+    assert actual_err == expected_err
