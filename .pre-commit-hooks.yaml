@@ -48,7 +48,7 @@
     stages: [commit, push, manual]
 -   id: check-json
     name: Check JSON
-    description: This hook checks json files for parseable syntax.
+    description: This hook checks JSON files for parseable syntax.
     entry: check-json
     language: python
     types: [json]
@@ -71,8 +71,8 @@
     language: python
     types: [symlink]
 -   id: check-toml
-    name: Check Toml
-    description: This hook checks toml files for parseable syntax.
+    name: Check TOML
+    description: This hook checks TOML files for parseable syntax.
     entry: check-toml
     language: python
     types: [toml]
@@ -83,14 +83,14 @@
     language: python
     types: [text]
 -   id: check-xml
-    name: Check Xml
-    description: This hook checks xml files for parseable syntax.
+    name: Check XML
+    description: This hook checks XML files for parseable syntax.
     entry: check-xml
     language: python
     types: [xml]
 -   id: check-yaml
-    name: Check Yaml
-    description: This hook checks yaml files for parseable syntax.
+    name: Check YAML
+    description: This hook checks YAML files for parseable syntax.
     entry: check-yaml
     language: python
     types: [yaml]
