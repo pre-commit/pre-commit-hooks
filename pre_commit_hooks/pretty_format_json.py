@@ -1,11 +1,11 @@
 from __future__ import print_function
 
 import argparse
-import difflib
 import io
 import json
 import sys
 from collections import OrderedDict
+from difflib import unified_diff
 from typing import List
 from typing import Mapping
 from typing import Optional
@@ -56,11 +56,11 @@ def parse_topkeys(s):  # type: (str) -> List[str]
     return s.split(',')
 
 
-def get_diff(source, target):  # type: (str, str) -> str
+def get_diff(source, target, file):  # type: (str, str, str) -> str
     source_lines = source.splitlines(True)
     target_lines = target.splitlines(True)
-    diff = ''.join(difflib.unified_diff(source_lines, target_lines))
-    return diff
+    diff = unified_diff(source_lines, target_lines, fromfile=file, tofile=file)
+    return ''.join(diff)
 
 
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
@@ -129,7 +129,13 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
                 else:
-                    print(get_diff(''.join(contents), pretty_contents))
+                    print(
+                        get_diff(
+                            ''.join(contents),
+                            pretty_contents,
+                            json_file,
+                        ),
+                    )
 
                 status = 1
         except ValueError:
