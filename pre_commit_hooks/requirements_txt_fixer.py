@@ -40,10 +40,15 @@ class Requirement(object):
 
 def fix_requirements(f):  # type: (IO[bytes]) -> int
     requirements = []  # type: List[Requirement]
-    before = tuple(f)
+    before = list(f)
     after = []  # type: List[bytes]
 
     before_string = b''.join(before)
+
+    # adds new line in case one is missing
+    # AND a change to the requirements file is needed regardless:
+    if before and not before[-1].endswith(b'\n'):
+        before[-1] += b'\n'
 
     # If the file is empty (i.e. only whitespace/newlines) exit early
     if before_string.strip() == b'':
