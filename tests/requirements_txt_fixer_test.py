@@ -15,6 +15,9 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
         (b'foo\n# comment at end\n', PASS, b'foo\n# comment at end\n'),
         (b'foo\nbar\n', FAIL, b'bar\nfoo\n'),
         (b'bar\nfoo\n', PASS, b'bar\nfoo\n'),
+        (b'a\nc\nb\n', FAIL, b'a\nb\nc\n'),
+        (b'a\nc\nb', FAIL, b'a\nb\nc\n'),
+        (b'a\nb\nc', PASS, b'a\nb\nc'),
         (
             b'#comment1\nfoo\n#comment2\nbar\n',
             FAIL,

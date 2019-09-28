@@ -40,8 +40,13 @@ class Requirement(object):
 
 def fix_requirements(f):  # type: (IO[bytes]) -> int
     requirements = []  # type: List[Requirement]
-    before = tuple(f)
+    before = list(f)  # type: List[bytes]
     after = []  # type: List[bytes]
+
+    # adds new line in case one is missing
+    # AND a change to the requirements file is needed regardless:
+    if before and not before[-1].endswith(b'\n'):
+        before[-1] += b'\n'
 
     before_string = b''.join(before)
 
@@ -94,7 +99,7 @@ def fix_requirements(f):  # type: (IO[bytes]) -> int
 
     after_string = b''.join(after)
 
-    if before_string == after_string:
+    if before_string.rstrip() == after_string.rstrip():
         return PASS
     else:
         f.seek(0)
