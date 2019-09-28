@@ -43,12 +43,12 @@ def fix_requirements(f):  # type: (IO[bytes]) -> int
     before = list(f)  # type: List[bytes]
     after = []  # type: List[bytes]
 
+    before_string = b''.join(before)
+
     # adds new line in case one is missing
     # AND a change to the requirements file is needed regardless:
     if before and not before[-1].endswith(b'\n'):
         before[-1] += b'\n'
-
-    before_string = b''.join(before)
 
     # If the file is empty (i.e. only whitespace/newlines) exit early
     if before_string.strip() == b'':
@@ -99,7 +99,7 @@ def fix_requirements(f):  # type: (IO[bytes]) -> int
 
     after_string = b''.join(after)
 
-    if before_string.rstrip() == after_string.rstrip():
+    if before_string == after_string:
         return PASS
     else:
         f.seek(0)
