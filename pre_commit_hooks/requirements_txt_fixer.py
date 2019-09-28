@@ -40,7 +40,7 @@ class Requirement(object):
 
 def fix_requirements(f):  # type: (IO[bytes]) -> int
     requirements = []  # type: List[Requirement]
-    before = list(f)  # type: List[bytes]
+    before = list(f)
     after = []  # type: List[bytes]
 
     before_string = b''.join(before)
