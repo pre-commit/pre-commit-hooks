@@ -94,7 +94,18 @@ Add this to your `.pre-commit-config.yaml`
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
     - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
-- `sort-simple-yaml` - Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
+- `sort-simple-yaml` - Sorts simple YAML files which consist only of top-level
+  keys, preserving comments and blocks.
+
+  Note that `sort-simple-yaml` by default matches no `files` as it enforces a
+  very specific format.  You must opt in to this by setting `files`, for
+  example:
+
+  ```yaml
+      -   id: sort-simple-yaml
+          files: ^config/simple/
+  ```
+
 - `trailing-whitespace` - Trims trailing whitespace.
     - To preserve Markdown [hard linebreaks](https://github.github.com/gfm/#hard-line-break)
       use `args: [--markdown-linebreak-ext=md]` (or other extensions used
