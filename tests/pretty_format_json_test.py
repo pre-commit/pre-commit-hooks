@@ -131,11 +131,9 @@ def test_diffing_output(capsys):
 +  "foo": "bar"
  }}
 '''.format(a, b)
-    expected_err = 'File {} is not pretty-formatted\n'.format(resource_path)
-
     actual_retval = main([resource_path])
     actual_out, actual_err = capsys.readouterr()
 
     assert actual_retval == expected_retval
     assert actual_out == expected_out
-    assert actual_err == expected_err
+    assert actual_err == ''
