@@ -94,7 +94,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         if _fix_file(
             filename,
             md,
-            None if args.chars is None else bytes(args.chars.encode('utf-8')),
+            None if args.chars is None else args.chars.encode('utf-8'),
         ):
             print('Fixing {}'.format(filename))
             return_code = 1
