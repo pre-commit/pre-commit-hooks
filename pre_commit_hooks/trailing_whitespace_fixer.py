@@ -7,15 +7,11 @@ from typing import Optional
 from typing import Sequence
 
 
-def _fix_file(filename, is_markdown, chars_to_strip):
+def _fix_file(filename, is_markdown, chars):
     # type: (str, bool, Optional[bytes]) -> bool
     with open(filename, mode='rb') as file_processed:
         lines = file_processed.readlines()
-    newlines = [
-        _process_line(line, is_markdown, chars_to_strip)
-        for line
-        in lines
-    ]
+    newlines = [_process_line(line, is_markdown, chars) for line in lines]
     if newlines != lines:
         with open(filename, mode='wb') as file_processed:
             for line in newlines:
@@ -25,7 +21,7 @@ def _fix_file(filename, is_markdown, chars_to_strip):
         return False
 
 
-def _process_line(line, is_markdown, chars_to_strip):
+def _process_line(line, is_markdown, chars):
     # type: (bytes, bool, Optional[bytes]) -> bytes
     if line[-2:] == b'\r\n':
         eol = b'\r\n'
@@ -37,8 +33,8 @@ def _process_line(line, is_markdown, chars_to_strip):
         eol = b''
     # preserve trailing two-space for non-blank lines in markdown files
     if is_markdown and (not line.isspace()) and line.endswith(b'  '):
-        return line[:-2].rstrip(chars_to_strip) + b'  ' + eol
-    return line.rstrip(chars_to_strip) + eol
+        return line[:-2].rstrip(chars) + b'  ' + eol
+    return line.rstrip(chars) + eol
 
 
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
@@ -60,8 +56,10 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     )
     parser.add_argument(
         '--chars',
-        help='The set of characters to strip from the end of lines.  '
-        'Defaults to all whitespace characters.',
+        help=(
+            'The set of characters to strip from the end of lines.  '
+            'Defaults to all whitespace characters.'
+        ),
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -86,16 +84,12 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
                 .format(ext),
             )
-
+    chars = None if args.chars is None else args.chars.encode('utf-8')
     return_code = 0
     for filename in args.filenames:
         _, extension = os.path.splitext(filename.lower())
         md = all_markdown or extension in md_exts
-        if _fix_file(
-            filename,
-            md,
-            None if args.chars is None else args.chars.encode('utf-8'),
-        ):
+        if _fix_file(filename, md, chars):
             print('Fixing {}'.format(filename))
             return_code = 1
     return return_code
