@@ -94,3 +94,11 @@ def test_custom_charset_no_change(tmpdir):
     path.write('\ta \t\n')
     ret = main([path.strpath, '--chars', ' '])
     assert ret == 0
+
+
+def test_markdown_with_custom_charset(tmpdir):
+    path = tmpdir.join('file.md')
+    path.write('\ta \t   \n')
+    ret = main([path.strpath, '--chars', ' ', '--markdown-linebreak-ext', '*'])
+    assert ret == 1
+    assert path.read() == '\ta \t  \n'
