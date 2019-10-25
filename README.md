@@ -111,6 +111,8 @@ Add this to your `.pre-commit-config.yaml`
       use `args: [--markdown-linebreak-ext=md]` (or other extensions used
       by your markdownfiles).  If for some reason you want to treat all files
       as markdown, use `--markdown-linebreak-ext=*`.
+    - By default, this hook trims all whitespace from the ends of lines.
+      To specify a custom set of characters to trim instead, use `args: [--chars,"<chars to trim>"]`.
 
 ### Deprecated / replaced hooks
 

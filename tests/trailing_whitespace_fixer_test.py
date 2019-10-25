@@ -78,3 +78,27 @@ def test_preserve_non_utf8_file(tmpdir):
     ret = main([path.strpath])
     assert ret == 1
     assert path.size() == (len(non_utf8_bytes_content) - 1)
+
+
+def test_custom_charset_change(tmpdir):
+    # strip spaces only, no tabs
+    path = tmpdir.join('file.txt')
+    path.write('\ta \t \n')
+    ret = main([path.strpath, '--chars', ' '])
+    assert ret == 1
+    assert path.read() == '\ta \t\n'
+
+
+def test_custom_charset_no_change(tmpdir):
+    path = tmpdir.join('file.txt')
+    path.write('\ta \t\n')
+    ret = main([path.strpath, '--chars', ' '])
+    assert ret == 0
+
+
+def test_markdown_with_custom_charset(tmpdir):
+    path = tmpdir.join('file.md')
+    path.write('\ta \t   \n')
+    ret = main([path.strpath, '--chars', ' ', '--markdown-linebreak-ext', '*'])
+    assert ret == 1
+    assert path.read() == '\ta \t  \n'
