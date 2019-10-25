@@ -29,13 +29,15 @@ def _process_line(line, is_markdown, chars_to_strip):
     # type: (bytes, bool, Optional[bytes]) -> bytes
     if line[-2:] == b'\r\n':
         eol = b'\r\n'
+        line = line[:-2]
     elif line[-1:] == b'\n':
         eol = b'\n'
+        line = line[:-1]
     else:
         eol = b''
     # preserve trailing two-space for non-blank lines in markdown files
-    if is_markdown and (not line.isspace()) and line.endswith(b'  ' + eol):
-        return line.rstrip(chars_to_strip) + b'  ' + eol
+    if is_markdown and (not line.isspace()) and line.endswith(b'  '):
+        return line[:-2].rstrip(chars_to_strip) + b'  ' + eol
     return line.rstrip(chars_to_strip) + eol
 
 
