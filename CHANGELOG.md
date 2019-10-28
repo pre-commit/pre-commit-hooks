@@ -11,7 +11,7 @@
 ### Fixes
 - Fix `requirements-txt-fixer` when file does not end in a newline.
     - #414 issue by @barakreif.
-    - #414 PR by @barakreif.
+    - #415 PR by @barakreif.
 - Fix double printing of filename in `pretty-format-json`.
     - #419 PR by @asottile.
 
