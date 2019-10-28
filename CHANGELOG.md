@@ -1,3 +1,20 @@
+2.4.0 - 2019-10-28
+==================
+
+### Features
+- Add diff output to `pretty-format-json` when run without `--autofix`.
+    - #408 PR by @joepin.
+- Add `--chars` option to `trailing-whitespace` fixer to control which
+  characters are stripped instead of all whitespace.
+    - #421 PR by @iconmaster5326.
+
+### Fixes
+- Fix `requirements-txt-fixer` when file does not end in a newline.
+    - #414 issue by @barakreif.
+    - #414 PR by @barakreif.
+- Fix double printing of filename in `pretty-format-json`.
+    - #419 PR by @asottile.
+
 2.3.0 - 2019-08-05
 ==================
 
