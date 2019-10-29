@@ -91,6 +91,7 @@ Add this to your `.pre-commit-config.yaml`
   the following commandline options:
     - `--autofix` - automatically format json files
     - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 4 spaces.
+    - `--no-ensure-ascii` preserve unicode characters instead of converting to escape sequences
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
     - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
