@@ -21,8 +21,9 @@ class Requirement(object):
     @property
     def name(self):  # type: () -> bytes
         assert self.value is not None, self.value
-        if self.value.startswith(b'-e '):
-            return self.value.lower().partition(b'=')[-1]
+        for egg in (b'#egg=', b'&egg='):
+            if egg in self.value:
+                return self.value.lower().partition(egg)[-1]
 
         return self.value.lower().partition(b'==')[0]
 
