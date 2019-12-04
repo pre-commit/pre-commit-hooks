@@ -18,7 +18,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     args = parser.parse_args(argv)
 
     retcode = 0
-    test_name_pattern = 'test.*.py' if args.django else '.*_test.py'
+    test_name_pattern = r'test.*\.py' if args.django else r'.*_test\.py'
     for filename in args.filenames:
         base = os.path.basename(filename)
         if (
