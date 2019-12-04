@@ -11,6 +11,10 @@ def test_main_one_fails():
     assert ret == 1
 
 
+def test_regex():
+    assert main(('foo_test_py',)) == 1
+
+
 def test_main_django_all_pass():
     ret = main((
         '--django', 'tests.py', 'test_foo.py', 'test_bar.py',
