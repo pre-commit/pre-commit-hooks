@@ -40,3 +40,15 @@ def test_integration(input_s, expected_retval, output, tmpdir):
 
     assert file_output == output
     assert ret == expected_retval
+
+
+@pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
+def test_integration_check(input_s, expected_retval, output, tmpdir):
+    path = tmpdir.join('file.txt')
+    path.write_binary(input_s)
+
+    ret = main(['--check', path.strpath])
+    file_output = path.read_binary()
+
+    assert file_output == input_s
+    assert ret == expected_retval

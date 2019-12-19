@@ -7,21 +7,20 @@ from typing import Optional
 from typing import Sequence
 
 
-def _fix_file(filename, is_markdown, chars):
-    # type: (str, bool, Optional[bytes]) -> bool
+def _fix_file(filename, is_markdown, chars=None, apply_fixes=True):
+    # type: (str, bool, Optional[bytes], bool) -> bool
     with open(filename, mode='rb') as file_processed:
         lines = file_processed.readlines()
     newlines = [_process_line(line, is_markdown, chars) for line in lines]
     if newlines != lines:
-        with open(filename, mode='wb') as file_processed:
-            for line in newlines:
-                file_processed.write(line)
-        return True
-    else:
-        return False
+        if apply_fixes:
+            with open(filename, mode='wb') as file_processed:
+                for line in newlines:
+                    file_processed.write(line)
+    return newlines != lines
 
 
-def _process_line(line, is_markdown, chars):
+def _process_line(line, is_markdown, chars=None):
     # type: (bytes, bool, Optional[bytes]) -> bytes
     if line[-2:] == b'\r\n':
         eol = b'\r\n'
@@ -39,6 +38,12 @@ def _process_line(line, is_markdown, chars):
 
 def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--check',
+        action='store_true',
+        help="Don't write the files back. Returns a non-zero code if changes "
+             'would be applied. Returns zero if no changes are required.',
+    )
     parser.add_argument(
         '--no-markdown-linebreak-ext',
         action='store_true',
@@ -89,8 +94,11 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     for filename in args.filenames:
         _, extension = os.path.splitext(filename.lower())
         md = all_markdown or extension in md_exts
-        if _fix_file(filename, md, chars):
-            print('Fixing {}'.format(filename))
+        if _fix_file(filename, md, chars, apply_fixes=not args.check):
+            if args.check:
+                print('Would fix {}'.format(filename))
+            else:
+                print('Fixing {}'.format(filename))
             return_code = 1
     return return_code
 
