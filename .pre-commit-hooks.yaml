@@ -192,3 +192,9 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: run-sub-hooks
+    name: Run Subdirectory Hooks
+    description: Runs subprocess with alternative pre-commit configuration.
+    entry: run-sub-hooks
+    language: python
+    verbose: true

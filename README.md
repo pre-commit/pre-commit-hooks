@@ -95,6 +95,10 @@ Add this to your `.pre-commit-config.yaml`
     - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
     - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 - `requirements-txt-fixer` - Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
+- `run-sub-hooks` - Runs subprocess with alternative pre-commit configuration.
+    - `--target` - target directory (doesn't have to be repository root
+    - `--config ...` - Control
+- `requirements-txt-fixer` - Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
 - `sort-simple-yaml` - Sorts simple YAML files which consist only of top-level
   keys, preserving comments and blocks.
 
