@@ -76,6 +76,7 @@ Add this to your `.pre-commit-config.yaml`
     - `--fix={auto,crlf,lf,no}`
         - `auto` - Replaces automatically the most frequent line ending. This is the default argument.
         - `crlf`, `lf` - Forces to replace line ending by respectively CRLF and LF.
+            - This option isn't compatible with git setup check-in LF check-out CRLF as git smudge this later than the hook is invoked.
         - `no` - Checks if there is any mixed line ending without modifying any file.
 - `name-tests-test` - Assert that files in tests/ end in `_test.py`.
     - Use `args: ['--django']` to match `test*.py` instead.
