@@ -64,6 +64,20 @@
     entry: check-merge-conflict
     language: python
     types: [text]
+-   id: check-missing-inits
+    name: Find directories with missing __init__ files
+    description: |-
+        Verify that all Python directories contain an __init__.py
+
+        Although __init__.py files are not required on Python 3.3+, omitting them in
+        one directory while having them in another directory will break in confusing
+        and unexpected ways:
+
+        http://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html#the-init-py-trap
+    entry: check-missing-inits
+    language: python
+    require_serial: true
+    files: .*\.py$
 -   id: check-symlinks
     name: Check for broken symlinks
     description: Checks for symlinks which do not point to anything.

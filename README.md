@@ -41,6 +41,7 @@ Add this to your `.pre-commit-config.yaml`
   proper shebang.
 - `check-json` - Attempts to load all json files to verify syntax.
 - `check-merge-conflict` - Check for files that contain merge conflict strings.
+- `check-missing-inits` - Checks for missing `__init__.py` files in any directory containing Python files.
 - `check-symlinks` - Checks for symlinks which do not point to anything.
 - `check-toml` - Attempts to load all TOML files to verify syntax.
 - `check-vcs-permalinks` - Ensures that links to vcs websites are permalinks.
