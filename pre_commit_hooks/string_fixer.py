@@ -45,9 +45,8 @@ def fix_strings(filename):  # type: (str) -> int
     splitcontents = list(contents)
 
     # Iterate in reverse so the offsets are always correct
-    tokens = reversed(list(tokenize.generate_tokens(
-        io.StringIO(contents).readline,
-    )))
+    tokens_l = list(tokenize.generate_tokens(io.StringIO(contents).readline))
+    tokens = reversed(tokens_l)
     for token_type, token_text, (srow, scol), (erow, ecol), _ in tokens:
         if token_type == tokenize.STRING:
             new_text = handle_match(token_text)
