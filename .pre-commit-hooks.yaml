@@ -179,6 +179,14 @@
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
+-   id: shellcheck
+    name: shellcheck
+    description: Test shell scripts with shellcheck
+    entry: shellcheck
+    language: python
+    types: [shell]
+    additional_dependencies: [shellcheck-py]
+    require_serial: true # shellcheck can detect sourcing this way
 -   id: sort-simple-yaml
     name: Sort simple YAML files
     language: python
