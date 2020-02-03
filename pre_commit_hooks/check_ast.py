@@ -23,14 +23,15 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             with open(filename, 'rb') as f:
                 ast.parse(f.read(), filename=filename)
         except SyntaxError:
-            print('{}: failed parsing with {} {}:'.format(
-                filename,
-                platform.python_implementation(),
-                sys.version.partition(' ')[0],
-            ))
-            print('\n{}'.format(
-                '    ' + traceback.format_exc().replace('\n', '\n    '),
-            ))
+            print(
+                '{}: failed parsing with {} {}:'.format(
+                    filename,
+                    platform.python_implementation(),
+                    sys.version.partition(' ')[0],
+                ),
+            )
+            tb = '    ' + traceback.format_exc().replace('\n', '\n    ')
+            print('\n{}'.format(tb))
             retval = 1
     return retval
 

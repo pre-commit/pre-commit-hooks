@@ -13,32 +13,32 @@ repos:
     -   id: double-quote-string-fixer
     -   id: requirements-txt-fixer
 -   repo: https://gitlab.com/pycqa/flake8
-    rev: 3.7.1
+    rev: 3.7.9
     hooks:
     -   id: flake8
 -   repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.4.3
+    rev: v1.5
     hooks:
     -   id: autopep8
 -   repo: https://github.com/pre-commit/pre-commit
-    rev: v1.14.2
+    rev: v2.0.1
     hooks:
     -   id: validate_manifest
 -   repo: https://github.com/asottile/reorder_python_imports
-    rev: v1.3.5
+    rev: v1.9.0
     hooks:
     -   id: reorder-python-imports
         language_version: python3
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v1.11.1
+    rev: v1.26.2
     hooks:
     -   id: pyupgrade
 -   repo: https://github.com/asottile/add-trailing-comma
-    rev: v0.7.1
+    rev: v1.5.0
     hooks:
     -   id: add-trailing-comma
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.660
+    rev: v0.761
     hooks:
     -   id: mypy
         language_version: python3

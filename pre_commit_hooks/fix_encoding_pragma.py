@@ -25,9 +25,11 @@ def has_coding(line):  # type: (bytes) -> bool
     )
 
 
-class ExpectedContents(collections.namedtuple(
-        'ExpectedContents', ('shebang', 'rest', 'pragma_status', 'ending'),
-)):
+class ExpectedContents(
+        collections.namedtuple(
+            'ExpectedContents', ('shebang', 'rest', 'pragma_status', 'ending'),
+        ),
+):
     """
     pragma_status:
     - True: has exactly the coding pragma expected
@@ -138,9 +140,11 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             )
             retv |= file_ret
             if file_ret:
-                print(fmt.format(
-                    pragma=args.pragma.decode(), filename=filename,
-                ))
+                print(
+                    fmt.format(
+                        pragma=args.pragma.decode(), filename=filename,
+                    ),
+                )
 
     return retv
 
