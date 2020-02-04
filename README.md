@@ -93,8 +93,7 @@ The following arguments are available:
 Checks for the existence of private keys.
 
 #### `double-quote-string-fixer`
-This hook replaces double quoted strings
-  with single quoted strings.
+This hook replaces double quoted strings with single quoted strings.
 
 #### `end-of-file-fixer`
 Makes sure files end in a newline and only a newline.
