@@ -107,9 +107,6 @@ Sort the lines in specified files (defaults to alphabetical).
 You must provide list of target files as input to it.
 Note that this hook WILL remove blank lines and does NOT respect any comments.
 
-#### `flake8`
-Run flake8 on your python files.
-
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
 
@@ -174,6 +171,7 @@ Trims trailing whitespace.
 - `autopep8-wrapper`: instead use
   [mirrors-autopep8](https://github.com/pre-commit/mirrors-autopep8)
 - `pyflakes`: instead use `flake8`
+- `flake8`: instead use [upstream flake8](https://gitlab.com/pycqa/flake8)
 
 ### As a standalone package
 
