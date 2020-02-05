@@ -1,3 +1,22 @@
+2.5.0 - 2020-02-04
+==================
+
+### Fixes
+- Fix sorting of requirements which use `egg=...`
+    - #425 PR by @vinayinvicible.
+- Fix over-eager regular expression for test filename matching
+    - #429 PR by rrauenza.
+
+### Updating
+- Use `flake8` from `pycqa/flake8` instead:
+
+  ```yaml
+  -   repo: https://gitlab.com/pycqa/flake8
+      rev: 3.7.9
+      hooks:
+      -   id: flake8
+  ```
+
 2.4.0 - 2019-10-28
 ==================
 
