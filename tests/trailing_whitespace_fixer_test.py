@@ -57,7 +57,7 @@ def test_fixes_markdown_files(tmpdir, ext):
     )
 
 
-@pytest.mark.parametrize('arg', ('--', 'a.b', 'a/b', ''))
+@pytest.mark.parametrize('arg', ('--', 'a/b', ''))
 def test_markdown_linebreak_ext_badopt(arg):
     with pytest.raises(SystemExit) as excinfo:
         main(['--markdown-linebreak-ext', arg])

@@ -86,7 +86,10 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     chars = None if args.chars is None else args.chars.encode('utf-8')
     return_code = 0
     for filename in args.filenames:
-        in_md_exts = any([filename for ext in md_exts if filename.endswith(ext)])
+        in_md_exts = any([
+            filename for ext in md_exts
+            if filename.endswith(ext)
+        ])
         md = all_markdown or in_md_exts
         if _fix_file(filename, md, chars):
             print('Fixing {}'.format(filename))
