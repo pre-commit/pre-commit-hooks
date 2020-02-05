@@ -78,6 +78,21 @@ def test_fixes_custom_ext_markdown_files(tmpdir, ext):
     )
 
 
+@pytest.mark.parametrize('ext', ('md', '.md', 'Md'))
+def test_complex_ext_are_not_wrongly_recognized(tmpdir, ext):
+    path = tmpdir.join(f'test.fmd')
+    path.write(
+        'foo  \n'
+        'bar \n'
+        'baz    \n'
+        '\t\n'
+        '\n  ',
+    )
+    ret = main((path.strpath, '--markdown-linebreak-ext={}'.format(ext)))
+    assert ret == 1
+    assert path.read() == ('foo\nbar\nbaz\n\n\n')
+
+
 @pytest.mark.parametrize('arg', ('--', 'a/b', ''))
 def test_markdown_linebreak_ext_badopt(arg):
     with pytest.raises(SystemExit) as excinfo:
