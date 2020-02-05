@@ -9,10 +9,7 @@ per line. Various users are adding/removing lines from this file; using
 this hook on that file should reduce the instances of git merge
 conflicts and keep the file nicely ordered.
 """
-from __future__ import print_function
-
 import argparse
-import sys
 from typing import IO
 from typing import Optional
 from typing import Sequence
@@ -21,7 +18,7 @@ PASS = 0
 FAIL = 1
 
 
-def sort_file_contents(f):  # type: (IO[bytes]) -> int
+def sort_file_contents(f: IO[bytes]) -> int:
     before = list(f)
     after = sorted([line.strip(b'\n\r') for line in before if line.strip()])
 
@@ -37,7 +34,7 @@ def sort_file_contents(f):  # type: (IO[bytes]) -> int
         return FAIL
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Files to sort')
     args = parser.parse_args(argv)
@@ -49,7 +46,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             ret_for_file = sort_file_contents(file_obj)
 
             if ret_for_file:
-                print('Sorting {}'.format(arg))
+                print(f'Sorting {arg}')
 
             retv |= ret_for_file
 
@@ -57,4 +54,4 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

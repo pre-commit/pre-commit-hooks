@@ -1,14 +1,11 @@
-from __future__ import print_function
-
 import argparse
 import os.path
 import re
-import sys
 from typing import Optional
 from typing import Sequence
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument(
@@ -27,14 +24,10 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
                 not base == 'conftest.py'
         ):
             retcode = 1
-            print(
-                '{} does not match pattern "{}"'.format(
-                    filename, test_name_pattern,
-                ),
-            )
+            print(f'{filename} does not match pattern "{test_name_pattern}"')
 
     return retcode
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

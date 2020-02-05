@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 import argparse
 import os.path
 from typing import Optional
@@ -12,10 +10,9 @@ CONFLICT_PATTERNS = [
     b'=======\n',
     b'>>>>>>> ',
 ]
-WARNING_MSG = 'Merge conflict string "{0}" found in {1}:{2}'
 
 
-def is_in_merge():  # type: () -> int
+def is_in_merge() -> int:
     return (
         os.path.exists(os.path.join('.git', 'MERGE_MSG')) and
         (
@@ -26,7 +23,7 @@ def is_in_merge():  # type: () -> int
     )
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument('--assume-in-merge', action='store_true')
@@ -42,9 +39,8 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
                 for pattern in CONFLICT_PATTERNS:
                     if line.startswith(pattern):
                         print(
-                            WARNING_MSG.format(
-                                pattern.decode(), filename, i + 1,
-                            ),
+                            f'Merge conflict string "{pattern.decode()}" '
+                            f'found in {filename}:{i + 1}',
                         )
                         retcode = 1
 

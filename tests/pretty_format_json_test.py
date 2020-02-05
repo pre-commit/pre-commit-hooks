@@ -2,7 +2,6 @@ import os
 import shutil
 
 import pytest
-from six import PY2
 
 from pre_commit_hooks.pretty_format_json import main
 from pre_commit_hooks.pretty_format_json import parse_num_to_int
@@ -42,7 +41,6 @@ def test_unsorted_main(filename, expected_retval):
     assert ret == expected_retval
 
 
-@pytest.mark.skipif(PY2, reason='Requires Python3')
 @pytest.mark.parametrize(
     ('filename', 'expected_retval'), (
         ('not_pretty_formatted_json.json', 1),
@@ -52,7 +50,7 @@ def test_unsorted_main(filename, expected_retval):
         ('tab_pretty_formatted_json.json', 0),
     ),
 )
-def test_tab_main(filename, expected_retval):  # pragma: no cover
+def test_tab_main(filename, expected_retval):
     ret = main(['--indent', '\t', get_resource_path(filename)])
     assert ret == expected_retval
 
@@ -113,9 +111,9 @@ def test_diffing_output(capsys):
     expected_retval = 1
     a = os.path.join('a', resource_path)
     b = os.path.join('b', resource_path)
-    expected_out = '''\
---- {}
-+++ {}
+    expected_out = f'''\
+--- {a}
++++ {b}
 @@ -1,6 +1,9 @@
  {{
 -    "foo":
@@ -130,7 +128,7 @@ def test_diffing_output(capsys):
 +  "blah": null,
 +  "foo": "bar"
  }}
-'''.format(a, b)
+'''
     actual_retval = main([resource_path])
     actual_out, actual_err = capsys.readouterr()
 

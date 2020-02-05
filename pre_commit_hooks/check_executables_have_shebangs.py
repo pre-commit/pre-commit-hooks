@@ -1,28 +1,22 @@
 """Check that executable text files have a shebang."""
-from __future__ import absolute_import
-from __future__ import print_function
-from __future__ import unicode_literals
-
 import argparse
-import pipes
+import shlex
 import sys
 from typing import Optional
 from typing import Sequence
 
 
-def check_has_shebang(path):  # type: (str) -> int
+def check_has_shebang(path: str) -> int:
     with open(path, 'rb') as f:
         first_bytes = f.read(2)
 
     if first_bytes != b'#!':
+        quoted = shlex.quote(path)
         print(
-            '{path}: marked executable but has no (or invalid) shebang!\n'
-            "  If it isn't supposed to be executable, try: chmod -x {quoted}\n"
-            '  If it is supposed to be executable, double-check its shebang.'
-            .format(
-                path=path,
-                quoted=pipes.quote(path),
-            ),
+            f'{path}: marked executable but has no (or invalid) shebang!\n'
+            f"  If it isn't supposed to be executable, try: "
+            f'`chmod -x {quoted}`\n'
+            f'  If it is supposed to be executable, double-check its shebang.',
             file=sys.stderr,
         )
         return 1
@@ -30,7 +24,7 @@ def check_has_shebang(path):  # type: (str) -> int
         return 0
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)

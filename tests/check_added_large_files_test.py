@@ -1,6 +1,3 @@
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import distutils.spawn
 
 import pytest
@@ -78,7 +75,7 @@ xfailif_no_gitlfs = pytest.mark.xfail(
 @xfailif_no_gitlfs
 def test_allows_gitlfs(temp_git_dir, monkeypatch):  # pragma: no cover
     with temp_git_dir.as_cwd():
-        monkeypatch.setenv(str('HOME'), str(temp_git_dir.strpath))
+        monkeypatch.setenv('HOME', str(temp_git_dir.strpath))
         cmd_output('git', 'lfs', 'install')
         temp_git_dir.join('f.py').write('a' * 10000)
         cmd_output('git', 'lfs', 'track', 'f.py')
@@ -90,7 +87,7 @@ def test_allows_gitlfs(temp_git_dir, monkeypatch):  # pragma: no cover
 @xfailif_no_gitlfs
 def test_moves_with_gitlfs(temp_git_dir, monkeypatch):  # pragma: no cover
     with temp_git_dir.as_cwd():
-        monkeypatch.setenv(str('HOME'), str(temp_git_dir.strpath))
+        monkeypatch.setenv('HOME', str(temp_git_dir.strpath))
         cmd_output('git', 'lfs', 'install')
         cmd_output('git', 'lfs', 'track', 'a.bin', 'b.bin')
         # First add the file we're going to move
