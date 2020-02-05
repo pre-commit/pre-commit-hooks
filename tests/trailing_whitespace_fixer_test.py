@@ -1,6 +1,3 @@
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import pytest
 
 from pre_commit_hooks.trailing_whitespace_fixer import main
@@ -46,7 +43,7 @@ def test_fixes_markdown_files(tmpdir, ext):
         '\t\n'  # trailing tabs are stripped anyway
         '\n  ',  # whitespace at the end of the file is removed
     )
-    ret = main((path.strpath, '--markdown-linebreak-ext={}'.format(ext)))
+    ret = main((path.strpath, f'--markdown-linebreak-ext={ext}'))
     assert ret == 1
     assert path.read() == (
         'foo  \n'

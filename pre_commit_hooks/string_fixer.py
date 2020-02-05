@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import print_function
-from __future__ import unicode_literals
-
 import argparse
 import io
 import re
@@ -13,7 +9,7 @@ from typing import Sequence
 START_QUOTE_RE = re.compile('^[a-zA-Z]*"')
 
 
-def handle_match(token_text):  # type: (str) -> str
+def handle_match(token_text: str) -> str:
     if '"""' in token_text or "'''" in token_text:
         return token_text
 
@@ -28,7 +24,7 @@ def handle_match(token_text):  # type: (str) -> str
         return token_text
 
 
-def get_line_offsets_by_line_no(src):  # type: (str) -> List[int]
+def get_line_offsets_by_line_no(src: str) -> List[int]:
     # Padded so we can index with line number
     offsets = [-1, 0]
     for line in src.splitlines(True):
@@ -36,8 +32,8 @@ def get_line_offsets_by_line_no(src):  # type: (str) -> List[int]
     return offsets
 
 
-def fix_strings(filename):  # type: (str) -> int
-    with io.open(filename, encoding='UTF-8', newline='') as f:
+def fix_strings(filename: str) -> int:
+    with open(filename, encoding='UTF-8', newline='') as f:
         contents = f.read()
     line_offsets = get_line_offsets_by_line_no(contents)
 
@@ -57,14 +53,14 @@ def fix_strings(filename):  # type: (str) -> int
 
     new_contents = ''.join(splitcontents)
     if contents != new_contents:
-        with io.open(filename, 'w', encoding='UTF-8', newline='') as f:
+        with open(filename, 'w', encoding='UTF-8', newline='') as f:
             f.write(new_contents)
         return 1
     else:
         return 0
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -74,7 +70,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     for filename in args.filenames:
         return_value = fix_strings(filename)
         if return_value != 0:
-            print('Fixing strings in {}'.format(filename))
+            print(f'Fixing strings in {filename}')
         retv |= return_value
 
     return retv

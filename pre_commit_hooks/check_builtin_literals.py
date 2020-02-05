@@ -1,10 +1,7 @@
-from __future__ import unicode_literals
-
 import argparse
 import ast
-import collections
-import sys
 from typing import List
+from typing import NamedTuple
 from typing import Optional
 from typing import Sequence
 from typing import Set
@@ -21,23 +18,26 @@ BUILTIN_TYPES = {
 }
 
 
-Call = collections.namedtuple('Call', ['name', 'line', 'column'])
+class Call(NamedTuple):
+    name: str
+    line: int
+    column: int
 
 
 class Visitor(ast.NodeVisitor):
-    def __init__(self, ignore=None, allow_dict_kwargs=True):
-        # type: (Optional[Sequence[str]], bool) -> None
-        self.builtin_type_calls = []  # type: List[Call]
+    def __init__(
+            self,
+            ignore: Optional[Sequence[str]] = None,
+            allow_dict_kwargs: bool = True,
+    ) -> None:
+        self.builtin_type_calls: List[Call] = []
         self.ignore = set(ignore) if ignore else set()
         self.allow_dict_kwargs = allow_dict_kwargs
 
-    def _check_dict_call(self, node):  # type: (ast.Call) -> bool
-        return (
-            self.allow_dict_kwargs and
-            (getattr(node, 'kwargs', None) or getattr(node, 'keywords', None))
-        )
+    def _check_dict_call(self, node: ast.Call) -> bool:
+        return self.allow_dict_kwargs and bool(node.keywords)
 
-    def visit_Call(self, node):  # type: (ast.Call) -> None
+    def visit_Call(self, node: ast.Call) -> None:
         if not isinstance(node.func, ast.Name):
             # Ignore functions that are object attributes (`foo.bar()`).
             # Assume that if the user calls `builtins.list()`, they know what
@@ -54,8 +54,11 @@ class Visitor(ast.NodeVisitor):
         )
 
 
-def check_file(filename, ignore=None, allow_dict_kwargs=True):
-    # type: (str, Optional[Sequence[str]], bool) -> List[Call]
+def check_file(
+        filename: str,
+        ignore: Optional[Sequence[str]] = None,
+        allow_dict_kwargs: bool = True,
+) -> List[Call]:
     with open(filename, 'rb') as f:
         tree = ast.parse(f.read(), filename=filename)
     visitor = Visitor(ignore=ignore, allow_dict_kwargs=allow_dict_kwargs)
@@ -63,11 +66,11 @@ def check_file(filename, ignore=None, allow_dict_kwargs=True):
     return visitor.builtin_type_calls
 
 
-def parse_ignore(value):  # type: (str) -> Set[str]
+def parse_ignore(value: str) -> Set[str]:
     return set(value.split(','))
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument('--ignore', type=parse_ignore, default=set())
@@ -93,15 +96,11 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             rc = rc or 1
         for call in calls:
             print(
-                '{filename}:{call.line}:{call.column}: '
-                'replace {call.name}() with {replacement}'.format(
-                    filename=filename,
-                    call=call,
-                    replacement=BUILTIN_TYPES[call.name],
-                ),
+                f'{filename}:{call.line}:{call.column}: '
+                f'replace {call.name}() with {BUILTIN_TYPES[call.name]}',
             )
     return rc
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

@@ -1,6 +1,3 @@
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import io
 
 import pytest
@@ -129,9 +126,6 @@ def test_not_ok_input_alternate_pragma():
 @pytest.mark.parametrize(
     ('input_s', 'expected'),
     (
-        # Python 2 cli parameters are bytes
-        (b'# coding: utf-8', b'# coding: utf-8'),
-        # Python 3 cli parameters are text
         ('# coding: utf-8', b'# coding: utf-8'),
         # trailing whitespace
         ('# coding: utf-8\n', b'# coding: utf-8'),
@@ -149,7 +143,7 @@ def test_integration_alternate_pragma(tmpdir, capsys):
     assert main((f.strpath, '--pragma', pragma)) == 1
     assert f.read() == '# coding: utf-8\nx = 1\n'
     out, _ = capsys.readouterr()
-    assert out == 'Added `# coding: utf-8` to {}\n'.format(f.strpath)
+    assert out == f'Added `# coding: utf-8` to {f.strpath}\n'
 
 
 def test_crlf_ok(tmpdir):

@@ -1,6 +1,3 @@
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from pre_commit_hooks.check_case_conflict import find_conflicting_filenames
 from pre_commit_hooks.check_case_conflict import main
 from pre_commit_hooks.util import cmd_output

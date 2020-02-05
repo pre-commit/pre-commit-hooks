@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import pytest
 
 from pre_commit_hooks.check_docstring_first import check_docstring_first

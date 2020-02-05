@@ -1,14 +1,10 @@
-from __future__ import absolute_import
-from __future__ import print_function
-from __future__ import unicode_literals
-
 from typing import Optional
 from typing import Sequence
 
 from pre_commit_hooks.util import cmd_output
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     # `argv` is ignored, pre-commit will send us a list of files that we
     # don't care about
     added_diff = cmd_output(
@@ -19,7 +15,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
         metadata, filename = line.split('\t', 1)
         new_mode = metadata.split(' ')[1]
         if new_mode == '160000':
-            print('{}: new submodule introduced'.format(filename))
+            print(f'{filename}: new submodule introduced')
             retv = 1
 
     if retv:

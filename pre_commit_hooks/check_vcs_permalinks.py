@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import print_function
-from __future__ import unicode_literals
-
 import argparse
 import re
 import sys
@@ -14,19 +10,19 @@ GITHUB_NON_PERMALINK = re.compile(
 )
 
 
-def _check_filename(filename):  # type: (str) -> int
+def _check_filename(filename: str) -> int:
     retv = 0
     with open(filename, 'rb') as f:
         for i, line in enumerate(f, 1):
             if GITHUB_NON_PERMALINK.search(line):
-                sys.stdout.write('{}:{}:'.format(filename, i))
+                sys.stdout.write(f'{filename}:{i}:')
                 sys.stdout.flush()
-                getattr(sys.stdout, 'buffer', sys.stdout).write(line)
+                sys.stdout.buffer.write(line)
                 retv = 1
     return retv
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)

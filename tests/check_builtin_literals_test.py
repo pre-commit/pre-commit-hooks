@@ -7,7 +7,7 @@ from pre_commit_hooks.check_builtin_literals import main
 from pre_commit_hooks.check_builtin_literals import Visitor
 
 BUILTIN_CONSTRUCTORS = '''\
-from six.moves import builtins
+import builtins
 
 c1 = complex()
 d1 = dict()

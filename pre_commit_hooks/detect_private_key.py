@@ -1,7 +1,4 @@
-from __future__ import print_function
-
 import argparse
-import sys
 from typing import Optional
 from typing import Sequence
 
@@ -17,7 +14,7 @@ BLACKLIST = [
 ]
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)
@@ -32,11 +29,11 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
 
     if private_key_files:
         for private_key_file in private_key_files:
-            print('Private key found: {}'.format(private_key_file))
+            print(f'Private key found: {private_key_file}')
         return 1
     else:
         return 0
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

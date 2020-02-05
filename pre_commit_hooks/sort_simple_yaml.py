@@ -18,8 +18,6 @@ We assume a strict subset of YAML that looks like:
 In other words, we don't sort deeper than the top layer, and might corrupt
 complicated YAML files.
 """
-from __future__ import print_function
-
 import argparse
 from typing import List
 from typing import Optional
@@ -29,7 +27,7 @@ from typing import Sequence
 QUOTES = ["'", '"']
 
 
-def sort(lines):  # type: (List[str]) -> List[str]
+def sort(lines: List[str]) -> List[str]:
     """Sort a YAML file in alphabetical order, keeping blocks together.
 
     :param lines: array of strings (without newlines)
@@ -47,7 +45,7 @@ def sort(lines):  # type: (List[str]) -> List[str]
     return new_lines
 
 
-def parse_block(lines, header=False):  # type: (List[str], bool) -> List[str]
+def parse_block(lines: List[str], header: bool = False) -> List[str]:
     """Parse and return a single block, popping off the start of `lines`.
 
     If parsing a header block, we stop after we reach a line that is not a
@@ -63,7 +61,7 @@ def parse_block(lines, header=False):  # type: (List[str], bool) -> List[str]
     return block_lines
 
 
-def parse_blocks(lines):  # type: (List[str]) -> List[List[str]]
+def parse_blocks(lines: List[str]) -> List[List[str]]:
     """Parse and return all possible blocks, popping off the start of `lines`.
 
     :param lines: list of lines
@@ -80,7 +78,7 @@ def parse_blocks(lines):  # type: (List[str]) -> List[List[str]]
     return blocks
 
 
-def first_key(lines):  # type: (List[str]) -> str
+def first_key(lines: List[str]) -> str:
     """Returns a string representing the sort key of a block.
 
     The sort key is the first YAML key we encounter, ignoring comments, and
@@ -102,7 +100,7 @@ def first_key(lines):  # type: (List[str]) -> str
         return ''  # not actually reached in reality
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -115,7 +113,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
             new_lines = sort(lines)
 
             if lines != new_lines:
-                print('Fixing file `{filename}`'.format(filename=filename))
+                print(f'Fixing file `{filename}`')
                 f.seek(0)
                 f.write('\n'.join(new_lines) + '\n')
                 f.truncate()

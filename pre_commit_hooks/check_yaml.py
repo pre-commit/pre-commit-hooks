@@ -1,11 +1,7 @@
-from __future__ import print_function
-
 import argparse
-import collections
-import io
-import sys
 from typing import Any
 from typing import Generator
+from typing import NamedTuple
 from typing import Optional
 from typing import Sequence
 
@@ -14,20 +10,24 @@ import ruamel.yaml
 yaml = ruamel.yaml.YAML(typ='safe')
 
 
-def _exhaust(gen):  # type: (Generator[str, None, None]) -> None
+def _exhaust(gen: Generator[str, None, None]) -> None:
     for _ in gen:
         pass
 
 
-def _parse_unsafe(*args, **kwargs):  # type: (*Any, **Any) -> None
+def _parse_unsafe(*args: Any, **kwargs: Any) -> None:
     _exhaust(yaml.parse(*args, **kwargs))
 
 
-def _load_all(*args, **kwargs):  # type: (*Any, **Any) -> None
+def _load_all(*args: Any, **kwargs: Any) -> None:
     _exhaust(yaml.load_all(*args, **kwargs))
 
 
-Key = collections.namedtuple('Key', ('multi', 'unsafe'))
+class Key(NamedTuple):
+    multi: bool
+    unsafe: bool
+
+
 LOAD_FNS = {
     Key(multi=False, unsafe=False): yaml.load,
     Key(multi=False, unsafe=True): _parse_unsafe,
@@ -36,7 +36,7 @@ LOAD_FNS = {
 }
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-m', '--multi', '--allow-multiple-documents', action='store_true',
@@ -59,7 +59,7 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     retval = 0
     for filename in args.filenames:
         try:
-            with io.open(filename, encoding='UTF-8') as f:
+            with open(filename, encoding='UTF-8') as f:
                 load_fn(f)
         except ruamel.yaml.YAMLError as exc:
             print(exc)
@@ -68,4 +68,4 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

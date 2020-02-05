@@ -1,6 +1,3 @@
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import pytest
 
 from pre_commit_hooks.mixed_line_ending import main
@@ -86,7 +83,7 @@ def test_no_fix_does_not_modify(tmpdir, capsys):
     assert ret == 1
     assert path.read_binary() == contents
     out, _ = capsys.readouterr()
-    assert out == '{}: mixed line endings\n'.format(path)
+    assert out == f'{path}: mixed line endings\n'
 
 
 def test_fix_lf(tmpdir, capsys):
@@ -97,7 +94,7 @@ def test_fix_lf(tmpdir, capsys):
     assert ret == 1
     assert path.read_binary() == b'foo\nbar\nbaz\n'
     out, _ = capsys.readouterr()
-    assert out == '{}: fixed mixed line endings\n'.format(path)
+    assert out == f'{path}: fixed mixed line endings\n'
 
 
 def test_fix_crlf(tmpdir):

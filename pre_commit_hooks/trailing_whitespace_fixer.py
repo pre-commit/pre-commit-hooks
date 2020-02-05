@@ -1,14 +1,14 @@
-from __future__ import print_function
-
 import argparse
 import os
-import sys
 from typing import Optional
 from typing import Sequence
 
 
-def _fix_file(filename, is_markdown, chars):
-    # type: (str, bool, Optional[bytes]) -> bool
+def _fix_file(
+        filename: str,
+        is_markdown: bool,
+        chars: Optional[bytes],
+) -> bool:
     with open(filename, mode='rb') as file_processed:
         lines = file_processed.readlines()
     newlines = [_process_line(line, is_markdown, chars) for line in lines]
@@ -21,8 +21,11 @@ def _fix_file(filename, is_markdown, chars):
         return False
 
 
-def _process_line(line, is_markdown, chars):
-    # type: (bytes, bool, Optional[bytes]) -> bytes
+def _process_line(
+        line: bytes,
+        is_markdown: bool,
+        chars: Optional[bytes],
+) -> bytes:
     if line[-2:] == b'\r\n':
         eol = b'\r\n'
         line = line[:-2]
@@ -37,7 +40,7 @@ def _process_line(line, is_markdown, chars):
     return line.rstrip(chars) + eol
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--no-markdown-linebreak-ext',
@@ -80,20 +83,20 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
     for ext in md_exts:
         if any(c in ext[1:] for c in r'./\:'):
             parser.error(
-                'bad --markdown-linebreak-ext extension {!r} (has . / \\ :)\n'
-                "  (probably filename; use '--markdown-linebreak-ext=EXT')"
-                .format(ext),
+                f'bad --markdown-linebreak-ext extension '
+                f'{ext!r} (has . / \\ :)\n'
+                f"  (probably filename; use '--markdown-linebreak-ext=EXT')",
             )
-    chars = None if args.chars is None else args.chars.encode('utf-8')
+    chars = None if args.chars is None else args.chars.encode()
     return_code = 0
     for filename in args.filenames:
         _, extension = os.path.splitext(filename.lower())
         md = all_markdown or extension in md_exts
         if _fix_file(filename, md, chars):
-            print('Fixing {}'.format(filename))
+            print(f'Fixing {filename}')
             return_code = 1
     return return_code
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

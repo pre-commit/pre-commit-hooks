@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import ast
 
 from pre_commit_hooks.debug_statement_hook import Debug

@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import pytest
 
 from pre_commit_hooks.check_executables_have_shebangs import main
@@ -12,7 +8,7 @@ from pre_commit_hooks.check_executables_have_shebangs import main
         b'#!/bin/bash\nhello world\n',
         b'#!/usr/bin/env python3.6',
         b'#!python',
-        '#!☃'.encode('UTF-8'),
+        '#!☃'.encode(),
     ),
 )
 def test_has_shebang(content, tmpdir):
@@ -27,7 +23,7 @@ def test_has_shebang(content, tmpdir):
         b' #!python\n',
         b'\n#!python\n',
         b'python\n',
-        '☃'.encode('UTF-8'),
+        '☃'.encode(),
 
     ),
 )
@@ -36,4 +32,4 @@ def test_bad_shebang(content, tmpdir, capsys):
     path.write(content, 'wb')
     assert main((path.strpath,)) == 1
     _, stderr = capsys.readouterr()
-    assert stderr.startswith('{}: marked executable but'.format(path.strpath))
+    assert stderr.startswith(f'{path}: marked executable but')

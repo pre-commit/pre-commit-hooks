@@ -1,6 +1,3 @@
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 import pytest
 
 from pre_commit_hooks.no_commit_to_branch import is_on_branch

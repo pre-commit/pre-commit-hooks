@@ -1,6 +1,3 @@
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
 from pre_commit_hooks import check_byte_order_marker
 
 

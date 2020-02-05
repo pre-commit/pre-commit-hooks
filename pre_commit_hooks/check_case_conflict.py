@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-from __future__ import print_function
-from __future__ import unicode_literals
-
 import argparse
 from typing import Iterable
 from typing import Optional
@@ -12,11 +8,11 @@ from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import cmd_output
 
 
-def lower_set(iterable):  # type: (Iterable[str]) -> Set[str]
+def lower_set(iterable: Iterable[str]) -> Set[str]:
     return {x.lower() for x in iterable}
 
 
-def find_conflicting_filenames(filenames):  # type: (Sequence[str]) -> int
+def find_conflicting_filenames(filenames: Sequence[str]) -> int:
     repo_files = set(cmd_output('git', 'ls-files').splitlines())
     relevant_files = set(filenames) | added_files()
     repo_files -= relevant_files
@@ -39,13 +35,13 @@ def find_conflicting_filenames(filenames):  # type: (Sequence[str]) -> int
             if x.lower() in conflicts
         ]
         for filename in sorted(conflicting_files):
-            print('Case-insensitivity conflict found: {}'.format(filename))
+            print(f'Case-insensitivity conflict found: {filename}')
         retv = 1
 
     return retv
 
 
-def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
+def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',
