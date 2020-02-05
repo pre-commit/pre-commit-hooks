@@ -1,7 +1,6 @@
 from __future__ import print_function
 
 import argparse
-import os
 import sys
 from typing import Optional
 from typing import Sequence
@@ -78,17 +77,17 @@ def main(argv=None):  # type: (Optional[Sequence[str]]) -> int
 
     # reject probable "eaten" filename as extension: skip leading '.' with [1:]
     for ext in md_exts:
-        if any(c in ext[1:] for c in r'./\:'):
+        if any(c in ext[1:] for c in r'/\:'):
             parser.error(
-                'bad --markdown-linebreak-ext extension {!r} (has . / \\ :)\n'
+                'bad --markdown-linebreak-ext extension {!r} (has / \\ :)\n'
                 "  (probably filename; use '--markdown-linebreak-ext=EXT')"
                 .format(ext),
             )
     chars = None if args.chars is None else args.chars.encode('utf-8')
     return_code = 0
     for filename in args.filenames:
-        _, extension = os.path.splitext(filename.lower())
-        md = all_markdown or extension in md_exts
+        in_md_exts = any([filename for ext in md_exts if filename.endswith(ext)])
+        md = all_markdown or in_md_exts
         if _fix_file(filename, md, chars):
             print('Fixing {}'.format(filename))
             return_code = 1
