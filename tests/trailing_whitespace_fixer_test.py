@@ -59,7 +59,7 @@ def test_fixes_markdown_files(tmpdir, ext):
 
 @pytest.mark.parametrize('ext', ('.md.j2'))
 def test_fixes_custom_ext_markdown_files(tmpdir, ext):
-    path = tmpdir.join(f'test.{ext}')
+    path = tmpdir.join('test.{}'.format(ext))
     path.write(
         'foo  \n'  # leaves alone
         'bar \n'  # less than two so it is removed
@@ -80,7 +80,7 @@ def test_fixes_custom_ext_markdown_files(tmpdir, ext):
 
 @pytest.mark.parametrize('ext', ('md', '.md', 'Md'))
 def test_complex_ext_are_not_wrongly_recognized(tmpdir, ext):
-    path = tmpdir.join(f'test.fmd')
+    path = tmpdir.join('test.fmd')
     path.write(
         'foo  \n'
         'bar \n'
