@@ -36,7 +36,7 @@ def test_ok_with_dos_line_endings(tmpdir):
     assert ret == 0
 
 
-@pytest.mark.parametrize('ext', ('md', 'Md', '.md', '*'))
+@pytest.mark.parametrize('ext', ('md', 'Md', '.md', '*', '.md.j2'))
 def test_fixes_markdown_files(tmpdir, ext):
     path = tmpdir.join('test.md')
     path.write(
