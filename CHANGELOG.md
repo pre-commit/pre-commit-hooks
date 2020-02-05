@@ -5,7 +5,7 @@
 - Fix sorting of requirements which use `egg=...`
     - #425 PR by @vinayinvicible.
 - Fix over-eager regular expression for test filename matching
-    - #429 PR by rrauenza.
+    - #429 PR by @rrauenza.
 
 ### Updating
 - Use `flake8` from `pycqa/flake8` instead:
