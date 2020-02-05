@@ -36,9 +36,30 @@ def test_ok_with_dos_line_endings(tmpdir):
     assert ret == 0
 
 
-@pytest.mark.parametrize('ext', ('md', 'Md', '.md', '*', '.md.j2'))
+@pytest.mark.parametrize('ext', ('md', 'Md', '.md', '*'))
 def test_fixes_markdown_files(tmpdir, ext):
     path = tmpdir.join('test.md')
+    path.write(
+        'foo  \n'  # leaves alone
+        'bar \n'  # less than two so it is removed
+        'baz    \n'  # more than two so it becomes two spaces
+        '\t\n'  # trailing tabs are stripped anyway
+        '\n  ',  # whitespace at the end of the file is removed
+    )
+    ret = main((path.strpath, '--markdown-linebreak-ext={}'.format(ext)))
+    assert ret == 1
+    assert path.read() == (
+        'foo  \n'
+        'bar\n'
+        'baz  \n'
+        '\n'
+        '\n'
+    )
+
+
+@pytest.mark.parametrize('ext', ('.md.j2'))
+def test_fixes_custom_ext_markdown_files(tmpdir, ext):
+    path = tmpdir.join(f'test.{ext}')
     path.write(
         'foo  \n'  # leaves alone
         'bar \n'  # less than two so it is removed
