@@ -62,6 +62,9 @@ Checks for symlinks which do not point to anything.
 #### `check-toml`
 Attempts to load all TOML files to verify syntax.
 
+#### `check-unicode-replacement-char`
+Forbid files which have a UTF-8 Unicode replacement character.
+
 #### `check-vcs-permalinks`
 Ensures that links to vcs websites are permalinks.
 

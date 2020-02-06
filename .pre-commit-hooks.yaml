@@ -22,6 +22,12 @@
     entry: check-byte-order-marker
     language: python
     types: [text]
+-   id: check-unicode-replacement-char
+    name: Check for Unicode replacement character
+    description: Forbid files which have a UTF-8 Unicode replacement character
+    entry: check-unicode-replacement-char
+    language: python
+    types: [text]
 -   id: check-builtin-literals
     name: Check builtin type constructor use
     description: Require literal syntax when initializing empty or zero Python builtin types.
