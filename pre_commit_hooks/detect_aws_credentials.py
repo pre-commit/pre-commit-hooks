@@ -84,7 +84,7 @@ def check_file_for_aws_keys(
             for key in keys:
                 # naively match the entire file, low chance of incorrect
                 # collision
-                if key in text_body:
+                if key and key in text_body:
                     bad_files.append(BadFile(filename, key[:4].ljust(28, '*')))
     return bad_files
 
