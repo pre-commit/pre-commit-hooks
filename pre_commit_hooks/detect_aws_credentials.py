@@ -31,7 +31,7 @@ def get_aws_secrets_from_env() -> Set[str]:
     for env_var in (
         'AWS_SECRET_ACCESS_KEY', 'AWS_SECURITY_TOKEN', 'AWS_SESSION_TOKEN',
     ):
-        if env_var in os.environ and os.environ[env_var]:
+        if os.environ.get(env_var):
             keys.add(os.environ[env_var])
     return keys
 
