@@ -31,7 +31,7 @@ def get_aws_secrets_from_env() -> Set[str]:
     for env_var in (
         'AWS_SECRET_ACCESS_KEY', 'AWS_SECURITY_TOKEN', 'AWS_SESSION_TOKEN',
     ):
-        if env_var in os.environ:
+        if env_var in os.environ and os.environ[env_var]:
             keys.add(os.environ[env_var])
     return keys
 
@@ -84,7 +84,7 @@ def check_file_for_aws_keys(
             for key in keys:
                 # naively match the entire file, low chance of incorrect
                 # collision
-                if key and key in text_body:
+                if key in text_body:
                     bad_files.append(BadFile(filename, key[:4].ljust(28, '*')))
     return bad_files
 
