@@ -69,7 +69,7 @@ def get_aws_secrets_from_file(credentials_file: str) -> Set[str]:
 
 def check_file_for_aws_keys(
         filenames: Sequence[str],
-        keys: Set[str],
+        keys: Set[bytes],
 ) -> List[BadFile]:
     """Check if files contain AWS secrets.
 
@@ -79,13 +79,14 @@ def check_file_for_aws_keys(
     bad_files = []
 
     for filename in filenames:
-        with open(filename, 'r') as content:
+        with open(filename, 'rb') as content:
             text_body = content.read()
             for key in keys:
                 # naively match the entire file, low chance of incorrect
                 # collision
                 if key in text_body:
-                    bad_files.append(BadFile(filename, key[:4].ljust(28, '*')))
+                    key_hidden = key.decode()[:4].ljust(28, '*')
+                    bad_files.append(BadFile(filename, key_hidden))
     return bad_files
 
 
@@ -137,7 +138,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         return 2
 
-    bad_filenames = check_file_for_aws_keys(args.filenames, keys)
+    keys_b = {key.encode() for key in keys}
+    bad_filenames = check_file_for_aws_keys(args.filenames, keys_b)
     if bad_filenames:
         for bad_file in bad_filenames:
             print(f'AWS secret found in {bad_file.filename}: {bad_file.key}')
