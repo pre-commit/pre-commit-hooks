@@ -7,7 +7,7 @@ from typing import Optional
 from typing import Sequence
 
 
-DEBUG_STATEMENTS = {'pdb', 'ipdb', 'pudb', 'q', 'rdb', 'rpdb'}
+DEBUG_STATEMENTS = {'pdb', 'ipdb', 'pudb', 'q', 'rdb', 'rpdb', 'wdb'}
 
 
 class Debug(NamedTuple):
