@@ -117,6 +117,19 @@ def test_detect_aws_credentials(filename, expected_retval):
     assert ret == expected_retval
 
 
+def test_allows_arbitrarily_encoded_files(tmpdir):
+    src_ini = tmpdir.join('src.ini')
+    src_ini.write(
+        '[default]\n'
+        'aws_access_key_id=AKIASDFASDF\n'
+        'aws_secret_Access_key=9018asdf23908190238123\n',
+    )
+    arbitrary_encoding = tmpdir.join('f')
+    arbitrary_encoding.write_binary(b'\x12\x9a\xe2\xf2')
+    ret = main((str(arbitrary_encoding), '--credentials-file', str(src_ini)))
+    assert ret == 0
+
+
 @patch('pre_commit_hooks.detect_aws_credentials.get_aws_secrets_from_file')
 @patch('pre_commit_hooks.detect_aws_credentials.get_aws_secrets_from_env')
 def test_non_existent_credentials(mock_secrets_env, mock_secrets_file, capsys):
