@@ -139,7 +139,7 @@
     types: [python]
 -   id: flake8
     name: Flake8 (deprecated, use gitlab.com/pycqa/flake8)
-    description: This hook runs flake8.
+    description: This hook runs flake8. (deprecated, use gitlab.com/pycqa/flake8)
     entry: flake8
     language: python
     types: [python]
