@@ -46,7 +46,7 @@ def test_integration_good_bad_lines(tmpdir, bad_lines, good_lines, retval):
 
     assert main([file_path]) == retval
 
-    with open(file_path, 'r') as f:
+    with open(file_path) as f:
         assert [line.rstrip() for line in f.readlines()] == good_lines
 
 
