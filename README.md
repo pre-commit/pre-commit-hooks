@@ -136,7 +136,7 @@ Checks that all your JSON files are pretty.  "Pretty"
 here means that keys are sorted and indented.  You can configure this with
 the following commandline options:
   - `--autofix` - automatically format json files
-  - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 4 spaces.
+  - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 2 spaces.
   - `--no-ensure-ascii` preserve unicode characters instead of converting to escape sequences
   - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
   - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
