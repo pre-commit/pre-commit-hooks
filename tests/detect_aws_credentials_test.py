@@ -1,5 +1,6 @@
+from unittest.mock import patch
+
 import pytest
-from mock import patch
 
 from pre_commit_hooks.detect_aws_credentials import get_aws_cred_files_from_env
 from pre_commit_hooks.detect_aws_credentials import get_aws_secrets_from_env
