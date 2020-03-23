@@ -13,12 +13,13 @@ See also: https://github.com/pre-commit/pre-commit
 
 Add this to your `.pre-commit-config.yaml`
 
-    -   repo: https://github.com/pre-commit/pre-commit-hooks
-        rev: v2.5.0  # Use the ref you want to point at
-        hooks:
-        -   id: trailing-whitespace
-        # -   id: ...
-
+```yaml
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.5.0  # Use the ref you want to point at
+    hooks:
+    -   id: trailing-whitespace
+    # -   id: ...
+```
 
 ### Hooks available
 
