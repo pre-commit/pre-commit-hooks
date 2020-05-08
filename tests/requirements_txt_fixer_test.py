@@ -50,6 +50,24 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             FAIL,
             b'Django\nijk\ngit+ssh://git_url@tag#egg=ocflib\n',
         ),
+        (
+            b'b==1.0.0\n'
+            b'c=2.0.0 \\\n'
+            b' --hash=sha256:abcd\n'
+            b'a=3.0.0 \\\n'
+            b'  --hash=sha256:a1b1c1d1',
+            FAIL,
+            b'a=3.0.0 \\\n'
+            b'  --hash=sha256:a1b1c1d1\n'
+            b'b==1.0.0\n'
+            b'c=2.0.0 \\\n'
+            b' --hash=sha256:abcd\n',
+        ),
+        (
+            b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
+            PASS,
+            b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):

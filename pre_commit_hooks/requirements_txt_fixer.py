@@ -34,6 +34,18 @@ class Requirement:
         else:
             return self.name < requirement.name
 
+    def is_complete(self) -> bool:
+        return (
+            self.value is not None and
+            not self.value.rstrip(b'\r\n').endswith(b'\\')
+        )
+
+    def append_value(self, value: bytes) -> None:
+        if self.value is not None:
+            self.value += value
+        else:
+            self.value = value
+
 
 def fix_requirements(f: IO[bytes]) -> int:
     requirements: List[Requirement] = []
@@ -55,7 +67,7 @@ def fix_requirements(f: IO[bytes]) -> int:
         # If the most recent requirement object has a value, then it's
         # time to start building the next requirement object.
 
-        if not len(requirements) or requirements[-1].value is not None:
+        if not len(requirements) or requirements[-1].is_complete():
             requirements.append(Requirement())
 
         requirement = requirements[-1]
@@ -73,7 +85,7 @@ def fix_requirements(f: IO[bytes]) -> int:
         elif line.startswith(b'#') or line.strip() == b'':
             requirement.comments.append(line)
         else:
-            requirement.value = line
+            requirement.append_value(line)
 
     # if a file ends in a comment, preserve it at the end
     if requirements[-1].value is None:
