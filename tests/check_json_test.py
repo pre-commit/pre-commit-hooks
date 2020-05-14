@@ -17,3 +17,9 @@ def test_main(capsys, filename, expected_retval):
     if expected_retval == 1:
         stdout, _ = capsys.readouterr()
         assert filename in stdout
+
+
+def test_non_utf8_file(tmpdir):
+    f = tmpdir.join('t.json')
+    f.write_binary(b'\xa9\xfe\x12')
+    assert main((str(f),))

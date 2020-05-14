@@ -14,8 +14,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         with open(filename, 'rb') as f:
             try:
                 json.load(f)
-            # TODO: need UnicodeDecodeError?
-            except (ValueError, UnicodeDecodeError) as exc:
+            except ValueError as exc:
                 print(f'{filename}: Failed to json decode ({exc})')
                 retval = 1
     return retval
