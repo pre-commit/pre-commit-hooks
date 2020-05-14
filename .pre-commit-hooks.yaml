@@ -1,6 +1,6 @@
 -   id: autopep8-wrapper
-    name: autopep8 wrapper
-    description: This is deprecated, use pre-commit/mirrors-autopep8 instead.
+    name: autopep8 wrapper (removed)
+    description: (removed) use pre-commit/mirrors-autopep8 instead.
     entry: pre-commit-hooks-removed autopep8-wrapper autopep8 https://github.com/pre-commit/mirrors-autopep8
     language: python
     always_run: true
@@ -138,8 +138,8 @@
     description: 'Add # -*- coding: utf-8 -*- to the top of python files'
     types: [python]
 -   id: flake8
-    name: Flake8 (deprecated, use gitlab.com/pycqa/flake8)
-    description: This hook runs flake8. (deprecated, use gitlab.com/pycqa/flake8)
+    name: Flake8 (removed)
+    description: (removed) use gitlab.com/pycqa/flake8 instead.
     entry: pre-commit-hooks-removed flake8 flake8 https://gitlab.com/pycqa/flake8
     language: python
     always_run: true
@@ -168,8 +168,8 @@
     pass_filenames: false
     always_run: true
 -   id: pyflakes
-    name: Pyflakes (DEPRECATED, use flake8)
-    description: This hook runs pyflakes. (This is deprecated, use flake8).
+    name: Pyflakes (removed)
+    description: (removed) use gitlab.com/pycqa/flake8 instead.
     entry: pre-commit-hooks-removed pyflakes flake8 https://gitlab.com/pycqa/flake8
     language: python
     always_run: true
