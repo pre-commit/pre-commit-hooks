@@ -1,10 +1,10 @@
 -   id: autopep8-wrapper
     name: autopep8 wrapper
     description: This is deprecated, use pre-commit/mirrors-autopep8 instead.
-    entry: autopep8-wrapper
+    entry: pre-commit-hooks-removed autopep8-wrapper autopep8 https://github.com/pre-commit/mirrors-autopep8
     language: python
-    types: [python]
-    args: [-i]
+    always_run: true
+    pass_filenames: false
 -   id: check-added-large-files
     name: Check for added large files
     description: Prevent giant files from being committed
@@ -140,10 +140,10 @@
 -   id: flake8
     name: Flake8 (deprecated, use gitlab.com/pycqa/flake8)
     description: This hook runs flake8. (deprecated, use gitlab.com/pycqa/flake8)
-    entry: flake8
+    entry: pre-commit-hooks-removed flake8 flake8 https://gitlab.com/pycqa/flake8
     language: python
-    types: [python]
-    require_serial: true
+    always_run: true
+    pass_filenames: false
 -   id: forbid-new-submodules
     name: Forbid new submodules
     language: python
@@ -170,9 +170,10 @@
 -   id: pyflakes
     name: Pyflakes (DEPRECATED, use flake8)
     description: This hook runs pyflakes. (This is deprecated, use flake8).
-    entry: pyflakes
+    entry: pre-commit-hooks-removed pyflakes flake8 https://gitlab.com/pycqa/flake8
     language: python
-    types: [python]
+    always_run: true
+    pass_filenames: false
 -   id: requirements-txt-fixer
     name: Fix requirements.txt
     description: Sorts entries in requirements.txt
