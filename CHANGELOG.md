@@ -1,3 +1,43 @@
+3.0.0 - 2020-05-14
+==================
+
+### Features
+- `detect-aws-credentials`: skip empty aws keys
+    - #450 PR by @begoon.
+    - #449 issue by @begoon.
+- `debug-statements`: add detection `wdb` debugger
+    - #452 PR by @itsdkey.
+    - #451 issue by @itsdkey.
+- `requirements-txt-fixer`: support line continuation for dependencies
+    - #469 PR by @aniketbhatnagar.
+    - #465 issue by @aniketbhatnagar.
+
+### Fixes
+- `detect-aws-credentials`: fix `UnicodeDecodeError` when running on non-UTF8
+  files.
+    - #453 PR by @asottile.
+    - #393 PR by @a7p
+    - #346 issue by @rpdelaney.
+
+### Updating
+- pre-commit/pre-commit-hooks now requires python3.6.1+
+    - #447 PR by @asottile.
+    - #455 PR by @asottile.
+- `flake8` / `pyflakes` have been removed, use `flake8` from `pycqa/flake8`
+  instead:
+
+  ```yaml
+  -   repo: https://gitlab.com/pycqa/flake8
+      rev: 3.8.1
+      hooks:
+      -   id: flake8
+  ```
+
+    - #476 PR by @asottile.
+    - #477 PR by @asottile.
+    - #344 issue by @asottile.
+
+
 2.5.0 - 2020-02-04
 ==================
 
