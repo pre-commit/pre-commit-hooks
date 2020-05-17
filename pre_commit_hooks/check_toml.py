@@ -13,8 +13,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     retval = 0
     for filename in args.filenames:
         try:
-            with open(filename) as f:
-                toml.load(f)
+            toml.load(filename)
         except toml.TomlDecodeError as exc:
             print(f'{filename}: {exc}')
             retval = 1
