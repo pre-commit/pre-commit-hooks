@@ -14,8 +14,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for filename in args.filenames:
         try:
             with open(filename, 'rb') as xml_file:
-                # https://github.com/python/typeshed/pull/3725
-                xml.sax.parse(xml_file, handler)  # type: ignore
+                xml.sax.parse(xml_file, handler)
         except xml.sax.SAXException as exc:
             print(f'{filename}: Failed to xml parse ({exc})')
             retval = 1
