@@ -13,8 +13,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     handler = xml.sax.handler.ContentHandler()
     for filename in args.filenames:
         try:
-            with open(filename, 'rb') as xml_file:
-                xml.sax.parse(xml_file, handler)
+            xml.sax.parse(filename, handler)
         except xml.sax.SAXException as exc:
             print(f'{filename}: Failed to xml parse ({exc})')
             retval = 1
