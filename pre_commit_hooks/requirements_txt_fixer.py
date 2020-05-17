@@ -1,4 +1,5 @@
 import argparse
+import re
 from typing import IO
 from typing import List
 from typing import Optional
@@ -10,6 +11,9 @@ FAIL = 1
 
 
 class Requirement:
+    UNTIL_COMPARISON = re.compile(b'={2,3}|!=|~=|>=?|<=?')
+    UNTIL_SEP = re.compile(rb'[^;\s]+')
+
     def __init__(self) -> None:
         self.value: Optional[bytes] = None
         self.comments: List[bytes] = []
@@ -17,11 +21,20 @@ class Requirement:
     @property
     def name(self) -> bytes:
         assert self.value is not None, self.value
+        name = self.value.lower()
         for egg in (b'#egg=', b'&egg='):
             if egg in self.value:
-                return self.value.lower().partition(egg)[-1]
+                return name.partition(egg)[-1]
 
-        return self.value.lower().partition(b'==')[0]
+        m = self.UNTIL_SEP.match(name)
+        assert m is not None
+
+        name = m.group()
+        m = self.UNTIL_COMPARISON.search(name)
+        if not m:
+            return name
+
+        return name[:m.start()]
 
     def __lt__(self, requirement: 'Requirement') -> int:
         # \n means top of file comment, so always return True,
