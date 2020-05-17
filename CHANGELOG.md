@@ -1,3 +1,11 @@
+3.0.1 - 2020-05-16
+==================
+
+### Fixes
+- `check-toml`: use UTF-8 encoding to load toml files
+    - #479 PR by @mxr.
+    - #474 issue by @staticdev.
+
 3.0.0 - 2020-05-14
 ==================
 
