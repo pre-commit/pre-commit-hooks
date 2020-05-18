@@ -33,9 +33,28 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
         (b'\nfoo\nbar\n', FAIL, b'bar\n\nfoo\n'),
         (b'\nbar\nfoo\n', PASS, b'\nbar\nfoo\n'),
         (
-            b'pyramid==1\npyramid-foo==2\n',
-            PASS,
-            b'pyramid==1\npyramid-foo==2\n',
+            b'pyramid-foo==1\npyramid>=2\n',
+            FAIL,
+            b'pyramid>=2\npyramid-foo==1\n',
+        ),
+        (
+            b'a==1\n'
+            b'c>=1\n'
+            b'bbbb!=1\n'
+            b'c-a>=1;python_version>="3.6"\n'
+            b'e>=2\n'
+            b'd>2\n'
+            b'g<2\n'
+            b'f<=2\n',
+            FAIL,
+            b'a==1\n'
+            b'bbbb!=1\n'
+            b'c>=1\n'
+            b'c-a>=1;python_version>="3.6"\n'
+            b'd>2\n'
+            b'e>=2\n'
+            b'f<=2\n'
+            b'g<2\n',
         ),
         (b'ocflib\nDjango\nPyMySQL\n', FAIL, b'Django\nocflib\nPyMySQL\n'),
         (
