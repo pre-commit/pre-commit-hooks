@@ -20,7 +20,7 @@ FAIL = 1
 
 def sort_file_contents(f: IO[bytes]) -> int:
     before = list(f)
-    after = sorted([line.strip(b'\n\r') for line in before if line.strip()])
+    after = sorted(line.strip(b'\n\r') for line in before if line.strip())
 
     before_string = b''.join(before)
     after_string = b'\n'.join(after) + b'\n'
