@@ -104,7 +104,7 @@ def test_git_executable_shebang(temp_git_dir, content, mode, expected):
         cmd_output('chmod', mode, str(path))
         cmd_output('git', 'update-index', f'--chmod={mode}', str(path))
 
-        # simulate how identify choses that something is executable
+        # simulate how identify chooses that something is executable
         filenames = [path for path in [str(path)] if os.access(path, os.X_OK)]
 
         assert main(filenames) == expected
