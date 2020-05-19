@@ -8,6 +8,7 @@ def test_always_fails():
         main((
             'autopep8-wrapper', 'autopep8',
             'https://github.com/pre-commit/mirrors-autopep8',
+            '--foo', 'bar',
         ))
     msg, = excinfo.value.args
     assert msg == (
