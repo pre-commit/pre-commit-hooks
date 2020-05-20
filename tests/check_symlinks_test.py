@@ -16,8 +16,8 @@ def test_main(tmpdir, dest, expected):  # pragma: no cover (symlinks)
     tmpdir.join('exists').ensure()
     symlink = tmpdir.join('symlink')
     symlink.mksymlinkto(tmpdir.join(dest))
-    assert main((symlink.strpath,)) == expected
+    assert main((str(symlink),)) == expected
 
 
 def test_main_normal_file(tmpdir):
-    assert main((tmpdir.join('f').ensure().strpath,)) == 0
+    assert main((str(tmpdir.join('f').ensure()),)) == 0

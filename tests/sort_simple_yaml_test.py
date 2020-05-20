@@ -39,7 +39,7 @@ TEST_SORTS = [
 
 @pytest.mark.parametrize('bad_lines,good_lines,retval', TEST_SORTS)
 def test_integration_good_bad_lines(tmpdir, bad_lines, good_lines, retval):
-    file_path = os.path.join(tmpdir.strpath, 'foo.yaml')
+    file_path = os.path.join(str(tmpdir), 'foo.yaml')
 
     with open(file_path, 'w') as f:
         f.write('\n'.join(bad_lines) + '\n')

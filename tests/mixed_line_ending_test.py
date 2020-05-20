@@ -25,7 +25,7 @@ from pre_commit_hooks.mixed_line_ending import main
 def test_mixed_line_ending_fixes_auto(input_s, output, tmpdir):
     path = tmpdir.join('file.txt')
     path.write_binary(input_s)
-    ret = main((path.strpath,))
+    ret = main((str(path),))
 
     assert ret == 1
     assert path.read_binary() == output
@@ -34,7 +34,7 @@ def test_mixed_line_ending_fixes_auto(input_s, output, tmpdir):
 def test_non_mixed_no_newline_end_of_file(tmpdir):
     path = tmpdir.join('f.txt')
     path.write_binary(b'foo\nbar\nbaz')
-    assert not main((path.strpath,))
+    assert not main((str(path),))
     # the hook *could* fix the end of the file, but leaves it alone
     # this is mostly to document the current behaviour
     assert path.read_binary() == b'foo\nbar\nbaz'
@@ -43,7 +43,7 @@ def test_non_mixed_no_newline_end_of_file(tmpdir):
 def test_mixed_no_newline_end_of_file(tmpdir):
     path = tmpdir.join('f.txt')
     path.write_binary(b'foo\r\nbar\nbaz')
-    assert main((path.strpath,))
+    assert main((str(path),))
     # the hook rewrites the end of the file, this is slightly inconsistent
     # with the non-mixed case but I think this is the better behaviour
     # this is mostly to document the current behaviour
@@ -66,7 +66,7 @@ def test_mixed_no_newline_end_of_file(tmpdir):
 def test_line_endings_ok(fix_option, input_s, tmpdir, capsys):
     path = tmpdir.join('input.txt')
     path.write_binary(input_s)
-    ret = main((fix_option, path.strpath))
+    ret = main((fix_option, str(path)))
 
     assert ret == 0
     assert path.read_binary() == input_s
@@ -78,7 +78,7 @@ def test_no_fix_does_not_modify(tmpdir, capsys):
     path = tmpdir.join('input.txt')
     contents = b'foo\r\nbar\rbaz\nwomp\n'
     path.write_binary(contents)
-    ret = main(('--fix=no', path.strpath))
+    ret = main(('--fix=no', str(path)))
 
     assert ret == 1
     assert path.read_binary() == contents
@@ -89,7 +89,7 @@ def test_no_fix_does_not_modify(tmpdir, capsys):
 def test_fix_lf(tmpdir, capsys):
     path = tmpdir.join('input.txt')
     path.write_binary(b'foo\r\nbar\rbaz\n')
-    ret = main(('--fix=lf', path.strpath))
+    ret = main(('--fix=lf', str(path)))
 
     assert ret == 1
     assert path.read_binary() == b'foo\nbar\nbaz\n'
@@ -100,7 +100,7 @@ def test_fix_lf(tmpdir, capsys):
 def test_fix_crlf(tmpdir):
     path = tmpdir.join('input.txt')
     path.write_binary(b'foo\r\nbar\rbaz\n')
-    ret = main(('--fix=crlf', path.strpath))
+    ret = main(('--fix=crlf', str(path)))
 
     assert ret == 1
     assert path.read_binary() == b'foo\r\nbar\r\nbaz\r\n'
@@ -110,7 +110,7 @@ def test_fix_lf_all_crlf(tmpdir):
     """Regression test for #239"""
     path = tmpdir.join('input.txt')
     path.write_binary(b'foo\r\nbar\r\n')
-    ret = main(('--fix=lf', path.strpath))
+    ret = main(('--fix=lf', str(path)))
 
     assert ret == 1
     assert path.read_binary() == b'foo\nbar\n'

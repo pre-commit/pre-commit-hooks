@@ -21,4 +21,4 @@ TESTS = (
 def test_main(input_s, expected_retval, tmpdir):
     path = tmpdir.join('file.txt')
     path.write_binary(input_s)
-    assert main([path.strpath]) == expected_retval
+    assert main([str(path)]) == expected_retval

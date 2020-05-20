@@ -56,12 +56,12 @@ def test_unit(capsys, contents, expected, expected_out):
 def test_integration(tmpdir, capsys, contents, expected, expected_out):
     f = tmpdir.join('test.py')
     f.write_binary(contents)
-    assert main([f.strpath]) == expected
-    assert capsys.readouterr()[0] == expected_out.format(filename=f.strpath)
+    assert main([str(f)]) == expected
+    assert capsys.readouterr()[0] == expected_out.format(filename=str(f))
 
 
 def test_arbitrary_encoding(tmpdir):
     f = tmpdir.join('f.py')
     contents = '# -*- coding: cp1252\nx = "£"'.encode('cp1252')
     f.write_binary(contents)
-    assert main([f.strpath]) == 0
+    assert main([str(f)]) == 0

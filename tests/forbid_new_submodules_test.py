@@ -15,7 +15,7 @@ def git_dir_with_git_dir(tmpdir):
         subprocess.check_call(('git', 'init', 'foo'))
         subprocess.check_call(
             ('git', 'commit', '-m', 'init', '--allow-empty', '--no-gpg-sign'),
-            cwd=tmpdir.join('foo').strpath,
+            cwd=str(tmpdir.join('foo')),
         )
         yield
 

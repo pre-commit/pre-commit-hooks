@@ -131,19 +131,19 @@ def test_ignore_constructors():
 def test_failing_file(tmpdir):
     f = tmpdir.join('f.py')
     f.write(BUILTIN_CONSTRUCTORS)
-    rc = main([f.strpath])
+    rc = main([str(f)])
     assert rc == 1
 
 
 def test_passing_file(tmpdir):
     f = tmpdir.join('f.py')
     f.write(BUILTIN_LITERALS)
-    rc = main([f.strpath])
+    rc = main([str(f)])
     assert rc == 0
 
 
 def test_failing_file_ignore_all(tmpdir):
     f = tmpdir.join('f.py')
     f.write(BUILTIN_CONSTRUCTORS)
-    rc = main(['--ignore=complex,dict,float,int,list,str,tuple', f.strpath])
+    rc = main(['--ignore=complex,dict,float,int,list,str,tuple', str(f)])
     assert rc == 0
