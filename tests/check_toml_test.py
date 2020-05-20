@@ -8,7 +8,7 @@ key = # INVALID
 
 = "no key name"  # INVALID
 """)
-    ret = main((filename.strpath,))
+    ret = main((str(filename),))
     assert ret == 1
 
 
@@ -25,12 +25,12 @@ name = "John"
 dob = 1979-05-27T07:32:00-08:00 # First class dates
 """,
     )
-    ret = main((filename.strpath,))
+    ret = main((str(filename),))
     assert ret == 0
 
 
 def test_toml_good_unicode(tmpdir):
     filename = tmpdir.join('f')
     filename.write_binary('letter = "\N{SNOWMAN}"\n'.encode())
-    ret = main((filename.strpath,))
+    ret = main((str(filename),))
     assert ret == 0

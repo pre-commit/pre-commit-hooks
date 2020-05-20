@@ -11,7 +11,7 @@ def test_integration_inserting_pragma(tmpdir):
     path = tmpdir.join('foo.py')
     path.write_binary(b'import httplib\n')
 
-    assert main((path.strpath,)) == 1
+    assert main((str(path),)) == 1
 
     assert path.read_binary() == (
         b'# -*- coding: utf-8 -*-\n'
@@ -22,14 +22,14 @@ def test_integration_inserting_pragma(tmpdir):
 def test_integration_ok(tmpdir):
     path = tmpdir.join('foo.py')
     path.write_binary(b'# -*- coding: utf-8 -*-\nx = 1\n')
-    assert main((path.strpath,)) == 0
+    assert main((str(path),)) == 0
 
 
 def test_integration_remove(tmpdir):
     path = tmpdir.join('foo.py')
     path.write_binary(b'# -*- coding: utf-8 -*-\nx = 1\n')
 
-    assert main((path.strpath, '--remove')) == 1
+    assert main((str(path), '--remove')) == 1
 
     assert path.read_binary() == b'x = 1\n'
 
@@ -37,7 +37,7 @@ def test_integration_remove(tmpdir):
 def test_integration_remove_ok(tmpdir):
     path = tmpdir.join('foo.py')
     path.write_binary(b'x = 1\n')
-    assert main((path.strpath, '--remove')) == 0
+    assert main((str(path), '--remove')) == 0
 
 
 @pytest.mark.parametrize(
@@ -140,20 +140,20 @@ def test_integration_alternate_pragma(tmpdir, capsys):
     f.write('x = 1\n')
 
     pragma = '# coding: utf-8'
-    assert main((f.strpath, '--pragma', pragma)) == 1
+    assert main((str(f), '--pragma', pragma)) == 1
     assert f.read() == '# coding: utf-8\nx = 1\n'
     out, _ = capsys.readouterr()
-    assert out == f'Added `# coding: utf-8` to {f.strpath}\n'
+    assert out == f'Added `# coding: utf-8` to {str(f)}\n'
 
 
 def test_crlf_ok(tmpdir):
     f = tmpdir.join('f.py')
     f.write_binary(b'# -*- coding: utf-8 -*-\r\nx = 1\r\n')
-    assert not main((f.strpath,))
+    assert not main((str(f),))
 
 
 def test_crfl_adds(tmpdir):
     f = tmpdir.join('f.py')
     f.write_binary(b'x = 1\r\n')
-    assert main((f.strpath,))
+    assert main((str(f),))
     assert f.read_binary() == b'# -*- coding: utf-8 -*-\r\nx = 1\r\n'

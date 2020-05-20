@@ -16,13 +16,13 @@ def f1_is_a_conflict_file(tmpdir):
     repo2 = tmpdir.join('repo2')
     repo2_f1 = repo2.join('f1')
 
-    cmd_output('git', 'init', '--', repo1.strpath)
+    cmd_output('git', 'init', '--', str(repo1))
     with repo1.as_cwd():
         repo1_f1.ensure()
         cmd_output('git', 'add', '.')
         cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'commit1')
 
-    cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
+    cmd_output('git', 'clone', str(repo1), str(repo2))
 
     # Commit in master
     with repo1.as_cwd():
@@ -71,13 +71,13 @@ def repository_pending_merge(tmpdir):
     repo2 = tmpdir.join('repo2')
     repo2_f1 = repo2.join('f1')
     repo2_f2 = repo2.join('f2')
-    cmd_output('git', 'init', repo1.strpath)
+    cmd_output('git', 'init', str(repo1))
     with repo1.as_cwd():
         repo1_f1.ensure()
         cmd_output('git', 'add', '.')
         cmd_output('git', 'commit', '--no-gpg-sign', '-m', 'commit1')
 
-    cmd_output('git', 'clone', repo1.strpath, repo2.strpath)
+    cmd_output('git', 'clone', str(repo1), str(repo2))
 
     # Commit in master
     with repo1.as_cwd():

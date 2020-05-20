@@ -3,7 +3,7 @@ from pre_commit_hooks.check_vcs_permalinks import main
 
 def test_trivial(tmpdir):
     f = tmpdir.join('f.txt').ensure()
-    assert not main((f.strpath,))
+    assert not main((str(f),))
 
 
 def test_passing(tmpdir):
@@ -16,7 +16,7 @@ def test_passing(tmpdir):
         # regression test for overly-greedy regex
         b'https://github.com/ yes / no ? /blob/master/foo#L1\n',
     )
-    assert not main((f.strpath,))
+    assert not main((str(f),))
 
 
 def test_failing(tmpdir, capsys):

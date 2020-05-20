@@ -13,14 +13,14 @@ from pre_commit_hooks.trailing_whitespace_fixer import main
 def test_fixes_trailing_whitespace(input_s, expected, tmpdir):
     path = tmpdir.join('file.md')
     path.write(input_s)
-    assert main((path.strpath,)) == 1
+    assert main((str(path),)) == 1
     assert path.read() == expected
 
 
 def test_ok_no_newline_end_of_file(tmpdir):
     filename = tmpdir.join('f')
     filename.write_binary(b'foo\nbar')
-    ret = main((filename.strpath,))
+    ret = main((str(filename),))
     assert filename.read_binary() == b'foo\nbar'
     assert ret == 0
 
@@ -28,7 +28,7 @@ def test_ok_no_newline_end_of_file(tmpdir):
 def test_ok_with_dos_line_endings(tmpdir):
     filename = tmpdir.join('f')
     filename.write_binary(b'foo\r\nbar\r\nbaz\r\n')
-    ret = main((filename.strpath,))
+    ret = main((str(filename),))
     assert filename.read_binary() == b'foo\r\nbar\r\nbaz\r\n'
     assert ret == 0
 
@@ -43,7 +43,7 @@ def test_fixes_markdown_files(tmpdir, ext):
         '\t\n'  # trailing tabs are stripped anyway
         '\n  ',  # whitespace at the end of the file is removed
     )
-    ret = main((path.strpath, f'--markdown-linebreak-ext={ext}'))
+    ret = main((str(path), f'--markdown-linebreak-ext={ext}'))
     assert ret == 1
     assert path.read() == (
         'foo  \n'
@@ -63,7 +63,7 @@ def test_markdown_linebreak_ext_badopt(arg):
 
 def test_prints_warning_with_no_markdown_ext(capsys, tmpdir):
     f = tmpdir.join('f').ensure()
-    assert main((f.strpath, '--no-markdown-linebreak-ext')) == 0
+    assert main((str(f), '--no-markdown-linebreak-ext')) == 0
     out, _ = capsys.readouterr()
     assert out == '--no-markdown-linebreak-ext now does nothing!\n'
 
@@ -72,7 +72,7 @@ def test_preserve_non_utf8_file(tmpdir):
     non_utf8_bytes_content = b'<a>\xe9 \n</a>\n'
     path = tmpdir.join('file.txt')
     path.write_binary(non_utf8_bytes_content)
-    ret = main([path.strpath])
+    ret = main([str(path)])
     assert ret == 1
     assert path.size() == (len(non_utf8_bytes_content) - 1)
 
@@ -81,7 +81,7 @@ def test_custom_charset_change(tmpdir):
     # strip spaces only, no tabs
     path = tmpdir.join('file.txt')
     path.write('\ta \t \n')
-    ret = main([path.strpath, '--chars', ' '])
+    ret = main([str(path), '--chars', ' '])
     assert ret == 1
     assert path.read() == '\ta \t\n'
 
@@ -89,13 +89,13 @@ def test_custom_charset_change(tmpdir):
 def test_custom_charset_no_change(tmpdir):
     path = tmpdir.join('file.txt')
     path.write('\ta \t\n')
-    ret = main([path.strpath, '--chars', ' '])
+    ret = main([str(path), '--chars', ' '])
     assert ret == 0
 
 
 def test_markdown_with_custom_charset(tmpdir):
     path = tmpdir.join('file.md')
     path.write('\ta \t   \n')
-    ret = main([path.strpath, '--chars', ' ', '--markdown-linebreak-ext', '*'])
+    ret = main([str(path), '--chars', ' ', '--markdown-linebreak-ext', '*'])
     assert ret == 1
     assert path.read() == '\ta \t  \n'

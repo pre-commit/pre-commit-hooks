@@ -67,16 +67,16 @@ def test_autofix_main(tmpdir):
     srcfile = tmpdir.join('to_be_json_formatted.json')
     shutil.copyfile(
         get_resource_path('not_pretty_formatted_json.json'),
-        srcfile.strpath,
+        str(srcfile),
     )
 
     # now launch the autofix on that file
-    ret = main(['--autofix', srcfile.strpath])
+    ret = main(['--autofix', str(srcfile)])
     # it should have formatted it
     assert ret == 1
 
     # file was formatted (shouldn't trigger linter again)
-    ret = main([srcfile.strpath])
+    ret = main([str(srcfile)])
     assert ret == 0
 
 

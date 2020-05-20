@@ -25,7 +25,7 @@ skip_win32 = pytest.mark.skipif(
 def test_has_shebang(content, tmpdir):
     path = tmpdir.join('path')
     path.write(content, 'wb')
-    assert main((path.strpath,)) == 0
+    assert main((str(path),)) == 0
 
 
 @skip_win32  # pragma: win32 no cover
@@ -41,7 +41,7 @@ def test_has_shebang(content, tmpdir):
 def test_bad_shebang(content, tmpdir, capsys):
     path = tmpdir.join('path')
     path.write(content, 'wb')
-    assert main((path.strpath,)) == 1
+    assert main((str(path),)) == 1
     _, stderr = capsys.readouterr()
     assert stderr.startswith(f'{path}: marked executable but')
 

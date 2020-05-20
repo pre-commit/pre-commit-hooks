@@ -20,16 +20,16 @@ def test_main_allow_multiple_documents(tmpdir):
     f.write('---\nfoo\n---\nbar\n')
 
     # should fail without the setting
-    assert main((f.strpath,))
+    assert main((str(f),))
 
     # should pass when we allow multiple documents
-    assert not main(('--allow-multiple-documents', f.strpath))
+    assert not main(('--allow-multiple-documents', str(f)))
 
 
 def test_fails_even_with_allow_multiple_documents(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write('[')
-    assert main(('--allow-multiple-documents', f.strpath))
+    assert main(('--allow-multiple-documents', str(f)))
 
 
 def test_main_unsafe(tmpdir):
@@ -40,12 +40,12 @@ def test_main_unsafe(tmpdir):
         '    deadbeefdeadbeefdeadbeef\n',
     )
     # should fail "safe" check
-    assert main((f.strpath,))
+    assert main((str(f),))
     # should pass when we allow unsafe documents
-    assert not main(('--unsafe', f.strpath))
+    assert not main(('--unsafe', str(f)))
 
 
 def test_main_unsafe_still_fails_on_syntax_errors(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write('[')
-    assert main(('--unsafe', f.strpath))
+    assert main(('--unsafe', str(f)))
