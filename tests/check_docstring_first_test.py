@@ -38,6 +38,13 @@ TESTS = (
     ),
     # String literals in expressions are ok.
     (b'x = "foo"\n', 0, ''),
+    # Attribute docstrings are ok.
+    (
+        b'x = "foo"\n'
+        b'"""x holds the foo"""',
+        0,
+        '',
+    ),
 )
 
 
@@ -48,7 +55,7 @@ all_tests = pytest.mark.parametrize(
 
 @all_tests
 def test_unit(capsys, contents, expected, expected_out):
-    assert check_docstring_first(contents) == expected
+    assert check_docstring_first(contents, '<unknown>') == expected
     assert capsys.readouterr()[0] == expected_out.format(filename='<unknown>')
 
 

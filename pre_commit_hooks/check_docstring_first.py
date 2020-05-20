@@ -11,7 +11,7 @@ NON_CODE_TOKENS = frozenset((
 ))
 
 
-def check_docstring_first(src: bytes, filename: str = '<unknown>') -> int:
+def check_docstring_first(src: bytes, filename: str) -> int:
     """Returns nonzero if the source has what looks like a docstring that is
     not at the beginning of the source.
 
@@ -20,9 +20,14 @@ def check_docstring_first(src: bytes, filename: str = '<unknown>') -> int:
     """
     found_docstring_line = None
     found_code_line = None
+    assignment_lines = set()
 
     tok_gen = tokenize_tokenize(io.BytesIO(src).readline)
-    for tok_type, _, (sline, scol), _, _ in tok_gen:
+    for tok_type, string, (sline, scol), _, _ in tok_gen:
+        # Save all lines with top-level attribute assignments
+        if scol == 2 and tok_type == tokenize.OP and string == '=':
+            assignment_lines.add(sline)
+
         # Looks like a docstring!
         if tok_type == tokenize.STRING and scol == 0:
             if found_docstring_line is not None:
@@ -31,7 +36,10 @@ def check_docstring_first(src: bytes, filename: str = '<unknown>') -> int:
                     f'(first docstring on line {found_docstring_line}).',
                 )
                 return 1
-            elif found_code_line is not None:
+            elif (
+                    found_code_line is not None and
+                    sline > 0 and sline - 1 not in assignment_lines
+            ):
                 print(
                     f'{filename}:{sline} Module docstring appears after code '
                     f'(code seen on line {found_code_line}).',
@@ -55,6 +63,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for filename in args.filenames:
         with open(filename, 'rb') as f:
             contents = f.read()
-        retv |= check_docstring_first(contents, filename=filename)
+        retv |= check_docstring_first(contents, filename)
 
     return retv
