@@ -1,3 +1,20 @@
+3.1.0 - 2020-05-20
+==================
+
+### Features
+- `check-executables-have-shebangs`: on windows, validate the mode bits using
+  `git`
+    - #480 PR by @mxr.
+    - #435 issue by @dstandish.
+- `requirements-txt-fixer`: support more operators
+    - #483 PR by @mxr.
+    - #331 issue by @hackedd.
+
+### Fixes
+- `pre-commit-hooks-removed`: Fix when removed hooks used `args`
+    - #487 PR by @pedrocalleja.
+    - #485 issue by @pedrocalleja.
+
 3.0.1 - 2020-05-16
 ==================
 
