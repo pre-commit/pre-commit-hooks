@@ -1,4 +1,3 @@
 covdefaults
 coverage
-pre-commit
 pytest
