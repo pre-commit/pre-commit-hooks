@@ -10,6 +10,11 @@
     description: Prevent giant files from being committed
     entry: check-added-large-files
     language: python
+-   id: check-path-edits
+    name: Check for path edits
+    description: Prevent edits tp specified path
+    entry: check-path-edits
+    language: python
 -   id: check-ast
     name: Check python ast
     description: Simply check whether the files parse as valid python.

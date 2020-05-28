@@ -57,6 +57,11 @@ Attempts to load all json files to verify syntax.
 #### `check-merge-conflict`
 Check for files that contain merge conflict strings.
 
+#### `check-path-edits`
+Prevent files in specific paths from being committed.
+  - Specify path patterns with regex `args: ["--pattern", "^tmp.*"]`.
+  - Pattern can be specified many times.
+
 #### `check-symlinks`
 Checks for symlinks which do not point to anything.
 
