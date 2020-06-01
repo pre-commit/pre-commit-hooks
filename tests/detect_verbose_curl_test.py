@@ -58,28 +58,28 @@ def test_failing(tmpdir, capsys):
 
         out, _ = capsys.readouterr()
         assert out == (
-            "Talkative/Verbose cURL command found: f.sh:3:b\'curl -v -X GET"
-            " ${url} -H \"X-Custom-Header: pytest-test\"\\n\'\n"
-            "Talkative/Verbose cURL command found: f.sh:4:b\'curl -X GET "
-            "${url} -H \"X-Custom-Header: pytest-test\" --verbose\\n\'\n"
-            'Talkative/Verbose cURL command found: '
-            "f.sh:5:b\'curl --write-out output.txt"
-            " -X GET ${url} -H \"X-Custom-Header: pytest-test\"\\n\'\n"
+            "Talkative/Verbose cURL command found:'f.sh':3:curl -v -X GET"
+            " ${url} -H \"X-Custom-Header: pytest-test\"\n"
+            "Talkative/Verbose cURL command found:'f.sh':4:curl -X GET "
+            "${url} -H \"X-Custom-Header: pytest-test\" --verbose\n"
+            'Talkative/Verbose cURL command found:'
+            "'f.sh':5:curl --write-out output.txt"
+            " -X GET ${url} -H \"X-Custom-Header: pytest-test\"\n"
 
-            "Talkative/Verbose cURL command found: f.groovy:3:b\'curl "
+            "Talkative/Verbose cURL command found:'f.groovy':3:curl "
             "-d \"{key1:value1, key2:value2}\""
             " -w output.txt -H \"Content-Type: application/json\""
-            " -X POST ${url}\\n\'\n"
+            ' -X POST ${url}\n'
             'Talkative/Verbose cURL command found:'
-            " f.groovy:4:b\'curl "
+            "'f.groovy':4:curl "
             '--trace-ascii ascii.txt '
             "-d \"{key1:value1, key2:value2}\""
             " -H \"Content-Type: application/json\" "
-            "-X POST ${url}\\n\'\n"
-            "Talkative/Verbose cURL command found: f.groovy:5:b\'curl "
+            '-X POST ${url}\n'
+            "Talkative/Verbose cURL command found:'f.groovy':5:curl "
             "-d \"{key1:value1, key2:value2}\""
-            '-X POST ${url} --trace trace.txt '
-            " -H \"Content-Type: application/json\"\\n\'\n"
+            ' -X POST ${url} --trace trace.txt '
+            " -H \"Content-Type: application/json\"\n"
 
             'Number of talkative/verbose cURL commands: 6\n'
         )
