@@ -112,6 +112,12 @@
     entry: detect-private-key
     language: python
     types: [text]
+-   id: detect-verbose-curl
+    name: Detect Verbose CURL
+    description: Detects the presence of verbose options in cURL commands.
+    entry: detect-verbose-curl
+    language: python
+    types: [text]
 -   id: double-quote-string-fixer
     name: Fix double quoted strings
     description: This hook replaces double quoted strings with single quoted strings

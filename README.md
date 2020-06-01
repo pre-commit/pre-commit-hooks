@@ -93,6 +93,9 @@ The following arguments are available:
 #### `detect-private-key`
 Checks for the existence of private keys.
 
+#### `detect-verbose-curl`
+Checks for the existence of files with verbose cURL commands.
+
 #### `double-quote-string-fixer`
 This hook replaces double quoted strings with single quoted strings.
 
