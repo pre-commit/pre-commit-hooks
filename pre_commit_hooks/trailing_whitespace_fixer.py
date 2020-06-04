@@ -43,6 +43,14 @@ def _process_line(
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        '--no-fail',
+        action='store_false',
+        help=(
+            'Always return a successful return code.  '
+            'Defaults to false.'
+        ),
+    )
+    parser.add_argument(
         '--no-markdown-linebreak-ext',
         action='store_true',
         help=argparse.SUPPRESS,
@@ -95,6 +103,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         if _fix_file(filename, md, chars):
             print(f'Fixing {filename}')
             return_code = 1
+    if args.no_fail:
+        return_code = 0
     return return_code
 
 
