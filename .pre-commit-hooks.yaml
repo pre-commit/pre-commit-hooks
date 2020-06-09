@@ -161,6 +161,12 @@
     entry: name-tests-test
     language: python
     files: (^|/)tests/.+\.py$
+-   id: no-commit-keywords
+    name: "Don't commit when nocommit keyword is present"
+    entry: no-commit-keywords
+    language: script
+    always_run: true
+    types: [text]
 -   id: no-commit-to-branch
     name: "Don't commit to branch"
     entry: no-commit-to-branch

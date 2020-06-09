@@ -1,3 +1,9 @@
+3.2.0 - 2020-06-10
+==================
+
+### Features
+- `no-commit-keywords`: block commits when 'nocommit' or other keywords are present
+
 3.1.0 - 2020-05-20
 ==================
 

@@ -123,6 +123,9 @@ Replaces or checks mixed line ending.
 Assert that files in tests/ end in `_test.py`.
   - Use `args: ['--django']` to match `test*.py` instead.
 
+#### `no-commit-keywords`
+Protect branches from checkins when 'nocommit' keyword is present. Used to remind the author to prevent work-in-progress state from being committed.
+
 #### `no-commit-to-branch`
 Protect specific branches from direct checkins.
   - Use `args: [--branch, staging, --branch, master]` to set the branch.
