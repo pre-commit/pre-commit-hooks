@@ -25,15 +25,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument(
         '--tokens',
         help=(
-            'The set of tokens, separated by space, used to block commits  '
-            'if present. For example, "nocommit NOCOMMIT"'
+            'The set of tokens, separated by comma, used to block commits  '
+            'if present. For example, "nocommit,NOCOMMIT"'
         ),
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
     return_code = 0
-    tokens = args.tokens or ["nocommit"]
+    if args.tokens:
+        tokens = args.tokens.split(",")
+    else:
+        # default value
+        tokens = ["nocommit"]
 
     for filename in args.filenames:
         _, extension = os.path.splitext(filename.lower())
