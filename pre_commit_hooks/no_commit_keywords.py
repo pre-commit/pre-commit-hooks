@@ -33,6 +33,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
 
     return_code = 0
+    print(args.tokens)
+
     if args.tokens:
         tokens = args.tokens.split(",")
     else:
