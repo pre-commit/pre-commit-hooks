@@ -11,8 +11,10 @@ def check_for_no_commit_tokens(
 ) -> str:
     with open(filename, mode='r', encoding='utf-8') as file_processed:
         lines = file_processed.read()
+        print(f"check_for#tokens - {tokens}")
         for token in tokens:
             match = re.search(token, lines)
+            print(f"check_for#token,match - {token}, {match}")
             if match:
                 # no-commit token is present
                 # return offending token
@@ -33,7 +35,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parser.parse_args(argv)
 
     return_code = 0
-    print(args.tokens)
+    print(f"tokens - {args.tokens}")
 
     if args.tokens:
         tokens = args.tokens.split(",")
