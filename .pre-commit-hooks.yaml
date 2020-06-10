@@ -162,7 +162,7 @@
     language: python
     files: (^|/)tests/.+\.py$
 -   id: no-commit-keywords
-    name: "Don't commit when nocommit keyword is present"
+    name: "Don't commit when no-commit keyword is present"
     entry: no-commit-keywords
     language: python
     types: [text]
