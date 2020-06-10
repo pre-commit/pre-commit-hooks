@@ -11,6 +11,9 @@ def check_for_no_commit_tokens(
 ) -> str:
     with open(filename, mode='r', encoding='utf-8') as file_processed:
         lines = file_processed.read()
+        print(f"filename : {filename}")
+        if filename == "README.md":
+            print(lines)
         print(f"check_for#tokens - {tokens}")
         for token in tokens:
             match = re.search(token, lines)
