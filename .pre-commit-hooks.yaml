@@ -164,9 +164,9 @@
 -   id: no-commit-keywords
     name: "Don't commit when nocommit keyword is present"
     entry: no-commit-keywords
-    language: script
-    always_run: true
+    language: python
     types: [text]
+    stages: [commit, push, manual]
 -   id: no-commit-to-branch
     name: "Don't commit to branch"
     entry: no-commit-to-branch
