@@ -15,7 +15,8 @@ def check_for_no_commit_tokens(
             match = re.search(token, lines)
             if match:
                 # no-commit token is present
-                return match.string
+                # return offending token
+                return token
     return None
 
 
@@ -36,9 +37,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     for filename in args.filenames:
         _, extension = os.path.splitext(filename.lower())
-        match_string = check_for_no_commit_tokens(filename, tokens)
-        if match_string:
-            print(f'Found no-commit token in {filename}: {match_string}')
+        token = check_for_no_commit_tokens(filename, tokens)
+        if token:
+            print(f'Found no-commit token in {filename}: {token}')
             return_code = 1
     return return_code
 
