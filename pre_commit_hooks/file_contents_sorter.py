@@ -2,7 +2,7 @@
 A very simple pre-commit hook that, when passed one or more filenames
 as arguments, will sort the lines in those files.
 
-An example use case for this: you have a deploy-whitelist.txt file
+An example use case for this: you have a deploy-allowlist.txt file
 in a repo that contains a list of filenames that is used to specify
 files to be included in a docker container. This file has one filename
 per line. Various users are adding/removing lines from this file; using
