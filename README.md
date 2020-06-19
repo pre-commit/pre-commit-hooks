@@ -132,6 +132,13 @@ Protect specific branches from direct checkins.
   - `-p` / `--pattern` can be used to protect branches that match a supplied regex
     (e.g. `--pattern, release/.*`). May be specified multiple times.
 
+Note that `no-commit-to-branch` is configured by default to [`always_run`](https://pre-commit.com/#config-always_run).
+As a result, it will ignore any setting of [`files`](https://pre-commit.com/#config-files),
+[`exclude`](https://pre-commit.com/#config-exclude), [`types`](https://pre-commit.com/#config-types)
+or [`exclude_types`](https://pre-commit.com/#config-exclude_types).
+Set [`always_run: false`](https://pre-commit.com/#config-always_run) to allow this hook to be skipped according to these
+file filters. Caveat: In this configuration, empty commits (`git commit --allow-empty`) would always be allowed by this hook.
+
 #### `pretty-format-json`
 Checks that all your JSON files are pretty.  "Pretty"
 here means that keys are sorted and indented.  You can configure this with
@@ -150,7 +157,7 @@ Sorts simple YAML files which consist only of top-level
 keys, preserving comments and blocks.
 
 Note that `sort-simple-yaml` by default matches no `files` as it enforces a
-very specific format.  You must opt in to this by setting `files`, for example:
+very specific format.  You must opt in to this by setting [`files`](https://pre-commit.com/#config-files), for example:
 
 ```yaml
     -   id: sort-simple-yaml
