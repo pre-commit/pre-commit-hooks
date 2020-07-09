@@ -165,7 +165,7 @@ very specific format.  You must opt in to this by setting [`files`](https://pre-
 ```
 
 
-#### `trailing-whitespace`
+#### `trailing-whitespace-fixer`
 Trims trailing whitespace.
   - To preserve Markdown [hard linebreaks](https://github.github.com/gfm/#hard-line-break)
     use `args: [--markdown-linebreak-ext=md]` (or other extensions used
