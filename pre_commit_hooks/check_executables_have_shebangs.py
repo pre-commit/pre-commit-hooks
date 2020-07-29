@@ -12,6 +12,14 @@ from pre_commit_hooks.util import cmd_output
 EXECUTABLE_VALUES = frozenset(('1', '3', '5', '7'))
 
 
+def zsplit(s: str) -> List[str]:
+    s = s.strip('\0')
+    if s:
+        return s.split('\0')
+    else:
+        return []
+
+
 def check_executables(paths: List[str]) -> int:
     if sys.platform == 'win32':  # pragma: win32 cover
         return _check_git_filemode(paths)
@@ -26,9 +34,9 @@ def check_executables(paths: List[str]) -> int:
 
 
 def _check_git_filemode(paths: Sequence[str]) -> int:
-    outs = cmd_output('git', 'ls-files', '--stage', '--', *paths)
+    outs = cmd_output('git', 'ls-files', '-z', '--stage', '--', *paths)
     seen: Set[str] = set()
-    for out in outs.splitlines():
+    for out in zsplit(outs):
         metadata, path = out.split('\t')
         tagmode = metadata.split(' ', 1)[0]
 
