@@ -1,3 +1,16 @@
+3.2.0 - 2020-07-30
+==================
+
+### Features
+- `debug-statements`: add support for `pydevd_pycharm` debugger
+    - #502 PR by @jgeerds.
+
+### Fixes
+- `check-executables-have-shebangs`: fix git-quoted files on windows (spaces,
+  non-ascii, etc.)
+    - #509 PR by @pawamoy.
+    - #508 issue by @pawamoy.
+
 3.1.0 - 2020-05-20
 ==================
 
