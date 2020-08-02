@@ -100,6 +100,12 @@
     entry: debug-statement-hook
     language: python
     types: [python]
+-   id: destroyed-symlinks
+    name: Detect Destroyed Symlinks
+    description: Detects symlinks which are changed to regular files with a content of a path which that symlink was pointing to.
+    entry: destroyed-symlinks
+    language: python
+    types: [file]
 -   id: detect-aws-credentials
     name: Detect AWS Credentials
     description: Detects *your* aws credentials from the aws cli credentials file

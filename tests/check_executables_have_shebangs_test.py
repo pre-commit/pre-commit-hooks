@@ -102,16 +102,6 @@ def test_check_git_filemode_failing(tmpdir):
         assert check_executables_have_shebangs._check_git_filemode(files) == 1
 
 
-@pytest.mark.parametrize('out', ('\0f1\0f2\0', '\0f1\0f2', 'f1\0f2\0'))
-def test_check_zsplits_correctly(out):
-    assert check_executables_have_shebangs.zsplit(out) == ['f1', 'f2']
-
-
-@pytest.mark.parametrize('out', ('\0\0', '\0', ''))
-def test_check_zsplit_returns_empty(out):
-    assert check_executables_have_shebangs.zsplit(out) == []
-
-
 @pytest.mark.parametrize(
     ('content', 'mode', 'expected'),
     (

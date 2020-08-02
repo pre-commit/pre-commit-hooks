@@ -8,16 +8,9 @@ from typing import Sequence
 from typing import Set
 
 from pre_commit_hooks.util import cmd_output
+from pre_commit_hooks.util import zsplit
 
 EXECUTABLE_VALUES = frozenset(('1', '3', '5', '7'))
-
-
-def zsplit(s: str) -> List[str]:
-    s = s.strip('\0')
-    if s:
-        return s.split('\0')
-    else:
-        return []
 
 
 def check_executables(paths: List[str]) -> int:
