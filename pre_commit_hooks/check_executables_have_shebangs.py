@@ -1,5 +1,6 @@
 """Check that executable text files have a shebang."""
 import argparse
+import platform
 import shlex
 import sys
 from typing import List
@@ -21,7 +22,7 @@ def zsplit(s: str) -> List[str]:
 
 
 def check_executables(paths: List[str]) -> int:
-    if sys.platform == 'win32':  # pragma: win32 cover
+    if sys.platform == 'win32' or "microsoft" in platform.uname()[3].lower():  # pragma: win32 cover
         return _check_git_filemode(paths)
     else:  # pragma: win32 no cover
         retv = 0
