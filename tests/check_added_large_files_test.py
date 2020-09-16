@@ -40,6 +40,17 @@ def test_add_something_giant(temp_git_dir):
         assert find_large_added_files(['f.py'], 10) == 0
 
 
+def test_enforce_all(temp_git_dir):
+    with temp_git_dir.as_cwd():
+        temp_git_dir.join('f.py').write('a' * 10000)
+
+        # Should fail, when not staged with enforce_all
+        assert find_large_added_files(['f.py'], 0, enforce_all=True) == 1
+
+        # Should pass, when not staged without enforce_all
+        assert find_large_added_files(['f.py'], 0, enforce_all=False) == 0
+
+
 def test_added_file_not_in_pre_commits_list(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.join('f.py').write("print('hello world')")
@@ -97,3 +108,15 @@ def test_moves_with_gitlfs(temp_git_dir, monkeypatch):  # pragma: no cover
         # Now move it and make sure the hook still succeeds
         cmd_output('git', 'mv', 'a.bin', 'b.bin')
         assert main(('--maxkb', '9', 'b.bin')) == 0
+
+
+@xfailif_no_gitlfs
+def test_enforce_allows_gitlfs(temp_git_dir, monkeypatch):  # pragma: no cover
+    with temp_git_dir.as_cwd():
+        monkeypatch.setenv('HOME', str(temp_git_dir))
+        cmd_output('git', 'lfs', 'install')
+        temp_git_dir.join('f.py').write('a' * 10000)
+        cmd_output('git', 'lfs', 'track', 'f.py')
+        cmd_output('git', 'add', '--', '.')
+        # With --enforce-all large files on git lfs should succeed
+        assert main(('--enforce-all', '--maxkb', '9', 'f.py')) == 0
