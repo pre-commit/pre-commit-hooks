@@ -42,9 +42,6 @@ Require literal syntax when initializing empty or zero Python builtin types.
   - Ignore this requirement for specific builtin types with `--ignore=type1,type2,…`.
   - Forbid `dict` keyword syntax with `--no-allow-dict-kwargs`.
 
-#### `check-byte-order-marker`
-Forbid files which have a UTF-8 byte-order marker
-
 #### `check-case-conflict`
 Check for files with names that would conflict on a case-insensitive filesystem like MacOS HFS+ or Windows FAT.
 
@@ -101,6 +98,9 @@ This hook replaces double quoted strings with single quoted strings.
 
 #### `end-of-file-fixer`
 Makes sure files end in a newline and only a newline.
+
+#### `fix-byte-order-marker`
+removes UTF-8 byte order marker
 
 #### `fix-encoding-pragma`
 Add `# -*- coding: utf-8 -*-` to the top of python files.
@@ -183,6 +183,7 @@ Trims trailing whitespace.
   [mirrors-autopep8](https://github.com/pre-commit/mirrors-autopep8)
 - `pyflakes`: instead use `flake8`
 - `flake8`: instead use [upstream flake8](https://gitlab.com/pycqa/flake8)
+- `check-byte-order-marker`: instead use fix-byte-order-marker
 
 ### As a standalone package
 

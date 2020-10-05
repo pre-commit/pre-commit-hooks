@@ -17,8 +17,8 @@
     language: python
     types: [python]
 -   id: check-byte-order-marker
-    name: Check for byte-order marker
-    description: Forbid files which have a UTF-8 byte-order marker
+    name: 'check BOM - deprecated: use fix-byte-order-marker'
+    description: forbid files which have a UTF-8 byte-order marker
     entry: check-byte-order-marker
     language: python
     types: [text]
@@ -131,6 +131,12 @@
     entry: file-contents-sorter
     language: python
     files: '^$'
+-   id: fix-byte-order-marker
+    name: fix UTF-8 byte order marker
+    description: removes UTF-8 byte order marker
+    entry: fix-byte-order-marker
+    language: python
+    types: [text]
 -   id: fix-encoding-pragma
     name: Fix python encoding pragma
     language: python
