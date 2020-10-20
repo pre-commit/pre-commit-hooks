@@ -1,3 +1,20 @@
+3.3.0 - 2020-10-20
+==================
+
+### Features
+- `file-contents-sorter`: add `--ignore-case` option for case-insensitive
+  sorting
+    - #514 PR by @Julian.
+- `check-added-large-files`: add `--enforce-all` option to check non-added
+  files as well
+    - #519 PR by @mshawcroft.
+    - #518 issue by @mshawcroft.
+- `fix-byte-order-marker`: new hook which fixes UTF-8 byte-order marker.
+    - #522 PR by @jgowdy.
+
+### Deprecations
+- `check-byte-order-marker` is now deprecated for `fix-byte-order-marker`
+
 3.2.0 - 2020-07-30
 ==================
 
