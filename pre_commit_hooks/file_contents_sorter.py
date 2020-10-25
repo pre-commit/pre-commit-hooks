@@ -13,6 +13,7 @@ import argparse
 from typing import Any
 from typing import Callable
 from typing import IO
+from typing import Iterable
 from typing import Optional
 from typing import Sequence
 
@@ -23,12 +24,16 @@ FAIL = 1
 def sort_file_contents(
     f: IO[bytes],
     key: Optional[Callable[[bytes], Any]],
+    *,
+    unique: bool = False,
 ) -> int:
     before = list(f)
-    after = sorted(
-        (line.strip(b'\n\r') for line in before if line.strip()),
-        key=key,
+    lines: Iterable[bytes] = (
+        line.rstrip(b'\n\r') for line in before if line.strip()
     )
+    if unique:
+        lines = set(lines)
+    after = sorted(lines, key=key)
 
     before_string = b''.join(before)
     after_string = b'\n'.join(after) + b'\n'
@@ -52,13 +57,20 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default=None,
         help='fold lower case to upper case characters',
     )
+    parser.add_argument(
+        '--unique',
+        action='store_true',
+        help='ensure each line is unique',
+    )
     args = parser.parse_args(argv)
 
     retv = PASS
 
     for arg in args.filenames:
         with open(arg, 'rb+') as file_obj:
-            ret_for_file = sort_file_contents(file_obj, key=args.ignore_case)
+            ret_for_file = sort_file_contents(
+                file_obj, key=args.ignore_case, unique=args.unique,
+            )
 
             if ret_for_file:
                 print(f'Sorting {arg}')

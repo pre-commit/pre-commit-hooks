@@ -45,6 +45,36 @@ from pre_commit_hooks.file_contents_sorter import PASS
             FAIL,
             b'fee\nFie\nFoe\nfum\n',
         ),
+        (
+            b'Fie\nFoe\nfee\nfee\nfum\n',
+            ['--ignore-case'],
+            FAIL,
+            b'fee\nfee\nFie\nFoe\nfum\n',
+        ),
+        (
+            b'Fie\nFoe\nfee\nfum\n',
+            ['--unique'],
+            PASS,
+            b'Fie\nFoe\nfee\nfum\n',
+        ),
+        (
+            b'Fie\nFie\nFoe\nfee\nfum\n',
+            ['--unique'],
+            FAIL,
+            b'Fie\nFoe\nfee\nfum\n',
+        ),
+        (
+            b'fee\nFie\nFoe\nfum\n',
+            ['--unique', '--ignore-case'],
+            PASS,
+            b'fee\nFie\nFoe\nfum\n',
+        ),
+        (
+            b'fee\nfee\nFie\nFoe\nfum\n',
+            ['--unique', '--ignore-case'],
+            FAIL,
+            b'fee\nFie\nFoe\nfum\n',
+        ),
     ),
 )
 def test_integration(input_s, argv, expected_retval, output, tmpdir):
