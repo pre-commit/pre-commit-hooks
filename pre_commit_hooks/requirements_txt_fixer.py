@@ -36,7 +36,7 @@ class Requirement:
 
         return name[:m.start()]
 
-    def __lt__(self, requirement: 'Requirement') -> int:
+    def __lt__(self, requirement: 'Requirement') -> bool:
         # \n means top of file comment, so always return True,
         # otherwise just do a string comparison with value.
         assert self.value is not None, self.value
