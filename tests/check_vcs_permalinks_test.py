@@ -22,13 +22,15 @@ def test_passing(tmpdir):
 def test_failing(tmpdir, capsys):
     with tmpdir.as_cwd():
         tmpdir.join('f.txt').write_binary(
-            b'https://github.com/asottile/test/blob/master/foo#L1\n',
+            b'https://github.com/asottile/test/blob/master/foo#L1\n'
+            b'https://example.com/asottile/test/blob/master/foo#L1\n',
         )
 
-        assert main(('f.txt',))
+        assert main(('f.txt', '--additional-github-domain', 'example.com'))
         out, _ = capsys.readouterr()
         assert out == (
             'f.txt:1:https://github.com/asottile/test/blob/master/foo#L1\n'
+            'f.txt:2:https://example.com/asottile/test/blob/master/foo#L1\n'
             '\n'
             'Non-permanent github link detected.\n'
             'On any page on github press [y] to load a permalink.\n'

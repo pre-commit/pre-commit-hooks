@@ -66,6 +66,10 @@ Attempts to load all TOML files to verify syntax.
 
 #### `check-vcs-permalinks`
 Ensures that links to vcs websites are permalinks.
+  - `--additional-github-domain DOMAIN` - Add check for specified domain.
+    Can be repeated multiple times.  for example, if your company uses
+    GitHub Enterprise you may use something like
+    `--additional-github-domain github.example.com`
 
 #### `check-xml`
 Attempts to load all xml files to verify syntax.
