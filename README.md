@@ -87,6 +87,12 @@ Attempts to load all yaml files to verify syntax.
 #### `debug-statements`
 Check for debugger imports and py37+ `breakpoint()` calls in python source.
 
+#### `destroyed-symlinks`
+Detects symlinks which are changed to regular files with a content of a path
+which that symlink was pointing to.
+This usually happens on Windows when a user clones a repository that has
+symlinks but they do not have the permission to create symlinks.
+
 #### `detect-aws-credentials`
 Checks for the existence of AWS secrets that you have set up with the AWS CLI.
 The following arguments are available:

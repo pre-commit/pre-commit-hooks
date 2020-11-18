@@ -1,5 +1,6 @@
 import subprocess
 from typing import Any
+from typing import List
 from typing import Optional
 from typing import Set
 
@@ -22,3 +23,11 @@ def cmd_output(*cmd: str, retcode: Optional[int] = 0, **kwargs: Any) -> str:
     if retcode is not None and proc.returncode != retcode:
         raise CalledProcessError(cmd, retcode, proc.returncode, stdout, stderr)
     return stdout
+
+
+def zsplit(s: str) -> List[str]:
+    s = s.strip('\0')
+    if s:
+        return s.split('\0')
+    else:
+        return []
