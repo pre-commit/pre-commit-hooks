@@ -1,3 +1,15 @@
+3.4.0 - 2020-12-15
+==================
+
+### Features
+- `file-contents-sorter`: Add `--unique` argument
+    - #524 PR by @danielhoherd.
+- `check-vcs-permalinks`: Add `--additional-github-domain` option
+    - #530 PR by @youngminz.
+- New hook: `destroyed-symlinks` to detect unintentional symlink-breakages on
+  windows.
+    - #511 PR by @m-khvoinitsky.
+
 3.3.0 - 2020-10-20
 ==================
 
