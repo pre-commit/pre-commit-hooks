@@ -52,6 +52,13 @@
     entry: check-json
     language: python
     types: [json]
+-   id: check-shebang-scripts-are-executable
+    name: Check that scripts with shebangs are executable
+    description: Ensures that (non-binary) files with a shebang are executable.
+    entry: check-shebang-scripts-are-executable
+    language: python
+    types: [text]
+    stages: [commit, push, manual]
 -   id: pretty-format-json
     name: Pretty format JSON
     description: This hook sets a standard for formatting JSON files.
