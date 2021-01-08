@@ -2,7 +2,9 @@
 import argparse
 import shlex
 import sys
+from typing import Generator
 from typing import List
+from typing import NamedTuple
 from typing import Optional
 from typing import Sequence
 from typing import Set
@@ -19,29 +21,38 @@ def check_executables(paths: List[str]) -> int:
     else:  # pragma: win32 no cover
         retv = 0
         for path in paths:
-            if not _check_has_shebang(path):
+            if not has_shebang(path):
                 _message(path)
                 retv = 1
 
         return retv
 
 
-def _check_git_filemode(paths: Sequence[str]) -> int:
-    outs = cmd_output('git', 'ls-files', '-z', '--stage', '--', *paths)
-    seen: Set[str] = set()
-    for out in zsplit(outs):
-        metadata, path = out.split('\t')
-        tagmode = metadata.split(' ', 1)[0]
+class GitLsFile(NamedTuple):
+    mode: str
+    filename: str
 
-        is_executable = any(b in EXECUTABLE_VALUES for b in tagmode[-3:])
-        if is_executable and not _check_has_shebang(path):
-            _message(path)
-            seen.add(path)
+
+def git_ls_files(paths: Sequence[str]) -> Generator[GitLsFile, None, None]:
+    outs = cmd_output('git', 'ls-files', '-z', '--stage', '--', *paths)
+    for out in zsplit(outs):
+        metadata, filename = out.split('\t')
+        mode, _, _ = metadata.split()
+        yield GitLsFile(mode, filename)
+
+
+def _check_git_filemode(paths: Sequence[str]) -> int:
+    seen: Set[str] = set()
+    for ls_file in git_ls_files(paths):
+        is_executable = any(b in EXECUTABLE_VALUES for b in ls_file.mode[-3:])
+        if is_executable and not has_shebang(ls_file.filename):
+            _message(ls_file.filename)
+            seen.add(ls_file.filename)
 
     return int(bool(seen))
 
 
-def _check_has_shebang(path: str) -> int:
+def has_shebang(path: str) -> int:
     with open(path, 'rb') as f:
         first_bytes = f.read(2)
 
