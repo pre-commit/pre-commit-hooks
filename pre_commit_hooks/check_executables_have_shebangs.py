@@ -34,8 +34,7 @@ def _check_git_filemode(paths: Sequence[str]) -> int:
         tagmode = metadata.split(' ', 1)[0]
 
         is_executable = any(b in EXECUTABLE_VALUES for b in tagmode[-3:])
-        has_shebang = _check_has_shebang(path)
-        if is_executable and not has_shebang:
+        if is_executable and not _check_has_shebang(path):
             _message(path)
             seen.add(path)
 
