@@ -30,6 +30,16 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
         ),
         (b'#comment\n\nfoo\nbar\n', FAIL, b'#comment\n\nbar\nfoo\n'),
         (b'#comment\n\nbar\nfoo\n', PASS, b'#comment\n\nbar\nfoo\n'),
+        (
+            b'foo\n\t#comment with indent\nbar\n',
+            FAIL,
+            b'\t#comment with indent\nbar\nfoo\n',
+        ),
+        (
+            b'bar\n\t#comment with indent\nfoo\n',
+            PASS,
+            b'bar\n\t#comment with indent\nfoo\n',
+        ),
         (b'\nfoo\nbar\n', FAIL, b'bar\n\nfoo\n'),
         (b'\nbar\nfoo\n', PASS, b'\nbar\nfoo\n'),
         (
