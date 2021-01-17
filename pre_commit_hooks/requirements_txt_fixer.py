@@ -95,7 +95,7 @@ def fix_requirements(f: IO[bytes]) -> int:
                 requirement.value = b'\n'
             else:
                 requirement.comments.append(line)
-        elif line.startswith(b'#') or line.strip() == b'':
+        elif line.lstrip().startswith(b'#') or line.strip() == b'':
             requirement.comments.append(line)
         else:
             requirement.append_value(line)
