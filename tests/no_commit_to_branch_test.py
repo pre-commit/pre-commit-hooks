@@ -67,3 +67,10 @@ def test_not_on_a_branch(temp_git_dir):
         cmd_output('git', 'checkout', head)
         # we're not on a branch!
         assert main(()) == 0
+
+
+@pytest.mark.parametrize('branch_name', ('master', 'main'))
+def test_default_branch_names(temp_git_dir, branch_name):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'checkout', '-b', branch_name)
+        assert main(()) == 1

@@ -140,7 +140,7 @@ Assert that files in tests/ end in `_test.py`.
 #### `no-commit-to-branch`
 Protect specific branches from direct checkins.
   - Use `args: [--branch, staging, --branch, master]` to set the branch.
-    `master` is the default if no branch argument is set.
+    Both `master` and `main` are protected by default if no branch argument is set.
   - `-b` / `--branch` may be specified multiple times to protect multiple
     branches.
   - `-p` / `--pattern` can be used to protect branches that match a supplied regex
