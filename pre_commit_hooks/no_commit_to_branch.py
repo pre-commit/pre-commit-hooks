@@ -38,7 +38,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    protected = frozenset(args.branch or ('master',))
+    protected = frozenset(args.branch or ('master', 'main'))
     patterns = frozenset(args.pattern or ())
     return int(is_on_branch(protected, patterns))
 
