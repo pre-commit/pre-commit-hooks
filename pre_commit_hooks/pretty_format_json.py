@@ -1,5 +1,6 @@
 import argparse
 import json
+import sys
 from difflib import unified_diff
 from typing import List
 from typing import Mapping
@@ -111,23 +112,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
                 sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
             )
-
-            if contents != pretty_contents:
-                if args.autofix:
-                    _autofix(json_file, pretty_contents)
-                else:
-                    print(
-                        get_diff(contents, pretty_contents, json_file),
-                        end='',
-                    )
-
-                status = 1
         except ValueError:
             print(
                 f'Input File {json_file} is not a valid JSON, consider using '
                 f'check-json',
             )
             return 1
+
+        if contents != pretty_contents:
+            if args.autofix:
+                _autofix(json_file, pretty_contents)
+            else:
+                diff_output = get_diff(contents, pretty_contents, json_file)
+                sys.stdout.buffer.write(diff_output.encode())
+
+            status = 1
 
     return status
 
