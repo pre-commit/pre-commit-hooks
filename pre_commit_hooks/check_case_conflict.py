@@ -1,5 +1,7 @@
 import argparse
+import os.path
 from typing import Iterable
+from typing import Iterator
 from typing import Optional
 from typing import Sequence
 from typing import Set
@@ -12,9 +14,22 @@ def lower_set(iterable: Iterable[str]) -> Set[str]:
     return {x.lower() for x in iterable}
 
 
+def parents(file: str) -> Iterator[str]:
+    file = os.path.dirname(file)
+    while file:
+        yield file
+        file = os.path.dirname(file)
+
+
+def directories_for(files: Set[str]) -> Set[str]:
+    return {parent for file in files for parent in parents(file)}
+
+
 def find_conflicting_filenames(filenames: Sequence[str]) -> int:
     repo_files = set(cmd_output('git', 'ls-files').splitlines())
+    repo_files |= directories_for(repo_files)
     relevant_files = set(filenames) | added_files()
+    relevant_files |= directories_for(relevant_files)
     repo_files -= relevant_files
     retv = 0
 
