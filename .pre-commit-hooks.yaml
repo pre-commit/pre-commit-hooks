@@ -205,3 +205,9 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: check-gitleaks
+    name: "gitleaks"
+    entry: check-gitleaks
+    language: python
+    pass_filenames: false
+    always_run: true
