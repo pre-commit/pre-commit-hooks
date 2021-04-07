@@ -8,7 +8,10 @@ from typing import Sequence
 
 
 def _get_pattern(domain: str) -> Pattern[bytes]:
-    regex = rf'https://{domain}/[^/ ]+/[^/ ]+/blob/master/[^# ]+#L\d+'
+    regex = (
+        rf'https://{domain}/[^/ ]+/[^/ ]+/blob/'
+        r'(?![a-fA-F0-9]{4,64}/)([^/. ]+)/[^# ]+#L\d+'
+    )
     return re.compile(regex.encode())
 
 
