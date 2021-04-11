@@ -7,8 +7,9 @@ from typing import Sequence
 CONFLICT_PATTERNS = [
     b'<<<<<<< ',
     b'======= ',
-    b'||||||| ',
     b'=======\n',
+    b'||||||| ',
+    b'|||||||\n',
     b'>>>>>>> ',
 ]
 
