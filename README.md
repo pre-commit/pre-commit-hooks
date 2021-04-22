@@ -51,6 +51,9 @@ Checks for a common error of placing code before the docstring.
 #### `check-executables-have-shebangs`
 Checks that non-binary executables have a proper shebang.
 
+#### `check-illegal-windows-names`
+Check for files that cannot be created on Windows.
+
 #### `check-json`
 Attempts to load all json files to verify syntax.
 
