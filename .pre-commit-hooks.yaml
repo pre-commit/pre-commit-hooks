@@ -46,6 +46,11 @@
     language: python
     types: [text, executable]
     stages: [commit, push, manual]
+-   id: check-illegal-windows-names
+    name: Check for illegal Windows names
+    description: Check for files that cannot be created on Windows.
+    entry: check-illegal-windows-names
+    language: python
 -   id: check-json
     name: Check JSON
     description: This hook checks json files for parseable syntax.
