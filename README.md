@@ -196,7 +196,7 @@ Trims trailing whitespace.
 - `autopep8-wrapper`: instead use
   [mirrors-autopep8](https://github.com/pre-commit/mirrors-autopep8)
 - `pyflakes`: instead use `flake8`
-- `flake8`: instead use [upstream flake8](https://gitlab.com/pycqa/flake8)
+- `flake8`: instead use [upstream flake8](https://github.com/PyCQA/flake8)
 - `check-byte-order-marker`: instead use fix-byte-order-marker
 
 ### As a standalone package

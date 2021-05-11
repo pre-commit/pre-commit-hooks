@@ -158,8 +158,8 @@
     types: [python]
 -   id: flake8
     name: Flake8 (removed)
-    description: (removed) use gitlab.com/pycqa/flake8 instead.
-    entry: pre-commit-hooks-removed flake8 flake8 https://gitlab.com/pycqa/flake8
+    description: (removed) use github.com/PyCQA/flake8 instead.
+    entry: pre-commit-hooks-removed flake8 flake8 https://github.com/PyCQA/flake8
     language: python
     always_run: true
     pass_filenames: false
@@ -188,8 +188,8 @@
     always_run: true
 -   id: pyflakes
     name: Pyflakes (removed)
-    description: (removed) use gitlab.com/pycqa/flake8 instead.
-    entry: pre-commit-hooks-removed pyflakes flake8 https://gitlab.com/pycqa/flake8
+    description: (removed) use github.com/PyCQA/flake8 instead.
+    entry: pre-commit-hooks-removed pyflakes flake8 https://github.com/PyCQA/flake8
     language: python
     always_run: true
     pass_filenames: false
