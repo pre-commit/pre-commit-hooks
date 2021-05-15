@@ -1,3 +1,39 @@
+4.0.0 - 2021-05-14
+==================
+
+### Features
+- `check-json`: report duplicate keys.
+    - #558 PR by @AdityaKhursale.
+    - #554 issue by @adamchainz.
+- `no-commit-to-branch`: add `main` to default blocked branches.
+    - #565 PR by @ndevenish.
+- `check-case-conflict`: check conflicts in directory names as well.
+    - #575 PR by @slsyy.
+    - #70 issue by @andyjack.
+- `check-vcs-permalinks`: forbid other branch names.
+    - #582 PR by @jack1142.
+    - #581 issue by @jack1142.
+- `check-shebang-scripts-are-executable`: new hook which ensures shebang'd
+  scripts are executable.
+    - #545 PR by @scop.
+
+### Fixes
+- `check-executables-have-shebangs`: Short circuit shebang lookup on windows.
+    - #544 PR by @scop.
+- `requirements-txt-fixer`: Fix comments which have indentation
+    - #549 PR by @greshilov.
+    - #548 issue by @greshilov.
+- `pretty-format-json`: write to stdout using UTF-8 encoding.
+    - #571 PR by @jack1142.
+    - #570 issue by @jack1142.
+- Use more inclusive language.
+    - #599 PR by @asottile.
+
+### Breaking changes
+- Remove deprecated hooks: `flake8`, `pyflakes`, `autopep8-wrapper`.
+    - #597 PR by @asottile.
+
+
 3.4.0 - 2020-12-15
 ==================
 
