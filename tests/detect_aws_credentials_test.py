@@ -13,15 +13,15 @@ from testing.util import get_resource_path
     ('env_vars', 'values'),
     (
         ({}, set()),
-        ({'AWS_DUMMY_KEY': '/foo'}, set()),
+        ({'AWS_PLACEHOLDER_KEY': '/foo'}, set()),
         ({'AWS_CONFIG_FILE': '/foo'}, {'/foo'}),
         ({'AWS_CREDENTIAL_FILE': '/foo'}, {'/foo'}),
         ({'AWS_SHARED_CREDENTIALS_FILE': '/foo'}, {'/foo'}),
         ({'BOTO_CONFIG': '/foo'}, {'/foo'}),
-        ({'AWS_DUMMY_KEY': '/foo', 'AWS_CONFIG_FILE': '/bar'}, {'/bar'}),
+        ({'AWS_PLACEHOLDER_KEY': '/foo', 'AWS_CONFIG_FILE': '/bar'}, {'/bar'}),
         (
             {
-                'AWS_DUMMY_KEY': '/foo', 'AWS_CONFIG_FILE': '/bar',
+                'AWS_PLACEHOLDER_KEY': '/foo', 'AWS_CONFIG_FILE': '/bar',
                 'AWS_CREDENTIAL_FILE': '/baz',
             },
             {'/bar', '/baz'},
@@ -44,13 +44,16 @@ def test_get_aws_credentials_file_from_env(env_vars, values):
     ('env_vars', 'values'),
     (
         ({}, set()),
-        ({'AWS_DUMMY_KEY': 'foo'}, set()),
+        ({'AWS_PLACEHOLDER_KEY': 'foo'}, set()),
         ({'AWS_SECRET_ACCESS_KEY': 'foo'}, {'foo'}),
         ({'AWS_SECURITY_TOKEN': 'foo'}, {'foo'}),
         ({'AWS_SESSION_TOKEN': 'foo'}, {'foo'}),
         ({'AWS_SESSION_TOKEN': ''}, set()),
         ({'AWS_SESSION_TOKEN': 'foo', 'AWS_SECURITY_TOKEN': ''}, {'foo'}),
-        ({'AWS_DUMMY_KEY': 'foo', 'AWS_SECRET_ACCESS_KEY': 'bar'}, {'bar'}),
+        (
+            {'AWS_PLACEHOLDER_KEY': 'foo', 'AWS_SECRET_ACCESS_KEY': 'bar'},
+            {'bar'},
+        ),
         (
             {'AWS_SECRET_ACCESS_KEY': 'foo', 'AWS_SECURITY_TOKEN': 'bar'},
             {'foo', 'bar'},
