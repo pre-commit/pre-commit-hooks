@@ -1,3 +1,11 @@
+4.0.1 - 2021-05-16
+==================
+
+### Fixes
+- `check-shebang-scripts-are-executable` fix entry point.
+    - #602 issue by @Person-93.
+    - #603 PR by @scop.
+
 4.0.0 - 2021-05-14
 ==================
 
