@@ -23,6 +23,9 @@ title = "TOML Example"
 [owner]
 name = "John"
 dob = 1979-05-27T07:32:00-08:00 # First class dates
+
+["toml-1.0.0-compat"]
+heterogeneous-array = [1, "2"]
 """,
     )
     ret = main((str(filename),))

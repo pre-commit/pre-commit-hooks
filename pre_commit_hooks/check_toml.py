@@ -2,7 +2,7 @@ import argparse
 from typing import Optional
 from typing import Sequence
 
-import toml
+import tomli
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
@@ -12,11 +12,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     retval = 0
     for filename in args.filenames:
-        try:
-            toml.load(filename)
-        except toml.TomlDecodeError as exc:
-            print(f'{filename}: {exc}')
-            retval = 1
+        with open(filename, encoding='utf-8') as f:
+            try:
+                tomli.load(f)
+            except tomli.TOMLDecodeError as exc:
+                print(f'{filename}: {exc}')
+                retval = 1
     return retval
 
 
