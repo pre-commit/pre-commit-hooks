@@ -27,7 +27,7 @@ repos:
     -   id: reorder-python-imports
         args: [--py3-plus]
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v2.19.1
+    rev: v2.19.4
     hooks:
     -   id: pyupgrade
         args: [--py36-plus]
@@ -41,6 +41,6 @@ repos:
     hooks:
     -   id: setup-cfg-fmt
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.812
+    rev: v0.902
     hooks:
     -   id: mypy
