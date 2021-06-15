@@ -10,6 +10,7 @@ from typing import Sequence
 DEBUG_STATEMENTS = {
     'ipdb',
     'pdb',
+    'pdbr',
     'pudb',
     'pydevd_pycharm',
     'q',
