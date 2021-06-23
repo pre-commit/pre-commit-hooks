@@ -154,6 +154,7 @@
     language: python
     entry: forbid-new-submodules
     description: Prevent addition of new git submodules
+    types: [directory]
 -   id: mixed-line-ending
     name: Mixed line ending
     description: Replaces or checks mixed line ending

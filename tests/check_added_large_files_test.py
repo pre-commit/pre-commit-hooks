@@ -5,6 +5,7 @@ import pytest
 from pre_commit_hooks.check_added_large_files import find_large_added_files
 from pre_commit_hooks.check_added_large_files import main
 from pre_commit_hooks.util import cmd_output
+from testing.util import git_commit
 
 
 def test_nothing_added(temp_git_dir):
@@ -104,7 +105,7 @@ def test_moves_with_gitlfs(temp_git_dir, monkeypatch):  # pragma: no cover
         # First add the file we're going to move
         temp_git_dir.join('a.bin').write('a' * 10000)
         cmd_output('git', 'add', '--', '.')
-        cmd_output('git', 'commit', '--no-gpg-sign', '-am', 'foo')
+        git_commit('-am', 'foo')
         # Now move it and make sure the hook still succeeds
         cmd_output('git', 'mv', 'a.bin', 'b.bin')
         assert main(('--maxkb', '9', 'b.bin')) == 0

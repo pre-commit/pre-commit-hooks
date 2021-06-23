@@ -6,6 +6,7 @@ from pre_commit_hooks.check_case_conflict import find_conflicting_filenames
 from pre_commit_hooks.check_case_conflict import main
 from pre_commit_hooks.check_case_conflict import parents
 from pre_commit_hooks.util import cmd_output
+from testing.util import git_commit
 
 skip_win32 = pytest.mark.skipif(
     sys.platform == 'win32',
@@ -85,7 +86,7 @@ def test_file_conflicts_with_committed_file(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.join('f.py').write("print('hello world')")
         cmd_output('git', 'add', 'f.py')
-        cmd_output('git', 'commit', '--no-gpg-sign', '-n', '-m', 'Add f.py')
+        git_commit('-m', 'Add f.py')
 
         temp_git_dir.join('F.py').write("print('hello world')")
         cmd_output('git', 'add', 'F.py')
@@ -98,7 +99,7 @@ def test_file_conflicts_with_committed_dir(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.mkdir('dir').join('x').write('foo')
         cmd_output('git', 'add', '-A')
-        cmd_output('git', 'commit', '--no-gpg-sign', '-n', '-m', 'Add f.py')
+        git_commit('-m', 'Add f.py')
 
         temp_git_dir.join('DIR').write('foo')
         cmd_output('git', 'add', '-A')

@@ -3,6 +3,7 @@ import pytest
 from pre_commit_hooks.no_commit_to_branch import is_on_branch
 from pre_commit_hooks.no_commit_to_branch import main
 from pre_commit_hooks.util import cmd_output
+from testing.util import git_commit
 
 
 def test_other_branch(temp_git_dir):
@@ -62,7 +63,7 @@ def test_main_default_call(temp_git_dir):
 
 def test_not_on_a_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
-        cmd_output('git', 'commit', '--no-gpg-sign', '--allow-empty', '-m1')
+        git_commit('--allow-empty', '-m1')
         head = cmd_output('git', 'rev-parse', 'HEAD').strip()
         cmd_output('git', 'checkout', head)
         # we're not on a branch!

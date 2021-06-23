@@ -5,6 +5,7 @@ import pytest
 
 from pre_commit_hooks.destroyed_symlinks import find_destroyed_symlinks
 from pre_commit_hooks.destroyed_symlinks import main
+from testing.util import git_commit
 
 TEST_SYMLINK = 'test_symlink'
 TEST_SYMLINK_TARGET = '/doesnt/really/matters'
@@ -23,9 +24,7 @@ def repo_with_destroyed_symlink(tmpdir):
         with open(TEST_FILE, 'w') as f:
             print('some random content', file=f)
         subprocess.check_call(('git', 'add', '.'))
-        subprocess.check_call(
-            ('git', 'commit', '--no-gpg-sign', '-m', 'initial'),
-        )
+        git_commit('-m', 'initial')
         assert b'120000 ' in subprocess.check_output(
             ('git', 'cat-file', '-p', 'HEAD^{tree}'),
         )
