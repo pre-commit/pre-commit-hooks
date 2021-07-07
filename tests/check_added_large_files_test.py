@@ -1,4 +1,4 @@
-import distutils.spawn
+import shutil
 
 import pytest
 
@@ -75,7 +75,7 @@ def test_integration(temp_git_dir):
 
 
 def has_gitlfs():
-    return distutils.spawn.find_executable('git-lfs') is not None
+    return shutil.which('git-lfs') is not None
 
 
 xfailif_no_gitlfs = pytest.mark.xfail(
