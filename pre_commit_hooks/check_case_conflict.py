@@ -1,5 +1,4 @@
 import argparse
-import os.path
 from typing import Iterable
 from typing import Iterator
 from typing import Optional
