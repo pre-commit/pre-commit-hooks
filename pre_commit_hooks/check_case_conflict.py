@@ -1,5 +1,4 @@
 import argparse
-import os.path
 from typing import Iterable
 from typing import Iterator
 from typing import Optional
@@ -15,10 +14,11 @@ def lower_set(iterable: Iterable[str]) -> Set[str]:
 
 
 def parents(file: str) -> Iterator[str]:
-    file = os.path.dirname(file)
-    while file:
-        yield file
-        file = os.path.dirname(file)
+    path_parts = file.split('/')
+    path_parts.pop()
+    while path_parts:
+        yield '/'.join(path_parts)
+        path_parts.pop()
 
 
 def directories_for(files: Set[str]) -> Set[str]:
