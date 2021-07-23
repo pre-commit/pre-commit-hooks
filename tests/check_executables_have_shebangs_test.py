@@ -1,19 +1,13 @@
 import os
-import sys
 
 import pytest
 
 from pre_commit_hooks import check_executables_have_shebangs
+from pre_commit_hooks.check_executables_have_shebangs import has_shebang
 from pre_commit_hooks.check_executables_have_shebangs import main
 from pre_commit_hooks.util import cmd_output
 
-skip_win32 = pytest.mark.skipif(
-    sys.platform == 'win32',
-    reason="non-git checks aren't relevant on windows",
-)
 
-
-@skip_win32  # pragma: win32 no cover
 @pytest.mark.parametrize(
     'content', (
         b'#!/bin/bash\nhello world\n',
@@ -25,10 +19,9 @@ skip_win32 = pytest.mark.skipif(
 def test_has_shebang(content, tmpdir):
     path = tmpdir.join('path')
     path.write(content, 'wb')
-    assert main((str(path),)) == 0
+    assert has_shebang(str(path))
 
 
-@skip_win32  # pragma: win32 no cover
 @pytest.mark.parametrize(
     'content', (
         b'',
@@ -38,12 +31,10 @@ def test_has_shebang(content, tmpdir):
         '☃'.encode(),
     ),
 )
-def test_bad_shebang(content, tmpdir, capsys):
+def test_bad_shebang(content, tmpdir):
     path = tmpdir.join('path')
     path.write(content, 'wb')
-    assert main((str(path),)) == 1
-    _, stderr = capsys.readouterr()
-    assert stderr.startswith(f'{path}: marked executable but')
+    assert not has_shebang(str(path))
 
 
 def test_check_git_filemode_passing(tmpdir):
