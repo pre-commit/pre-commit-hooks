@@ -16,16 +16,11 @@ EXECUTABLE_VALUES = frozenset(('1', '3', '5', '7'))
 
 
 def check_executables(paths: List[str]) -> int:
-    if sys.platform == 'win32':  # pragma: win32 cover
-        return _check_git_filemode(paths)
-    else:  # pragma: win32 no cover
-        retv = 0
-        for path in paths:
-            if not has_shebang(path):
-                _message(path)
-                retv = 1
-
-        return retv
+    # Even if this hook is configured to be called only on files flagged
+    # executable by identify, we must check the real filemode known to Git
+    # because some filesystems force the executable bit (e.g. fat32 under
+    # Linux).
+    return _check_git_filemode(paths)
 
 
 class GitLsFile(NamedTuple):
