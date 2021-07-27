@@ -1,29 +1,29 @@
 -   id: check-added-large-files
     name: Check for added large files
-    description: Prevent giant files from being committed.
+    description: Prevents giant files from being committed.
     entry: check-added-large-files
     language: python
 -   id: check-ast
     name: Check Python AST
-    description: Simply check whether the files parse as valid python.
+    description: Simply checks whether the files parse as valid python.
     entry: check-ast
     language: python
     types: [python]
 -   id: check-byte-order-marker
     name: 'Check BOM - deprecated: use fix-byte-order-marker'
-    description: Forbid files which have a UTF-8 byte-order marker.
+    description: Forbids files which have a UTF-8 byte-order marker.
     entry: check-byte-order-marker
     language: python
     types: [text]
 -   id: check-builtin-literals
     name: Check builtin type constructor use
-    description: Require literal syntax when initializing empty or zero Python builtin types.
+    description: Requires literal syntax when initializing empty or zero Python builtin types.
     entry: check-builtin-literals
     language: python
     types: [python]
 -   id: check-case-conflict
     name: Check for case conflicts
-    description: Check for files that would conflict in case-insensitive filesystems.
+    description: Checks for files that would conflict in case-insensitive filesystems.
     entry: check-case-conflict
     language: python
 -   id: check-docstring-first
@@ -41,7 +41,7 @@
     stages: [commit, push, manual]
 -   id: check-json
     name: Check JSON
-    description: This hook checks JSON files for parseable syntax.
+    description: Checks JSON files for parseable syntax.
     entry: check-json
     language: python
     types: [json]
@@ -54,13 +54,13 @@
     stages: [commit, push, manual]
 -   id: pretty-format-json
     name: Pretty format JSON
-    description: This hook sets a standard for formatting JSON files.
+    description: Sets a standard for formatting JSON files.
     entry: pretty-format-json
     language: python
     types: [json]
 -   id: check-merge-conflict
     name: Check for merge conflicts
-    description: Check for files that contain merge conflict strings.
+    description: Checks for files that contain merge conflict strings.
     entry: check-merge-conflict
     language: python
     types: [text]
@@ -72,7 +72,7 @@
     types: [symlink]
 -   id: check-toml
     name: Check TOML
-    description: This hook checks TOML files for parseable syntax.
+    description: Checks TOML files for parseable syntax.
     entry: check-toml
     language: python
     types: [toml]
@@ -84,19 +84,19 @@
     types: [text]
 -   id: check-xml
     name: Check XML
-    description: This hook checks XML files for parseable syntax.
+    description: Checks XML files for parseable syntax.
     entry: check-xml
     language: python
     types: [xml]
 -   id: check-yaml
     name: Check YAML
-    description: This hook checks YAML files for parseable syntax.
+    description: Checks YAML files for parseable syntax.
     entry: check-yaml
     language: python
     types: [yaml]
 -   id: debug-statements
     name: Debug statements (Python)
-    description: Check for debugger imports and py37+ `breakpoint()` calls in python source.
+    description: Checks for debugger imports and py37+ `breakpoint()` calls in python source.
     entry: debug-statement-hook
     language: python
     types: [python]
@@ -120,7 +120,7 @@
     types: [text]
 -   id: double-quote-string-fixer
     name: Fix double quoted strings
-    description: This hook replaces double quoted strings with single quoted strings.
+    description: Replaces double quoted strings with single quoted strings.
     entry: double-quote-string-fixer
     language: python
     types: [python]
@@ -133,7 +133,7 @@
     stages: [commit, push, manual]
 -   id: file-contents-sorter
     name: File contents sorter
-    description: Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
+    description: Sorts the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
     entry: file-contents-sorter
     language: python
     files: '^$'
@@ -145,13 +145,13 @@
     types: [text]
 -   id: fix-encoding-pragma
     name: Fix python encoding pragma
-    description: 'Add # -*- coding: utf-8 -*- to the top of python files.'
+    description: 'Adds # -*- coding: utf-8 -*- to the top of python files.'
     language: python
     entry: fix-encoding-pragma
     types: [python]
 -   id: forbid-new-submodules
     name: Forbid new submodules
-    description: Prevent addition of new git submodules.
+    description: Prevents addition of new git submodules.
     language: python
     entry: forbid-new-submodules
 -   id: mixed-line-ending
@@ -186,7 +186,7 @@
     files: '^$'
 -   id: trailing-whitespace
     name: Trim trailing whitespace
-    description: This hook trims trailing whitespace.
+    description: Trims trailing whitespace.
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
