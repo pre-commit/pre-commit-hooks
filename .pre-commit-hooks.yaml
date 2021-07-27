@@ -1,17 +1,17 @@
 -   id: check-added-large-files
     name: Check for added large files
-    description: Prevent giant files from being committed
+    description: Prevent giant files from being committed.
     entry: check-added-large-files
     language: python
 -   id: check-ast
-    name: Check python ast
+    name: Check Python AST
     description: Simply check whether the files parse as valid python.
     entry: check-ast
     language: python
     types: [python]
 -   id: check-byte-order-marker
-    name: 'check BOM - deprecated: use fix-byte-order-marker'
-    description: forbid files which have a UTF-8 byte-order marker
+    name: 'Check BOM - deprecated: use fix-byte-order-marker'
+    description: Forbid files which have a UTF-8 byte-order marker.
     entry: check-byte-order-marker
     language: python
     types: [text]
@@ -23,7 +23,7 @@
     types: [python]
 -   id: check-case-conflict
     name: Check for case conflicts
-    description: Check for files that would conflict in case-insensitive filesystems
+    description: Check for files that would conflict in case-insensitive filesystems.
     entry: check-case-conflict
     language: python
 -   id: check-docstring-first
@@ -41,7 +41,7 @@
     stages: [commit, push, manual]
 -   id: check-json
     name: Check JSON
-    description: This hook checks json files for parseable syntax.
+    description: This hook checks JSON files for parseable syntax.
     entry: check-json
     language: python
     types: [json]
@@ -71,98 +71,98 @@
     language: python
     types: [symlink]
 -   id: check-toml
-    name: Check Toml
-    description: This hook checks toml files for parseable syntax.
+    name: Check TOML
+    description: This hook checks TOML files for parseable syntax.
     entry: check-toml
     language: python
     types: [toml]
 -   id: check-vcs-permalinks
-    name: Check vcs permalinks
-    description: Ensures that links to vcs websites are permalinks.
+    name: Check VCS permalinks
+    description: Ensures that links to VCS websites are permalinks.
     entry: check-vcs-permalinks
     language: python
     types: [text]
 -   id: check-xml
-    name: Check Xml
-    description: This hook checks xml files for parseable syntax.
+    name: Check XML
+    description: This hook checks XML files for parseable syntax.
     entry: check-xml
     language: python
     types: [xml]
 -   id: check-yaml
-    name: Check Yaml
-    description: This hook checks yaml files for parseable syntax.
+    name: Check YAML
+    description: This hook checks YAML files for parseable syntax.
     entry: check-yaml
     language: python
     types: [yaml]
 -   id: debug-statements
-    name: Debug Statements (Python)
+    name: Debug statements (Python)
     description: Check for debugger imports and py37+ `breakpoint()` calls in python source.
     entry: debug-statement-hook
     language: python
     types: [python]
 -   id: destroyed-symlinks
-    name: Detect Destroyed Symlinks
+    name: Detect destroyed symlinks
     description: Detects symlinks which are changed to regular files with a content of a path which that symlink was pointing to.
     entry: destroyed-symlinks
     language: python
     types: [file]
 -   id: detect-aws-credentials
-    name: Detect AWS Credentials
-    description: Detects *your* aws credentials from the aws cli credentials file
+    name: Detect AWS credentials
+    description: Detects *your* AWS credentials from the AWS CLI credentials file.
     entry: detect-aws-credentials
     language: python
     types: [text]
 -   id: detect-private-key
-    name: Detect Private Key
-    description: Detects the presence of private keys
+    name: Detect private key
+    description: Detects the presence of private keys.
     entry: detect-private-key
     language: python
     types: [text]
 -   id: double-quote-string-fixer
     name: Fix double quoted strings
-    description: This hook replaces double quoted strings with single quoted strings
+    description: This hook replaces double quoted strings with single quoted strings.
     entry: double-quote-string-fixer
     language: python
     types: [python]
 -   id: end-of-file-fixer
-    name: Fix End of Files
+    name: Fix end of files
     description: Ensures that a file is either empty, or ends with one newline.
     entry: end-of-file-fixer
     language: python
     types: [text]
     stages: [commit, push, manual]
 -   id: file-contents-sorter
-    name: File Contents Sorter
+    name: File contents sorter
     description: Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
     entry: file-contents-sorter
     language: python
     files: '^$'
 -   id: fix-byte-order-marker
-    name: fix UTF-8 byte order marker
-    description: removes UTF-8 byte order marker
+    name: Fix UTF-8 byte order marker
+    description: Removes UTF-8 byte order marker.
     entry: fix-byte-order-marker
     language: python
     types: [text]
 -   id: fix-encoding-pragma
     name: Fix python encoding pragma
+    description: 'Add # -*- coding: utf-8 -*- to the top of python files.'
     language: python
     entry: fix-encoding-pragma
-    description: 'Add # -*- coding: utf-8 -*- to the top of python files'
     types: [python]
 -   id: forbid-new-submodules
     name: Forbid new submodules
+    description: Prevent addition of new git submodules.
     language: python
     entry: forbid-new-submodules
-    description: Prevent addition of new git submodules
 -   id: mixed-line-ending
     name: Mixed line ending
-    description: Replaces or checks mixed line ending
+    description: Replaces or checks mixed line ending.
     entry: mixed-line-ending
     language: python
     types: [text]
 -   id: name-tests-test
     name: Tests should end in _test.py
-    description: This verifies that test files are named correctly
+    description: This verifies that test files are named correctly.
     entry: name-tests-test
     language: python
     files: (^|/)tests/.+\.py$
@@ -174,18 +174,18 @@
     always_run: true
 -   id: requirements-txt-fixer
     name: Fix requirements.txt
-    description: Sorts entries in requirements.txt
+    description: Sorts entries in requirements.txt.
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
 -   id: sort-simple-yaml
     name: Sort simple YAML files
+    description: Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
     language: python
     entry: sort-simple-yaml
-    description: Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
     files: '^$'
 -   id: trailing-whitespace
-    name: Trim Trailing Whitespace
+    name: Trim trailing whitespace
     description: This hook trims trailing whitespace.
     entry: trailing-whitespace-fixer
     language: python
