@@ -1,1 +1,2 @@
 im: ok yaml
+test: {site: http://example.com}
