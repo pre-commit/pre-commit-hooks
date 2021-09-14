@@ -164,7 +164,9 @@ the following commandline options:
   - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 2 spaces.
   - `--no-ensure-ascii` preserve unicode characters instead of converting to escape sequences
   - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
+  - `--sort-values comma,separated,keys` - Keys whose list values shall be sorted. Only applied to lists with primitive values.
   - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
+  - `--unique-values comma,separated,keys` - Keys whose list values shall be made unique. Only applied to lists with primitive values.
 
 #### `requirements-txt-fixer`
 Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
