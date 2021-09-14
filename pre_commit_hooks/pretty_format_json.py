@@ -84,9 +84,8 @@ def _get_pretty_format(
         transformed_pairs = transform_top_keys(transformed_pairs)
         return dict(transformed_pairs)
 
-    load = json.loads(contents, object_pairs_hook=pairs_first)
     json_pretty = json.dumps(
-        load,
+        json.loads(contents, object_pairs_hook=pairs_first),
         indent=indent,
         ensure_ascii=ensure_ascii,
     )
