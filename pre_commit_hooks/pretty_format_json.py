@@ -20,7 +20,9 @@ def _get_pretty_format(
         top_keys: Sequence[str] = (),
         unique_values: Sequence[str] = (),
 ) -> str:
-    def transform_top_keys(pairs: Sequence[Tuple[str, Any]]) -> Sequence[Tuple[str, Any]]:
+    def transform_top_keys(
+        pairs: Sequence[Tuple[str, Any]],
+    ) -> Sequence[Tuple[str, Any]]:
         transformed_pairs = []
         before = [pair for pair in pairs if pair[0] in top_keys]
         before = sorted(before, key=lambda x: top_keys.index(x[0]))
@@ -31,32 +33,46 @@ def _get_pretty_format(
         transformed_pairs.extend(after)
         return transformed_pairs
 
-    def transform_sort_values(pairs: Sequence[Tuple[str, Any]]) -> Sequence[Tuple[str, Any]]:
+    def transform_sort_values(
+        pairs: Sequence[Tuple[str, Any]],
+    ) -> Sequence[Tuple[str, Any]]:
         if not sort_values:
             return pairs
         transformed_pairs = []
         for (key, value) in pairs:
-            if (key not in sort_values  # No sorting requested
-                or not isinstance(value, List)  # Value is no list, sorting makes no sense
-                or len(set([type(x) for x in value])) > 1  # Only sort if all list entries are of the same type
-                or any([isinstance(x, (List, Mapping)) for x in value])  # Only sort if all list entries are no list or mapping
+            if (
+                key not in sort_values or
+                not isinstance(value, List) or
+                len({type(x) for x in value}) > 1 or
+                    any([isinstance(x, (List, Mapping)) for x in value])
             ):
+                # No sorting requested
+                # Value is no list, sorting makes no sense
+                # Only sort if all list entries are of the same type
+                # Only sort if all list entries are no list or mapping
                 transformed_pairs.append((key, value))
                 continue
             transformed_pairs.append((key, sorted(value)))
         return transformed_pairs
 
-    def transform_unique_values(pairs: Sequence[Tuple[str, Any]]) -> Sequence[Tuple[str, Any]]:
+    def transform_unique_values(
+        pairs: Sequence[Tuple[str, Any]],
+    ) -> Sequence[Tuple[str, Any]]:
         if not unique_values:
             return pairs
         print(pairs)
         transformed_pairs = []
         for (key, value) in pairs:
-            if (key not in unique_values  # No unification requested
-                or not isinstance(value, List)  # Value is no list, unification makes no sense
-                or len(set([type(x) for x in value])) > 1  # Only unify if all list entries are of the same type
-                or any([isinstance(x, (List, Mapping)) for x in value])  # Only unify if all list entries are no list or mapping
+            if (
+                key not in unique_values or
+                    not isinstance(value, List) or
+                    len({type(x) for x in value}) > 1 or
+                    any([isinstance(x, (List, Mapping)) for x in value])
             ):
+                # No unification requested
+                # Value is no list, unification makes no sense
+                # Only unify if all list entries are of the same type
+                # Only unify if all list entries are no list or mapping
                 transformed_pairs.append((key, value))
                 continue
             transformed_pairs.append((key, list(dict.fromkeys(value))))
@@ -68,7 +84,7 @@ def _get_pretty_format(
         transformed_pairs = transform_top_keys(transformed_pairs)
         return dict(transformed_pairs)
 
-    load=json.loads(contents, object_pairs_hook=pairs_first)
+    load = json.loads(contents, object_pairs_hook=pairs_first)
     json_pretty = json.dumps(
         load,
         indent=indent,

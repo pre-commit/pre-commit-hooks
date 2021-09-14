@@ -107,8 +107,11 @@ def test_badfile_main():
 
 
 def test_sort_values_get_pretty_format():
-    ret = main((
-        '--no-sort-keys', '--sort-values=sort_list,wont_sort_list,sort_sub_sub_sub_dict', get_resource_path('sort_values_pretty_formatted_json.json')))
+    ret = main([
+        '--no-sort-keys',
+        '--sort-values=sort_list,wont_sort_list,sort_sub_sub_sub_dict',
+        get_resource_path('sort_values_pretty_formatted_json.json'),
+    ])
     assert ret == 1
 
 
@@ -144,7 +147,11 @@ def test_sort_values_diffing_output(capsys):
        "do_not_sort": []
      }}
 '''
-    actual_retval = main(['--no-sort-keys', '--sort-values=sort_list,wont_sort_list,sort_sub_sub_sub_dict', resource_path])
+    actual_retval = main([
+        '--no-sort-keys',
+        '--sort-values=sort_list,wont_sort_list,sort_sub_sub_sub_dict',
+        resource_path,
+    ])
     actual_out, actual_err = capsys.readouterr()
 
     assert actual_retval == expected_retval
@@ -154,7 +161,10 @@ def test_sort_values_diffing_output(capsys):
 
 def test_uniquevalues_get_pretty_format():
     ret = main([
-        '--no-sort-keys', '--unique-values=unique_list,sub_list', get_resource_path('unique_values_pretty_formatted_json.json')])
+        '--no-sort-keys',
+        '--unique-values=unique_list,sub_list',
+        get_resource_path('unique_values_pretty_formatted_json.json'),
+    ])
     assert ret == 1
 
 
