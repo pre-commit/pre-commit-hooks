@@ -36,20 +36,11 @@ def _get_pretty_format(
             return pairs
         transformed_pairs = []
         for (key, value) in pairs:
-            if key not in sort_values:
-                # No sorting requested
-                transformed_pairs.append((key, value))
-                continue
-            if not isinstance(value, List):
-                # Value is no list, sorting makes no sense
-                transformed_pairs.append((key, value))
-                continue
-            if len(set([type(x) for x in value])) > 1:
-                # Only sort if all list entries are of the same type
-                transformed_pairs.append((key, value))
-                continue
-            if any([isinstance(x, (List, Mapping)) for x in value]):
-                # Only sort if all list entries are no list or mapping
+            if (key not in sort_values  # No sorting requested
+                or not isinstance(value, List)  # Value is no list, sorting makes no sense
+                or len(set([type(x) for x in value])) > 1  # Only sort if all list entries are of the same type
+                or any([isinstance(x, (List, Mapping)) for x in value])  # Only sort if all list entries are no list or mapping
+            ):
                 transformed_pairs.append((key, value))
                 continue
             transformed_pairs.append((key, sorted(value)))
@@ -61,19 +52,11 @@ def _get_pretty_format(
         print(pairs)
         transformed_pairs = []
         for (key, value) in pairs:
-            if key not in unique_values:
-                transformed_pairs.append((key, value))
-                continue
-            if not isinstance(value, List):
-                # Value is no list, sorting makes no sense
-                transformed_pairs.append((key, value))
-                continue
-            if len(set([type(x) for x in value])) > 1:
-                # Only sort if all list entries are of the same type
-                transformed_pairs.append((key, value))
-                continue
-            if any([isinstance(x, (List, Mapping)) for x in value]):
-                # Only sort if all list entries are no list or mapping
+            if (key not in unique_values  # No unification requested
+                or not isinstance(value, List)  # Value is no list, unification makes no sense
+                or len(set([type(x) for x in value])) > 1  # Only unify if all list entries are of the same type
+                or any([isinstance(x, (List, Mapping)) for x in value])  # Only unify if all list entries are no list or mapping
+            ):
                 transformed_pairs.append((key, value))
                 continue
             transformed_pairs.append((key, list(dict.fromkeys(value))))
