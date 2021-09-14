@@ -48,8 +48,8 @@ def _get_pretty_format(
             ):
                 # No sorting requested
                 # Value is no list, sorting makes no sense
-                # Only sort if all list entries are of the same type
-                # Only sort if all list entries are no list or mapping
+                # Not all list entries are of the same type
+                # One or more list entries are list or mapping
                 transformed_pairs.append((key, value))
                 continue
             transformed_pairs.append((key, sorted(value)))
@@ -71,8 +71,8 @@ def _get_pretty_format(
             ):
                 # No unification requested
                 # Value is no list, unification makes no sense
-                # Only unify if all list entries are of the same type
-                # Only unify if all list entries are no list or mapping
+                # Not all list entries are of the same type
+                # One or more list entries are list or mapping
                 transformed_pairs.append((key, value))
                 continue
             transformed_pairs.append((key, list(dict.fromkeys(value))))
