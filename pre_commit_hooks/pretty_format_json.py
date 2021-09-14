@@ -2,6 +2,7 @@ import argparse
 import json
 import sys
 from difflib import unified_diff
+from typing import Any
 from typing import List
 from typing import Mapping
 from typing import Optional
@@ -15,17 +16,78 @@ def _get_pretty_format(
         indent: str,
         ensure_ascii: bool = True,
         sort_keys: bool = True,
+        sort_values: Sequence[str] = (),
         top_keys: Sequence[str] = (),
+        unique_values: Sequence[str] = (),
 ) -> str:
-    def pairs_first(pairs: Sequence[Tuple[str, str]]) -> Mapping[str, str]:
+    def transform_top_keys(pairs: Sequence[Tuple[str, Any]]) -> Sequence[Tuple[str, Any]]:
+        transformed_pairs = []
         before = [pair for pair in pairs if pair[0] in top_keys]
         before = sorted(before, key=lambda x: top_keys.index(x[0]))
         after = [pair for pair in pairs if pair[0] not in top_keys]
         if sort_keys:
             after.sort()
-        return dict(before + after)
+        transformed_pairs.extend(before)
+        transformed_pairs.extend(after)
+        return transformed_pairs
+
+    def transform_sort_values(pairs: Sequence[Tuple[str, Any]]) -> Sequence[Tuple[str, Any]]:
+        if not sort_values:
+            return pairs
+        transformed_pairs = []
+        for (key, value) in pairs:
+            if key not in sort_values:
+                # No sorting requested
+                transformed_pairs.append((key, value))
+                continue
+            if not isinstance(value, List):
+                # Value is no list, sorting makes no sense
+                transformed_pairs.append((key, value))
+                continue
+            if len(set([type(x) for x in value])) > 1:
+                # Only sort if all list entries are of the same type
+                transformed_pairs.append((key, value))
+                continue
+            if any([isinstance(x, (List, Mapping)) for x in value]):
+                # Only sort if all list entries are no list or mapping
+                transformed_pairs.append((key, value))
+                continue
+            transformed_pairs.append((key, sorted(value)))
+        return transformed_pairs
+
+    def transform_unique_values(pairs: Sequence[Tuple[str, Any]]) -> Sequence[Tuple[str, Any]]:
+        if not unique_values:
+            return pairs
+        print(pairs)
+        transformed_pairs = []
+        for (key, value) in pairs:
+            if key not in unique_values:
+                transformed_pairs.append((key, value))
+                continue
+            if not isinstance(value, List):
+                # Value is no list, sorting makes no sense
+                transformed_pairs.append((key, value))
+                continue
+            if len(set([type(x) for x in value])) > 1:
+                # Only sort if all list entries are of the same type
+                transformed_pairs.append((key, value))
+                continue
+            if any([isinstance(x, (List, Mapping)) for x in value]):
+                # Only sort if all list entries are no list or mapping
+                transformed_pairs.append((key, value))
+                continue
+            transformed_pairs.append((key, list(dict.fromkeys(value))))
+        return transformed_pairs
+
+    def pairs_first(pairs: Sequence[Tuple[str, Any]]) -> Mapping[str, Any]:
+        transformed_pairs = transform_unique_values(pairs)
+        transformed_pairs = transform_sort_values(transformed_pairs)
+        transformed_pairs = transform_top_keys(transformed_pairs)
+        return dict(transformed_pairs)
+
+    load=json.loads(contents, object_pairs_hook=pairs_first)
     json_pretty = json.dumps(
-        json.loads(contents, object_pairs_hook=pairs_first),
+        load,
         indent=indent,
         ensure_ascii=ensure_ascii,
     )
@@ -47,6 +109,14 @@ def parse_num_to_int(s: str) -> Union[int, str]:
 
 
 def parse_topkeys(s: str) -> List[str]:
+    return s.split(',')
+
+
+def parse_sortvalues(s: str) -> List[str]:
+    return s.split(',')
+
+
+def parse_uniquevalues(s: str) -> List[str]:
     return s.split(',')
 
 
@@ -92,6 +162,20 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         help='Keep JSON nodes in the same order',
     )
     parser.add_argument(
+        '--sort-values',
+        type=parse_sortvalues,
+        dest='sort_values',
+        default=[],
+        help='The values of the given dict keys are sorted',
+    )
+    parser.add_argument(
+        '--unique-values',
+        type=parse_uniquevalues,
+        dest='unique_values',
+        default=[],
+        help='The values of the given dict keys are are made unique',
+    )
+    parser.add_argument(
         '--top-keys',
         type=parse_topkeys,
         dest='top_keys',
@@ -110,7 +194,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         try:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
-                sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
+                sort_keys=not args.no_sort_keys, sort_values=args.sort_values,
+                top_keys=args.top_keys, unique_values=args.unique_values,
             )
         except ValueError:
             print(

@@ -1,0 +1,25 @@
+{
+  "unique_list": [
+    234,
+    34,
+    2,
+    234
+  ],
+  "sub_dict": {
+    "sub_list": [
+      "foo",
+      "foo",
+      {
+        "sub_sub_dict_entry": "sub_sub_dict_entry_value"
+      },
+      "bar",
+      [
+        1,
+        2,
+        3
+      ]
+    ],
+    "sub_list_2": "sub_list_2_value"
+  },
+  "foo": "bar"
+}

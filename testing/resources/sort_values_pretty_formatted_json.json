@@ -1,0 +1,25 @@
+{
+  "foo": "bar",
+  "sort_list": [
+    34,
+    2,
+    234
+  ],
+  "wont_sort_list": [
+    34,
+    2,
+    ""
+  ],
+  "sub_dict": {
+    "sub_sub_dict": {
+      "sort_sub_sub_sub_dict": [
+        "foo",
+        "bar",
+        "bar",
+        "baz"
+      ],
+      "do_not_sort": []
+    }
+  },
+  "blah": null
+}
