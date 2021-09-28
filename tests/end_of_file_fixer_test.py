@@ -1,8 +1,6 @@
-import io
-
 import pytest
 
-from pre_commit_hooks.end_of_file_fixer import fix_file
+from pre_commit_hooks.end_of_file_fixer import _process_file
 from pre_commit_hooks.end_of_file_fixer import main
 
 
@@ -23,11 +21,9 @@ TESTS = (
 
 
 @pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
-def test_fix_file(input_s, expected_retval, output):
-    file_obj = io.BytesIO(input_s)
-    ret = fix_file(file_obj)
-    assert file_obj.getvalue() == output
-    assert ret == expected_retval
+def test_process_file(input_s, expected_retval, output):
+    processed = _process_file(input_s)
+    assert processed == output
 
 
 @pytest.mark.parametrize(('input_s', 'expected_retval', 'output'), TESTS)
