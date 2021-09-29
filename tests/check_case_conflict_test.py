@@ -13,6 +13,11 @@ skip_win32 = pytest.mark.skipif(
     reason='case conflicts between directories and files',
 )
 
+skip_darwin = pytest.mark_skipif(
+    sys.platform == "darwin",
+    reason = 'case conflicts between directories and files'
+)
+
 
 def test_parents():
     assert set(parents('a')) == set()
@@ -45,6 +50,7 @@ def test_adding_something_with_conflict(temp_git_dir):
 
 
 @skip_win32  # pragma: win32 no cover
+@skip_darwin # pragma: MacOS no cover
 def test_adding_files_with_conflicting_directories(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.mkdir('dir').join('x').write('foo')
@@ -55,6 +61,7 @@ def test_adding_files_with_conflicting_directories(temp_git_dir):
 
 
 @skip_win32  # pragma: win32 no cover
+@skip_darwin # pragma: MacOS no cover
 def test_adding_files_with_conflicting_deep_directories(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.mkdir('x').mkdir('y').join('z').write('foo')
@@ -65,6 +72,7 @@ def test_adding_files_with_conflicting_deep_directories(temp_git_dir):
 
 
 @skip_win32  # pragma: win32 no cover
+@skip_darwin # pragma: MacOS no cover
 def test_adding_file_with_conflicting_directory(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.mkdir('dir').join('x').write('foo')
@@ -95,6 +103,7 @@ def test_file_conflicts_with_committed_file(temp_git_dir):
 
 
 @skip_win32  # pragma: win32 no cover
+@skip_darwin # pragma: MacOS no cover
 def test_file_conflicts_with_committed_dir(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.mkdir('dir').join('x').write('foo')
