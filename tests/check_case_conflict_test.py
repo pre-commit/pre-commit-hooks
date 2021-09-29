@@ -13,7 +13,7 @@ skip_win32 = pytest.mark.skipif(
     reason='case conflicts between directories and files',
 )
 
-skip_darwin = pytest.mark_skipif(
+skip_darwin = pytest.mark.skipif(
     sys.platform == 'darwin',
     reason='case conflicts between directories and files',
 )
