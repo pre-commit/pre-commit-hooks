@@ -11,6 +11,8 @@ BLACKLIST = [
     b'PuTTY-User-Key-File-2',
     b'BEGIN SSH2 ENCRYPTED PRIVATE KEY',
     b'BEGIN PGP PRIVATE KEY BLOCK',
+    b'BEGIN ENCRYPTED PRIVATE KEY',
+    b'BEGIN OpenVPN Static key V1',
 ]
 
 
