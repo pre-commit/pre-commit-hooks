@@ -11,6 +11,7 @@ TESTS = (
     (b'PuTTY-User-Key-File-2: ssh-rsa', 1),
     (b'---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----', 1),
     (b'-----BEGIN ENCRYPTED PRIVATE KEY-----', 1),
+    (b'-----BEGIN OpenVPN Static key V1-----', 1),
     (b'ssh-rsa DATA', 0),
     (b'ssh-dsa DATA', 0),
     # Some arbitrary binary data
