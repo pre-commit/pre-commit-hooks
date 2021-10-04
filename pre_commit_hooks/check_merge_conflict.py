@@ -3,6 +3,8 @@ import os.path
 from typing import Optional
 from typing import Sequence
 
+from pre_commit_hooks.util import cmd_output
+
 
 CONFLICT_PATTERNS = [
     b'<<<<<<< ',
@@ -12,13 +14,14 @@ CONFLICT_PATTERNS = [
 ]
 
 
-def is_in_merge() -> int:
+def is_in_merge() -> bool:
+    git_dir = cmd_output('git', 'rev-parse', '--git-dir').rstrip()
     return (
-        os.path.exists(os.path.join('.git', 'MERGE_MSG')) and
+        os.path.exists(os.path.join(git_dir, 'MERGE_MSG')) and
         (
-            os.path.exists(os.path.join('.git', 'MERGE_HEAD')) or
-            os.path.exists(os.path.join('.git', 'rebase-apply')) or
-            os.path.exists(os.path.join('.git', 'rebase-merge'))
+            os.path.exists(os.path.join(git_dir, 'MERGE_HEAD')) or
+            os.path.exists(os.path.join(git_dir, 'rebase-apply')) or
+            os.path.exists(os.path.join(git_dir, 'rebase-merge'))
         )
     )
 
