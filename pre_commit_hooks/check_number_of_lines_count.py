@@ -12,7 +12,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default=30,
         type=int,
         action='store',
-        help='Maximum allowable number of lines (default: 30)',
+        help='Maximum allowed number of lines',
     )
     args = parser.parse_args(argv)
 

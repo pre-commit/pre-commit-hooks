@@ -1,3 +1,4 @@
 covdefaults
 coverage
+pyfakefs
 pytest
