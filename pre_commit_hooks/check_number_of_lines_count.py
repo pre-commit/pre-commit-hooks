@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
-from typing import Optional, Sequence
+from typing import Optional
+from typing import Sequence
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
