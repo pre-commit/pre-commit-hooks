@@ -40,15 +40,9 @@ def fix_filename(filename: str, fix: str) -> int:
         return mixed
 
     if fix == 'auto':
-        max_ending = LF
-        max_lines = 0
         # ordering is important here such that lf > crlf > cr
-        for ending_type in ALL_ENDINGS:
-            # also important, using >= to find a max that prefers the last
-            if counts[ending_type] >= max_lines:
-                max_ending = ending_type
-                max_lines = counts[ending_type]
-
+        # max prefers the first item when multiple items are the max
+        max_ending = max(reversed(ALL_ENDINGS), key=counts.get)
         _fix(filename, contents, max_ending)
         return 1
     else:
