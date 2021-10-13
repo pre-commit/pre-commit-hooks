@@ -130,8 +130,32 @@ def test_does_not_care_when_not_in_a_merge(tmpdir):
     f.write_binary(b'problem\n=======\n')
     assert main([str(f.realpath())]) == 0
 
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n======= \n')
+    assert main([str(f.realpath())]) == 0
+
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n|||||||\n')
+    assert main([str(f.realpath()), '--assume-in-merge']) == 0
+
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n||||||| \n')
+    assert main([str(f.realpath()), '--assume-in-merge']) == 0
+
 
 def test_care_when_assumed_merge(tmpdir):
     f = tmpdir.join('README.md')
     f.write_binary(b'problem\n=======\n')
+    assert main([str(f.realpath()), '--assume-in-merge']) == 1
+
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n======= \n')
+    assert main([str(f.realpath()), '--assume-in-merge']) == 1
+
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n|||||||\n')
+    assert main([str(f.realpath()), '--assume-in-merge']) == 1
+
+    f = tmpdir.join('README.md')
+    f.write_binary(b'problem\n||||||| \n')
     assert main([str(f.realpath()), '--assume-in-merge']) == 1
