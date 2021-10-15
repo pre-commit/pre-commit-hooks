@@ -135,3 +135,15 @@ def test_care_when_assumed_merge(tmpdir):
     f = tmpdir.join('README.md')
     f.write_binary(b'problem\n=======\n')
     assert main([str(f.realpath()), '--assume-in-merge']) == 1
+
+
+def test_worktree_merge_conflicts(f1_is_a_conflict_file, tmpdir):
+    worktree = tmpdir.join('worktree')
+    cmd_output('git', 'worktree', 'add', str(worktree))
+    with worktree.as_cwd():
+        cmd_output(
+            'git', 'pull', '--no-rebase', 'origin', 'master', retcode=None,
+        )
+        msg = f1_is_a_conflict_file.join('.git/worktrees/worktree/MERGE_MSG')
+        assert msg.exists()
+        test_merge_conflicts_git()
