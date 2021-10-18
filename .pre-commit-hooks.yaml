@@ -138,7 +138,7 @@
     language: python
     files: '^$'
 -   id: fix-byte-order-marker
-    name: fix UTF-8 byte order marker
+    name: Fix UTF-8 byte order marker
     description: removes UTF-8 byte order marker
     entry: fix-byte-order-marker
     language: python
