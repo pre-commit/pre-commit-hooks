@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Sort a simple YAML file, keeping blocks of comments and definitions
 together.
 
