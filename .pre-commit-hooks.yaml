@@ -1,193 +1,193 @@
 -   id: check-added-large-files
-    name: Check for added large files
-    description: Prevent giant files from being committed
+    name: check for added large files
+    description: prevent giant files from being committed
     entry: check-added-large-files
     language: python
 -   id: check-ast
-    name: Check python ast
-    description: Simply check whether the files parse as valid python.
+    name: check python ast
+    description: simply check whether the files parse as valid python.
     entry: check-ast
     language: python
     types: [python]
 -   id: check-byte-order-marker
     name: 'check BOM - deprecated: use fix-byte-order-marker'
-    description: forbid files which have a UTF-8 byte-order marker
+    description: forbid files which have a utf-8 byte-order marker
     entry: check-byte-order-marker
     language: python
     types: [text]
 -   id: check-builtin-literals
-    name: Check builtin type constructor use
-    description: Require literal syntax when initializing empty or zero Python builtin types.
+    name: check builtin type constructor use
+    description: require literal syntax when initializing empty or zero python builtin types.
     entry: check-builtin-literals
     language: python
     types: [python]
 -   id: check-case-conflict
-    name: Check for case conflicts
-    description: Check for files that would conflict in case-insensitive filesystems
+    name: check for case conflicts
+    description: check for files that would conflict in case-insensitive filesystems
     entry: check-case-conflict
     language: python
 -   id: check-docstring-first
-    name: Check docstring is first
-    description: Checks a common error of defining a docstring after code.
+    name: check docstring is first
+    description: checks a common error of defining a docstring after code.
     entry: check-docstring-first
     language: python
     types: [python]
 -   id: check-executables-have-shebangs
-    name: Check that executables have shebangs
-    description: Ensures that (non-binary) executables have a shebang.
+    name: check that executables have shebangs
+    description: ensures that (non-binary) executables have a shebang.
     entry: check-executables-have-shebangs
     language: python
     types: [text, executable]
     stages: [commit, push, manual]
 -   id: check-json
-    name: Check JSON
-    description: This hook checks json files for parseable syntax.
+    name: check json
+    description: this hook checks json files for parseable syntax.
     entry: check-json
     language: python
     types: [json]
 -   id: check-shebang-scripts-are-executable
-    name: Check that scripts with shebangs are executable
-    description: Ensures that (non-binary) files with a shebang are executable.
+    name: check that scripts with shebangs are executable
+    description: ensures that (non-binary) files with a shebang are executable.
     entry: check-shebang-scripts-are-executable
     language: python
     types: [text]
     stages: [commit, push, manual]
 -   id: pretty-format-json
-    name: Pretty format JSON
-    description: This hook sets a standard for formatting JSON files.
+    name: pretty format json
+    description: this hook sets a standard for formatting json files.
     entry: pretty-format-json
     language: python
     types: [json]
 -   id: check-merge-conflict
-    name: Check for merge conflicts
-    description: Check for files that contain merge conflict strings.
+    name: check for merge conflicts
+    description: check for files that contain merge conflict strings.
     entry: check-merge-conflict
     language: python
     types: [text]
 -   id: check-symlinks
-    name: Check for broken symlinks
-    description: Checks for symlinks which do not point to anything.
+    name: check for broken symlinks
+    description: checks for symlinks which do not point to anything.
     entry: check-symlinks
     language: python
     types: [symlink]
 -   id: check-toml
-    name: Check Toml
-    description: This hook checks toml files for parseable syntax.
+    name: check toml
+    description: this hook checks toml files for parseable syntax.
     entry: check-toml
     language: python
     types: [toml]
 -   id: check-vcs-permalinks
-    name: Check vcs permalinks
-    description: Ensures that links to vcs websites are permalinks.
+    name: check vcs permalinks
+    description: ensures that links to vcs websites are permalinks.
     entry: check-vcs-permalinks
     language: python
     types: [text]
 -   id: check-xml
-    name: Check Xml
-    description: This hook checks xml files for parseable syntax.
+    name: check xml
+    description: this hook checks xml files for parseable syntax.
     entry: check-xml
     language: python
     types: [xml]
 -   id: check-yaml
-    name: Check Yaml
-    description: This hook checks yaml files for parseable syntax.
+    name: check yaml
+    description: this hook checks yaml files for parseable syntax.
     entry: check-yaml
     language: python
     types: [yaml]
 -   id: debug-statements
-    name: Debug Statements (Python)
-    description: Check for debugger imports and py37+ `breakpoint()` calls in python source.
+    name: debug statements (python)
+    description: check for debugger imports and py37+ `breakpoint()` calls in python source.
     entry: debug-statement-hook
     language: python
     types: [python]
 -   id: destroyed-symlinks
-    name: Detect Destroyed Symlinks
-    description: Detects symlinks which are changed to regular files with a content of a path which that symlink was pointing to.
+    name: detect destroyed symlinks
+    description: detects symlinks which are changed to regular files with a content of a path which that symlink was pointing to.
     entry: destroyed-symlinks
     language: python
     types: [file]
 -   id: detect-aws-credentials
-    name: Detect AWS Credentials
-    description: Detects *your* aws credentials from the aws cli credentials file
+    name: detect aws credentials
+    description: detects *your* aws credentials from the aws cli credentials file
     entry: detect-aws-credentials
     language: python
     types: [text]
 -   id: detect-private-key
-    name: Detect Private Key
-    description: Detects the presence of private keys
+    name: detect private key
+    description: detects the presence of private keys
     entry: detect-private-key
     language: python
     types: [text]
 -   id: double-quote-string-fixer
-    name: Fix double quoted strings
-    description: This hook replaces double quoted strings with single quoted strings
+    name: fix double quoted strings
+    description: this hook replaces double quoted strings with single quoted strings
     entry: double-quote-string-fixer
     language: python
     types: [python]
 -   id: end-of-file-fixer
-    name: Fix End of Files
-    description: Ensures that a file is either empty, or ends with one newline.
+    name: fix end of files
+    description: ensures that a file is either empty, or ends with one newline.
     entry: end-of-file-fixer
     language: python
     types: [text]
     stages: [commit, push, manual]
 -   id: file-contents-sorter
-    name: File Contents Sorter
-    description: Sort the lines in specified files (defaults to alphabetical). You must provide list of target files as input in your .pre-commit-config.yaml file.
+    name: file contents sorter
+    description: sort the lines in specified files (defaults to alphabetical). you must provide list of target files as input in your .pre-commit-config.yaml file.
     entry: file-contents-sorter
     language: python
     files: '^$'
 -   id: fix-byte-order-marker
-    name: fix UTF-8 byte order marker
-    description: removes UTF-8 byte order marker
+    name: fix utf-8 byte order marker
+    description: removes utf-8 byte order marker
     entry: fix-byte-order-marker
     language: python
     types: [text]
 -   id: fix-encoding-pragma
-    name: Fix python encoding pragma
+    name: fix python encoding pragma
     language: python
     entry: fix-encoding-pragma
-    description: 'Add # -*- coding: utf-8 -*- to the top of python files'
+    description: 'add # -*- coding: utf-8 -*- to the top of python files'
     types: [python]
 -   id: forbid-new-submodules
-    name: Forbid new submodules
+    name: forbid new submodules
     language: python
     entry: forbid-new-submodules
-    description: Prevent addition of new git submodules
+    description: prevent addition of new git submodules
     types: [directory]
 -   id: mixed-line-ending
-    name: Mixed line ending
-    description: Replaces or checks mixed line ending
+    name: mixed line ending
+    description: replaces or checks mixed line ending
     entry: mixed-line-ending
     language: python
     types: [text]
 -   id: name-tests-test
-    name: Tests should end in _test.py
-    description: This verifies that test files are named correctly
+    name: tests should end in _test.py
+    description: this verifies that test files are named correctly
     entry: name-tests-test
     language: python
     files: (^|/)tests/.+\.py$
 -   id: no-commit-to-branch
-    name: "Don't commit to branch"
+    name: "don't commit to branch"
     entry: no-commit-to-branch
     language: python
     pass_filenames: false
     always_run: true
 -   id: requirements-txt-fixer
-    name: Fix requirements.txt
-    description: Sorts entries in requirements.txt
+    name: fix requirements.txt
+    description: sorts entries in requirements.txt
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
 -   id: sort-simple-yaml
-    name: Sort simple YAML files
+    name: sort simple yaml files
     language: python
     entry: sort-simple-yaml
-    description: Sorts simple YAML files which consist only of top-level keys, preserving comments and blocks.
+    description: sorts simple yaml files which consist only of top-level keys, preserving comments and blocks.
     files: '^$'
 -   id: trailing-whitespace
-    name: Trim Trailing Whitespace
-    description: This hook trims trailing whitespace.
+    name: trim trailing whitespace
+    description: this hook trims trailing whitespace.
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
