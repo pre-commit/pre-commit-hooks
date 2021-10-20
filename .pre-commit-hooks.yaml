@@ -145,15 +145,15 @@
     types: [text]
 -   id: fix-encoding-pragma
     name: fix python encoding pragma
+    description: 'add # -*- coding: utf-8 -*- to the top of python files'
     language: python
     entry: fix-encoding-pragma
-    description: 'add # -*- coding: utf-8 -*- to the top of python files'
     types: [python]
 -   id: forbid-new-submodules
     name: forbid new submodules
+    description: prevent addition of new git submodules
     language: python
     entry: forbid-new-submodules
-    description: prevent addition of new git submodules
     types: [directory]
 -   id: mixed-line-ending
     name: mixed line ending
@@ -181,9 +181,9 @@
     files: requirements.*\.txt$
 -   id: sort-simple-yaml
     name: sort simple yaml files
+    description: sorts simple yaml files which consist only of top-level keys, preserving comments and blocks.
     language: python
     entry: sort-simple-yaml
-    description: sorts simple yaml files which consist only of top-level keys, preserving comments and blocks.
     files: '^$'
 -   id: trailing-whitespace
     name: trim trailing whitespace
