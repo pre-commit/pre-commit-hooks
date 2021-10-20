@@ -1,6 +1,6 @@
 -   id: check-added-large-files
     name: check for added large files
-    description: prevent giant files from being committed
+    description: prevent giant files from being committed.
     entry: check-added-large-files
     language: python
 -   id: check-ast
@@ -11,7 +11,7 @@
     types: [python]
 -   id: check-byte-order-marker
     name: 'check BOM - deprecated: use fix-byte-order-marker'
-    description: forbid files which have a utf-8 byte-order marker
+    description: forbid files which have a utf-8 byte-order marker.
     entry: check-byte-order-marker
     language: python
     types: [text]
@@ -23,7 +23,7 @@
     types: [python]
 -   id: check-case-conflict
     name: check for case conflicts
-    description: check for files that would conflict in case-insensitive filesystems
+    description: check for files that would conflict in case-insensitive filesystems.
     entry: check-case-conflict
     language: python
 -   id: check-docstring-first
@@ -108,19 +108,19 @@
     types: [file]
 -   id: detect-aws-credentials
     name: detect aws credentials
-    description: detects *your* aws credentials from the aws cli credentials file
+    description: detects *your* aws credentials from the aws cli credentials file.
     entry: detect-aws-credentials
     language: python
     types: [text]
 -   id: detect-private-key
     name: detect private key
-    description: detects the presence of private keys
+    description: detects the presence of private keys.
     entry: detect-private-key
     language: python
     types: [text]
 -   id: double-quote-string-fixer
     name: fix double quoted strings
-    description: this hook replaces double quoted strings with single quoted strings
+    description: this hook replaces double quoted strings with single quoted strings.
     entry: double-quote-string-fixer
     language: python
     types: [python]
@@ -139,31 +139,31 @@
     files: '^$'
 -   id: fix-byte-order-marker
     name: fix utf-8 byte order marker
-    description: removes utf-8 byte order marker
+    description: removes utf-8 byte order marker.
     entry: fix-byte-order-marker
     language: python
     types: [text]
 -   id: fix-encoding-pragma
     name: fix python encoding pragma
-    description: 'add # -*- coding: utf-8 -*- to the top of python files'
+    description: 'add # -*- coding: utf-8 -*- to the top of python files.'
     language: python
     entry: fix-encoding-pragma
     types: [python]
 -   id: forbid-new-submodules
     name: forbid new submodules
-    description: prevent addition of new git submodules
+    description: prevent addition of new git submodules.
     language: python
     entry: forbid-new-submodules
     types: [directory]
 -   id: mixed-line-ending
     name: mixed line ending
-    description: replaces or checks mixed line ending
+    description: replaces or checks mixed line ending.
     entry: mixed-line-ending
     language: python
     types: [text]
 -   id: name-tests-test
     name: tests should end in _test.py
-    description: this verifies that test files are named correctly
+    description: this verifies that test files are named correctly.
     entry: name-tests-test
     language: python
     files: (^|/)tests/.+\.py$
@@ -175,7 +175,7 @@
     always_run: true
 -   id: requirements-txt-fixer
     name: fix requirements.txt
-    description: sorts entries in requirements.txt
+    description: sorts entries in requirements.txt.
     entry: requirements-txt-fixer
     language: python
     files: requirements.*\.txt$
