@@ -121,3 +121,16 @@ def test_enforce_allows_gitlfs(temp_git_dir, monkeypatch):  # pragma: no cover
         cmd_output('git', 'add', '--', '.')
         # With --enforce-all large files on git lfs should succeed
         assert main(('--enforce-all', '--maxkb', '9', 'f.py')) == 0
+
+
+@xfailif_no_gitlfs  # pragma: no cover
+def test_enforce_allows_gitlfs_after_commit(temp_git_dir, monkeypatch):
+    with temp_git_dir.as_cwd():
+        monkeypatch.setenv('HOME', str(temp_git_dir))
+        cmd_output('git', 'lfs', 'install')
+        temp_git_dir.join('f.py').write('a' * 10000)
+        cmd_output('git', 'lfs', 'track', 'f.py')
+        cmd_output('git', 'add', '--', '.')
+        git_commit('-am', 'foo')
+        # With --enforce-all large files on git lfs should succeed
+        assert main(('--enforce-all', '--maxkb', '9', 'f.py')) == 0
