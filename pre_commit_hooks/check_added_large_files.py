@@ -55,7 +55,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     )
     parser.add_argument(
         '--maxkb', type=int, default=500,
-        help='Maxmimum allowable KB for added files',
+        help='Maximum allowable KB for added files',
     )
     args = parser.parse_args(argv)
 
