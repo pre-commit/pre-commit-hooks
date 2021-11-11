@@ -49,6 +49,11 @@ Check for files with names that would conflict on a case-insensitive filesystem 
 #### `check-docstring-first`
 Checks for a common error of placing code before the docstring.
 
+#### `check-encoding`
+Checks that text files have desired encoding.
+  - `--encoding` - specify encoding to assert; if not specified, default is
+    [platform dependent](https://docs.python.org/3/library/functions.html?highlight=encoding#open)
+
 #### `check-executables-have-shebangs`
 Checks that non-binary executables have a proper shebang.
 

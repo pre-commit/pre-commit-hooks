@@ -32,6 +32,12 @@
     entry: check-docstring-first
     language: python
     types: [python]
+-   id: check-encoding
+    name: check text files have desired encoding
+    description: checks that text files decode cleanly using an encoding.
+    entry: check-encoding
+    language: python
+    types: [text]
 -   id: check-executables-have-shebangs
     name: check that executables have shebangs
     description: ensures that (non-binary) executables have a shebang.
