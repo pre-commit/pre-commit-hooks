@@ -18,6 +18,7 @@ skip_darwin = pytest.mark.skipif(
     reason='case conflicts between directories and files',
 )
 
+
 def test_parents():
     assert set(parents('a')) == set()
     assert set(parents('a/b')) == {'a'}
@@ -48,7 +49,7 @@ def test_adding_something_with_conflict(temp_git_dir):
         assert find_conflicting_filenames(['f.py', 'F.py']) == 1
 
 
-@skip_darwin # pragma: darwin no cover
+@skip_darwin  # pragma: darwin no cover
 @skip_win32  # pragma: win32 no cover
 def test_adding_files_with_conflicting_directories(temp_git_dir):
     with temp_git_dir.as_cwd():
@@ -59,7 +60,7 @@ def test_adding_files_with_conflicting_directories(temp_git_dir):
         assert find_conflicting_filenames([]) == 1
 
 
-@skip_darwin # pragma: darwin no cover
+@skip_darwin  # pragma: darwin no cover
 @skip_win32  # pragma: win32 no cover
 def test_adding_files_with_conflicting_deep_directories(temp_git_dir):
     with temp_git_dir.as_cwd():
@@ -70,7 +71,7 @@ def test_adding_files_with_conflicting_deep_directories(temp_git_dir):
         assert find_conflicting_filenames([]) == 1
 
 
-@skip_darwin # pragma: darwin no cover
+@skip_darwin  # pragma: darwin no cover
 @skip_win32  # pragma: win32 no cover
 def test_adding_file_with_conflicting_directory(temp_git_dir):
     with temp_git_dir.as_cwd():
@@ -101,7 +102,7 @@ def test_file_conflicts_with_committed_file(temp_git_dir):
         assert find_conflicting_filenames(['F.py']) == 1
 
 
-@skip_darwin # pragma: darwin no cover
+@skip_darwin  # pragma: darwin no cover
 @skip_win32  # pragma: win32 no cover
 def test_file_conflicts_with_committed_dir(temp_git_dir):
     with temp_git_dir.as_cwd():
