@@ -64,6 +64,8 @@ def _message(path: str) -> None:
         f'{path}: marked executable but has no (or invalid) shebang!\n'
         f"  If it isn't supposed to be executable, try: "
         f'`chmod -x {shlex.quote(path)}`\n'
+        f'  If on Windows, you may also need to: '
+        f'`git add --chmod=-x {shlex.quote(path)}`\n'
         f'  If it is supposed to be executable, double-check its shebang.',
         file=sys.stderr,
     )
