@@ -1,24 +1,33 @@
 import argparse
-import json
 import math
 import os
+import subprocess
 from typing import Optional
 from typing import Sequence
 from typing import Set
 
 from pre_commit_hooks.util import added_files
-from pre_commit_hooks.util import CalledProcessError
-from pre_commit_hooks.util import cmd_output
+from pre_commit_hooks.util import zsplit
 
 
-def lfs_files() -> Set[str]:
-    try:
-        # Introduced in git-lfs 2.2.0, first working in 2.2.1
-        lfs_ret = cmd_output('git', 'lfs', 'status', '--json')
-    except CalledProcessError:  # pragma: no cover (with git-lfs)
-        lfs_ret = '{"files":{}}'
+def filter_lfs_files(filenames: Set[str]) -> None:  # pragma: no cover (lfs)
+    """Remove files tracked by git-lfs from the set."""
+    if not filenames:
+        return
 
-    return set(json.loads(lfs_ret)['files'])
+    check_attr = subprocess.run(
+        ('git', 'check-attr', 'filter', '-z', '--stdin'),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+        encoding='utf-8',
+        check=True,
+        input='\0'.join(filenames),
+    )
+    stdout = zsplit(check_attr.stdout)
+    for i in range(0, len(stdout), 3):
+        filename, filter_tag = stdout[i], stdout[i + 2]
+        if filter_tag == 'lfs':
+            filenames.remove(filename)
 
 
 def find_large_added_files(
@@ -30,7 +39,9 @@ def find_large_added_files(
     # Find all added files that are also in the list of files pre-commit tells
     # us about
     retv = 0
-    filenames_filtered = set(filenames) - lfs_files()
+    filenames_filtered = set(filenames)
+    filter_lfs_files(filenames_filtered)
+
     if not enforce_all:
         filenames_filtered &= added_files()
 
