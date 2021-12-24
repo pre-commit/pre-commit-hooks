@@ -1,3 +1,34 @@
+4.1.0 - 2021-12-22
+==================
+
+### Features
+- `debug-statements`: add `pdbr` debugger.
+    - #614 PR by @cansarigol.
+- `detect-private-key`: add detection for additional key types.
+    - #658 PR by @ljmf00.
+- `check-executables-have-shebangs`: improve messaging on windows.
+    - #689 PR by @pujitm.
+    - #686 issue by @jmerdich.
+- `check-added-large-files`: support `--enforce-all` with `git-lfs`.
+    - #674 PR by @amartani.
+    - #560 issue by @jeremy-coulon.
+
+### Fixes
+- `check-case-conflict`: improve performance.
+    - #626 PR by @guykisel.
+    - #625 issue by @guykisel.
+- `forbid-new-submodules`: fix false-negatives for `pre-push`.
+    - #619 PR by @m-khvoinitsky.
+    - #609 issue by @m-khvoinitsky.
+- `check-merge-conflict`: fix execution in git worktrees.
+    - #662 PR by @errsyn.
+    - #638 issue by @daschuer.
+
+### Misc.
+- Normalize case of hook names and descriptions.
+    - #671 PR by @dennisroche.
+    - #673 PR by @revolter.
+
 4.0.1 - 2021-05-16
 ==================
 
