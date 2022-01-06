@@ -162,7 +162,7 @@
     language: python
     types: [text]
 -   id: name-tests-test
-    name: tests should end in _test.py
+    name: python tests naming
     description: this verifies that test files are named correctly.
     entry: name-tests-test
     language: python
