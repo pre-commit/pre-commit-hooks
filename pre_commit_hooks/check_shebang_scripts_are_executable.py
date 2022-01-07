@@ -34,7 +34,7 @@ def _message(path: str) -> None:
     print(
         f'{path}: has a shebang but is not marked executable!\n'
         f'  If it is supposed to be executable, try: '
-        f'`chmod +x {shlex.quote(path)}`\n'
+        f'`git update-index --chmod=+x {shlex.quote(path)}`\n'
         f'  If it not supposed to be executable, double-check its shebang '
         f'is wanted.\n',
         file=sys.stderr,
