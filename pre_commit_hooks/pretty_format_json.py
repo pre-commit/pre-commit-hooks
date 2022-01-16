@@ -1,13 +1,11 @@
+from __future__ import annotations
+
 import argparse
 import json
 import sys
 from difflib import unified_diff
-from typing import List
 from typing import Mapping
-from typing import Optional
 from typing import Sequence
-from typing import Tuple
-from typing import Union
 
 
 def _get_pretty_format(
@@ -17,7 +15,7 @@ def _get_pretty_format(
         sort_keys: bool = True,
         top_keys: Sequence[str] = (),
 ) -> str:
-    def pairs_first(pairs: Sequence[Tuple[str, str]]) -> Mapping[str, str]:
+    def pairs_first(pairs: Sequence[tuple[str, str]]) -> Mapping[str, str]:
         before = [pair for pair in pairs if pair[0] in top_keys]
         before = sorted(before, key=lambda x: top_keys.index(x[0]))
         after = [pair for pair in pairs if pair[0] not in top_keys]
@@ -38,7 +36,7 @@ def _autofix(filename: str, new_contents: str) -> None:
         f.write(new_contents)
 
 
-def parse_num_to_int(s: str) -> Union[int, str]:
+def parse_num_to_int(s: str) -> int | str:
     """Convert string numbers to int, leaving strings as is."""
     try:
         return int(s)
@@ -46,7 +44,7 @@ def parse_num_to_int(s: str) -> Union[int, str]:
         return s
 
 
-def parse_topkeys(s: str) -> List[str]:
+def parse_topkeys(s: str) -> list[str]:
     return s.split(',')
 
 
@@ -57,7 +55,7 @@ def get_diff(source: str, target: str, file: str) -> str:
     return ''.join(diff)
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--autofix',

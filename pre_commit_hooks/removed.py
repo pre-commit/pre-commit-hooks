@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import sys
-from typing import Optional
 from typing import Sequence
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     argv = argv if argv is not None else sys.argv[1:]
     hookid, new_hookid, url = argv[:3]
     raise SystemExit(

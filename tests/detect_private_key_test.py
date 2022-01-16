@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from pre_commit_hooks.detect_private_key import main

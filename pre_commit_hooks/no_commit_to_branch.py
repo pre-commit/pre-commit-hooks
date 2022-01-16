@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import argparse
 import re
 from typing import AbstractSet
-from typing import Optional
 from typing import Sequence
 
 from pre_commit_hooks.util import CalledProcessError
@@ -23,7 +24,7 @@ def is_on_branch(
     )
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-b', '--branch', action='append',

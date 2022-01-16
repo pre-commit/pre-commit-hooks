@@ -1,11 +1,10 @@
+from __future__ import annotations
+
 import argparse
 import configparser
 import os
-from typing import List
 from typing import NamedTuple
-from typing import Optional
 from typing import Sequence
-from typing import Set
 
 
 class BadFile(NamedTuple):
@@ -13,7 +12,7 @@ class BadFile(NamedTuple):
     key: str
 
 
-def get_aws_cred_files_from_env() -> Set[str]:
+def get_aws_cred_files_from_env() -> set[str]:
     """Extract credential file paths from environment variables."""
     return {
         os.environ[env_var]
@@ -25,7 +24,7 @@ def get_aws_cred_files_from_env() -> Set[str]:
     }
 
 
-def get_aws_secrets_from_env() -> Set[str]:
+def get_aws_secrets_from_env() -> set[str]:
     """Extract AWS secrets from environment variables."""
     keys = set()
     for env_var in (
@@ -36,7 +35,7 @@ def get_aws_secrets_from_env() -> Set[str]:
     return keys
 
 
-def get_aws_secrets_from_file(credentials_file: str) -> Set[str]:
+def get_aws_secrets_from_file(credentials_file: str) -> set[str]:
     """Extract AWS secrets from configuration files.
 
     Read an ini-style configuration file and return a set with all found AWS
@@ -69,8 +68,8 @@ def get_aws_secrets_from_file(credentials_file: str) -> Set[str]:
 
 def check_file_for_aws_keys(
         filenames: Sequence[str],
-        keys: Set[bytes],
-) -> List[BadFile]:
+        keys: set[bytes],
+) -> list[BadFile]:
     """Check if files contain AWS secrets.
 
     Return a list of all files containing AWS secrets and keys found, with all
@@ -90,7 +89,7 @@ def check_file_for_aws_keys(
     return bad_files
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Filenames to run')
     parser.add_argument(
@@ -119,7 +118,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     # of files to to gather AWS secrets from.
     credential_files |= get_aws_cred_files_from_env()
 
-    keys: Set[str] = set()
+    keys: set[str] = set()
     for credential_file in credential_files:
         keys |= get_aws_secrets_from_file(credential_file)
 

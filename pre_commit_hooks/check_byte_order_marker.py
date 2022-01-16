@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import argparse
-from typing import Optional
 from typing import Sequence
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)

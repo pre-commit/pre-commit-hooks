@@ -1,13 +1,14 @@
+from __future__ import annotations
+
 import argparse
 import os
-from typing import Optional
 from typing import Sequence
 
 
 def _fix_file(
         filename: str,
         is_markdown: bool,
-        chars: Optional[bytes],
+        chars: bytes | None,
 ) -> bool:
     with open(filename, mode='rb') as file_processed:
         lines = file_processed.readlines()
@@ -24,7 +25,7 @@ def _fix_file(
 def _process_line(
         line: bytes,
         is_markdown: bool,
-        chars: Optional[bytes],
+        chars: bytes | None,
 ) -> bytes:
     if line[-2:] == b'\r\n':
         eol = b'\r\n'
@@ -40,7 +41,7 @@ def _process_line(
     return line.rstrip(chars) + eol
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--no-markdown-linebreak-ext',

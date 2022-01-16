@@ -25,12 +25,12 @@ repos:
     rev: v2.6.0
     hooks:
     -   id: reorder-python-imports
-        args: [--py3-plus]
+        args: [--py37-plus, --add-import, 'from __future__ import annotations']
 -   repo: https://github.com/asottile/pyupgrade
     rev: v2.31.0
     hooks:
     -   id: pyupgrade
-        args: [--py36-plus]
+        args: [--py37-plus]
 -   repo: https://github.com/asottile/add-trailing-comma
     rev: v2.2.1
     hooks:

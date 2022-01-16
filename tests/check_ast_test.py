@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pre_commit_hooks.check_ast import main
 from testing.util import get_resource_path
 

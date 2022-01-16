@@ -1,16 +1,16 @@
+from __future__ import annotations
+
 import argparse
 import math
 import os
 import subprocess
-from typing import Optional
 from typing import Sequence
-from typing import Set
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import zsplit
 
 
-def filter_lfs_files(filenames: Set[str]) -> None:  # pragma: no cover (lfs)
+def filter_lfs_files(filenames: set[str]) -> None:  # pragma: no cover (lfs)
     """Remove files tracked by git-lfs from the set."""
     if not filenames:
         return
@@ -54,7 +54,7 @@ def find_large_added_files(
     return retv
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',

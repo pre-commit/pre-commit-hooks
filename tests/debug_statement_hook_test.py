@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import ast
 
 from pre_commit_hooks.debug_statement_hook import Debug

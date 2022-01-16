@@ -1,8 +1,8 @@
+from __future__ import annotations
+
 import argparse
 import shlex
 import subprocess
-from typing import List
-from typing import Optional
 from typing import Sequence
 
 from pre_commit_hooks.util import cmd_output
@@ -13,8 +13,8 @@ PERMS_LINK = '120000'
 PERMS_NONEXIST = '000000'
 
 
-def find_destroyed_symlinks(files: Sequence[str]) -> List[str]:
-    destroyed_links: List[str] = []
+def find_destroyed_symlinks(files: Sequence[str]) -> list[str]:
+    destroyed_links: list[str] = []
     if not files:
         return destroyed_links
     for line in zsplit(
@@ -66,7 +66,7 @@ def find_destroyed_symlinks(files: Sequence[str]) -> List[str]:
     return destroyed_links
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)

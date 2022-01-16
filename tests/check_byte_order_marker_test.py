@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pre_commit_hooks import check_byte_order_marker
 
 

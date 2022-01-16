@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pre_commit_hooks.tests_should_end_in_test import main
 
 

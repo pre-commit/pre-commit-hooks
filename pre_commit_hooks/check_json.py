@@ -1,16 +1,14 @@
+from __future__ import annotations
+
 import argparse
 import json
 from typing import Any
-from typing import Dict
-from typing import List
-from typing import Optional
 from typing import Sequence
-from typing import Tuple
 
 
 def raise_duplicate_keys(
-        ordered_pairs: List[Tuple[str, Any]],
-) -> Dict[str, Any]:
+        ordered_pairs: list[tuple[str, Any]],
+) -> dict[str, Any]:
     d = {}
     for key, val in ordered_pairs:
         if key in d:
@@ -20,7 +18,7 @@ def raise_duplicate_keys(
     return d
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)
