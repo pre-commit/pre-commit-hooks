@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 import argparse
 from typing import Any
 from typing import Generator
 from typing import NamedTuple
-from typing import Optional
 from typing import Sequence
 
 import ruamel.yaml
@@ -36,7 +37,7 @@ LOAD_FNS = {
 }
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-m', '--multi', '--allow-multiple-documents', action='store_true',

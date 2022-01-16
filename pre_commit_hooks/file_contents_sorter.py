@@ -9,12 +9,13 @@ per line. Various users are adding/removing lines from this file; using
 this hook on that file should reduce the instances of git merge
 conflicts and keep the file nicely ordered.
 """
+from __future__ import annotations
+
 import argparse
 from typing import Any
 from typing import Callable
 from typing import IO
 from typing import Iterable
-from typing import Optional
 from typing import Sequence
 
 PASS = 0
@@ -23,7 +24,7 @@ FAIL = 1
 
 def sort_file_contents(
     f: IO[bytes],
-    key: Optional[Callable[[bytes], Any]],
+    key: Callable[[bytes], Any] | None,
     *,
     unique: bool = False,
 ) -> int:
@@ -47,7 +48,7 @@ def sort_file_contents(
         return FAIL
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Files to sort')
     parser.add_argument(

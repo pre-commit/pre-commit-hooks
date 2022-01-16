@@ -1,12 +1,13 @@
+from __future__ import annotations
+
 import argparse
 import os
-from typing import Optional
 from typing import Sequence
 
 from pre_commit_hooks.util import cmd_output
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)

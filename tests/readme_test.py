@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from pre_commit_hooks.check_yaml import yaml
 
 

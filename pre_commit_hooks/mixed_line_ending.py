@@ -1,7 +1,7 @@
+from __future__ import annotations
+
 import argparse
 import collections
-from typing import Dict
-from typing import Optional
 from typing import Sequence
 
 
@@ -25,7 +25,7 @@ def fix_filename(filename: str, fix: str) -> int:
     with open(filename, 'rb') as f:
         contents = f.read()
 
-    counts: Dict[bytes, int] = collections.defaultdict(int)
+    counts: dict[bytes, int] = collections.defaultdict(int)
 
     for line in contents.splitlines(True):
         for ending in ALL_ENDINGS:
@@ -62,7 +62,7 @@ def fix_filename(filename: str, fix: str) -> int:
         return other_endings
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-f', '--fix',

@@ -1,8 +1,8 @@
+from __future__ import annotations
+
 import argparse
 import re
 import sys
-from typing import List
-from typing import Optional
 from typing import Pattern
 from typing import Sequence
 
@@ -15,7 +15,7 @@ def _get_pattern(domain: str) -> Pattern[bytes]:
     return re.compile(regex.encode())
 
 
-def _check_filename(filename: str, patterns: List[Pattern[bytes]]) -> int:
+def _check_filename(filename: str, patterns: list[Pattern[bytes]]) -> int:
     retv = 0
     with open(filename, 'rb') as f:
         for i, line in enumerate(f, 1):
@@ -28,7 +28,7 @@ def _check_filename(filename: str, patterns: List[Pattern[bytes]]) -> int:
     return retv
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument(

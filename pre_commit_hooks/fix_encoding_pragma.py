@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import argparse
 from typing import IO
 from typing import NamedTuple
-from typing import Optional
 from typing import Sequence
 
 DEFAULT_PRAGMA = b'# -*- coding: utf-8 -*-'
@@ -26,7 +27,7 @@ class ExpectedContents(NamedTuple):
     # True: has exactly the coding pragma expected
     # False: missing coding pragma entirely
     # None: has a coding pragma, but it does not match
-    pragma_status: Optional[bool]
+    pragma_status: bool | None
     ending: bytes
 
     @property
@@ -55,7 +56,7 @@ def _get_expected_contents(
         rest = second_line + rest
 
     if potential_coding.rstrip(b'\r\n') == expected_pragma:
-        pragma_status: Optional[bool] = True
+        pragma_status: bool | None = True
     elif has_coding(potential_coding):
         pragma_status = None
     else:
@@ -105,7 +106,7 @@ def _normalize_pragma(pragma: str) -> bytes:
     return pragma.encode().rstrip()
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         'Fixes the encoding pragma of python files',
     )

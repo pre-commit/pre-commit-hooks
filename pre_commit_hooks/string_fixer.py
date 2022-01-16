@@ -1,9 +1,9 @@
+from __future__ import annotations
+
 import argparse
 import io
 import re
 import tokenize
-from typing import List
-from typing import Optional
 from typing import Sequence
 
 START_QUOTE_RE = re.compile('^[a-zA-Z]*"')
@@ -24,7 +24,7 @@ def handle_match(token_text: str) -> str:
         return token_text
 
 
-def get_line_offsets_by_line_no(src: str) -> List[int]:
+def get_line_offsets_by_line_no(src: str) -> list[int]:
     # Padded so we can index with line number
     offsets = [-1, 0]
     for line in src.splitlines(True):
@@ -60,7 +60,7 @@ def fix_strings(filename: str) -> int:
         return 0
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

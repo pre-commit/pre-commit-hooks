@@ -1,10 +1,9 @@
+from __future__ import annotations
+
 import argparse
 import ast
-from typing import List
 from typing import NamedTuple
-from typing import Optional
 from typing import Sequence
-from typing import Set
 
 
 BUILTIN_TYPES = {
@@ -27,10 +26,10 @@ class Call(NamedTuple):
 class Visitor(ast.NodeVisitor):
     def __init__(
             self,
-            ignore: Optional[Sequence[str]] = None,
+            ignore: Sequence[str] | None = None,
             allow_dict_kwargs: bool = True,
     ) -> None:
-        self.builtin_type_calls: List[Call] = []
+        self.builtin_type_calls: list[Call] = []
         self.ignore = set(ignore) if ignore else set()
         self.allow_dict_kwargs = allow_dict_kwargs
 
@@ -56,9 +55,9 @@ class Visitor(ast.NodeVisitor):
 
 def check_file(
         filename: str,
-        ignore: Optional[Sequence[str]] = None,
+        ignore: Sequence[str] | None = None,
         allow_dict_kwargs: bool = True,
-) -> List[Call]:
+) -> list[Call]:
     with open(filename, 'rb') as f:
         tree = ast.parse(f.read(), filename=filename)
     visitor = Visitor(ignore=ignore, allow_dict_kwargs=allow_dict_kwargs)
@@ -66,11 +65,11 @@ def check_file(
     return visitor.builtin_type_calls
 
 
-def parse_ignore(value: str) -> Set[str]:
+def parse_ignore(value: str) -> set[str]:
     return set(value.split(','))
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument('--ignore', type=parse_ignore, default=set())

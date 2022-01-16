@@ -1,18 +1,17 @@
 """Check that text files with a shebang are executable."""
+from __future__ import annotations
+
 import argparse
 import shlex
 import sys
-from typing import List
-from typing import Optional
 from typing import Sequence
-from typing import Set
 
 from pre_commit_hooks.check_executables_have_shebangs import EXECUTABLE_VALUES
 from pre_commit_hooks.check_executables_have_shebangs import git_ls_files
 from pre_commit_hooks.check_executables_have_shebangs import has_shebang
 
 
-def check_shebangs(paths: List[str]) -> int:
+def check_shebangs(paths: list[str]) -> int:
     # Cannot optimize on non-executability here if we intend this check to
     # work on win32 -- and that's where problems caused by non-executability
     # (elsewhere) are most likely to arise from.
@@ -20,7 +19,7 @@ def check_shebangs(paths: List[str]) -> int:
 
 
 def _check_git_filemode(paths: Sequence[str]) -> int:
-    seen: Set[str] = set()
+    seen: set[str] = set()
     for ls_file in git_ls_files(paths):
         is_executable = any(b in EXECUTABLE_VALUES for b in ls_file.mode[-3:])
         if not is_executable and has_shebang(ls_file.filename):
@@ -41,7 +40,7 @@ def _message(path: str) -> None:
     )
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
+def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)
