@@ -14,6 +14,7 @@ def _get_pretty_format(
         ensure_ascii: bool = True,
         sort_keys: bool = True,
         top_keys: Sequence[str] = (),
+        new_line: bool = False,
 ) -> str:
     def pairs_first(pairs: Sequence[tuple[str, str]]) -> Mapping[str, str]:
         before = [pair for pair in pairs if pair[0] in top_keys]
@@ -27,7 +28,7 @@ def _get_pretty_format(
         indent=indent,
         ensure_ascii=ensure_ascii,
     )
-    return f'{json_pretty}\n'
+    return f'{json_pretty}\n' if new_line else json_pretty
 
 
 def _autofix(filename: str, new_contents: str) -> None:
@@ -96,6 +97,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         default=[],
         help='Ordered list of keys to keep at the top of JSON hashes',
     )
+    parser.add_argument(
+        '--new-line', 
+        action='store_true', 
+        dest='new_line',
+        default=False, 
+        help="Add a new line at the end of the file"
+    )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -108,7 +116,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         try:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
-                sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
+                sort_keys=not args.no_sort_keys, top_keys=args.top_keys, new_line=args.new_line
             )
         except ValueError:
             print(
