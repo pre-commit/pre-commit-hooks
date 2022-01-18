@@ -116,7 +116,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         try:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
-                sort_keys=not args.no_sort_keys, top_keys=args.top_keys, new_line=not args.no_new_line,
+                sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
+                new_line=not args.no_new_line,
             )
         except ValueError:
             print(
