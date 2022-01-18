@@ -98,11 +98,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         help='Ordered list of keys to keep at the top of JSON hashes',
     )
     parser.add_argument(
-        '--new-line', 
+        '--no-new-line', 
         action='store_true', 
-        dest='new_line',
+        dest='no_new_line',
         default=False, 
-        help="Add a new line at the end of the file"
+        help="Do NOT add a new line at the end of the files"
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -116,7 +116,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         try:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
-                sort_keys=not args.no_sort_keys, top_keys=args.top_keys, new_line=args.new_line
+                sort_keys=not args.no_sort_keys, top_keys=args.top_keys, new_line=not args.no_new_line
             )
         except ValueError:
             print(
