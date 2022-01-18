@@ -14,7 +14,7 @@ def _get_pretty_format(
         ensure_ascii: bool = True,
         sort_keys: bool = True,
         top_keys: Sequence[str] = (),
-        new_line: bool = False,
+        new_line: bool = True,
 ) -> str:
     def pairs_first(pairs: Sequence[tuple[str, str]]) -> Mapping[str, str]:
         before = [pair for pair in pairs if pair[0] in top_keys]
