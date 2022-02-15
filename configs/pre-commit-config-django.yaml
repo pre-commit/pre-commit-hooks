@@ -20,12 +20,12 @@ repos:
       - id: check-xml
       - id: check-yaml
       - id: pretty-format-json
-#  # isort sorts the imports
-#  - repo: https://github.com/asottile/seed-isort-config
-#    rev: v2.2.0
-#    hooks:
-#      - id: seed-isort-config
-#  - repo: https://github.com/pycqa/isort
-#    rev: 5.10.1
-#    hooks:
-#      - id: isort
+  # isort sorts the imports
+  - repo: https://github.com/asottile/seed-isort-config
+    rev: v2.2.0
+    hooks:
+      - id: seed-isort-config
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
