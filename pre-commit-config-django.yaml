@@ -1,0 +1,31 @@
+default_language_version:
+  # default language version for each language
+  python: python3.7
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      # See https://pre-commit.com/hooks.html for more hooks
+      - id: check-ast
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: name-tests-test
+        args: [ "--django" ]
+      - id: trailing-whitespace
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
+      - id: check-yaml
+      - id: pretty-format-json
+#  # isort sorts the imports
+#  - repo: https://github.com/asottile/seed-isort-config
+#    rev: v2.2.0
+#    hooks:
+#      - id: seed-isort-config
+#  - repo: https://github.com/pycqa/isort
+#    rev: 5.10.1
+#    hooks:
+#      - id: isort
