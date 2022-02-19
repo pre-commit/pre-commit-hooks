@@ -15,7 +15,10 @@ EXECUTABLE_VALUES = frozenset(('1', '3', '5', '7'))
 
 
 def check_executables(paths: list[str]) -> int:
-    if sys.platform == 'win32':  # pragma: win32 cover
+    fs_tracks_executable_bit = cmd_output(
+        'git', 'config', 'core.fileMode', retcode=None,
+    ).strip()
+    if fs_tracks_executable_bit == 'false':  # pragma: win32 cover
         return _check_git_filemode(paths)
     else:  # pragma: win32 no cover
         retv = 0
