@@ -125,6 +125,10 @@ Sort the lines in specified files (defaults to alphabetical).
 You must provide list of target files as input to it.
 Note that this hook WILL remove blank lines and does NOT respect any comments.
 
+The following arguments are available:
+- `--ignore-case` - fold lower case to upper case characters.
+- `--unique` - ensure each line is unique.
+
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
 
