@@ -58,6 +58,9 @@ Attempts to load all json files to verify syntax.
 #### `check-merge-conflict`
 Check for files that contain merge conflict strings.
 
+#### `check-permitted-path-characters`
+Check for allowed characters in pathnames.
+
 #### `check-shebang-scripts-are-executable`
 Checks that scripts with shebangs are executable.
 

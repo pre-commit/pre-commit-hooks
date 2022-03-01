@@ -45,6 +45,12 @@
     entry: check-json
     language: python
     types: [json]
+-   id: check-permitted-path-characters
+    name: check for permitted path characters
+    description: checks pathnames for allowed characters
+    entry: check-permitted-path-characters
+    language: python
+    args: ['--']
 -   id: check-shebang-scripts-are-executable
     name: check that scripts with shebangs are executable
     description: ensures that (non-binary) files with a shebang are executable.
