@@ -107,6 +107,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         '--allow-missing-credentials',
         dest='allow_missing_credentials',
+        default=True,
         action='store_true',
         help='Allow hook to pass when no credentials are detected.',
     )
