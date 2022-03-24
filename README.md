@@ -1,6 +1,6 @@
-[![Build Status](https://asottile.visualstudio.com/asottile/_apis/build/status/pre-commit.pre-commit-hooks?branchName=master)](https://asottile.visualstudio.com/asottile/_build/latest?definitionId=17&branchName=master)
-[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/asottile/asottile/17/master.svg)](https://dev.azure.com/asottile/asottile/_build/latest?definitionId=17&branchName=master)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/pre-commit/pre-commit-hooks/master.svg)](https://results.pre-commit.ci/latest/github/pre-commit/pre-commit-hooks/master)
+[![Build Status](https://asottile.visualstudio.com/asottile/_apis/build/status/pre-commit.pre-commit-hooks?branchName=main)](https://asottile.visualstudio.com/asottile/_build/latest?definitionId=17&branchName=main)
+[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/asottile/asottile/17/main.svg)](https://dev.azure.com/asottile/asottile/_build/latest?definitionId=17&branchName=main)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/pre-commit/pre-commit-hooks/main.svg)](https://results.pre-commit.ci/latest/github/pre-commit/pre-commit-hooks/main)
 
 pre-commit-hooks
 ================
@@ -146,8 +146,8 @@ Assert that files in tests/ end in `_test.py`.
 
 #### `no-commit-to-branch`
 Protect specific branches from direct checkins.
-  - Use `args: [--branch, staging, --branch, master]` to set the branch.
-    Both `master` and `main` are protected by default if no branch argument is set.
+  - Use `args: [--branch, staging, --branch, main]` to set the branch.
+    Both `main` and `master` are protected by default if no branch argument is set.
   - `-b` / `--branch` may be specified multiple times to protect multiple
     branches.
   - `-p` / `--pattern` can be used to protect branches that match a supplied regex
