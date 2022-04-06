@@ -1,3 +1,26 @@
+4.2.0 - 2022-04-06
+==================
+
+### Features
+- `name-tests-test`: updated display text.
+    - #713 PR by @asottile.
+- `check-docstring-first`: make output more parsable.
+    - #748 PR by @asottile.
+- `check-merge-conflict`: make output more parsable.
+    - #748 PR by @asottile.
+- `debug-statements`: make output more parsable.
+    - #748 PR by @asottile.
+
+### Fixes
+- `check-merge-conflict`: fix detection of `======` conflict marker on windows.
+    - #748 PR by @asottile.
+
+### Updating
+- Drop python<3.7.
+    - #719 PR by @asottile.
+- Changed default branch from `master` to `main`.
+    - #744 PR by @asottile.
+
 4.1.0 - 2021-12-22
 ==================
 
