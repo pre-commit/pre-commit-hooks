@@ -65,7 +65,7 @@ def check_file(filename: str) -> int:
     visitor.visit(ast_obj)
 
     for bp in visitor.breakpoints:
-        print(f'{filename}:{bp.line}:{bp.col} - {bp.name} {bp.reason}')
+        print(f'{filename}:{bp.line}:{bp.col}: {bp.name} {bp.reason}')
 
     return int(bool(visitor.breakpoints))
 

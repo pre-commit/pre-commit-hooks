@@ -28,13 +28,13 @@ def check_docstring_first(src: bytes, filename: str = '<unknown>') -> int:
         if tok_type == tokenize.STRING and scol == 0:
             if found_docstring_line is not None:
                 print(
-                    f'{filename}:{sline} Multiple module docstrings '
+                    f'{filename}:{sline}: Multiple module docstrings '
                     f'(first docstring on line {found_docstring_line}).',
                 )
                 return 1
             elif found_code_line is not None:
                 print(
-                    f'{filename}:{sline} Module docstring appears after code '
+                    f'{filename}:{sline}: Module docstring appears after code '
                     f'(code seen on line {found_code_line}).',
                 )
                 return 1

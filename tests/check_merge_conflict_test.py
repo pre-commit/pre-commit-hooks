@@ -101,8 +101,14 @@ def repository_pending_merge(tmpdir):
 
 
 @pytest.mark.usefixtures('f1_is_a_conflict_file')
-def test_merge_conflicts_git():
+def test_merge_conflicts_git(capsys):
     assert main(['f1']) == 1
+    out, _ = capsys.readouterr()
+    assert out == (
+        "f1:1: Merge conflict string '<<<<<<<' found\n"
+        "f1:3: Merge conflict string '=======' found\n"
+        "f1:5: Merge conflict string '>>>>>>>' found\n"
+    )
 
 
 @pytest.mark.parametrize(
@@ -139,7 +145,7 @@ def test_care_when_assumed_merge(tmpdir):
     assert main([str(f.realpath()), '--assume-in-merge']) == 1
 
 
-def test_worktree_merge_conflicts(f1_is_a_conflict_file, tmpdir):
+def test_worktree_merge_conflicts(f1_is_a_conflict_file, tmpdir, capsys):
     worktree = tmpdir.join('worktree')
     cmd_output('git', 'worktree', 'add', str(worktree))
     with worktree.as_cwd():
@@ -148,4 +154,4 @@ def test_worktree_merge_conflicts(f1_is_a_conflict_file, tmpdir):
         )
         msg = f1_is_a_conflict_file.join('.git/worktrees/worktree/MERGE_MSG')
         assert msg.exists()
-        test_merge_conflicts_git()
+        test_merge_conflicts_git(capsys)
