@@ -55,7 +55,9 @@ def test_non_utf8_file(tmpdir):
     assert main((str(f_py),)) == 0
 
 
-def test_py37_breakpoint(tmpdir):
+def test_py37_breakpoint(tmpdir, capsys):
     f_py = tmpdir.join('f.py')
     f_py.write('def f():\n    breakpoint()\n')
     assert main((str(f_py),)) == 1
+    out, _ = capsys.readouterr()
+    assert out == f'{f_py}:2:4: breakpoint called\n'

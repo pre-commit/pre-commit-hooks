@@ -10,6 +10,7 @@ from pre_commit_hooks.util import cmd_output
 CONFLICT_PATTERNS = [
     b'<<<<<<< ',
     b'======= ',
+    b'=======\r\n',
     b'=======\n',
     b'>>>>>>> ',
 ]
@@ -39,12 +40,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     retcode = 0
     for filename in args.filenames:
         with open(filename, 'rb') as inputfile:
-            for i, line in enumerate(inputfile):
+            for i, line in enumerate(inputfile, start=1):
                 for pattern in CONFLICT_PATTERNS:
                     if line.startswith(pattern):
                         print(
-                            f'Merge conflict string "{pattern.decode()}" '
-                            f'found in {filename}:{i + 1}',
+                            f'{filename}:{i}: Merge conflict string '
+                            f'{pattern.strip().decode()!r} found',
                         )
                         retcode = 1
 
