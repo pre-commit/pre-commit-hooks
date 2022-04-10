@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shlex
 import sys
 from typing import Sequence
@@ -9,13 +10,30 @@ from typing import Sequence
 from pre_commit_hooks.check_executables_have_shebangs import EXECUTABLE_VALUES
 from pre_commit_hooks.check_executables_have_shebangs import git_ls_files
 from pre_commit_hooks.check_executables_have_shebangs import has_shebang
+from pre_commit_hooks.util import cmd_output
 
 
 def check_shebangs(paths: list[str]) -> int:
-    # Cannot optimize on non-executability here if we intend this check to
-    # work on win32 -- and that's where problems caused by non-executability
-    # (elsewhere) are most likely to arise from.
-    return _check_git_filemode(paths)
+    fs_tracks_executable_bit = cmd_output(
+        'git', 'config', 'core.fileMode', retcode=None,
+    ).strip()
+    return (
+        _check_git_filemode(paths)
+        if fs_tracks_executable_bit == 'false'
+        else _check_fs_filemode(paths)
+    )
+
+
+def _check_fs_filemode(
+    paths: list[str],
+) -> int:  # pragma: win32 no cover
+    retv = 0
+    for path in paths:
+        if not os.access(path, os.X_OK) and has_shebang(path):
+            _message(path)
+            retv = 1
+
+    return retv
 
 
 def _check_git_filemode(paths: Sequence[str]) -> int:

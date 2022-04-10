@@ -1,11 +1,69 @@
 from __future__ import annotations
 
+import sys
+
 import pytest
 
 from pre_commit_hooks.check_shebang_scripts_are_executable import \
     _check_git_filemode
 from pre_commit_hooks.check_shebang_scripts_are_executable import main
 from pre_commit_hooks.util import cmd_output
+
+skip_win32 = pytest.mark.xfail(
+    sys.platform == 'win32',
+    reason="non-git checks aren't relevant on windows",
+)
+
+
+@skip_win32  # pragma: win32 no cover
+@pytest.mark.parametrize(
+    'content', (
+        b'#!/bin/bash\nhello world\n',
+        b'#!/usr/bin/env python3.10',
+        b'#!python',
+        '#!☃'.encode(),
+    ),
+)
+def test_executable_shebang(content, tmpdir):
+    path = tmpdir.join('path')
+    path.write(content, 'wb')
+    cmd_output('chmod', '+x', path)
+    assert main((str(path),)) == 0
+
+
+@skip_win32  # pragma: win32 no cover
+@pytest.mark.parametrize(
+    'content', (
+        b'#!/bin/bash\nhello world\n',
+        b'#!/usr/bin/env python3.10',
+        b'#!python',
+        '#!☃'.encode(),
+    ),
+)
+def test_not_executable_shebang(content, tmpdir, capsys):
+    path = tmpdir.join('path')
+    path.write(content, 'wb')
+    assert main((str(path),)) == 1
+    _, stderr = capsys.readouterr()
+    assert stderr.startswith(
+        f'{path}: has a shebang but is not marked executable!',
+    )
+
+
+@skip_win32  # pragma: win32 no cover
+@pytest.mark.parametrize(
+    'content', (
+        b'',
+        b' #!python\n',
+        b'\n#!python\n',
+        b'python\n',
+        '☃'.encode(),
+    ),
+)
+def test_not_executable_no_shebang(content, tmpdir, capsys):
+    path = tmpdir.join('path')
+    path.write(content, 'wb')
+    assert main((str(path),)) == 0
 
 
 def test_check_git_filemode_passing(tmpdir):
