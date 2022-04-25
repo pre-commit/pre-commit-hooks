@@ -57,6 +57,7 @@ Attempts to load all json files to verify syntax.
 
 #### `check-merge-conflict`
 Check for files that contain merge conflict strings.
+  - `--assume-in-merge` - Allows running the hook when there is no ongoing merge operation
 
 #### `check-shebang-scripts-are-executable`
 Checks that scripts with shebangs are executable.
