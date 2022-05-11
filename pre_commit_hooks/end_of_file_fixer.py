@@ -62,7 +62,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         with open(filename, 'rb+') as file_obj:
             ret_for_file = fix_file(file_obj)
             if ret_for_file:
-                print(f'Fixing {filename}')
+                print(f'Fixed {filename}')
             retv |= ret_for_file
 
     return retv
