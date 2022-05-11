@@ -13,9 +13,10 @@ def fix_file(file_obj: IO[bytes]) -> int:
         file_obj.seek(-1, os.SEEK_END)
     except OSError:
         return 0
+
     last_character = file_obj.read(1)
-    # last_character will be '' for an empty file
-    if last_character not in {b'\n', b'\r'} and last_character != b'':
+
+    if last_character not in {b'\n', b'\r'}:
         # Needs this seek for windows, otherwise IOError
         file_obj.seek(0, os.SEEK_END)
         file_obj.write(b'\n')
