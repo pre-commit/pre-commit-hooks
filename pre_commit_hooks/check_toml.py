@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from typing import Sequence
 
-import toml
+if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
+    import tomllib
+else:  # pragma: <3.11 cover
+    import tomli as tomllib
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -14,8 +18,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     retval = 0
     for filename in args.filenames:
         try:
-            toml.load(filename)
-        except toml.TomlDecodeError as exc:
+            with open(filename, mode='rb') as fp:
+                tomllib.load(fp)
+        except tomllib.TOMLDecodeError as exc:
             print(f'{filename}: {exc}')
             retval = 1
     return retval
