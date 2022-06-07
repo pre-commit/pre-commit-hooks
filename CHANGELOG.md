@@ -1,3 +1,24 @@
+4.3.0 - 2022-06-07
+==================
+
+### Features
+- `check-executables-have-shebangs`: use `git config core.fileMode` to
+  determine if it should query `git`.
+    - #730 PR by @Kurt-von-Laven.
+- `name-tests-test`: add `--pytest-test-first` test convention.
+    - #779 PR by @asottile.
+
+### Fixes
+- `check-shebang-scripts-are-executable`: update windows instructions.
+    - #774 PR by @mdeweerd.
+    - #770 issue by @mdeweerd.
+- `check-toml`: use stdlib `tomllib` when available.
+    - #771 PR by @DanielNoord.
+    - #755 issue by @sognetic.
+- `check-added-large-files`: don't run on non-file `stages`.
+    - #778 PR by @asottile.
+    - #777 issue by @skyj.
+
 4.2.0 - 2022-04-06
 ==================
 
