@@ -96,6 +96,7 @@ def test_allows_gitlfs(temp_git_dir):  # pragma: no cover
         # Should succeed
         assert main(('--maxkb', '9', 'f.py')) == 0
 
+
 @xfailif_no_gitlfs
 def test_disallows_gitlfs_when_specified(temp_git_dir):  # pragma: no cover
     with temp_git_dir.as_cwd():

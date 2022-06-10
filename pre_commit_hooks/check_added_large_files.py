@@ -41,7 +41,7 @@ def find_large_added_files(
     # us about
     retv = 0
     filenames_filtered = set(filenames)
-    
+
     if allow_in_lfs:
         filter_lfs_files(filenames_filtered)
 
