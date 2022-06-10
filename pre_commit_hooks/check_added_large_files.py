@@ -33,8 +33,8 @@ def filter_lfs_files(filenames: set[str]) -> None:  # pragma: no cover (lfs)
 def find_large_added_files(
         filenames: Sequence[str],
         maxkb: int,
-        allow_in_lfs: bool,
         *,
+        allow_in_lfs: bool = True,
         enforce_all: bool = False,
 ) -> int:
     # Find all added files that are also in the list of files pre-commit tells
@@ -80,7 +80,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     return find_large_added_files(
         args.filenames,
         args.maxkb,
-        args.allow_in_lfs,
+        allow_in_lfs=args.allow_in_lfs,
         enforce_all=args.enforce_all,
     )
 
