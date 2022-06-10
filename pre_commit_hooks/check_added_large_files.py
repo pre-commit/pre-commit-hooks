@@ -33,6 +33,7 @@ def filter_lfs_files(filenames: set[str]) -> None:  # pragma: no cover (lfs)
 def find_large_added_files(
         filenames: Sequence[str],
         maxkb: int,
+        allow_in_lfs: bool,
         *,
         enforce_all: bool = False,
 ) -> int:
@@ -40,7 +41,9 @@ def find_large_added_files(
     # us about
     retv = 0
     filenames_filtered = set(filenames)
-    filter_lfs_files(filenames_filtered)
+    
+    if allow_in_lfs:
+        filter_lfs_files(filenames_filtered)
 
     if not enforce_all:
         filenames_filtered &= added_files()
@@ -65,6 +68,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         help='Enforce all files are checked, not just staged files.',
     )
     parser.add_argument(
+        '--allow-in-lfs', type=bool, default=true,
+        help='Whether to allow large files if stored in git lfs',
+    )
+    parser.add_argument(
         '--maxkb', type=int, default=500,
         help='Maximum allowable KB for added files',
     )
@@ -73,6 +80,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     return find_large_added_files(
         args.filenames,
         args.maxkb,
+        args.allow_in_lfs,
         enforce_all=args.enforce_all,
     )
 
