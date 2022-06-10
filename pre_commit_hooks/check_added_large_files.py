@@ -68,7 +68,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         help='Enforce all files are checked, not just staged files.',
     )
     parser.add_argument(
-        '--allow-in-lfs', type=bool, default=true,
+        '--allow-in-lfs', type=bool, default=True,
         help='Whether to allow large files if stored in git lfs',
     )
     parser.add_argument(
