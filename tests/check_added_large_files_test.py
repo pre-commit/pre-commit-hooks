@@ -105,7 +105,7 @@ def test_disallows_gitlfs_when_specified(temp_git_dir):  # pragma: no cover
         cmd_output('git', 'lfs', 'track', 'f.py')
         cmd_output('git', 'add', '--', '.')
         # Should reject file
-        assert main(('--maxkb', '9', '--allow-in-lfs', 'false', 'f.py')) == 1
+        assert main(('--maxkb', '9', '--allow-in-lfs', 'False', 'f.py')) == 1
 
 
 @xfailif_no_gitlfs
