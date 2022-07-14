@@ -1,3 +1,4 @@
 covdefaults
 coverage
+Jinja2
 pytest
