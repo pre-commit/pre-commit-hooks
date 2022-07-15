@@ -47,7 +47,7 @@ def _get_default_template() -> str:
 
 def get_rendered_template(
         template_file: str,
-        variables: dict[str, str],
+        variables: dict[str, Sequence[str]],
 ) -> str:
     with open(template_file) as f:
         template = Template(f.read())
@@ -63,6 +63,8 @@ def update_commit_file(
         with open(commit_msg_file) as f:
             data = f.readlines()
 
+        commented = list(filter(lambda line: line.startswith('#'), data))
+        original = list(filter(lambda line: not line.startswith('#'), data))
         data_as_str = ''.join([item for item in data])
         # if message already contain ticket number means
         # it is under git commit --amend or rebase or alike
@@ -73,6 +75,8 @@ def update_commit_file(
         variables = {
             'ticket': ticket,
             'content': data_as_str,
+            'commented': commented,
+            'original_msg': original,
         }
 
         content = get_rendered_template(

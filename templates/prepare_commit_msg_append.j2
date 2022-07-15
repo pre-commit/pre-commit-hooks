@@ -1,3 +1,5 @@
-{{ content }}
+{{ original_msg | join('') | trim() }}
 
-Relates: {{ ticket }}
+Relates: #{{ ticket }}
+
+{{ commented | join('') }}
