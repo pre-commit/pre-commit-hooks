@@ -22,6 +22,18 @@ def test_current_branch(temp_git_dir):
 TESTS = (
     (
         b'',
+        b'',
+        'test',  # this should not trigger anything
+        'prepare_commit_msg_prepend.j2',
+    ),
+    (
+        b'',
+        b'[1.0.0] ',
+        'release/1.0.0',  # but this should
+        'prepare_commit_msg_prepend.j2',
+    ),
+    (
+        b'',
         b'[TT-01] ',
         'feature/TT-01',
         'prepare_commit_msg_prepend.j2',
@@ -64,7 +76,8 @@ def test_update_commit_file(
     with temp_git_dir.as_cwd():
         path = temp_git_dir.join('COMMIT_EDITMSG')
         path.write_binary(input_s)
-        ticket = branch_name.split('/')[1]
+        parts = branch_name.split('/')
+        ticket = parts[1] if len(parts) > 1 else parts[0]
         jinja = get_jinja_env()
         update_commit_file(jinja, path, template, ticket)
 
@@ -89,6 +102,7 @@ def test_main(
             argv=[
                 '-t', template,
                 '-p', '(?<=feature/).*',
+                '-p', '(?<=release/).*',
                 str(path),
             ],
         ) == 0
