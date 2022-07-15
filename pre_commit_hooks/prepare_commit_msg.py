@@ -4,12 +4,11 @@ import argparse
 import re
 from typing import Sequence
 
-from jinja2 import Environment
-from jinja2 import PackageLoader
-from jinja2 import select_autoescape
+from jinja2 import Template
 
 from pre_commit_hooks.util import CalledProcessError
 from pre_commit_hooks.util import cmd_output
+from testing.util import get_template_path
 
 
 def get_current_branch() -> str:
@@ -25,7 +24,7 @@ def _configure_args(
         parser: argparse.ArgumentParser,
 ) -> argparse.ArgumentParser:
     parser.add_argument(
-        '-t', '--template', default='prepare_commit_msg_append.j2',
+        '-t', '--template', default=_get_default_template(),
         help='Template to use for the commit message.',
     )
     parser.add_argument(
@@ -42,24 +41,20 @@ def _configure_args(
     return parser
 
 
-def get_jinja_env() -> Environment:
-    return Environment(
-        loader=PackageLoader('pre_commit_hooks'),
-        autoescape=select_autoescape(),
-    )
+def _get_default_template() -> str:
+    return get_template_path('prepare_commit_msg_append.j2')
 
 
 def get_rendered_template(
-        jinja: Environment,
         template_file: str,
         variables: dict[str, str],
 ) -> str:
-    template = jinja.get_template(template_file)
+    with open(template_file) as f:
+        template = Template(f.read())
     return template.render(variables)
 
 
 def update_commit_file(
-        jinja: Environment,
         commit_msg_file: str,
         template: str,
         ticket: str,
@@ -81,7 +76,6 @@ def update_commit_file(
         }
 
         content = get_rendered_template(
-            jinja=jinja,
             template_file=template,
             variables=variables,
         )
@@ -114,9 +108,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         # checked white listed branches
         return 0
 
-    jinja = get_jinja_env()
     commit_file = args.COMMIT_MSG_FILE[0]
-    return update_commit_file(jinja, commit_file, args.template, matches[0])
+    return update_commit_file(commit_file, args.template, matches[0])
 
 
 if __name__ == '__main__':
