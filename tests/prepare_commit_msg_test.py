@@ -6,7 +6,7 @@ from pre_commit_hooks.prepare_commit_msg import get_current_branch
 from pre_commit_hooks.prepare_commit_msg import main
 from pre_commit_hooks.prepare_commit_msg import update_commit_file
 from pre_commit_hooks.util import cmd_output
-from testing.util import get_template_path
+from pre_commit_hooks.util import get_template_path
 
 
 def test_current_branch(temp_git_dir):

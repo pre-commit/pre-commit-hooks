@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import subprocess
 from typing import Any
 
@@ -30,3 +31,8 @@ def zsplit(s: str) -> list[str]:
         return s.split('\0')
     else:
         return []
+
+
+def get_template_path(path: str) -> str:
+    parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    return os.path.join(parent_dir, 'templates', path)

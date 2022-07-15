@@ -8,7 +8,7 @@ from jinja2 import Template
 
 from pre_commit_hooks.util import CalledProcessError
 from pre_commit_hooks.util import cmd_output
-from testing.util import get_template_path
+from pre_commit_hooks.util import get_template_path
 
 
 def get_current_branch() -> str:
