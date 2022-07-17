@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from os import linesep
+
 import pytest
 
 from pre_commit_hooks.prepare_commit_msg import get_current_branch
@@ -58,13 +60,14 @@ TESTS = (
     ),
     (
         b'',
-        b'\n\nRelates: #AA-01\n\n',
+        f'{linesep}{linesep}Relates: #AA-01{linesep}{linesep}'.encode(),
         'feature/AA-01',
         get_template_path('prepare_commit_msg_append.j2'),
     ),
     (
         b'Initial message',
-        b'Initial message\n\nRelates: #AA-02\n\n',
+        f'Initial message{linesep}{linesep}Relates: #AA-02{linesep}{linesep}'
+        .encode(),
         'feature/AA-02',
         get_template_path('prepare_commit_msg_append.j2'),
     ),
@@ -120,15 +123,18 @@ def test_main(
 
 TESTS_TEMPLATES = (
     (
-        b'Initial Message\n\n# Git commented\n# output simulated',
-        b'[1.0.0] Initial Message\n\n# Git commented\n# output simulated',
+        f'Initial Message{linesep}{linesep}# Git commented{linesep}# '
+        f'output simulated'.encode(),
+        f'[1.0.0] Initial Message{linesep}{linesep}# Git commented{linesep}# '
+        f'output simulated'.encode(),
         'release/1.0.0',  # but this should
         get_template_path('prepare_commit_msg_prepend.j2'),
     ),
     (
-        b'Initial Message\n# Git commented\n# output simulated',
-        b'Initial Message\n\nRelates: #1.0.0\n\n'
-        b'# Git commented\n# output simulated',
+        f'Initial Message{linesep}# Git commented{linesep}# output '
+        f'simulated'.encode(),
+        f'Initial Message{linesep}{linesep}Relates: #1.0.0{linesep}{linesep}'
+        f'# Git commented{linesep}# output simulated'.encode(),
         'release/1.0.0',  # but this should
         get_template_path('prepare_commit_msg_append.j2'),
     ),
