@@ -28,6 +28,12 @@ TESTS = (
     ),
     (
         b'',
+        b'',
+        'master',  # this should not trigger anything
+        'prepare_commit_msg_prepend.j2',
+    ),
+    (
+        b'',
         b'[1.0.0] ',
         'release/1.0.0',  # but this should
         get_template_path('prepare_commit_msg_prepend.j2'),
