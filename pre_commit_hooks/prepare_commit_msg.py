@@ -6,16 +6,12 @@ from typing import Sequence
 
 from jinja2 import Template
 
-from pre_commit_hooks.util import CalledProcessError
 from pre_commit_hooks.util import cmd_output
 from pre_commit_hooks.util import get_template_path
 
 
 def get_current_branch() -> str:
-    try:
-        ref_name = cmd_output('git', 'symbolic-ref', '--short', 'HEAD')
-    except CalledProcessError:
-        return ''
+    ref_name = cmd_output('git', 'symbolic-ref', '--short', 'HEAD')
 
     return ref_name.strip()
 
