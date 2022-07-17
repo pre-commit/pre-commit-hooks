@@ -34,5 +34,5 @@ def zsplit(s: str) -> list[str]:
 
 
 def get_template_path(path: str) -> str:
-    parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+    parent_dir = os.path.abspath(os.getcwd())
     return os.path.join(parent_dir, 'templates', path)
