@@ -167,7 +167,7 @@
     description: verifies that test files are named correctly.
     entry: name-tests-test
     language: python
-    files: (^|/)tests/.+\.py$
+    files: (^|/)test(s)?/.+\.py$
 -   id: no-commit-to-branch
     name: "don't commit to branch"
     entry: no-commit-to-branch
