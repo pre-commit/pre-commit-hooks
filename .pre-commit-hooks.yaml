@@ -191,3 +191,8 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: notify-duplicate-entry
+    name: Notify duplicate entry
+    description: Notifies duplicate entry in the same file
+    entry: notify-duplicate-entry
+    language: python
