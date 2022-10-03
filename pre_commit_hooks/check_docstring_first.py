@@ -18,7 +18,7 @@ def _push_code(seen_code: io.StringIO, tok_type: int, text: str):
         return
     seen_code.write(text)
     if text and not text.isspace():
-        seen_code.write(" ")
+        seen_code.write(' ')
 
 
 def check_docstring_first(src: bytes, filename: str = '<unknown>') -> int:
