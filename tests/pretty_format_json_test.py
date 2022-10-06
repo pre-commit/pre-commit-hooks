@@ -23,6 +23,8 @@ def test_parse_num_to_int():
         ('unsorted_pretty_formatted_json.json', 1),
         ('non_ascii_pretty_formatted_json.json', 1),
         ('pretty_formatted_json.json', 0),
+        # numbers with high precision should not be modified.
+        ('high_precision_numbers.json', 0),
     ),
 )
 def test_main(filename, expected_retval):

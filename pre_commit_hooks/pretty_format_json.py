@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import argparse
-import json
+import simplejson as json
 import sys
 from difflib import unified_diff
 from typing import Mapping
@@ -23,7 +23,7 @@ def _get_pretty_format(
             after.sort()
         return dict(before + after)
     json_pretty = json.dumps(
-        json.loads(contents, object_pairs_hook=pairs_first),
+        json.loads(contents, object_pairs_hook=pairs_first, use_decimal=True),
         indent=indent,
         ensure_ascii=ensure_ascii,
     )
