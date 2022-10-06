@@ -30,8 +30,8 @@ def fix_strings(filename: str) -> int:
                 if fixed != source_in_1_line:
                     fixed_lines = fixed.split('\n')
                     cell['source'] = (
-                            [_ + '\n' for _ in fixed_lines[:-1]]
-                            + [fixed_lines[-1]]
+                        [_ + '\n' for _ in fixed_lines[:-1]] +
+                        [fixed_lines[-1]]
                     )
                     return_value = 1
 
@@ -41,7 +41,7 @@ def fix_strings(filename: str) -> int:
                 json.dump(notebook_contents, f, indent=1)
                 # Jupyter notebooks (.ipynb) always ends with a new line
                 # but json.dump does not.
-                f.write("\n")
+                f.write('\n')
 
         return return_value
 
