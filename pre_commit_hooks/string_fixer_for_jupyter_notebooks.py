@@ -16,7 +16,7 @@ def fix_strings(filename: str) -> int:
         with open(filename) as f:
             notebook_contents = json.load(f)
     except json.JSONDecodeError as exc:
-        print(f'{filename}: Failed to load')
+        print(f'{filename}: Failed to load ({exc})')
         return 1
     else:
         cells = notebook_contents['cells']
