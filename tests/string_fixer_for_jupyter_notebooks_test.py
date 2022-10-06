@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from pre_commit_hooks.string_fixer_for_jupyter_notebooks import main
@@ -9,6 +11,7 @@ TESTS = (
     # the file in Case 2 is not altered, so we reload the same file
     ('jupyter_case_2.ipynb', 'jupyter_case_2.ipynb', 0),
 )
+
 
 @pytest.mark.parametrize(('input_file', 'output_file', 'expected_retv'), TESTS)
 def test_rewrite(input_file, output_file, expected_retv, tmpdir):
