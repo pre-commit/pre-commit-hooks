@@ -1,11 +1,12 @@
 from __future__ import annotations
 
 import argparse
-import simplejson as json
 import sys
 from difflib import unified_diff
 from typing import Mapping
 from typing import Sequence
+
+import simplejson as json
 
 
 def _get_pretty_format(
