@@ -125,6 +125,12 @@
     entry: double-quote-string-fixer
     language: python
     types: [python]
+-   id: double-quote-string-fixer-jupyter-notebooks
+    name: fix double quoted strings in Jupyter notebooks
+    description: replaces double quoted strings with single quoted strings in Jupyter notebooks.
+    entry: double-quote-string-fixer-jupyter-notebooks
+    lanbuage: python
+    files: (^|/).*\.ipynb$
 -   id: end-of-file-fixer
     name: fix end of files
     description: ensures that a file is either empty, or ends with one newline.
