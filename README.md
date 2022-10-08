@@ -114,17 +114,23 @@ This hook replaces double quoted strings with single quoted strings.
 #### `end-of-file-fixer`
 Makes sure files end in a newline and only a newline.
 
+#### `file-contents-sorter`
+Sort the lines in specified files (defaults to alphabetical).
+You must provide the target [`files`](https://pre-commit.com/#config-files) as input, for example:
+
+```yaml
+    -   id: file-contents-sorter
+        files: \.gitignore
+```
+
+Note that this hook WILL remove blank lines and does NOT respect any comments.
+
 #### `fix-byte-order-marker`
 removes UTF-8 byte order marker
 
 #### `fix-encoding-pragma`
 Add `# -*- coding: utf-8 -*-` to the top of python files.
   - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
-
-#### `file-contents-sorter`
-Sort the lines in specified files (defaults to alphabetical).
-You must provide list of target files as input to it.
-Note that this hook WILL remove blank lines and does NOT respect any comments.
 
 The following arguments are available:
 - `--ignore-case` - fold lower case to upper case characters.
