@@ -116,13 +116,7 @@ Makes sure files end in a newline and only a newline.
 
 #### `file-contents-sorter`
 Sort the lines in specified files (defaults to alphabetical).
-You must provide the target [`files`](https://pre-commit.com/#config-files) as input, for example:
-
-```yaml
-    -   id: file-contents-sorter
-        files: \.gitignore
-```
-
+You must provide the target [`files`](https://pre-commit.com/#config-files) as input.
 Note that this hook WILL remove blank lines and does NOT respect any comments.
 
 #### `fix-byte-order-marker`
