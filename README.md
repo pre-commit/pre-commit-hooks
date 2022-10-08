@@ -182,6 +182,8 @@ the following commandline options:
 #### `requirements-txt-fixer`
 Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
 
+Use `args: ["file1.txt", "requirements/file2.txt"]` to sort requirement files with custom names.
+
 #### `sort-simple-yaml`
 Sorts simple YAML files which consist only of top-level
 keys, preserving comments and blocks.
