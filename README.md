@@ -88,6 +88,10 @@ Attempts to load all yaml files to verify syntax.
     portability to other yaml implementations.
     Implies `--allow-multiple-documents`.
 
+#### `check-yaml-filename-extension`
+Ensures that yaml file names ends with a specified extension.
+  - `--extension` - Specifies which extension to use `yaml` or `yml`. Defaults to `yaml`.
+
 #### `debug-statements`
 Check for debugger imports and py37+ `breakpoint()` calls in python source.
 

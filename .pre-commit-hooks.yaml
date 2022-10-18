@@ -95,6 +95,12 @@
     entry: check-yaml
     language: python
     types: [yaml]
+-   id: check-yaml-filename-extension
+    name: check yaml filename extension
+    description: checks that yaml file names ends with specified extension.
+    entry: check-yaml-filename-extension
+    language: python
+    types: [yaml]
 -   id: debug-statements
     name: debug statements (python)
     description: checks for debugger imports and py37+ `breakpoint()` calls in python source.
