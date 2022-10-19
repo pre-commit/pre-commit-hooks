@@ -68,12 +68,6 @@ from pre_commit_hooks.file_contents_sorter import PASS
         (
             b'fee\nFie\nFoe\nfum\n',
             ['--unique', '--ignore-case'],
-            PASS,
-            b'fee\nFie\nFoe\nfum\n',
-        ),
-        (
-            b'fee\nfee\nFie\nFoe\nfum\n',
-            ['--unique', '--ignore-case'],
             FAIL,
             b'fee\nFie\nFoe\nfum\n',
         ),

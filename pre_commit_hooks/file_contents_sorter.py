@@ -65,6 +65,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
+    if args.ignore_case and args.unique:
+        print('ERROR: usage of --unique and --ignore-case is unsupported. \
+        Please update your configuration.')
+        return FAIL
+
     retv = PASS
 
     for arg in args.filenames:
