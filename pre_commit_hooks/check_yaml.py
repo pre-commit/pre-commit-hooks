@@ -8,7 +8,7 @@ from typing import Sequence
 
 import ruamel.yaml
 
-yaml = ruamel.yaml.YAML(typ='safe')
+yaml = ruamel.yaml.YAML(typ='safe', pure=True)
 
 
 def _exhaust(gen: Generator[str, None, None]) -> None:
