@@ -1,3 +1,11 @@
+4.4.0 - 2022-11-23
+==================
+
+### Features
+- `forbid-submodules`: new hook which outright bans submodules.
+    - #815 PR by @asottile.
+    - #707 issue by @ChiefGokhlayeh.
+
 4.3.0 - 2022-06-07
 ==================
 
