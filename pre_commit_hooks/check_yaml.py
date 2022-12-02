@@ -65,15 +65,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     load_fn = LOAD_FNS[Key(multi=args.multi, unsafe=args.unsafe)]
 
     if args.ignore_ansible_vault:
-        def ignore_ansible_vault(loader: ruamel.yaml.Loader,
-                                 node: ruamel.yaml.Node) -> Any:
+        def ignore_ansible_vault(
+            loader: ruamel.yaml.Loader,
+            node: ruamel.yaml.Node,
+        ) -> Any:
             if node.value.startswith('!vault'):
                 node.value = node.value[1:]
             return loader.construct_yaml_str(node)
 
-        ruamel.yaml.add_constructor(u'!vault',
-                                    ignore_ansible_vault,
-                                    constructor=ruamel.yaml.SafeConstructor)
+        ruamel.yaml.add_constructor(
+            '!vault',
+            ignore_ansible_vault,
+            constructor=ruamel.yaml.SafeConstructor,
+        )
 
     retval = 0
     for filename in args.filenames:
