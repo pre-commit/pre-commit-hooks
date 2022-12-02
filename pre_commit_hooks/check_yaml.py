@@ -52,10 +52,28 @@ def main(argv: Sequence[str] | None = None) -> int:
             'Implies --allow-multiple-documents'
         ),
     )
+    parser.add_argument(
+        '--ignore-ansible-vault', action='store_true',
+        help=(
+            'Ignore keys that look like ansible vault encrypted values.  '
+            'This works by removing the "!" from the "!vault" value prefix.'
+        ),
+    )
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)
 
     load_fn = LOAD_FNS[Key(multi=args.multi, unsafe=args.unsafe)]
+
+    if args.ignore_ansible_vault:
+        def ignore_ansible_vault(loader: ruamel.yaml.Loader,
+                                 node: ruamel.yaml.Node) -> Any:
+            if node.value.startswith('!vault'):
+                node.value = node.value[1:]
+            return loader.construct_yaml_str(node)
+
+        ruamel.yaml.add_constructor(u'!vault',
+                                    ignore_ansible_vault,
+                                    constructor=ruamel.yaml.SafeConstructor)
 
     retval = 0
     for filename in args.filenames:

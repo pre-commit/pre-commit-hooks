@@ -51,3 +51,22 @@ def test_main_unsafe_still_fails_on_syntax_errors(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write('[')
     assert main(('--unsafe', str(f)))
+
+
+def test_main_ignore_ansible_vault(tmpdir):
+    f = tmpdir.join('test.yaml')
+    f.write(
+        'some_foo: !vault |\n'
+        '    $ANSIBLE_VAULT;1.1;AES256\n'
+        '    deadbeefdeadbeefdeadbeef\n',
+    )
+    # should fail "safe" check
+    assert main((str(f),))
+    # should pass when we allow unsafe documents
+    assert not main(('--ignore-ansible-vault', str(f)))
+
+
+def test_main_ignore_ansible_vault_still_fails_on_syntax_errors(tmpdir):
+    f = tmpdir.join('test.yaml')
+    f.write('[')
+    assert main(('--ignore-ansible-vault', str(f)))
