@@ -108,6 +108,14 @@ The following arguments are available:
 #### `detect-private-key`
 Checks for the existence of private keys.
 
+The following arguments are available:
+- `--whitelist` - the filename with with the files (relative path) to whitelist. For example:
+
+  ```yaml
+  - id: detect-private-key
+    args: [--whitelist=.detect-private-key.whitelist]
+  ```
+
 #### `double-quote-string-fixer`
 This hook replaces double quoted strings with single quoted strings.
 

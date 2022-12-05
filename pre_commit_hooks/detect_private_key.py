@@ -20,14 +20,24 @@ BLACKLIST = [
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
+    parser.add_argument(
+        '--whitelist',
+        help='The filename with with the files (relative path) to whitelist',
+    )
     args = parser.parse_args(argv)
 
     private_key_files = []
+    whitelisted_files = ''
+
+    if args.whitelist:
+        with open(args.whitelist) as f:
+            whitelisted_files = f.read()
 
     for filename in args.filenames:
         with open(filename, 'rb') as f:
             content = f.read()
-            if any(line in content for line in BLACKLIST):
+            if any(line in content for line in BLACKLIST) \
+                    and filename not in whitelisted_files:
                 private_key_files.append(filename)
 
     if private_key_files:
