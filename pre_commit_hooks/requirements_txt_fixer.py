@@ -115,7 +115,10 @@ def fix_requirements(f: IO[bytes]) -> int:
     # which is automatically added by broken pip package under Debian
     requirements = [
         req for req in requirements
-        if req.value != b'pkg-resources==0.0.0\n'
+        if req.value not in [
+            b'pkg-resources==0.0.0\n',
+            b'pkg_resources==0.0.0\n',
+        ]
     ]
 
     # sort the requirements and remove duplicates
