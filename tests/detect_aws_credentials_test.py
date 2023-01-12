@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
+from pre_commit_hooks.detect_aws_credentials import filter_keys
 from pre_commit_hooks.detect_aws_credentials import get_aws_cred_files_from_env
 from pre_commit_hooks.detect_aws_credentials import get_aws_secrets_from_env
 from pre_commit_hooks.detect_aws_credentials import get_aws_secrets_from_file
@@ -102,6 +103,18 @@ def test_get_aws_secrets_from_file(filename, expected_keys):
 
 
 @pytest.mark.parametrize(
+    ('keys', 'exclude', 'expected_ret'),
+    (
+        ({'foo', 'bar'}, '^$', {'foo', 'bar'}),
+        ({'foo', 'bar', 'baz'}, '^bar$', {'foo', 'baz'}),
+        ({'foo', 'bar', 'baz'}, '^ba', {'foo'}),
+    ),
+)
+def test_filter_keys(keys, exclude, expected_ret):
+    assert filter_keys(keys, exclude) == expected_ret
+
+
+@pytest.mark.parametrize(
     ('filename', 'expected_retval'),
     (
         ('aws_config_with_secret.ini', 1),
@@ -117,6 +130,26 @@ def test_detect_aws_credentials(filename, expected_retval):
     # with a valid credentials file
     ret = main((
         get_resource_path(filename),
+        '--credentials-file',
+        'testing/resources/aws_config_with_multiple_sections.ini',
+    ))
+    assert ret == expected_retval
+
+
+@pytest.mark.parametrize(
+    ('filename', 'exclude', 'expected_retval'),
+    (
+        ('aws_config_with_secret.ini', '.*rpg.*', 0),
+        ('aws_config_with_multiple_sections.ini', '.*rpg.*', 1),
+    ),
+)
+def test_detect_aws_credentials_with_exclude(
+        filename, exclude, expected_retval,
+):
+    ret = main((
+        get_resource_path(filename),
+        '--exclude-values',
+        exclude,
         '--credentials-file',
         'testing/resources/aws_config_with_multiple_sections.ini',
     ))

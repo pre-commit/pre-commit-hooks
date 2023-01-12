@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import configparser
 import os
+import re
 from typing import NamedTuple
 from typing import Sequence
 
@@ -89,6 +90,11 @@ def check_file_for_aws_keys(
     return bad_files
 
 
+def filter_keys(keys: set[str], exclude: str) -> set[str]:
+    pattern = re.compile(exclude)
+    return {key for key in keys if not pattern.match(key)}
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Filenames to run')
@@ -109,6 +115,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         dest='allow_missing_credentials',
         action='store_true',
         help='Allow hook to pass when no credentials are detected.',
+    )
+    parser.add_argument(
+        '--exclude-values',
+        dest='exclude_values',
+        default='^$',
+        help='Regular expression for secret values that should be excluded.',
     )
     args = parser.parse_args(argv)
 
@@ -137,7 +149,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         return 2
 
-    keys_b = {key.encode() for key in keys}
+    keys_b = {key.encode() for key in filter_keys(keys, args.exclude_values)}
     bad_filenames = check_file_for_aws_keys(args.filenames, keys_b)
     if bad_filenames:
         for bad_file in bad_filenames:
