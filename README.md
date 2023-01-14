@@ -179,7 +179,7 @@ the following commandline options:
   - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 
 #### `requirements-txt-fixer`
-Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
+Sorts entries in requirements.txt and constraints.txt and removes incorrect entry for `pkg-resources==0.0.0`
 
 #### `sort-simple-yaml`
 Sorts simple YAML files which consist only of top-level
