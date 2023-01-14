@@ -49,21 +49,26 @@ def sort_file_contents(
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(exit_on_error=False)
     parser.add_argument('filenames', nargs='+', help='Files to sort')
-    parser.add_argument(
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
         '--ignore-case',
         action='store_const',
         const=bytes.lower,
         default=None,
         help='fold lower case to upper case characters',
     )
-    parser.add_argument(
+    group.add_argument(
         '--unique',
         action='store_true',
         help='ensure each line is unique',
     )
-    args = parser.parse_args(argv)
+    try:
+        args = parser.parse_args(argv)
+    except argparse.ArgumentError as e:
+        print(f'{e}')
+        return FAIL
 
     retv = PASS
 
