@@ -17,6 +17,7 @@ class Requirement:
     def __init__(self) -> None:
         self.value: bytes | None = None
         self.comments: list[bytes] = []
+        self.index_urls: list[bytes] = []
 
     @property
     def name(self) -> bytes:
@@ -64,6 +65,8 @@ def fix_requirements(f: IO[bytes]) -> int:
     requirements: list[Requirement] = []
     before = list(f)
     after: list[bytes] = []
+    index_options: list[bytes] = []
+    extra_index_options: list[bytes] = []
 
     before_string = b''.join(before)
 
@@ -97,6 +100,13 @@ def fix_requirements(f: IO[bytes]) -> int:
                 requirement.comments.append(line)
         elif line.lstrip().startswith(b'#') or line.strip() == b'':
             requirement.comments.append(line)
+        elif (
+                line.lstrip().startswith(b'-i ') or
+                line.lstrip().startswith(b'--index-url')
+        ):
+            index_options.append(line)
+        elif line.lstrip().startswith(b'--extra-index-url'):
+            extra_index_options.append(line)
         else:
             requirement.append_value(line)
 
@@ -113,6 +123,8 @@ def fix_requirements(f: IO[bytes]) -> int:
         if req.value != b'pkg-resources==0.0.0\n'
     ]
 
+    after.extend(index_options)
+    after.extend(extra_index_options)
     for requirement in sorted(requirements):
         after.extend(requirement.comments)
         assert requirement.value, requirement.value

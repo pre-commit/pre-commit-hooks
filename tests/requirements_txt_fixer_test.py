@@ -99,6 +99,27 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             PASS,
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
+        (
+            b'# Bar\n'
+            b'--extra-index-url http://dist.repoze.org/zope2/2.10/simple\n'
+            b'zopelib2\n'
+            b'# Foo\n'
+            b'-i http://dist.repoze.org/zope2/2.10/simple\n'
+            b'zopelib1\n'
+            b'# Baz\n'
+            b'--index-url http://dist.repoze.org/zope2/2.10/simple\n'
+            b'zopelib3',
+            FAIL,
+            b'-i http://dist.repoze.org/zope2/2.10/simple\n'
+            b'--index-url http://dist.repoze.org/zope2/2.10/simple\n'
+            b'--extra-index-url http://dist.repoze.org/zope2/2.10/simple\n'
+            b'# Foo\n'
+            b'zopelib1\n'
+            b'# Bar\n'
+            b'zopelib2\n'
+            b'# Baz\n'
+            b'zopelib3\n',
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):
