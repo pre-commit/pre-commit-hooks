@@ -42,17 +42,17 @@ class FloatPreservingEncoder(json.JSONEncoder):
         ):
 
             if o != o:
-                text = "NaN"
+                text = 'NaN'
             elif o == _inf:
-                text = "Infinity"
+                text = 'Infinity'
             elif o == _neginf:
-                text = "-Infinity"
+                text = '-Infinity'
             else:
                 return _repr(o)
 
             if not allow_nan:
                 raise ValueError(
-                    "Out of range float values are not JSON compliant: " + repr(o)
+                    'Out of range float values are not JSON compliant: ' + repr(o),
                 )
 
             return text
