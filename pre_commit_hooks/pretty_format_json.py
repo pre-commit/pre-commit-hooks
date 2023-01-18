@@ -4,8 +4,72 @@ import argparse
 import json
 import sys
 from difflib import unified_diff
+from typing import Any
+from typing import Iterator
 from typing import Mapping
 from typing import Sequence
+
+
+class FloatString(float):
+    def __init__(self, str_value: str):
+        self.str_value = str_value
+
+    def __repr__(self):
+        return self.str_value
+
+
+def float_parser(value: str) -> FloatString:
+    return FloatString(value)
+
+
+class FloatPreservingEncoder(json.JSONEncoder):
+    def iterencode(self, o: Any, _one_shot: bool = ...) -> Iterator[str] | str:
+        if self.check_circular:
+            markers = {}
+        else:
+            markers = None
+        if self.ensure_ascii:
+            _encoder = json.encoder.encode_basestring_ascii
+        else:
+            _encoder = json.encoder.encode_basestring
+
+        def floatstr(
+            o,
+            allow_nan=self.allow_nan,
+            _repr=FloatString.__repr__,
+            _inf=json.encoder.INFINITY,
+            _neginf=-json.encoder.INFINITY,
+        ):
+
+            if o != o:
+                text = "NaN"
+            elif o == _inf:
+                text = "Infinity"
+            elif o == _neginf:
+                text = "-Infinity"
+            else:
+                return _repr(o)
+
+            if not allow_nan:
+                raise ValueError(
+                    "Out of range float values are not JSON compliant: " + repr(o)
+                )
+
+            return text
+
+        _iterencode = json.encoder._make_iterencode(
+            markers,
+            self.default,
+            _encoder,
+            self.indent,
+            floatstr,
+            self.key_separator,
+            self.item_separator,
+            self.sort_keys,
+            self.skipkeys,
+            _one_shot,
+        )
+        return _iterencode(o, 0)
 
 
 def _get_pretty_format(
@@ -23,9 +87,10 @@ def _get_pretty_format(
             after.sort()
         return dict(before + after)
     json_pretty = json.dumps(
-        json.loads(contents, object_pairs_hook=pairs_first),
+        json.loads(contents, object_pairs_hook=pairs_first, parse_float=float_parser),
         indent=indent,
         ensure_ascii=ensure_ascii,
+        cls=FloatPreservingEncoder,
     )
     return f'{json_pretty}\n'
 
