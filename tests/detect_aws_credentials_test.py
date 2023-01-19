@@ -125,6 +125,7 @@ def test_detect_aws_credentials(filename, expected_retval):
 
 def test_allows_arbitrarily_encoded_files(tmpdir):
     src_ini = tmpdir.join('src.ini')
+    # these are dummy credentials for testing
     src_ini.write(
         '[default]\n'
         'aws_access_key_id=AKIASDFASDF\n'
