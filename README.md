@@ -6,7 +6,7 @@ pre-commit-hooks
 
 Some out-of-the-box hooks for pre-commit.
 
-See also: https://github.com/pre-commit/pre-commit
+See also: https://github.com/pre-commit/pre-commit.
 
 
 ### Using pre-commit-hooks with pre-commit
@@ -56,7 +56,7 @@ Attempts to load all json files to verify syntax.
 
 #### `check-merge-conflict`
 Check for files that contain merge conflict strings.
-  - `--assume-in-merge` - Allows running the hook when there is no ongoing merge operation
+  - `--assume-in-merge` - Allows running the hook when there is no ongoing merge operation.
 
 #### `check-shebang-scripts-are-executable`
 Checks that scripts with shebangs are executable.
@@ -119,7 +119,7 @@ You must provide the target [`files`](https://pre-commit.com/#config-files) as i
 Note that this hook WILL remove blank lines and does NOT respect any comments.
 
 #### `fix-byte-order-marker`
-removes UTF-8 byte order marker
+removes UTF-8 byte order marker.
 
 #### `fix-encoding-pragma`
 Add `# -*- coding: utf-8 -*-` to the top of python files.
@@ -132,8 +132,8 @@ The following arguments are available:
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
 
-This is intended as a helper to migrate away from submodules.  If you want to
-ban them entirely use `forbid-submodules`
+This is intended as a helper to migrate away from submodules. If you want to
+ban them entirely use `forbid-submodules`.
 
 #### `forbid-submodules`
 forbids any submodules in the repository.
@@ -169,13 +169,13 @@ Set [`always_run: false`](https://pre-commit.com/#config-always_run) to allow th
 file filters. Caveat: In this configuration, empty commits (`git commit --allow-empty`) would always be allowed by this hook.
 
 #### `pretty-format-json`
-Checks that all your JSON files are pretty.  "Pretty"
-here means that keys are sorted and indented.  You can configure this with
+Checks that all your JSON files are pretty. "Pretty"
+here means that keys are sorted and indented. You can configure this with
 the following commandline options:
-  - `--autofix` - automatically format json files
-  - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace).  Defaults to 2 spaces.
-  - `--no-ensure-ascii` preserve unicode characters instead of converting to escape sequences
-  - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
+  - `--autofix` - automatically format json files.
+  - `--indent ...` - Control the indentation (either a number for a number of spaces or a string of whitespace). Defaults to 2 spaces.
+  - `--no-ensure-ascii` preserve unicode characters instead of converting to escape sequences.
+  - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys).
   - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 
 #### `requirements-txt-fixer`
@@ -205,10 +205,10 @@ Trims trailing whitespace.
 
 ### Deprecated / replaced hooks
 
-- `check-byte-order-marker`: instead use fix-byte-order-marker
+- `check-byte-order-marker`: instead use fix-byte-order-marker.
 
 ### As a standalone package
 
 If you'd like to use these hooks, they're also available as a standalone package.
 
-Simply `pip install pre-commit-hooks`
+Simply `pip install pre-commit-hooks`.
