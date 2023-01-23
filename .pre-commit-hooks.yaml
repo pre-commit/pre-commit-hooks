@@ -51,7 +51,7 @@
     description: checks terraform files for parseable IAM syntax.
     entry: check-iam
     language: python
-    types: [tf]
+    files: \.tf$
 -   id: check-shebang-scripts-are-executable
     name: check that scripts with shebangs are executable
     description: ensures that (non-binary) files with a shebang are executable.
