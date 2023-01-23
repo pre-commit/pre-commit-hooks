@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import argparse
+from typing import Sequence
+
 import hcl2
 # from typing import Any
-from typing import Sequence
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -11,7 +14,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     retval = 0
     for filename in args.filenames:
-        if filename == "iam.tf":
+        if filename == 'iam.tf':
             continue
         with open(filename, 'rb') as f:
             try:
@@ -23,14 +26,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         if resources:
             for item in resources:
                 for keys in item:
-                    if key.startswith("aws_iam"):
+                    if key.startswith('aws_iam'):
                         print(f'{filename}: Has {key} resource')
                         retval = 1
         resources = data.get('data')
         if resources:
             for item in resources:
                 for keys in item:
-                    if key.startswith("aws_iam"):
+                    if key.startswith('aws_iam'):
                         print(f'{filename}: Has {key} data resource')
                         retval = 1
     return retval
