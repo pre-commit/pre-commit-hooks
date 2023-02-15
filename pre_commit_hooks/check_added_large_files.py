@@ -34,13 +34,16 @@ def find_large_added_files(
         filenames: Sequence[str],
         maxkb: int,
         *,
+        skip_lfs_files: bool = False,
         enforce_all: bool = False,
 ) -> int:
     # Find all added files that are also in the list of files pre-commit tells
     # us about
     retv = 0
     filenames_filtered = set(filenames)
-    filter_lfs_files(filenames_filtered)
+
+    if skip_lfs_files:
+        filter_lfs_files(filenames_filtered)
 
     if not enforce_all:
         filenames_filtered &= added_files()
@@ -68,11 +71,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--maxkb', type=int, default=500,
         help='Maximum allowable KB for added files',
     )
+    parser.add_argument(
+        '--no-skip-lfs-files', action='store_true',
+        help='Do not skip Git LFS files.',
+    )
     args = parser.parse_args(argv)
 
     return find_large_added_files(
         args.filenames,
         args.maxkb,
+        skip_lfs_files=not args.no_skip_lfs_files,
         enforce_all=args.enforce_all,
     )
 
