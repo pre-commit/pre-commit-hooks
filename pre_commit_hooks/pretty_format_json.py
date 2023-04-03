@@ -12,21 +12,22 @@ from typing import Union
 INFINITY = float('inf')
 
 
-def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
-                     _key_separator, _item_separator, _sort_keys, _skipkeys,
-                     _one_shot,
-                     ## HACK: hand-optimized bytecode; turn globals into locals
-                     ValueError=ValueError,
-                     dict=dict,
-                     float=float,
-                     id=id,
-                     int=int,
-                     isinstance=isinstance,
-                     list=list,
-                     str=str,
-                     tuple=tuple,
-                     _intstr=int.__str__,
-                     ):
+def _make_iterencode(
+    markers, _default, _encoder, _indent, _floatstr,
+    _key_separator, _item_separator, _sort_keys, _skipkeys,
+    _one_shot,
+    ## HACK: hand-optimized bytecode; turn globals into locals
+    ValueError=ValueError,
+    dict=dict,
+    float=float,
+    id=id,
+    int=int,
+    isinstance=isinstance,
+    list=list,
+    str=str,
+    tuple=tuple,
+    _intstr=int.__str__,
+):
 
     if _indent is not None and not isinstance(_indent, str):
         _indent = ' ' * _indent
@@ -38,7 +39,7 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         if markers is not None:
             markerid = id(lst)
             if markerid in markers:
-                raise ValueError("Circular reference detected")
+                raise ValueError('Circular reference detected')
             markers[markerid] = lst
         buf = '['
         if _indent is not None:
@@ -95,7 +96,7 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
         if markers is not None:
             markerid = id(dct)
             if markerid in markers:
-                raise ValueError("Circular reference detected")
+                raise ValueError('Circular reference detected')
             markers[markerid] = dct
         yield '{'
         if _indent is not None:
@@ -131,8 +132,10 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
             elif _skipkeys:
                 continue
             else:
-                raise TypeError(f'keys must be str, int, float, bool or None, '
-                                f'not {key.__class__.__name__}')
+                raise TypeError(
+                    f'keys must be str, int, float, bool or None, '
+                    f'not {key.__class__.__name__}',
+                )
             if first:
                 first = False
             else:
@@ -191,7 +194,7 @@ def _make_iterencode(markers, _default, _encoder, _indent, _floatstr,
             if markers is not None:
                 markerid = id(o)
                 if markerid in markers:
-                    raise ValueError("Circular reference detected")
+                    raise ValueError('Circular reference detected')
                 markers[markerid] = o
             o = _default(o)
             yield from _iterencode(o, _current_indent_level)
@@ -216,8 +219,10 @@ class CustomJSONEncoder(json.JSONEncoder):
         else:
             markers = None
 
-        def floatstr(o, allow_nan=self.allow_nan,
-                     _repr=float.__repr__, _inf=INFINITY, _neginf=-INFINITY):
+        def floatstr(
+            o, allow_nan=self.allow_nan,
+            _repr=float.__repr__, _inf=INFINITY, _neginf=-INFINITY,
+        ):
             # Check for specials.  Note that this type of test is processor
             # and/or platform-specific, so do tests which don't depend on the
             # internals.
@@ -233,8 +238,9 @@ class CustomJSONEncoder(json.JSONEncoder):
 
             if not allow_nan:
                 raise ValueError(
-                    "Out of range float values are not JSON compliant: " +
-                    repr(o))
+                    'Out of range float values are not JSON compliant: ' +
+                    repr(o),
+                )
 
             return text
 
@@ -243,7 +249,8 @@ class CustomJSONEncoder(json.JSONEncoder):
         _iterencode = _make_iterencode(
             markers, self.default, _encoder, self.indent, floatstr,
             self.key_separator, self.item_separator, self.sort_keys,
-            self.skipkeys, _one_shot)
+            self.skipkeys, _one_shot,
+        )
         return _iterencode(o, 0)
 
 
@@ -253,6 +260,7 @@ def _get_pretty_format(
         ensure_ascii: bool = True,
         sort_keys: bool = True,
         top_keys: Sequence[str] = (),
+        sort_by_first_key: bool = False,
 ) -> str:
     def pairs_first(pairs: Sequence[Tuple[str, str]]) -> Mapping[str, str]:
         before = [pair for pair in pairs if pair[0] in top_keys]
@@ -261,12 +269,16 @@ def _get_pretty_format(
         if sort_keys:
             after.sort()
         return dict(before + after)
+
+    json_contents = json.loads(contents, object_pairs_hook=pairs_first)
+    if sort_by_first_key:
+        json_contents.sort(key=lambda row: list(row.values())[0])
     json_pretty = json.dumps(
-        json.loads(contents, object_pairs_hook=pairs_first),
+        json_contents,
         indent=indent,
         ensure_ascii=ensure_ascii,
         cls=CustomJSONEncoder,
-        separators=(', ', ': ')
+        separators=(', ', ': '),
     )
     return f'{json_pretty}\n'
 
@@ -337,6 +349,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         default=[],
         help='Ordered list of keys to keep at the top of JSON hashes',
     )
+    parser.add_argument(
+        '--sort-by-first-key',
+        dest='sort_by_first_key',
+        action='store_true',
+        default=False,
+        help='Sort the json by a specific key',
+    )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -350,6 +369,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
                 sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
+                sort_by_first_key=args.sort_by_first_key,
             )
         except ValueError:
             print(
