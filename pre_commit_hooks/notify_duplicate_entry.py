@@ -32,7 +32,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         'test_case': 'uuid',
         'test_suit': 'uuid', 'test_supported_version': 'test_case_uuid',
         'testcase_workload_association': 'uuid', 'user': 'uuid',
-        'user_tokens': 'user_token', 'workflow_task': 'workflow_id'
+        'user_tokens': 'user_token', 'workflow_task': 'workflow_id',
+        'context': 'uuid',
     }
 
     args = vars(parser.parse_args(argv))
