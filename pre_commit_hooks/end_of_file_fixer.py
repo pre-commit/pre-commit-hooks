@@ -7,6 +7,7 @@ from typing import Sequence
 
 platform_eol = os.linesep.encode('ascii')
 
+
 def fix_file(file_obj: IO[bytes]) -> int:
     # Test for newline at end of file
     # Empty files will throw IOError here
