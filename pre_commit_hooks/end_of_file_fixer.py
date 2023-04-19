@@ -6,6 +6,26 @@ from typing import IO
 from typing import Sequence
 
 
+def detect_eol_equence(file_obj: IO[bytes]) -> bytes:
+    # readline() doesn't work because it doesn't get \r right
+    eol_marker = b''
+    last_was_eol = False
+    while True:
+        next = file_obj.read(1)
+        if not next:
+            return eol_marker if eol_marker else b'\n'
+
+        if next in (b'\r\n', b'\r', b'\n'):
+            eol_marker += next
+            last_was_eol = True
+        else:
+            # normal character
+            if last_was_eol:
+                return eol_marker
+
+    return b'\n'
+
+
 def fix_file(file_obj: IO[bytes]) -> int:
     # Test for newline at end of file
     # Empty files will throw IOError here
@@ -16,9 +36,10 @@ def fix_file(file_obj: IO[bytes]) -> int:
     last_character = file_obj.read(1)
     # last_character will be '' for an empty file
     if last_character not in {b'\n', b'\r'} and last_character != b'':
-        # Needs this seek for windows, otherwise IOError
+        file_obj.seek(0, os.SEEK_SET)
+        eol_seq = detect_eol_equence(file_obj)
         file_obj.seek(0, os.SEEK_END)
-        file_obj.write(b'\n')
+        file_obj.write(eol_seq)
         return 1
 
     while last_character in {b'\n', b'\r'}:

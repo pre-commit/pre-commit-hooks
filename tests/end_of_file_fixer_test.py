@@ -21,6 +21,9 @@ TESTS = (
     (b'foo\r\n\r\n\r\n', 1, b'foo\r\n'),
     (b'foo\r', 0, b'foo\r'),
     (b'foo\r\r\r\r', 1, b'foo\r'),
+    (b'foo\r\nbar', 1, b'foo\r\nbar\r\n'),
+    (b'foo\nbar', 1, b'foo\nbar\n'),
+    (b'foo\rbar', 1, b'foo\rbar\r'),
 )
 
 
