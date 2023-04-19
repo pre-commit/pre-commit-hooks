@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import os
 
 import pytest
 
@@ -9,14 +10,15 @@ from pre_commit_hooks.end_of_file_fixer import main
 
 
 # Input, expected return value, expected output
+platform_eol = os.linesep.encode('ascii')
 TESTS = (
     (b'foo\n', 0, b'foo\n'),
     (b'', 0, b''),
     (b'\n\n', 1, b''),
     (b'\n\n\n\n', 1, b''),
-    (b'foo', 1, b'foo\n'),
+    (b'foo', 1, b'foo' + platform_eol),
     (b'foo\n\n\n', 1, b'foo\n'),
-    (b'\xe2\x98\x83', 1, b'\xe2\x98\x83\n'),
+    (b'\xe2\x98\x83', 1, b'\xe2\x98\x83' + platform_eol),
     (b'foo\r\n', 0, b'foo\r\n'),
     (b'foo\r\n\r\n\r\n', 1, b'foo\r\n'),
     (b'foo\r', 0, b'foo\r'),

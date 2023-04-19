@@ -5,6 +5,7 @@ import os
 from typing import IO
 from typing import Sequence
 
+platform_eol = os.linesep.encode('ascii')
 
 def fix_file(file_obj: IO[bytes]) -> int:
     # Test for newline at end of file
@@ -18,7 +19,7 @@ def fix_file(file_obj: IO[bytes]) -> int:
     if last_character not in {b'\n', b'\r'} and last_character != b'':
         # Needs this seek for windows, otherwise IOError
         file_obj.seek(0, os.SEEK_END)
-        file_obj.write(b'\n')
+        file_obj.write(platform_eol)
         return 1
 
     while last_character in {b'\n', b'\r'}:
