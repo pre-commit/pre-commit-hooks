@@ -15,6 +15,7 @@ DEBUG_STATEMENTS = {
     'pydevd_pycharm',
     'q',
     'rdb',
+    'celery.contrib',
     'rpdb',
     'wdb',
 }
