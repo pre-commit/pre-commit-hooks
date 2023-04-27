@@ -4,15 +4,23 @@ from typing import Optional
 from typing import Sequence
 from pathlib import Path
 
-def _check_duplicate_entry(json_contents, key):
-    json_dict = {}
-    duplicate_uuids = set()
-    for row in json_contents:
-        if row[key] not in json_dict:
-            json_dict[row[key]] = row
+
+def _check_duplicate_entry(json_entries, pkeys):
+    """ Check duplicate entry based on pkey criteria.
+
+    :param json_entries: List of json entries
+    :param pkeys: List of Primary keys
+    :return: list of duplicated entry pkey value tuples
+    """
+    unique_entries = set()
+    duplicate_entries = set()
+    for entry in json_entries:
+        pkey_value_tuple = tuple(entry[pkey] for pkey in pkeys)
+        if pkey_value_tuple not in unique_entries:
+            unique_entries.add(pkey_value_tuple)
         else:
-            duplicate_uuids.add(row[key])
-    return duplicate_uuids, len(duplicate_uuids)
+            duplicate_entries.add(pkey_value_tuple)
+    return duplicate_entries, len(duplicate_entries)
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
@@ -21,19 +29,27 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                         help='Names of the JSON files to check duplicate entries'
                         )
     table_uuid_mapping = {
-        'action': 'uuid', 'env_property_group': 'uuid',
-        'environment': 'uuid', 'environment_property': 'code',
-        'report_summary': 'uuid',
-        'runner': 'uuid', 'scenario': 'uuid',
-        'sla': 'uuid', 'sla_scenario_association': 'sla', 'tag': 'uuid',
-        'tag_action_association': 'tag_uuid',
-        'tag_case_association': 'test_case_uuid',
-        'teams': 'uuid',
-        'test_case': 'uuid',
-        'test_suit': 'uuid', 'test_supported_version': 'test_case_uuid',
-        'testcase_workload_association': 'uuid', 'user': 'uuid',
-        'user_tokens': 'user_token', 'workflow_task': 'workflow_id',
-        'context': 'uuid',
+        'action': ['uuid'],
+        'env_property_group': ['uuid'],
+        'environment': ['uuid'],
+        'environment_property': ['code'],
+        'report_summary': ['uuid'],
+        'runner': ['uuid'],
+        'scenario': ['uuid'],
+        'sla': ['uuid'],
+        'sla_scenario_association': ['sla', 'scenario'],
+        'tag': ['uuid'],
+        'tag_action_association': ['tag_uuid', 'action_uuid'],
+        'tag_case_association': ['test_case_uuid', 'tag_uuid'],
+        'teams': ['uuid'],
+        'test_case': ['uuid'],
+        'test_suit': ['uuid'],
+        'test_supported_version': ['test_case_uuid', 'version'],
+        'testcase_workload_association': ['uuid'],
+        'user': ['uuid'],
+        'user_tokens': ['user_token'],
+        'workflow_task': ['workflow_id'],
+        'context': ['uuid'],
     }
 
     args = vars(parser.parse_args(argv))
@@ -43,13 +59,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for i in range(len(filenames)):
         json_file = filenames[i]
         file_name = Path(filenames[i]).stem
-        key = table_uuid_mapping[file_name]
+        pkeys = table_uuid_mapping[file_name]
         with open(json_file, encoding='UTF-8') as f:
-            contents = json.load(f)
-        duplicate_uuids, status = _check_duplicate_entry(contents, key)
+            json_entries = json.load(f)
+        duplicate_entries, status = _check_duplicate_entry(json_entries, pkeys)
 
         if status:
-            print(f"Duplicate UUIDs found - {duplicate_uuids} in file "
+            print(f"Duplicate entries found - {duplicate_entries} in file "
                   f"{json_file}")
             flag = True
 
