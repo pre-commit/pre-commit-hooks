@@ -50,6 +50,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         'user_tokens': ['user_token'],
         'workflow_task': ['workflow_id'],
         'context': ['uuid'],
+        'test_sla_association': ['test_case', 'sla'],
+        'teams_association': ['user_uuid', 'team_uuid'],
+        'teams_resource_permission': ['team_uuid', 'resource_name'],
+        'label': ['uuid'],
     }
 
     args = vars(parser.parse_args(argv))
