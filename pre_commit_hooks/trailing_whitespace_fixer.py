@@ -66,14 +66,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
     )
     parser.add_argument(
-        '--quiet','-q',
+        '--quiet', '-q',
         action='store_true',
         default=False,
         help=(
             'Fix whitespace without failing. ',
-            'default: %(default)s'
+            'default: %(default)s',
         ),
-    )                    
+    )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
