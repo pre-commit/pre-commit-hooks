@@ -65,6 +65,15 @@ def main(argv: Sequence[str] | None = None) -> int:
             'Defaults to all whitespace characters.'
         ),
     )
+    parser.add_argument(
+        '--quiet','-q',
+        action='store_true',
+        default=False,
+        help=(
+            'Fix whitespace without failing. ',
+            'default: %(default)s'
+        ),
+    )                    
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -93,7 +102,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     for filename in args.filenames:
         _, extension = os.path.splitext(filename.lower())
         md = all_markdown or extension in md_exts
-        if _fix_file(filename, md, chars):
+        if _fix_file(filename, md, chars) and not args.quiet:
             print(f'Fixing {filename}')
             return_code = 1
     return return_code
