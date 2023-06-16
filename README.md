@@ -135,9 +135,6 @@ Prevent addition of new git submodules.
 This is intended as a helper to migrate away from submodules.  If you want to
 ban them entirely use `forbid-submodules`
 
-#### `forbid-submodules`
-forbids any submodules in the repository.
-
 #### `mixed-line-ending`
 Replaces or checks mixed line ending.
   - `--fix={auto,crlf,lf,no}`
