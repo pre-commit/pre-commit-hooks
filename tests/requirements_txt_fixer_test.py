@@ -122,9 +122,18 @@ def test_requirement_object():
     requirement_bar = Requirement()
     requirement_bar.value = b'bar'
 
+    requirement_baz = Requirement()
+    requirement_baz.value = b'baz>=1.2.3'
+
     # This may look redundant, but we need to test both foo.__lt__(bar) and
     # bar.__lt__(foo)
     assert requirement_foo > top_of_file
     assert top_of_file < requirement_foo
     assert requirement_foo > requirement_bar
     assert requirement_bar < requirement_foo
+
+    # Test the version extraction code
+    assert not requirement_foo.has_version()
+    assert not requirement_bar.has_version()
+    assert requirement_baz.has_version()
+    assert requirement_baz.version == '1.2.3'
