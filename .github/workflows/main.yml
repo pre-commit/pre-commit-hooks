@@ -8,12 +8,12 @@ on:
 
 jobs:
   main-windows:
-    uses: asottile/workflows/.github/workflows/tox.yml@v1.0.0
+    uses: asottile/workflows/.github/workflows/tox.yml@v1.5.0
     with:
       env: '["py38"]'
       os: windows-latest
   main-linux:
-    uses: asottile/workflows/.github/workflows/tox.yml@v1.0.0
+    uses: asottile/workflows/.github/workflows/tox.yml@v1.5.0
     with:
-      env: '["py37", "py38", "py39", "py310"]'
+      env: '["py38", "py39", "py310", "py311"]'
       os: ubuntu-latest
