@@ -118,16 +118,16 @@ Sort the lines in specified files (defaults to alphabetical).
 You must provide the target [`files`](https://pre-commit.com/#config-files) as input.
 Note that this hook WILL remove blank lines and does NOT respect any comments.
 
+The following arguments are available:
+- `--ignore-case` - fold lower case to upper case characters.
+- `--unique` - ensure each line is unique.
+
 #### `fix-byte-order-marker`
 removes UTF-8 byte order marker
 
 #### `fix-encoding-pragma`
 Add `# -*- coding: utf-8 -*-` to the top of python files.
   - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
-
-The following arguments are available:
-- `--ignore-case` - fold lower case to upper case characters.
-- `--unique` - ensure each line is unique.
 
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
