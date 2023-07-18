@@ -87,9 +87,8 @@ Attempts to load all yaml files to verify syntax.
     portability to other yaml implementations.
     Implies `--allow-multiple-documents`.
   - `--allow_duplicate_keys` - Use this parameter to allow duplicate keys in yaml files.
-    In JSON mapping keys should be unique, in YAML they must be unique.
-    PyYAML never enforced this although the YAML 1.1 specification already required this.
-    Duplicate keys in mappings are no longer allowed by default.
+    Duplicate keys in yaml files are not allowed by default.
+    However, e.g. gitlab-ci.yml files may require this.
 
 #### `debug-statements`
 Check for debugger imports and py37+ `breakpoint()` calls in python source.
