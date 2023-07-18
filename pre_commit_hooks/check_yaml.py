@@ -53,8 +53,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         ),
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
+    parser.add_argument(
+        '--allow_duplicate_keys', '--allow-duplicate-keys', action='store_true', 
+        help=('In JSON mapping keys should be unique, in YAML they must be unique.'
+              'PyYAML never enforced this although the YAML 1.1 specification already required this.'
+              'Duplicate keys in mappings are no longer allowed by default.'
+              'Use this parameter to allow duplicate keys in yaml files.'
+        ),
+    )
+
     args = parser.parse_args(argv)
 
+    yaml.allow_duplicate_keys = args.allow_duplicate_keys
+        
     load_fn = LOAD_FNS[Key(multi=args.multi, unsafe=args.unsafe)]
 
     retval = 0
