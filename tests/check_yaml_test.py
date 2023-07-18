@@ -27,6 +27,7 @@ def test_main_allow_multiple_documents(tmpdir):
     # should pass when we allow multiple documents
     assert not main(('--allow-multiple-documents', str(f)))
 
+
 def test_main_allow_duplicate_keys(tmpdir):
     f = get_resource_path('duplicate_key_yaml.notyaml')
     # should fail by default
