@@ -46,7 +46,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--unsafe', action='store_true',
         help=(
             'Instead of loading the files, simply parse them for syntax.  '
-            'A syntax-only check enables extensions and unsafe contstructs '
+            'A syntax-only check enables extensions and unsafe constructs '
             'which would otherwise be forbidden.  Using this option removes '
             'all guarantees of portability to other yaml implementations.  '
             'Implies --allow-multiple-documents'
