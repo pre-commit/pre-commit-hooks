@@ -59,6 +59,7 @@
     entry: pretty-format-json
     language: python
     types: [json]
+    exclude_types: [jupyter]
 -   id: check-merge-conflict
     name: check for merge conflicts
     description: checks for files that contain merge conflict strings.
