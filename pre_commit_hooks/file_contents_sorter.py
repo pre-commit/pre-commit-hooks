@@ -37,7 +37,10 @@ def sort_file_contents(
     after = sorted(lines, key=key)
 
     before_string = b''.join(before)
-    after_string = b'\n'.join(after) + b'\n'
+    after_string = b'\n'.join(after)
+
+    if after_string:
+        after_string += b'\n'
 
     if before_string == after_string:
         return PASS
