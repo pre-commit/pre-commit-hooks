@@ -9,9 +9,11 @@ from difflib import unified_diff
 from typing import Mapping
 from typing import Sequence
 
-def _insert_linebreaks(json_str) -> str:
-    # (?P<spaces>\s*) seems to capture the \n. Hence, there is no need for it in the substitution string
-    return re.sub(r'\n(?P<spaces>\s*)(?P<json_key>.*): {}(?P<delim>,??)', '\n\g<spaces>\g<json_key>: {\n\g<spaces>}\g<delim>', json_str)
+def _insert_linebreaks(json_str: str) -> str:
+    return re.sub(
+        r'\n(?P<spaces>\s*)(?P<json_key>.*): {}(?P<delim>,??)', 
+        '\n\g<spaces>\g<json_key>: {\n\g<spaces>}\g<delim>', 
+        json_str)
 
 def _get_pretty_format(
         contents: str,
@@ -109,7 +111,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         action='store_true',
         dest='empty_object_with_newline',
         default=False,
-        help='Format empty JSON objects to have a linebreak, also activates --no-sort-keys',
+        help='Format empty JSON objects to have a linebreak, ' \
+            + 'also activates --no-sort-keys',
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

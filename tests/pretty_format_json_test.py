@@ -146,24 +146,29 @@ def test_empty_object_with_newline(tmpdir):
     ret = main(["--empty-object-with-newline", str(sameline)])
     assert ret == 1
 
+    # a template to be compared against.
     multiline = get_resource_path("empty_object_json_multiline.json")
-    to_be_formatted_sameline = tmpdir.join(
-        "not_pretty_formatted_empty_object_json_sameline.json"
-    )
-    shutil.copyfile(str(sameline), str(to_be_formatted_sameline))
 
     # file has empty object with newline => expect fail with default settings
     ret = main([str(multiline)])
     assert ret == 1
 
-    # now launch the autofix with empty object with newline support on that file
+    # launch the autofix with empty object with newline support on that file
+    to_be_formatted_sameline = tmpdir.join(
+        "not_pretty_formatted_empty_object_json_sameline.json"
+    )
+    shutil.copyfile(str(sameline), str(to_be_formatted_sameline))
     ret = main(
-        ["--autofix", "--empty-object-with-newline", str(to_be_formatted_sameline)]
+        ["--autofix",
+        "--empty-object-with-newline",
+        str(to_be_formatted_sameline)]
     )
     # it should have formatted it and don't raise an error code
+    # to not stop the the commit
     assert ret == 0
 
-    # file was formatted (shouldn't trigger linter with --empty-object-with-newline switch)
+    # file was formatted (shouldn't trigger linter with 
+    # --empty-object-with-newline switch)
     ret = main(["--empty-object-with-newline", str(to_be_formatted_sameline)])
     assert ret == 0
     assert filecmp.cmp(to_be_formatted_sameline, multiline)
