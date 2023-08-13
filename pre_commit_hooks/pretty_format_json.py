@@ -2,16 +2,17 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 import re
-
+import sys
 from difflib import unified_diff
 from typing import Mapping
 from typing import Sequence
 
+
 def _insert_linebreaks(json_str) -> str:
     # (?P<spaces>\s*) seems to capture the \n. Hence, there is no need for it in the substitution string
-    return re.sub(r'\n(?P<spaces>\s*)(?P<json_key>.*): {}(?P<delim>,??)', '\n\g<spaces>\g<json_key>: {\n\g<spaces>}\g<delim>', json_str)
+    return re.sub(r'\n(?P<spaces>\s*)(?P<json_key>.*): {}(?P<delim>,??)', '\n\\g<spaces>\\g<json_key>: {\n\\g<spaces>}\\g<delim>', json_str)
+
 
 def _get_pretty_format(
         contents: str,
@@ -126,7 +127,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
                 sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
-                empty_object_with_newline=args.empty_object_with_newline
+                empty_object_with_newline=args.empty_object_with_newline,
             )
         except ValueError:
             print(
@@ -144,7 +145,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             else:
                 diff_output = get_diff(contents, pretty_contents, json_file)
                 sys.stdout.buffer.write(diff_output.encode())
-
 
     return status
 

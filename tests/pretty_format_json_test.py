@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import filecmp
 import os
 import shutil
 
 import pytest
-import filecmp
 
 from pre_commit_hooks.pretty_format_json import main
 from pre_commit_hooks.pretty_format_json import parse_num_to_int
@@ -142,13 +142,13 @@ def test_diffing_output(capsys):
 
 def test_empty_object_with_newline(tmpdir):
     # same line objects shoud trigger with --empty-object-with-newline switch
-    sameline = get_resource_path("empty_object_json_sameline.json")
-    ret = main(["--empty-object-with-newline", str(sameline)])
+    sameline = get_resource_path('empty_object_json_sameline.json')
+    ret = main(['--empty-object-with-newline', str(sameline)])
     assert ret == 1
 
-    multiline = get_resource_path("empty_object_json_multiline.json")
+    multiline = get_resource_path('empty_object_json_multiline.json')
     to_be_formatted_sameline = tmpdir.join(
-        "not_pretty_formatted_empty_object_json_sameline.json"
+        'not_pretty_formatted_empty_object_json_sameline.json',
     )
     shutil.copyfile(str(sameline), str(to_be_formatted_sameline))
 
@@ -158,12 +158,12 @@ def test_empty_object_with_newline(tmpdir):
 
     # now launch the autofix with empty object with newline support on that file
     ret = main(
-        ["--autofix", "--empty-object-with-newline", str(to_be_formatted_sameline)]
+        ['--autofix', '--empty-object-with-newline', str(to_be_formatted_sameline)],
     )
     # it should have formatted it and don't raise an error code
     assert ret == 0
 
     # file was formatted (shouldn't trigger linter with --empty-object-with-newline switch)
-    ret = main(["--empty-object-with-newline", str(to_be_formatted_sameline)])
+    ret = main(['--empty-object-with-newline', str(to_be_formatted_sameline)])
     assert ret == 0
     assert filecmp.cmp(to_be_formatted_sameline, multiline)
