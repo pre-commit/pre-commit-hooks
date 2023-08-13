@@ -1,0 +1,14 @@
+{
+  "empty": {},
+  "inhabited": {
+    "person": {
+      "name": "Roger",
+      "nested_empty_with_comma": {},
+      "array": [
+        {
+          "nested_empty_in_array": {}
+        }
+      ]
+    }
+  }
+}

@@ -4,6 +4,7 @@ import os
 import shutil
 
 import pytest
+import filecmp
 
 from pre_commit_hooks.pretty_format_json import main
 from pre_commit_hooks.pretty_format_json import parse_num_to_int
@@ -137,3 +138,32 @@ def test_diffing_output(capsys):
     assert actual_retval == expected_retval
     assert actual_out == expected_out
     assert actual_err == ''
+
+
+def test_empty_object_with_newline(tmpdir):
+    # same line objects shoud trigger with --empty-object-with-newline switch
+    sameline = get_resource_path("empty_object_json_sameline.json")
+    ret = main(["--empty-object-with-newline", str(sameline)])
+    assert ret == 1
+
+    multiline = get_resource_path("empty_object_json_multiline.json")
+    to_be_formatted_sameline = tmpdir.join(
+        "not_pretty_formatted_empty_object_json_sameline.json"
+    )
+    shutil.copyfile(str(sameline), str(to_be_formatted_sameline))
+
+    # file has empty object with newline => expect fail with default settings
+    ret = main([str(multiline)])
+    assert ret == 1
+
+    # now launch the autofix with empty object with newline support on that file
+    ret = main(
+        ["--autofix", "--empty-object-with-newline", str(to_be_formatted_sameline)]
+    )
+    # it should have formatted it and don't raise an error code
+    assert ret == 0
+
+    # file was formatted (shouldn't trigger linter with --empty-object-with-newline switch)
+    ret = main(["--empty-object-with-newline", str(to_be_formatted_sameline)])
+    assert ret == 0
+    assert filecmp.cmp(to_be_formatted_sameline, multiline)
