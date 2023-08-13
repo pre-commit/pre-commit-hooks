@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import filecmp
 import os
 import shutil
 
 import pytest
-import filecmp
 
 from pre_commit_hooks.pretty_format_json import main
 from pre_commit_hooks.pretty_format_json import parse_num_to_int
@@ -142,8 +142,8 @@ def test_diffing_output(capsys):
 
 def test_empty_object_with_newline(tmpdir):
     # same line objects shoud trigger with --empty-object-with-newline switch
-    sameline = get_resource_path("empty_object_json_sameline.json")
-    ret = main(["--empty-object-with-newline", str(sameline)])
+    sameline = get_resource_path('empty_object_json_sameline.json')
+    ret = main(['--empty-object-with-newline', str(sameline)])
     assert ret == 1
 
     # a template to be compared against.
