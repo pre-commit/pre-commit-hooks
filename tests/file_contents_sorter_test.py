@@ -17,6 +17,7 @@ from pre_commit_hooks.file_contents_sorter import PASS
         (b'missing_newline', [], FAIL, b'missing_newline\n'),
         (b'newline\nmissing', [], FAIL, b'missing\nnewline\n'),
         (b'missing\nnewline', [], FAIL, b'missing\nnewline\n'),
+        (b'missing\r\nnewline', [], FAIL, b'missing\r\nnewline\r\n'),
         (b'alpha\nbeta\n', [], PASS, b'alpha\nbeta\n'),
         (b'beta\nalpha\n', [], FAIL, b'alpha\nbeta\n'),
         (b'C\nc\n', [], PASS, b'C\nc\n'),
@@ -68,6 +69,12 @@ from pre_commit_hooks.file_contents_sorter import PASS
             b'Fie\nFoe\nfee\nfum\n',
         ),
         (
+            b'Fie\r\nFie\nFoe\nfee\nfee\r\nfum\n',
+            ['--unique'],
+            FAIL,
+            b'Fie\r\nFoe\nfee\nfum\n',
+        ),
+        (
             b'fee\nFie\nFoe\nfum\n',
             ['--unique', '--ignore-case'],
             PASS,
@@ -78,6 +85,24 @@ from pre_commit_hooks.file_contents_sorter import PASS
             ['--unique', '--ignore-case'],
             FAIL,
             b'fee\nFie\nFoe\nfum\n',
+        ),
+        (
+            b'linefeed\r\ncarriage_return\r\n',
+            [],
+            FAIL,
+            b'carriage_return\r\nlinefeed\r\n',
+        ),
+        (
+            b'carriage_return\r\nlinefeed\r\n',
+            [],
+            PASS,
+            b'carriage_return\r\nlinefeed\r\n',
+        ),
+        (
+            b'a\na\r\na\r\na\na\r\na\n',
+            [],
+            PASS,
+            b'a\na\r\na\r\na\na\r\na\n',
         ),
     ),
 )
