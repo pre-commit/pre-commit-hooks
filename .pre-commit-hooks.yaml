@@ -119,6 +119,12 @@
     entry: detect-private-key
     language: python
     types: [text]
+-   id: detect-secret-token
+    name: detect secret token
+    description: detects the presence of RFC 8959 secret-token.
+    entry: detect-secret-token
+    language: python
+    types: [text]
 -   id: double-quote-string-fixer
     name: fix double quoted strings
     description: replaces double quoted strings with single quoted strings.

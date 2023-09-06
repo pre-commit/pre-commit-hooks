@@ -107,6 +107,9 @@ The following arguments are available:
 #### `detect-private-key`
 Checks for the existence of private keys.
 
+#### `detect-secret-token`
+Checks for the existence of RFC 8959 `secret-token`.
+
 #### `double-quote-string-fixer`
 This hook replaces double quoted strings with single quoted strings.
 
