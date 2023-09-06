@@ -117,6 +117,7 @@ Makes sure files end in a newline and only a newline.
 Sort the lines in specified files (defaults to alphabetical).
 You must provide the target [`files`](https://pre-commit.com/#config-files) as input.
 Note that this hook WILL remove blank lines and does NOT respect any comments.
+All newlines will be converted to line feeds (`\n`).
 
 The following arguments are available:
 - `--ignore-case` - fold lower case to upper case characters.
