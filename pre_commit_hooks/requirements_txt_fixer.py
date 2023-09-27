@@ -62,7 +62,7 @@ class Requirement:
 
 def fix_requirements(f: IO[bytes]) -> int:
     requirements: list[Requirement] = []
-    before = list(f)
+    before = list(set(f))
     after: list[bytes] = []
 
     before_string = b''.join(before)
