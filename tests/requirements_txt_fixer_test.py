@@ -99,6 +99,8 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             PASS,
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
+        (b'\nfoo\nfoo\n', FAIL, b'\nfoo\n'),
+        (b'\nbar\nfoo\nbar\n', FAIL, b'\nbar\nfoo\n'),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):

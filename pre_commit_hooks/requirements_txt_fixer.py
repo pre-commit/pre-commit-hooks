@@ -116,7 +116,8 @@ def fix_requirements(f: IO[bytes]) -> int:
     for requirement in sorted(requirements):
         after.extend(requirement.comments)
         assert requirement.value, requirement.value
-        after.append(requirement.value)
+        if requirement.value not in after:
+            after.append(requirement.value)
     after.extend(rest)
 
     after_string = b''.join(after)
