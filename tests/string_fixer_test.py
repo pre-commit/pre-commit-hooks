@@ -37,6 +37,12 @@ TESTS = (
         1,
     ),
     ('"foo""bar"', "'foo''bar'", 1),
+    pytest.param(
+        "f'hello{\"world\"}'",
+        "f'hello{\"world\"}'",
+        0,
+        id='ignore nested fstrings',
+    ),
 )
 
 
