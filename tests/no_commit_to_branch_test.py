@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+from pre_commit_hooks.no_commit_to_branch import get_current_branch
 from pre_commit_hooks.no_commit_to_branch import is_on_branch
 from pre_commit_hooks.no_commit_to_branch import main
 from pre_commit_hooks.util import cmd_output
@@ -11,24 +12,38 @@ from testing.util import git_commit
 def test_other_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'anotherbranch')
-        assert is_on_branch({'master'}) is False
+        current_branch = get_current_branch()
+        assert current_branch == 'anotherbranch'
+        assert is_on_branch(current_branch, {'master'}) is False
 
 
 def test_multi_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'another/branch')
-        assert is_on_branch({'master'}) is False
+        current_branch = get_current_branch()
+        assert current_branch == 'another/branch'
+        assert is_on_branch(current_branch, {'master'}) is False
 
 
 def test_multi_branch_fail(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'another/branch')
-        assert is_on_branch({'another/branch'}) is True
+        current_branch = get_current_branch()
+        assert current_branch == 'another/branch'
+        assert is_on_branch(current_branch, {'another/branch'}) is True
 
 
 def test_master_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
-        assert is_on_branch({'master'}) is True
+        current_branch = get_current_branch()
+        assert current_branch == 'master'
+        assert is_on_branch(current_branch, {'master'}) is True
+
+
+def test_branch_pattern_fail(temp_git_dir):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'checkout', '-b', 'another/branch')
+        assert is_on_branch('another/branch', set(), {'another/.*'}) is True
 
 
 def test_main_branch_call(temp_git_dir):
@@ -42,12 +57,6 @@ def test_forbid_multiple_branches(temp_git_dir, branch_name):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', branch_name)
         assert main(('--branch', 'b1', '--branch', 'b2'))
-
-
-def test_branch_pattern_fail(temp_git_dir):
-    with temp_git_dir.as_cwd():
-        cmd_output('git', 'checkout', '-b', 'another/branch')
-        assert is_on_branch(set(), {'another/.*'}) is True
 
 
 @pytest.mark.parametrize('branch_name', ('master', 'another/branch'))
