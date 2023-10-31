@@ -36,6 +36,32 @@ TEST_SORTS = [
         ['# i am', '# a header'],
         RETVAL_GOOD,
     ),
+
+    (
+        [
+            '# top of file',
+            '# header',
+            '',
+            'b: 42',
+            '',
+            ' # a comment with leading space',
+            'e: 1',
+            '',
+            'c: true',
+        ],
+        [
+            '# top of file',
+            '# header',
+            '',
+            'b: 42',
+            '',
+            'c: true',
+            '',
+            ' # a comment with leading space',
+            'e: 1',
+        ],
+        RETVAL_BAD,
+    ),
 ]
 
 
