@@ -20,10 +20,20 @@ complicated YAML files.
 from __future__ import annotations
 
 import argparse
+import re
 from typing import Sequence
 
 
 QUOTES = ["'", '"']
+
+
+def _is_comment(line: str) -> bool:
+    """Tell if a YAML line is a comment, starting with spaces and a #.
+
+    :param line: line of text
+    :return: True if line is a yaml comment
+    """
+    return re.search(r'^\s*#', line) is not None
 
 
 def sort(lines: list[str]) -> list[str]:
@@ -55,7 +65,7 @@ def parse_block(lines: list[str], header: bool = False) -> list[str]:
     :return: list of lines that form the single block
     """
     block_lines = []
-    while lines and lines[0] and (not header or lines[0].startswith('#')):
+    while lines and lines[0] and (not header or _is_comment(lines[0])):
         block_lines.append(lines.pop(0))
     return block_lines
 
@@ -90,7 +100,7 @@ def first_key(lines: list[str]) -> str:
     'foo'
     """
     for line in lines:
-        if line.startswith('#'):
+        if _is_comment(line):
             continue
         if any(line.startswith(quote) for quote in QUOTES):
             return line[1:]
