@@ -4,6 +4,7 @@ import argparse
 import re
 from typing import AbstractSet
 from typing import Sequence
+
 from pre_commit_hooks.util import CalledProcessError
 from pre_commit_hooks.util import cmd_output
 
