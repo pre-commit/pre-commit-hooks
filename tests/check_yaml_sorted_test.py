@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import os
+
 import yaml
 
 from pre_commit_hooks.check_yaml_sorted import is_sorted
+from pre_commit_hooks.check_yaml_sorted import main
 
 
 def test_sort_list_by_items():
@@ -100,3 +103,17 @@ def test_sort_list_of_dicts_same_first_key_by_val():
     assert is_sorted(yaml.safe_load(_sorted_yaml_long))
     assert not is_sorted(yaml.safe_load(_unsorted_yaml))
     assert not is_sorted(yaml.safe_load(_unsorted_yaml_long))
+
+
+def test_integration(tmpdir):
+    file_path = os.path.join(str(tmpdir), 'foo.yaml')
+
+    with open(file_path, 'w') as f:
+        f.write(_sorted_yaml)
+
+    assert main([file_path]) == 0
+
+    with open(file_path, 'w') as f:
+        f.write(_unsorted_yaml)
+
+    assert main([file_path]) != 0
