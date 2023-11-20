@@ -95,6 +95,12 @@
     entry: check-yaml
     language: python
     types: [yaml]
+-   id: check-yaml-sorted
+    name: check yaml sorted
+    description: checks top-level items of yaml files are sorted.
+    entry: check-yaml-sorted
+    language: python
+    types: [yaml]
 -   id: debug-statements
     name: debug statements (python)
     description: checks for debugger imports and py37+ `breakpoint()` calls in python source.

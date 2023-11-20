@@ -87,6 +87,11 @@ Attempts to load all yaml files to verify syntax.
     portability to other yaml implementations.
     Implies `--allow-multiple-documents`.
 
+#### `check-yaml-sorted`
+Checks that top-level items in yaml files are sorted. This is done on the
+stringified representation, which means it can handle lists of scalars, lists
+of dicts by first key or val, etc.
+
 #### `debug-statements`
 Check for debugger imports and py37+ `breakpoint()` calls in python source.
 
