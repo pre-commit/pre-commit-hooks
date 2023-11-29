@@ -54,6 +54,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         'teams_association': ['user_uuid', 'team_uuid'],
         'teams_resource_permission': ['team_uuid', 'resource_name'],
         'label': ['uuid'],
+        'authentication_config_rules': ['auth_type'],
+        'authentication': ['uuid'],
+        'user_authentication_association':
+            ['user_uuid', 'authentication_uuid'],
     }
 
     args = vars(parser.parse_args(argv))
@@ -63,10 +67,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for i in range(len(filenames)):
         json_file = filenames[i]
         file_name = Path(filenames[i]).stem
-        pkeys = table_uuid_mapping[file_name]
+        if file_name not in table_uuid_mapping:
+            print(
+                f"Table {file_name} has no primary key specified to validate "
+                f"duplicate entries. Please update the plugin code in "
+                f"https://git.voereir.io/voereir/pre-commit-hooks"
+            )
+            continue
+
+        primary_keys = table_uuid_mapping[file_name]
         with open(json_file, encoding='UTF-8') as f:
             json_entries = json.load(f)
-        duplicate_entries, status = _check_duplicate_entry(json_entries, pkeys)
+        duplicate_entries, status = _check_duplicate_entry(
+            json_entries, primary_keys)
 
         if status:
             print(f"Duplicate entries found - {duplicate_entries} in file "
