@@ -111,7 +111,7 @@ Checks for the existence of private keys.
 This hook replaces double quoted strings with single quoted strings.
 
 #### `end-of-file-fixer`
-Makes sure files end in a newline and only a newline.
+Makes sure files end in a newline and only a newline. Should be run _after_ `trailing-whitespace` in order to handle files that end with spaces.
 
 #### `file-contents-sorter`
 Sort the lines in specified files (defaults to alphabetical).
