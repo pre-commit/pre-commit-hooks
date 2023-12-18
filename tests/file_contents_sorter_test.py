@@ -10,7 +10,9 @@ from pre_commit_hooks.file_contents_sorter import PASS
 @pytest.mark.parametrize(
     ('input_s', 'argv', 'expected_retval', 'output'),
     (
-        (b'', [], FAIL, b'\n'),
+        (b'', [], PASS, b''),
+        (b'\n', [], FAIL, b''),
+        (b'\n\n', [], FAIL, b''),
         (b'lonesome\n', [], PASS, b'lonesome\n'),
         (b'missing_newline', [], FAIL, b'missing_newline\n'),
         (b'newline\nmissing', [], FAIL, b'missing\nnewline\n'),

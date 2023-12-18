@@ -185,7 +185,7 @@
     description: sorts entries in requirements.txt.
     entry: requirements-txt-fixer
     language: python
-    files: requirements.*\.txt$
+    files: (requirements|constraints).*\.txt$
 -   id: sort-simple-yaml
     name: sort simple yaml files
     description: sorts simple yaml files which consist only of top-level keys, preserving comments and blocks.

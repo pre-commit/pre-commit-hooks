@@ -46,7 +46,7 @@ def find_large_added_files(
         filenames_filtered &= added_files()
 
     for filename in filenames_filtered:
-        kb = int(math.ceil(os.stat(filename).st_size / 1024))
+        kb = math.ceil(os.stat(filename).st_size / 1024)
         if kb > maxkb:
             print(f'{filename} ({kb} KB) exceeds {maxkb} KB.')
             retv = 1

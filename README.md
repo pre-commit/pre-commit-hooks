@@ -1,5 +1,4 @@
-[![Build Status](https://asottile.visualstudio.com/asottile/_apis/build/status/pre-commit.pre-commit-hooks?branchName=main)](https://asottile.visualstudio.com/asottile/_build/latest?definitionId=17&branchName=main)
-[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/asottile/asottile/17/main.svg)](https://dev.azure.com/asottile/asottile/_build/latest?definitionId=17&branchName=main)
+[![build status](https://github.com/pre-commit/pre-commit-hooks/actions/workflows/main.yml/badge.svg)](https://github.com/pre-commit/pre-commit-hooks/actions/workflows/main.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/pre-commit/pre-commit-hooks/main.svg)](https://results.pre-commit.ci/latest/github/pre-commit/pre-commit-hooks/main)
 
 pre-commit-hooks
@@ -16,7 +15,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ```yaml
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.3.0  # Use the ref you want to point at
+    rev: v4.5.0  # Use the ref you want to point at
     hooks:
     -   id: trailing-whitespace
     # -   id: ...
@@ -118,6 +117,11 @@ Makes sure files end in a newline and only a newline.
 Sort the lines in specified files (defaults to alphabetical).
 You must provide the target [`files`](https://pre-commit.com/#config-files) as input.
 Note that this hook WILL remove blank lines and does NOT respect any comments.
+All newlines will be converted to line feeds (`\n`).
+
+The following arguments are available:
+- `--ignore-case` - fold lower case to upper case characters.
+- `--unique` - ensure each line is unique.
 
 #### `fix-byte-order-marker`
 removes UTF-8 byte order marker
@@ -125,10 +129,6 @@ removes UTF-8 byte order marker
 #### `fix-encoding-pragma`
 Add `# -*- coding: utf-8 -*-` to the top of python files.
   - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
-
-The following arguments are available:
-- `--ignore-case` - fold lower case to upper case characters.
-- `--unique` - ensure each line is unique.
 
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
@@ -180,7 +180,7 @@ the following commandline options:
   - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 
 #### `requirements-txt-fixer`
-Sorts entries in requirements.txt and removes incorrect entry for `pkg-resources==0.0.0`
+Sorts entries in requirements.txt and constraints.txt and removes incorrect entry for `pkg-resources==0.0.0`
 
 #### `sort-simple-yaml`
 Sorts simple YAML files which consist only of top-level

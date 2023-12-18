@@ -8,6 +8,7 @@ from typing import Sequence
 
 
 DEBUG_STATEMENTS = {
+    'bpdb',
     'ipdb',
     'pdb',
     'pdbr',

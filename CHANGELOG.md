@@ -1,3 +1,35 @@
+4.5.0 - 2023-10-07
+==================
+
+### Features
+- `requirements-txt-fixer`: also sort `constraints.txt` by default.
+    - #857 PR by @lev-blit.
+    - #830 issue by @PLPeeters.
+- `debug-statements`: add `bpdb` debugger.
+    - #942 PR by @mwip.
+    - #941 issue by @mwip.
+
+### Fixes
+- `file-contents-sorter`: fix sorting an empty file.
+    - #944 PR by @RoelAdriaans.
+    - #935 issue by @paduszyk.
+- `double-quote-string-fixer`: don't rewrite inside f-strings in 3.12+.
+    - #973 PR by @asottile.
+    - #971 issue by @XuehaiPan.
+
+## Migrating
+- now requires python >= 3.8.
+    - #926 PR by @asottile.
+    - #927 PR by @asottile.
+
+4.4.0 - 2022-11-23
+==================
+
+### Features
+- `forbid-submodules`: new hook which outright bans submodules.
+    - #815 PR by @asottile.
+    - #707 issue by @ChiefGokhlayeh.
+
 4.3.0 - 2022-06-07
 ==================
 
