@@ -64,6 +64,9 @@ Checks that scripts with shebangs are executable.
 #### `check-symlinks`
 Checks for symlinks which do not point to anything.
 
+#### `check-projen-files`
+Checks for projen files that were updated manually.
+
 #### `check-toml`
 Attempts to load all TOML files to verify syntax.
 

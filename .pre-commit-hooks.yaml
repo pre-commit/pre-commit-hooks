@@ -53,6 +53,13 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: check_projen_files
+    name: check projen files
+    description: checks if projen files were not updated manually.
+    entry: check_projen_files
+    language: python
+    types: [text]
+    stages: [push, manual]
 -   id: pretty-format-json
     name: pretty format json
     description: sets a standard for formatting json files.
