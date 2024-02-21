@@ -45,6 +45,11 @@ class Requirement:
         elif requirement.value == b'\n':
             return False
         else:
+            # if 2 requirements have the same name, the one with comments
+            # needs to go first (so that when removing duplicates, the one
+            # with comments is kept)
+            if self.name == requirement.name:
+                return bool(self.comments) > bool(requirement.comments)
             return self.name < requirement.name
 
     def is_complete(self) -> bool:
@@ -113,10 +118,14 @@ def fix_requirements(f: IO[bytes]) -> int:
         if req.value != b'pkg-resources==0.0.0\n'
     ]
 
+    # sort the requirements and remove duplicates
+    prev = None
     for requirement in sorted(requirements):
         after.extend(requirement.comments)
         assert requirement.value, requirement.value
-        after.append(requirement.value)
+        if prev is None or requirement.value != prev.value:
+            after.append(requirement.value)
+            prev = requirement
     after.extend(rest)
 
     after_string = b''.join(after)
