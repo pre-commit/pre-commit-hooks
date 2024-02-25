@@ -68,6 +68,12 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             b'f<=2\n'
             b'g<2\n',
         ),
+        (b'a==1\nb==1\na==1\n', FAIL, b'a==1\nb==1\n'),
+        (
+            b'a==1\nb==1\n#comment about a\na==1\n',
+            FAIL,
+            b'#comment about a\na==1\nb==1\n',
+        ),
         (b'ocflib\nDjango\nPyMySQL\n', FAIL, b'Django\nocflib\nPyMySQL\n'),
         (
             b'-e git+ssh://git_url@tag#egg=ocflib\nDjango\nPyMySQL\n',
