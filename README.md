@@ -87,6 +87,12 @@ Attempts to load all yaml files to verify syntax.
     portability to other yaml implementations.
     Implies `--allow-multiple-documents`.
 
+#### `conventional-commit-msg`
+Check if the top line of a commit message follows the
+[conventional rules](https://www.conventionalcommits.org/en/v1.0.0/).
+The message is expected in format: `type(scope)?: description (body)? (footer)?`
+Where description is in lowercase, present tense, and no period at the end.
+
 #### `debug-statements`
 Check for debugger imports and py37+ `breakpoint()` calls in python source.
 

@@ -95,6 +95,17 @@
     entry: check-yaml
     language: python
     types: [yaml]
+
+-   id: conventional-commit-msg
+    name: conventional commit message
+    # type(scope)?: description (body)? (footer)? (lowercase, present tense, and no period at the end)
+    language: pygrep
+    entry: '^(chore|test|feat|fix|build|docs|refactor)!?(\([a-z]+\))?: (?![A-Z][a-z])(?![a-z]+(ed|ing)\s).*$'
+    args:
+    - --multiline
+    - --negate # fails if the entry is NOT matched
+    stages: [commit-msg]
+
 -   id: debug-statements
     name: debug statements (python)
     description: checks for debugger imports and py37+ `breakpoint()` calls in python source.
