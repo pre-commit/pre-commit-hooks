@@ -59,6 +59,12 @@
     entry: pretty-format-json
     language: python
     types: [json]
+-   id: check-lfs-attributes
+    name: check for files with mismatching LFS attribute
+    description: ensures LFS pointers are matching .gitattributes
+    entry: check-lfs-attributes
+    language: python
+    stages: [commit, push, manual]
 -   id: check-merge-conflict
     name: check for merge conflicts
     description: checks for files that contain merge conflict strings.

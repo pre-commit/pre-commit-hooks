@@ -54,6 +54,12 @@ Checks that non-binary executables have a proper shebang.
 #### `check-json`
 Attempts to load all json files to verify syntax.
 
+#### `check-lfs-attributes`
+Check for files with mismatching LFS attribute.
+  - Limits checked files to those indicated as staged for addition by git.
+  - `--enforce-all` - Check all listed files not just those staged for
+    addition.
+
 #### `check-merge-conflict`
 Check for files that contain merge conflict strings.
   - `--assume-in-merge` - Allows running the hook when there is no ongoing merge operation
