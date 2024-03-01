@@ -4,9 +4,10 @@ import shutil
 
 import pytest
 
-from pre_commit_hooks.check_lfs_attributes import check_lfs_attributes, select_lfs_attr_files, \
-    select_lfs_tree_files
+from pre_commit_hooks.check_lfs_attributes import check_lfs_attributes
 from pre_commit_hooks.check_lfs_attributes import main
+from pre_commit_hooks.check_lfs_attributes import select_lfs_attr_files
+from pre_commit_hooks.check_lfs_attributes import select_lfs_tree_files
 from pre_commit_hooks.util import cmd_output
 from testing.util import git_commit
 
