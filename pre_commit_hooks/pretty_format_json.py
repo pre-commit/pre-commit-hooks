@@ -27,7 +27,8 @@ def _get_pretty_format(
         indent=indent,
         ensure_ascii=ensure_ascii,
     )
-    return f'{json_pretty}\n'
+    finisher = '\n' if contents.endswith('\n') else ''
+    return f'{json_pretty}{finisher}'
 
 
 def _autofix(filename: str, new_contents: str) -> None:
