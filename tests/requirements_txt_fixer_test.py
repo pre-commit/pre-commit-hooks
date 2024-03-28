@@ -82,6 +82,8 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
         ),
         (b'bar\npkg-resources==0.0.0\nfoo\n', FAIL, b'bar\nfoo\n'),
         (b'foo\npkg-resources==0.0.0\nbar\n', FAIL, b'bar\nfoo\n'),
+        (b'bar\npkg_resources==0.0.0\nfoo\n', FAIL, b'bar\nfoo\n'),
+        (b'foo\npkg_resources==0.0.0\nbar\n', FAIL, b'bar\nfoo\n'),
         (
             b'git+ssh://git_url@tag#egg=ocflib\nDjango\nijk\n',
             FAIL,
