@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from typing import IO
 from typing import NamedTuple
 from typing import Sequence
@@ -107,6 +108,13 @@ def _normalize_pragma(pragma: str) -> bytes:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    print(
+        'warning: this hook is deprecated and will be removed in a future '
+        'release because py2 is EOL. instead, use '
+        'https://github.com/asottile/pyupgrade',
+        file=sys.stderr,
+    )
+
     parser = argparse.ArgumentParser(
         'Fixes the encoding pragma of python files',
     )

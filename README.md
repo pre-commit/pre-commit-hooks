@@ -127,6 +127,9 @@ The following arguments are available:
 removes UTF-8 byte order marker
 
 #### `fix-encoding-pragma`
+
+_Deprecated since py2 is EOL - use [pyupgrade](https://github.com/asottile/pyupgrade) instead._
+
 Add `# -*- coding: utf-8 -*-` to the top of python files.
   - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
 
