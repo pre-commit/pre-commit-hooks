@@ -1,3 +1,17 @@
+4.6.0 - 2024-04-06
+==================
+
+### Features
+- `requirements-txt-fixer`: remove duplicate packages.
+    - #1014 PR by @vhoulbreque-withings.
+    - #960 issue @csibe17.
+
+### Migrating
+- `fix-encoding-pragma`: deprecated -- will be removed in 5.0.0.  use
+  [pyupgrade](https://github.com/asottile/pyupgrade) or some other tool.
+    - #1033 PR by @mxr.
+    - #1032 issue by @mxr.
+
 4.5.0 - 2023-10-07
 ==================
 
