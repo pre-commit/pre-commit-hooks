@@ -145,7 +145,7 @@
     language: python
     types: [text]
 -   id: fix-encoding-pragma
-    name: fix python encoding pragma
+    name: fix python encoding pragma (deprecated)
     description: 'adds # -*- coding: utf-8 -*- to the top of python files.'
     language: python
     entry: fix-encoding-pragma
