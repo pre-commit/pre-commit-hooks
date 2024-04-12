@@ -199,3 +199,9 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: detect-gcp-credentials
+    name: detect gcp credentials
+    language: python
+    description: detect gcp hardcoded gcp credentials
+    entry: detect-gcp-credentials
+    types: [text]
