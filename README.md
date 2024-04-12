@@ -207,6 +207,9 @@ Trims trailing whitespace.
   - By default, this hook trims all whitespace from the ends of lines.
     To specify a custom set of characters to trim instead, use `args: [--chars,"<chars to trim>"]`.
 
+#### `detect-gcp-credentials`
+Checks for the existence of GCP credentials in the staged files.
+
 ### Deprecated / replaced hooks
 
 - `check-byte-order-marker`: instead use fix-byte-order-marker
