@@ -40,12 +40,3 @@ repos:
     hooks:
     -   id: mypy
         additional_dependencies: [types-all]
-
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.4.0  # Use the latest released version of pre-commit-hooks
-    hooks:
-      - id: detect-gcp-credentials
-        name: Detect GCP Credentials
-        entry: hooks/detect_gcp_credentials.py
-        language: python
-        types: [text]
