@@ -53,4 +53,3 @@ top_level.txt = setuptools.command.egg_info:write_toplevel_names
 [setuptools.finalize_distribution_options]
 keywords = setuptools.dist:Distribution._finalize_setup_keywords
 parent_finalize = setuptools.dist:_Distribution.finalize_options
-
