@@ -48,6 +48,8 @@ def fix_strings(filename: str) -> int:
     splitcontents = list(contents)
 
     fstring_depth = 0
+    fstring_content = ''
+    f_erow = f_ecol = -1
 
     # Iterate in reverse so the offsets are always correct
     tokens_l = list(tokenize.generate_tokens(io.StringIO(contents).readline))
@@ -55,8 +57,17 @@ def fix_strings(filename: str) -> int:
     for token_type, token_text, (srow, scol), (erow, ecol), _ in tokens:
         if token_type == FSTRING_START:  # pragma: >=3.12 cover
             fstring_depth += 1
+            splitcontents[
+                line_offsets[srow] + scol:
+                line_offsets[f_erow] + f_ecol
+            ] = handle_match(token_text + fstring_content)
+            fstring_content = ''
         elif token_type == FSTRING_END:  # pragma: >=3.12 cover
             fstring_depth -= 1
+            fstring_content = token_text + fstring_content
+            f_erow, f_ecol = erow, ecol
+        elif fstring_depth != 0:  # pragma: >=3.12 cover
+            fstring_content = token_text + fstring_content
         elif fstring_depth == 0 and token_type == tokenize.STRING:
             new_text = handle_match(token_text)
             splitcontents[
