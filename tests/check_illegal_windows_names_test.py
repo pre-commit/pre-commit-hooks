@@ -28,6 +28,8 @@ def hook_re():
         pytest.param('aux', id='without ext'),
         pytest.param('AuX.tXt', id='capitals'),
         pytest.param('com7.dat', id='com with digit'),
+        pytest.param(':', id='bare colon'),
+        pytest.param('file:Zone.Identifier', id='mid colon'),
     ),
 )
 def test_check_illegal_windows_names_matches(hook_re, s):
