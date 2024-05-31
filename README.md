@@ -210,6 +210,18 @@ Trims trailing whitespace.
   - By default, this hook trims all whitespace from the ends of lines.
     To specify a custom set of characters to trim instead, use `args: [--chars,"<chars to trim>"]`.
 
+
+#### `enforce-branch-name`
+Validates the branch name follows a pattern.
+  - `-p` / `--pattern` is used to pass the regex a valid branch name should have.
+
+Note that `enforce-branch-name` is configured by default to [`always_run`](https://pre-commit.com/#config-always_run).
+As a result, it will ignore any setting of [`files`](https://pre-commit.com/#config-files),
+[`exclude`](https://pre-commit.com/#config-exclude), [`types`](https://pre-commit.com/#config-types)
+or [`exclude_types`](https://pre-commit.com/#config-exclude_types).
+Set [`always_run: false`](https://pre-commit.com/#config-always_run) to allow this hook to be skipped according to these
+file filters. Caveat: In this configuration, empty commits (`git commit --allow-empty`) would always be allowed by this hook.
+
 ### Deprecated / replaced hooks
 
 - `check-byte-order-marker`: instead use fix-byte-order-marker

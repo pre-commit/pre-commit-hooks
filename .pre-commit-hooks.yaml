@@ -204,3 +204,10 @@
     language: python
     types: [text]
     stages: [commit, push, manual]
+-   id: enforce-branch-name
+    name: enforce branch name
+    description: Make sure the current branch follows one of the accepted patterns.
+    entry: enforce-branch-name
+    language: python
+    pass_filenames: false
+    always_run: true
