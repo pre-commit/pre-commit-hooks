@@ -64,6 +64,12 @@
     entry: pretty-format-json
     language: python
     types: [json]
+-   id: check-html
+    name: check html
+    description: checks html files for parseable syntax.
+    entry: check-html
+    language: python
+    types: [html]
 -   id: check-merge-conflict
     name: check for merge conflicts
     description: checks for files that contain merge conflict strings.
