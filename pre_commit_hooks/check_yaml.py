@@ -11,7 +11,7 @@ import ruamel.yaml
 yaml = ruamel.yaml.YAML(typ='safe')
 
 
-def _exhaust(gen: Generator[str, None, None]) -> None:
+def _exhaust(gen: Generator[str]) -> None:
     for _ in gen:
         pass
 
