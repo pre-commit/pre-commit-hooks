@@ -149,12 +149,6 @@
     entry: fix-byte-order-marker
     language: python
     types: [text]
--   id: fix-encoding-pragma
-    name: fix python encoding pragma (deprecated)
-    description: 'adds # -*- coding: utf-8 -*- to the top of python files.'
-    language: python
-    entry: fix-encoding-pragma
-    types: [python]
 -   id: forbid-new-submodules
     name: forbid new submodules
     description: prevents addition of new git submodules.
