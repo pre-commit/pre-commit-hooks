@@ -13,10 +13,10 @@ if sys.version_info >= (3, 12):  # pragma: >=3.12 cover
 else:  # pragma: <3.12 cover
     FSTRING_START = FSTRING_END = -1
 
-START_QUOTE_RE = re.compile('^[a-zA-Z]*"')
+START_QUOTE_RE = re.compile("^[a-zA-Z]*['\"]")
 
 
-def handle_match(token_text: str) -> str:
+def handle_match(token_text: str, replace_single_quotes: bool = False) -> str:
     if '"""' in token_text or "'''" in token_text:
         return token_text
 
@@ -25,9 +25,11 @@ def handle_match(token_text: str) -> str:
         meat = token_text[match.end():-1]
         if '"' in meat or "'" in meat:
             return token_text
+        elif replace_single_quotes:
+            return match.group().replace("'", '"') + meat + '"'
         else:
             return match.group().replace('"', "'") + meat + "'"
-    else:
+    else:  # will this happen?  # pragma: no cover
         return token_text
 
 
@@ -39,7 +41,7 @@ def get_line_offsets_by_line_no(src: str) -> list[int]:
     return offsets
 
 
-def fix_strings(filename: str) -> int:
+def fix_strings(filename: str, replace_single_quotes: bool = False) -> int:
     with open(filename, encoding='UTF-8', newline='') as f:
         contents = f.read()
     line_offsets = get_line_offsets_by_line_no(contents)
@@ -58,7 +60,9 @@ def fix_strings(filename: str) -> int:
         elif token_type == FSTRING_END:  # pragma: >=3.12 cover
             fstring_depth -= 1
         elif fstring_depth == 0 and token_type == tokenize.STRING:
-            new_text = handle_match(token_text)
+            new_text = handle_match(
+                token_text, replace_single_quotes=replace_single_quotes
+            )
             splitcontents[
                 line_offsets[srow] + scol:
                 line_offsets[erow] + ecol
@@ -76,12 +80,20 @@ def fix_strings(filename: str) -> int:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
+    parser.add_argument(
+        '--replace-single-quotes',
+        action='store_true',
+        default=False,
+        help='Replace single quotes into double quotes',
+    )
     args = parser.parse_args(argv)
 
     retv = 0
 
     for filename in args.filenames:
-        return_value = fix_strings(filename)
+        return_value = fix_strings(
+            filename, replace_single_quotes=args.replace_single_quotes
+        )
         if return_value != 0:
             print(f'Fixing strings in {filename}')
         retv |= return_value

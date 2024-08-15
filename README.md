@@ -112,6 +112,7 @@ Checks for the existence of private keys.
 
 #### `double-quote-string-fixer`
 This hook replaces double quoted strings with single quoted strings.
+  - `--replace-single-quotes` - replaces single quoted strings with double quoted strings.
 
 #### `end-of-file-fixer`
 Makes sure files end in a newline and only a newline.
