@@ -61,7 +61,7 @@ def fix_strings(filename: str, replace_single_quotes: bool = False) -> int:
             fstring_depth -= 1
         elif fstring_depth == 0 and token_type == tokenize.STRING:
             new_text = handle_match(
-                token_text, replace_single_quotes=replace_single_quotes
+                token_text, replace_single_quotes=replace_single_quotes,
             )
             splitcontents[
                 line_offsets[srow] + scol:
@@ -92,7 +92,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     for filename in args.filenames:
         return_value = fix_strings(
-            filename, replace_single_quotes=args.replace_single_quotes
+            filename, replace_single_quotes=args.replace_single_quotes,
         )
         if return_value != 0:
             print(f'Fixing strings in {filename}')

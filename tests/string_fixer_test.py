@@ -71,7 +71,7 @@ TESTS = (
 
 
 @pytest.mark.parametrize(
-    ('input_s', 'output', 'reversed_case', 'expected_retval'), TESTS
+    ('input_s', 'output', 'reversed_case', 'expected_retval'), TESTS,
 )
 def test_rewrite(input_s, output, reversed_case, expected_retval, tmpdir):
     path = tmpdir.join('file.py')
@@ -79,7 +79,7 @@ def test_rewrite(input_s, output, reversed_case, expected_retval, tmpdir):
 
     argv = [str(path)]
     if reversed_case:
-        argv.append("--replace-single-quotes")
+        argv.append('--replace-single-quotes')
     retval = main(argv)
 
     assert path.read() == output
