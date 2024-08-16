@@ -107,6 +107,25 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             PASS,
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
+        (
+            (
+                b'-c external.txt\n'
+                b'\n'
+                b'Peach\n'
+                b'apple\n'
+                b'banana\n'
+                b'pear\n'
+            ),
+            FAIL,
+            (
+                b'-c external.txt\n'
+                b'\n'
+                b'apple\n'
+                b'banana\n'
+                b'Peach\n'
+                b'pear\n'
+            ),
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):

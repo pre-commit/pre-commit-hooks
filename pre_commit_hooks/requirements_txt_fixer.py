@@ -66,10 +66,7 @@ class Requirement:
 
 
 def fix_requirements(f: IO[bytes]) -> int:
-    requirements: list[Requirement] = []
     before = list(f)
-    after: list[bytes] = []
-
     before_string = b''.join(before)
 
     # adds new line in case one is missing
@@ -81,17 +78,21 @@ def fix_requirements(f: IO[bytes]) -> int:
     if before_string.strip() == b'':
         return PASS
 
+    # split requirements into sections based on newlines
+    sections: list[list[Requirement]] = [[]]
+
     for line in before:
+        requirements = sections[-1]
+
         # If the most recent requirement object has a value, then it's
         # time to start building the next requirement object.
-
         if not len(requirements) or requirements[-1].is_complete():
             requirements.append(Requirement())
 
         requirement = requirements[-1]
 
         # If we see a newline before any requirements, then this is a
-        # top of file comment.
+        # top of section comment.
         if len(requirements) == 1 and line.strip() == b'':
             if (
                     len(requirement.comments) and
@@ -100,38 +101,48 @@ def fix_requirements(f: IO[bytes]) -> int:
                 requirement.value = b'\n'
             else:
                 requirement.comments.append(line)
+        elif line.lstrip() == b'':
+            sections.append([])
         elif line.lstrip().startswith(b'#') or line.strip() == b'':
             requirement.comments.append(line)
         else:
             requirement.append_value(line)
 
-    # if a file ends in a comment, preserve it at the end
-    if requirements[-1].value is None:
-        rest = requirements.pop().comments
-    else:
-        rest = []
+    after_string = b''
 
-    # find and remove pkg-resources==0.0.0
-    # which is automatically added by broken pip package under Debian
-    requirements = [
-        req for req in requirements
-        if req.value not in [
-            b'pkg-resources==0.0.0\n',
-            b'pkg_resources==0.0.0\n',
+    for requirements in sections:
+        after: list[bytes] = []
+
+        if len(after_string) > 0:
+            after_string += b'\n'
+
+        # if a section ends in a comment, preserve it at the end
+        if requirements[-1].value is None:
+            rest = requirements.pop().comments
+        else:
+            rest = []
+
+        # find and remove pkg-resources==0.0.0
+        # which is automatically added by broken pip package under Debian
+        requirements = [
+            req for req in requirements
+            if req.value not in [
+                b'pkg-resources==0.0.0\n',
+                b'pkg_resources==0.0.0\n',
+            ]
         ]
-    ]
 
-    # sort the requirements and remove duplicates
-    prev = None
-    for requirement in sorted(requirements):
-        after.extend(requirement.comments)
-        assert requirement.value, requirement.value
-        if prev is None or requirement.value != prev.value:
-            after.append(requirement.value)
-            prev = requirement
-    after.extend(rest)
+        # sort the requirements and remove duplicates
+        prev = None
+        for requirement in sorted(requirements):
+            after.extend(requirement.comments)
+            assert requirement.value, requirement.value
+            if prev is None or requirement.value != prev.value:
+                after.append(requirement.value)
+                prev = requirement
+        after.extend(rest)
 
-    after_string = b''.join(after)
+        after_string += b''.join(after)
 
     if before_string == after_string:
         return PASS
