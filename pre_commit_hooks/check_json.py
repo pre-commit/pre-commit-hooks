@@ -3,7 +3,8 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from typing import Any, Sequence
+from typing import Any
+from typing import Sequence
 
 
 def raise_duplicate_keys(
@@ -16,6 +17,7 @@ def raise_duplicate_keys(
         else:
             d[key] = val
     return d
+
 
 def check_mixed_indentation(content: str, filename: str) -> bool:
     """
@@ -41,6 +43,7 @@ def check_mixed_indentation(content: str, filename: str) -> bool:
 
     return not found_mixed
 
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
@@ -48,7 +51,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     retval = 0
     for filename in args.filenames:
-        with open(filename, 'r') as f:
+        with open(filename) as f:
             content = f.read()
 
         # Check for mixed indentation first
