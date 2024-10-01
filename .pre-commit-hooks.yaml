@@ -3,7 +3,8 @@
     description: prevents giant files from being committed.
     entry: check-added-large-files
     language: python
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: check-ast
     name: check python ast
     description: simply checks whether the files parse as valid python.
@@ -39,7 +40,8 @@
     entry: check-executables-have-shebangs
     language: python
     types: [text, executable]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: check-illegal-windows-names
     name: check illegal windows names
     entry: Illegal windows filenames detected
@@ -57,7 +59,8 @@
     entry: check-shebang-scripts-are-executable
     language: python
     types: [text]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: pretty-format-json
     name: pretty format json
     description: sets a standard for formatting json files.
@@ -136,7 +139,8 @@
     entry: end-of-file-fixer
     language: python
     types: [text]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: file-contents-sorter
     name: file contents sorter
     description: sorts the lines in specified files (defaults to alphabetical). you must provide list of target files as input in your .pre-commit-config.yaml file.
@@ -203,4 +207,5 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
