@@ -1,3 +1,27 @@
+5.0.0 - 2024-10-05
+==================
+
+### Features
+- `requirements-txt-fixer`: also remove `pkg_resources==...`.
+    - #850 PR by @ericfrederich.
+    - #1030 issue by @ericfrederich.
+- `check-illegal-windows-names`: new hook!
+    - #1044 PR by @ericfrederich.
+    - #589 issue by @ericfrederich.
+    - #1049 PR by @Jeffrey-Lim.
+- `pretty-format-json`: continue processing even if a file has a json error.
+    - #1039 PR by @amarvin.
+    - #1038 issue by @amarvin.
+
+### Fixes
+- `destroyed-symlinks`: set `stages` to `[pre-commit, pre-push, manual]`
+    - PR #1085 by @AdrianDC.
+
+### Migrating
+- pre-commit-hooks now requires `pre-commit>=3.2.0`.
+- use non-deprecated names for `stages`.
+    - #1093 PR by @asottile.
+
 4.6.0 - 2024-04-06
 ==================
 
