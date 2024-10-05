@@ -44,9 +44,9 @@
     minimum_pre_commit_version: 3.2.0
 -   id: check-illegal-windows-names
     name: check illegal windows names
-    entry: Illegal windows filenames detected
+    entry: Illegal Windows filenames detected
     language: fail
-    files: '(?i)((^|/)(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(\.|/|$)|:)'
+    files: '(?i)((^|/)(CON|PRN|AUX|NUL|COM[\d¹²³]|LPT[\d¹²³])(\.|/|$)|[<>:\"\\|?*\x00-\x1F]|/[^/]*[\.\s]/|[^/]*[\.\s]$)'
 -   id: check-json
     name: check json
     description: checks json files for parseable syntax.
