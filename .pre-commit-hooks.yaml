@@ -115,6 +115,7 @@
     entry: destroyed-symlinks
     language: python
     types: [file]
+    stages: [pre-commit, pre-push, manual]
 -   id: detect-aws-credentials
     name: detect aws credentials
     description: detects *your* aws credentials from the aws cli credentials file.
