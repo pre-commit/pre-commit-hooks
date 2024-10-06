@@ -67,18 +67,6 @@ from pre_commit_hooks.file_contents_sorter import PASS
             FAIL,
             b'Fie\nFoe\nfee\nfum\n',
         ),
-        (
-            b'fee\nFie\nFoe\nfum\n',
-            ['--unique', '--ignore-case'],
-            PASS,
-            b'fee\nFie\nFoe\nfum\n',
-        ),
-        (
-            b'fee\nfee\nFie\nFoe\nfum\n',
-            ['--unique', '--ignore-case'],
-            FAIL,
-            b'fee\nFie\nFoe\nfum\n',
-        ),
     ),
 )
 def test_integration(input_s, argv, expected_retval, output, tmpdir):
@@ -89,3 +77,24 @@ def test_integration(input_s, argv, expected_retval, output, tmpdir):
 
     assert path.read_binary() == output
     assert output_retval == expected_retval
+
+
+@pytest.mark.parametrize(
+    ('input_s', 'argv'),
+    (
+        (
+            b'fee\nFie\nFoe\nfum\n',
+            ['--unique', '--ignore-case'],
+        ),
+        (
+            b'fee\nfee\nFie\nFoe\nfum\n',
+            ['--unique', '--ignore-case'],
+        ),
+    ),
+)
+def test_integration_invalid_args(input_s, argv, tmpdir):
+    path = tmpdir.join('file.txt')
+    path.write_binary(input_s)
+
+    with pytest.raises(SystemExit):
+        main([str(path)] + argv)
