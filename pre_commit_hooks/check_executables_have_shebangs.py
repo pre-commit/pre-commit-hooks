@@ -4,9 +4,9 @@ from __future__ import annotations
 import argparse
 import shlex
 import sys
-from typing import Generator
+from collections.abc import Generator
+from collections.abc import Sequence
 from typing import NamedTuple
-from typing import Sequence
 
 from pre_commit_hooks.util import cmd_output
 from pre_commit_hooks.util import zsplit
