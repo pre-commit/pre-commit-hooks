@@ -3,9 +3,9 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections.abc import Mapping
+from collections.abc import Sequence
 from difflib import unified_diff
-from typing import Mapping
-from typing import Sequence
 
 
 def _get_pretty_format(

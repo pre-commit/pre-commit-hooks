@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections.abc import Sequence
 from typing import Any
-from typing import Sequence
 
 
 def raise_duplicate_keys(

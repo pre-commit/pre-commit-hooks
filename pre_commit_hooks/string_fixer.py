@@ -5,7 +5,7 @@ import io
 import re
 import sys
 import tokenize
-from typing import Sequence
+from collections.abc import Sequence
 
 if sys.version_info >= (3, 12):  # pragma: >=3.12 cover
     FSTRING_START = tokenize.FSTRING_START
