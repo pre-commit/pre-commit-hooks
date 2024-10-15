@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Generator
+from collections.abc import Sequence
 from typing import Any
-from typing import Generator
 from typing import NamedTuple
-from typing import Sequence
 
 import ruamel.yaml
 

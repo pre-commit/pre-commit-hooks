@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import argparse
 import os
+from collections.abc import Sequence
 from typing import IO
-from typing import Sequence
 
 
 def fix_file(file_obj: IO[bytes]) -> int:

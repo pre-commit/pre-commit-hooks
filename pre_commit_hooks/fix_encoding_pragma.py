@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import argparse
 import sys
+from collections.abc import Sequence
 from typing import IO
 from typing import NamedTuple
-from typing import Sequence
 
 DEFAULT_PRAGMA = b'# -*- coding: utf-8 -*-'
 

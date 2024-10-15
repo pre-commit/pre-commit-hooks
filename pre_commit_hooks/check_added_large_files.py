@@ -4,7 +4,7 @@ import argparse
 import math
 import os
 import subprocess
-from typing import Sequence
+from collections.abc import Sequence
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import zsplit

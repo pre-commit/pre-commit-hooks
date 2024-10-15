@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import argparse
 import re
+from collections.abc import Sequence
 from typing import AbstractSet
-from typing import Sequence
 
 from pre_commit_hooks.util import CalledProcessError
 from pre_commit_hooks.util import cmd_output

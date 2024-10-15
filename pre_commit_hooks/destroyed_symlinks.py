@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import shlex
 import subprocess
-from typing import Sequence
+from collections.abc import Sequence
 
 from pre_commit_hooks.util import cmd_output
 from pre_commit_hooks.util import zsplit

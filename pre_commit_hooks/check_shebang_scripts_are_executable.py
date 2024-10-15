@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import shlex
 import sys
-from typing import Sequence
+from collections.abc import Sequence
 
 from pre_commit_hooks.check_executables_have_shebangs import EXECUTABLE_VALUES
 from pre_commit_hooks.check_executables_have_shebangs import git_ls_files
