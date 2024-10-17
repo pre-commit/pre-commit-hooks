@@ -20,7 +20,6 @@ def main(argv: Sequence[str] | None = None) -> int:
     reg = re.compile(args.pattern)
     for filename in args.filenames:
         base = os.path.basename(filename)
-        print(base)
         # Check for files that should be ignored
         if base in ('__init__.py', 'conftest.py', 'models.py'):
             continue
