@@ -14,8 +14,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--pytest',
         dest='pattern',
         action='store_const',
-        const=r'tests/.*/tests_*\.py',
-        default=r'tests/.*/tests_*\.py',
+        const=r'^tests\/(?:[a-zA-Z0-9_]+\/)*tests[a-zA-Z0-9_]*\.py$',
+        default=r'^tests\/(?:[a-zA-Z0-9_]+\/)*tests[a-zA-Z0-9_]*\.py$',
         help='(the default) ensure tests match %(const)s',
     )
     args = parser.parse_args(argv)
