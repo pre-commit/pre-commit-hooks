@@ -14,8 +14,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--pytest',
         dest='pattern',
         action='store_const',
-        const=r'.*_test\.py',
-        default=r'.*_test\.py',
+        const=r'.tests_*\.py',
+        default=r'.tests_*\.py',
         help='(the default) ensure tests match %(const)s',
     )
     mutex.add_argument(
