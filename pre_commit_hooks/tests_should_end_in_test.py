@@ -14,23 +14,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--pytest',
         dest='pattern',
         action='store_const',
-        const=r'tests_*\.py',
-        default=r'tests_*\.py',
+        const=r'.*/tests_*\.py',
+        default=r'.*/tests_*\.py',
         help='(the default) ensure tests match %(const)s',
-    )
-    mutex.add_argument(
-        '--pytest-test-first',
-        dest='pattern',
-        action='store_const',
-        const=r'test_.*\.py',
-        help='ensure tests match %(const)s',
-    )
-    mutex.add_argument(
-        '--django', '--unittest',
-        dest='pattern',
-        action='store_const',
-        const=r'test.*\.py',
-        help='ensure tests match %(const)s',
     )
     args = parser.parse_args(argv)
 
@@ -38,6 +24,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     reg = re.compile(args.pattern)
     for filename in args.filenames:
         base = os.path.basename(filename)
+        print(base)
         if (
                 not reg.fullmatch(base) and
                 not base == '__init__.py' and
