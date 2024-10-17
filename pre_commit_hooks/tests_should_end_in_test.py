@@ -14,8 +14,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--pytest',
         dest='pattern',
         action='store_const',
-        const=r'.*/tests_*\.py',
-        default=r'.*/tests_*\.py',
+        const=r'tests/.*/tests_*\.py',
+        default=r'tests/.*/tests_*\.py',
         help='(the default) ensure tests match %(const)s',
     )
     args = parser.parse_args(argv)
@@ -27,9 +27,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(base)
         if (
                 not reg.fullmatch(base) and
-                not base == '__init__.py' and
-                not base == 'conftest.py' and
-                not base == 'models.py'
+                not base == '.*/__init__.py' and
+                not base == '.*/conftest.py' and
+                not base == '.*/models.py'
+
         ):
             retcode = 1
             print(f'{filename} does not match pattern "{args.pattern}"')
