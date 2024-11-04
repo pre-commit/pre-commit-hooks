@@ -37,11 +37,20 @@ def main(argv: Sequence[str] | None = None) -> int:
             'may be specified multiple times'
         ),
     )
+    parser.add_argument(
+        '-m', '--message', default='',
+        help=(
+            'What message to display if the the check fails'
+        ),
+    )
     args = parser.parse_args(argv)
 
     protected = frozenset(args.branch or ('master', 'main'))
     patterns = frozenset(args.pattern or ())
-    return int(is_on_branch(protected, patterns))
+    result = int(is_on_branch(protected, patterns))
+    if result:
+        print(args.message)
+    return result
 
 
 if __name__ == '__main__':

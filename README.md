@@ -167,6 +167,7 @@ Protect specific branches from direct checkins.
     branches.
   - `-p` / `--pattern` can be used to protect branches that match a supplied regex
     (e.g. `--pattern, release/.*`). May be specified multiple times.
+  - `-m` / `--message` can be used to customize the error message in case of failure.
 
 Note that `no-commit-to-branch` is configured by default to [`always_run`](https://pre-commit.com/#config-always_run).
 As a result, it will ignore any setting of [`files`](https://pre-commit.com/#config-files),
