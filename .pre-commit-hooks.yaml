@@ -208,5 +208,6 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
+    exclude_types: [tsv]
     stages: [pre-commit, pre-push, manual]
     minimum_pre_commit_version: 3.2.0
