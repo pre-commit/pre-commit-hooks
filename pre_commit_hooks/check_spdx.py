@@ -1,4 +1,3 @@
-
 """This script checks for the presence of an SPDX-License-Identifier in the comments of source files."""
 from __future__ import annotations
 
@@ -9,17 +8,17 @@ from collections.abc import Sequence
 
 def _load_file(file_path: str) -> str:
     try:
-        with open(file_path, 'r', encoding='utf-8') as f:
+        with open(file_path, encoding='utf-8') as f:
             return f.read()
     except Exception as e:
-            print(f"Error loading file content of {file_path}: {e}")
+        print(f"Error loading file content of {file_path}: {e}")
 
 
 def _check_spdx(file_content: str) -> bool:
     for line in file_content:
         stripped_line = line.strip()
-        if stripped_line.startswith("#") or stripped_line.startswith("//") or re.match(r"^\s*/\*", stripped_line):
-            if "SPDX-License-Identifier:" in stripped_line:
+        if stripped_line.startswith('#') or stripped_line.startswith('//') or re.match(r'^\s*/\*', stripped_line):
+            if 'SPDX-License-Identifier:' in stripped_line:
                 return True
         else:
             break
