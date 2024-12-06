@@ -61,6 +61,13 @@
     types: [text]
     stages: [pre-commit, pre-push, manual]
     minimum_pre_commit_version: 3.2.0
+-   id: check-spdx
+    name: check SPDX line
+    description: checks for the presence of an SPDX-License-Identifier in the comments of source files.
+    entry: check-spdx
+    language: python
+    files: \.(py|js|java|c|cpp|go|sh|ps1)$
+    types: [text]
 -   id: pretty-format-json
     name: pretty format json
     description: sets a standard for formatting json files.
