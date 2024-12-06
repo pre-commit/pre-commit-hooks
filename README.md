@@ -64,6 +64,9 @@ Check for files that contain merge conflict strings.
 #### `check-shebang-scripts-are-executable`
 Checks that scripts with shebangs are executable.
 
+#### `check-spdx`
+Checks for the presence of an SPDX-License-Identifier in the comments of source files.
+
 #### `check-symlinks`
 Checks for symlinks which do not point to anything.
 
