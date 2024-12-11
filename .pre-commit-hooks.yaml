@@ -201,7 +201,7 @@
     description: sorts simple yaml files which consist only of top-level keys, preserving comments and blocks.
     language: python
     entry: sort-simple-yaml
-    files: '^$'
+    types: [yaml]
 -   id: trailing-whitespace
     name: trim trailing whitespace
     description: trims trailing whitespace.
