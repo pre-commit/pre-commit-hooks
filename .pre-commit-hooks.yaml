@@ -133,7 +133,8 @@
     description: detects the presence of web3 private keys.
     entry: detect-web3-private-key
     language: python
-    types: [text]
+    types: [file]
+    additional_dependencies: ['eth-account']
 -   id: double-quote-string-fixer
     name: fix double quoted strings
     description: replaces double quoted strings with single quoted strings.
