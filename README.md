@@ -110,6 +110,9 @@ The following arguments are available:
 #### `detect-private-key`
 Checks for the existence of private keys.
 
+#### `detect-web3-private-key`
+Checks for the existence of web3 private keys. Add `# web3-private-key-ok` to the end of the line to ignore false positives.
+
 #### `double-quote-string-fixer`
 This hook replaces double quoted strings with single quoted strings.
 
