@@ -141,7 +141,11 @@ def main(argv: Sequence[str] | None = None) -> int:
                 if args.autofix:
                     _autofix(json_file, pretty_contents)
                     if args.empty_object_with_newline:
+                        # When using --empty-object-with-newline with --autofix,
+                        # we want to return success after fixing
                         status = 0
+                    else:
+                        status = 1
                 else:
                     diff_output = get_diff(
                         contents,
@@ -149,8 +153,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                         json_file
                     )
                     sys.stdout.buffer.write(diff_output.encode())
-
-                status = 1
+                    status = 1
 
     return status
 
