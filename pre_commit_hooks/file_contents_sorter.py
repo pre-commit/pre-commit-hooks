@@ -12,11 +12,11 @@ conflicts and keep the file nicely ordered.
 from __future__ import annotations
 
 import argparse
+from collections.abc import Iterable
+from collections.abc import Sequence
 from typing import Any
 from typing import Callable
 from typing import IO
-from typing import Iterable
-from typing import Sequence
 
 PASS = 0
 FAIL = 1
@@ -54,18 +54,21 @@ def sort_file_contents(
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Files to sort')
-    parser.add_argument(
+
+    mutex = parser.add_mutually_exclusive_group(required=False)
+    mutex.add_argument(
         '--ignore-case',
         action='store_const',
         const=bytes.lower,
         default=None,
         help='fold lower case to upper case characters',
     )
-    parser.add_argument(
+    mutex.add_argument(
         '--unique',
         action='store_true',
         help='ensure each line is unique',
     )
+
     args = parser.parse_args(argv)
 
     retv = PASS

@@ -4,9 +4,9 @@ from __future__ import annotations
 import argparse
 import shlex
 import sys
-from typing import Generator
+from collections.abc import Generator
+from collections.abc import Sequence
 from typing import NamedTuple
-from typing import Sequence
 
 from pre_commit_hooks.util import cmd_output
 from pre_commit_hooks.util import zsplit
@@ -35,7 +35,7 @@ class GitLsFile(NamedTuple):
     filename: str
 
 
-def git_ls_files(paths: Sequence[str]) -> Generator[GitLsFile, None, None]:
+def git_ls_files(paths: Sequence[str]) -> Generator[GitLsFile]:
     outs = cmd_output('git', 'ls-files', '-z', '--stage', '--', *paths)
     for out in zsplit(outs):
         metadata, filename = out.split('\t')

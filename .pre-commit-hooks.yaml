@@ -3,7 +3,8 @@
     description: prevents giant files from being committed.
     entry: check-added-large-files
     language: python
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: check-ast
     name: check python ast
     description: simply checks whether the files parse as valid python.
@@ -39,7 +40,13 @@
     entry: check-executables-have-shebangs
     language: python
     types: [text, executable]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
+-   id: check-illegal-windows-names
+    name: check illegal windows names
+    entry: Illegal Windows filenames detected
+    language: fail
+    files: '(?i)((^|/)(CON|PRN|AUX|NUL|COM[\d¹²³]|LPT[\d¹²³])(\.|/|$)|[<>:\"\\|?*\x00-\x1F]|/[^/]*[\.\s]/|[^/]*[\.\s]$)'
 -   id: check-json
     name: check json
     description: checks json files for parseable syntax.
@@ -52,7 +59,8 @@
     entry: check-shebang-scripts-are-executable
     language: python
     types: [text]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: pretty-format-json
     name: pretty format json
     description: sets a standard for formatting json files.
@@ -107,6 +115,7 @@
     entry: destroyed-symlinks
     language: python
     types: [file]
+    stages: [pre-commit, pre-push, manual]
 -   id: detect-aws-credentials
     name: detect aws credentials
     description: detects *your* aws credentials from the aws cli credentials file.
@@ -131,7 +140,8 @@
     entry: end-of-file-fixer
     language: python
     types: [text]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: file-contents-sorter
     name: file contents sorter
     description: sorts the lines in specified files (defaults to alphabetical). you must provide list of target files as input in your .pre-commit-config.yaml file.
@@ -145,7 +155,7 @@
     language: python
     types: [text]
 -   id: fix-encoding-pragma
-    name: fix python encoding pragma
+    name: fix python encoding pragma (deprecated)
     description: 'adds # -*- coding: utf-8 -*- to the top of python files.'
     language: python
     entry: fix-encoding-pragma
@@ -198,4 +208,5 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
-    stages: [commit, push, manual]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0

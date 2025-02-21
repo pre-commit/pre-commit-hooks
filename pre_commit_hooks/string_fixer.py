@@ -3,8 +3,15 @@ from __future__ import annotations
 import argparse
 import io
 import re
+import sys
 import tokenize
-from typing import Sequence
+from collections.abc import Sequence
+
+if sys.version_info >= (3, 12):  # pragma: >=3.12 cover
+    FSTRING_START = tokenize.FSTRING_START
+    FSTRING_END = tokenize.FSTRING_END
+else:  # pragma: <3.12 cover
+    FSTRING_START = FSTRING_END = -1
 
 START_QUOTE_RE = re.compile('^[a-zA-Z]*"')
 
@@ -40,11 +47,17 @@ def fix_strings(filename: str) -> int:
     # Basically a mutable string
     splitcontents = list(contents)
 
+    fstring_depth = 0
+
     # Iterate in reverse so the offsets are always correct
     tokens_l = list(tokenize.generate_tokens(io.StringIO(contents).readline))
     tokens = reversed(tokens_l)
     for token_type, token_text, (srow, scol), (erow, ecol), _ in tokens:
-        if token_type == tokenize.STRING:
+        if token_type == FSTRING_START:  # pragma: >=3.12 cover
+            fstring_depth += 1
+        elif token_type == FSTRING_END:  # pragma: >=3.12 cover
+            fstring_depth -= 1
+        elif fstring_depth == 0 and token_type == tokenize.STRING:
             new_text = handle_match(token_text)
             splitcontents[
                 line_offsets[srow] + scol:

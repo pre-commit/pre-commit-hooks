@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import collections
-from typing import Sequence
+from collections.abc import Sequence
 
 
 CRLF = b'\r\n'

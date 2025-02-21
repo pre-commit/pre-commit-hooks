@@ -1,3 +1,65 @@
+5.0.0 - 2024-10-05
+==================
+
+### Features
+- `requirements-txt-fixer`: also remove `pkg_resources==...`.
+    - #850 PR by @ericfrederich.
+    - #1030 issue by @ericfrederich.
+- `check-illegal-windows-names`: new hook!
+    - #1044 PR by @ericfrederich.
+    - #589 issue by @ericfrederich.
+    - #1049 PR by @Jeffrey-Lim.
+- `pretty-format-json`: continue processing even if a file has a json error.
+    - #1039 PR by @amarvin.
+    - #1038 issue by @amarvin.
+
+### Fixes
+- `destroyed-symlinks`: set `stages` to `[pre-commit, pre-push, manual]`
+    - PR #1085 by @AdrianDC.
+
+### Migrating
+- pre-commit-hooks now requires `pre-commit>=3.2.0`.
+- use non-deprecated names for `stages`.
+    - #1093 PR by @asottile.
+
+4.6.0 - 2024-04-06
+==================
+
+### Features
+- `requirements-txt-fixer`: remove duplicate packages.
+    - #1014 PR by @vhoulbreque-withings.
+    - #960 issue @csibe17.
+
+### Migrating
+- `fix-encoding-pragma`: deprecated -- will be removed in 5.0.0.  use
+  [pyupgrade](https://github.com/asottile/pyupgrade) or some other tool.
+    - #1033 PR by @mxr.
+    - #1032 issue by @mxr.
+
+4.5.0 - 2023-10-07
+==================
+
+### Features
+- `requirements-txt-fixer`: also sort `constraints.txt` by default.
+    - #857 PR by @lev-blit.
+    - #830 issue by @PLPeeters.
+- `debug-statements`: add `bpdb` debugger.
+    - #942 PR by @mwip.
+    - #941 issue by @mwip.
+
+### Fixes
+- `file-contents-sorter`: fix sorting an empty file.
+    - #944 PR by @RoelAdriaans.
+    - #935 issue by @paduszyk.
+- `double-quote-string-fixer`: don't rewrite inside f-strings in 3.12+.
+    - #973 PR by @asottile.
+    - #971 issue by @XuehaiPan.
+
+## Migrating
+- now requires python >= 3.8.
+    - #926 PR by @asottile.
+    - #927 PR by @asottile.
+
 4.4.0 - 2022-11-23
 ==================
 

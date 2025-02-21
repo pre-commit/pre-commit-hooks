@@ -1,17 +1,17 @@
 from __future__ import annotations
 
 import argparse
+from collections.abc import Generator
+from collections.abc import Sequence
 from typing import Any
-from typing import Generator
 from typing import NamedTuple
-from typing import Sequence
 
 import ruamel.yaml
 
 yaml = ruamel.yaml.YAML(typ='safe')
 
 
-def _exhaust(gen: Generator[str, None, None]) -> None:
+def _exhaust(gen: Generator[str]) -> None:
     for _ in gen:
         pass
 
@@ -46,7 +46,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--unsafe', action='store_true',
         help=(
             'Instead of loading the files, simply parse them for syntax.  '
-            'A syntax-only check enables extensions and unsafe contstructs '
+            'A syntax-only check enables extensions and unsafe constructs '
             'which would otherwise be forbidden.  Using this option removes '
             'all guarantees of portability to other yaml implementations.  '
             'Implies --allow-multiple-documents'

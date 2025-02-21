@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import shlex
 import sys
-from typing import Sequence
+from collections.abc import Sequence
 
 from pre_commit_hooks.check_executables_have_shebangs import EXECUTABLE_VALUES
 from pre_commit_hooks.check_executables_have_shebangs import git_ls_files
@@ -36,7 +36,7 @@ def _message(path: str) -> None:
         f'`chmod +x {shlex.quote(path)}`\n'
         f'  If on Windows, you may also need to: '
         f'`git add --chmod=+x {shlex.quote(path)}`\n'
-        f'  If it not supposed to be executable, double-check its shebang '
+        f'  If it is not supposed to be executable, double-check its shebang '
         f'is wanted.\n',
         file=sys.stderr,
     )

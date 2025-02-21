@@ -4,9 +4,9 @@ import argparse
 import json
 import re
 import sys
+from collections.abc import Mapping
+from collections.abc import Sequence
 from difflib import unified_diff
-from typing import Mapping
-from typing import Sequence
 
 def _insert_linebreaks(json_str: str) -> str:
     return re.sub(
@@ -135,17 +135,22 @@ def main(argv: Sequence[str] | None = None) -> int:
                 f'Input File {json_file} is not a valid JSON, consider using '
                 f'check-json',
             )
-            return 1
-
-        if contents != pretty_contents:
             status = 1
-            if args.autofix:
-                _autofix(json_file, pretty_contents)
-                if args.empty_object_with_newline:
-                    status = 0
-            else:
-                diff_output = get_diff(contents, pretty_contents, json_file)
-                sys.stdout.buffer.write(diff_output.encode())
+        else:
+            if contents != pretty_contents:
+                if args.autofix:
+                    _autofix(json_file, pretty_contents)
+                    if args.empty_object_with_newline:
+                        status = 0
+                else:
+                    diff_output = get_diff(
+                        contents,
+                        pretty_contents,
+                        json_file
+                    )
+                    sys.stdout.buffer.write(diff_output.encode())
+
+                status = 1
 
     return status
 
