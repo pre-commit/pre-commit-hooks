@@ -8,11 +8,14 @@ from collections.abc import Mapping
 from collections.abc import Sequence
 from difflib import unified_diff
 
+
 def _insert_linebreaks(json_str: str) -> str:
     return re.sub(
-        r'\n(?P<spaces>\s*)(?P<json_key>.*): {}(?P<delim>,??)', 
-        '\n\g<spaces>\g<json_key>: {\n\g<spaces>}\g<delim>', 
-        json_str)
+        r'\n(?P<spaces>\s*)(?P<json_key>.*): {}(?P<delim>,??)',
+        '\n\\g<spaces>\\g<json_key>: {\n\\g<spaces>}\\g<delim>',
+        json_str,
+    )
+
 
 def _get_pretty_format(
         contents: str,
@@ -110,8 +113,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         action='store_true',
         dest='empty_object_with_newline',
         default=False,
-        help='Format empty JSON objects to have a linebreak, ' \
-            + 'also activates --no-sort-keys',
+        help='Format empty JSON objects to have a linebreak, ' +
+        'also activates --no-sort-keys',
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
@@ -150,7 +153,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     diff_output = get_diff(
                         contents,
                         pretty_contents,
-                        json_file
+                        json_file,
                     )
                     sys.stdout.buffer.write(diff_output.encode())
                     status = 1
