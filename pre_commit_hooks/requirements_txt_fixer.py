@@ -151,6 +151,7 @@ def fix_requirements(f: IO[bytes], fail_without_version: bool) -> int:
     if before_string == after_string:
         return PASS
     else:
+        print("Sorting requirements")
         f.seek(0)
         f.write(after_string)
         f.truncate()
@@ -171,7 +172,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             ret_for_file = fix_requirements(file_obj, args.fail_without_version)
 
             if ret_for_file:
-                print(f'Sorting {arg}')
+                print(f'Error in file {arg}')
 
             retv |= ret_for_file
 
