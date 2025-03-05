@@ -13,6 +13,7 @@ FAIL = 1
 class Requirement:
     UNTIL_COMPARISON = re.compile(b'={2,3}|!=|~=|>=?|<=?')
     UNTIL_SEP = re.compile(rb'[^;\s]+')
+    VERSION_SPECIFIED = re.compile(b'.+(={2,3}|!=|~=|>=?|<=?).+')
 
     def __init__(self) -> None:
         self.value: bytes | None = None
@@ -58,6 +59,9 @@ class Requirement:
             not self.value.rstrip(b'\r\n').endswith(b'\\')
         )
 
+    def contains_version_specifier(self) -> bool:
+        return bool(self.VERSION_SPECIFIED.match(self.value))
+
     def append_value(self, value: bytes) -> None:
         if self.value is not None:
             self.value += value
@@ -65,7 +69,7 @@ class Requirement:
             self.value = value
 
 
-def fix_requirements(f: IO[bytes]) -> int:
+def fix_requirements(f: IO[bytes], fail_without_version: bool) -> int:
     requirements: list[Requirement] = []
     before = list(f)
     after: list[bytes] = []
@@ -121,6 +125,17 @@ def fix_requirements(f: IO[bytes]) -> int:
         ]
     ]
 
+    # check for requirements without a version specified
+    if fail_without_version:
+        missing_requirement_found = False
+        for req in requirements:
+            if not req.contains_version_specifier():
+                print(f'Missing version for requirement {req.name.decode()}')
+                missing_requirement_found = True
+
+        if missing_requirement_found:
+            return FAIL
+
     # sort the requirements and remove duplicates
     prev = None
     for requirement in sorted(requirements):
@@ -145,13 +160,15 @@ def fix_requirements(f: IO[bytes]) -> int:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
+    parser.add_argument("--fail-without-version", action="store_true",
+                        help="Fail if a requirement is missing a version")
     args = parser.parse_args(argv)
 
     retv = PASS
 
     for arg in args.filenames:
         with open(arg, 'rb+') as file_obj:
-            ret_for_file = fix_requirements(file_obj)
+            ret_for_file = fix_requirements(file_obj, args.fail_without_version)
 
             if ret_for_file:
                 print(f'Sorting {arg}')

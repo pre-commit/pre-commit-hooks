@@ -192,7 +192,7 @@
     always_run: true
 -   id: requirements-txt-fixer
     name: fix requirements.txt
-    description: sorts entries in requirements.txt.
+    description: sorts entries in requirements.txt and checks whether a version is specified (parameterized).
     entry: requirements-txt-fixer
     language: python
     files: (requirements|constraints).*\.txt$
