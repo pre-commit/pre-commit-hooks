@@ -60,7 +60,10 @@ class Requirement:
         )
 
     def contains_version_specifier(self) -> bool:
-        return bool(self.VERSION_SPECIFIED.match(self.value))
+        return (
+            self.value is not None and
+            bool(self.VERSION_SPECIFIED.match(self.value))
+        )
 
     def append_value(self, value: bytes) -> None:
         if self.value is not None:
@@ -171,7 +174,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     for arg in args.filenames:
         with open(arg, 'rb+') as file_obj:
-            ret_for_file = fix_requirements(file_obj, args.fail_without_version)
+            ret_for_file = fix_requirements(
+                file_obj, args.fail_without_version,
+            )
 
             if ret_for_file:
                 print(f'Error in file {arg}')

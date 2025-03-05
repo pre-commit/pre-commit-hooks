@@ -120,9 +120,24 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
         (b'bar\nfoo\n', ['--fail-without-version'], FAIL, b'bar\nfoo\n'),
-        (b'bar==1.0\nfoo==1.1a\n', ['--fail-without-version'], PASS, b'bar==1.0\nfoo==1.1a\n'),
-        (b'#test\nbar==1.0\nfoo==1.1a\n', ['--fail-without-version'], PASS, b'#test\nbar==1.0\nfoo==1.1a\n'),
-        (b'bar==1.0\n#test\nfoo==1.1a\n', ['--fail-without-version'], PASS, b'bar==1.0\n#test\nfoo==1.1a\n'),
+        (
+            b'bar==1.0\nfoo==1.1a\n',
+            ['--fail-without-version'],
+            PASS,
+            b'bar==1.0\nfoo==1.1a\n',
+        ),
+        (
+            b'#test\nbar==1.0\nfoo==1.1a\n',
+            ['--fail-without-version'],
+            PASS,
+            b'#test\nbar==1.0\nfoo==1.1a\n',
+        ),
+        (
+            b'bar==1.0\n#test\nfoo==1.1a\n',
+            ['--fail-without-version'],
+            PASS,
+            b'bar==1.0\n#test\nfoo==1.1a\n',
+        ),
     ),
 )
 def test_integration(input_s, argv, expected_retval, output, tmpdir):
