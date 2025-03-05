@@ -151,7 +151,7 @@ def fix_requirements(f: IO[bytes], fail_without_version: bool) -> int:
     if before_string == after_string:
         return PASS
     else:
-        print("Sorting requirements")
+        print('Sorting requirements')
         f.seek(0)
         f.write(after_string)
         f.truncate()
@@ -161,8 +161,10 @@ def fix_requirements(f: IO[bytes], fail_without_version: bool) -> int:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
-    parser.add_argument("--fail-without-version", action="store_true",
-                        help="Fail if a requirement is missing a version")
+    parser.add_argument(
+        '--fail-without-version', action='store_true',
+        help='Fail if a requirement is missing a version',
+    )
     args = parser.parse_args(argv)
 
     retv = PASS

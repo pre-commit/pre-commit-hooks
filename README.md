@@ -186,7 +186,7 @@ the following commandline options:
   - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 
 #### `requirements-txt-fixer`
-Sorts entries in requirements.txt and constraints.txt and removes incorrect entry for `pkg-resources==0.0.0`  
+Sorts entries in requirements.txt and constraints.txt and removes incorrect entry for `pkg-resources==0.0.0`
 Provides also an optional check if a version is specified for each requirement. You can configure this with
 the following commandline options:
   - `--fail-without-version` - Fails when no version is specified for a requirement
