@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import ast
 
+import pytest
+
 from pre_commit_hooks.debug_statement_hook import Debug
 from pre_commit_hooks.debug_statement_hook import DebugStatementParser
 from pre_commit_hooks.debug_statement_hook import main
@@ -26,10 +28,24 @@ def test_finds_debug_import_from_import():
     assert visitor.breakpoints == [Debug(1, 0, 'pudb', 'imported')]
 
 
-def test_finds_debug_import_when_using_dunder_import():
+@pytest.mark.parametrize(
+    'debugger_module', (
+        'bpdb',
+        'ipdb',
+        'pdb',
+        'pdbr',
+        'pudb',
+        'pydevd_pycharm',
+        'q',
+        'rdb',
+        'rpdb',
+        'wdb'
+    )
+)
+def test_finds_debug_import_when_using_dunder_import(debugger_module):
     visitor = DebugStatementParser()
-    visitor.visit(ast.parse('__import__("pdb").set_trace()'))
-    assert visitor.breakpoints == [Debug(1, 0, 'pdb', 'imported')]
+    visitor.visit(ast.parse(f'__import__("{debugger_module}").set_trace()'))
+    assert visitor.breakpoints == [Debug(1, 0, debugger_module, 'imported')]
 
 
 def test_finds_breakpoint():
