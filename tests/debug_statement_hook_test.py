@@ -39,8 +39,8 @@ def test_finds_debug_import_from_import():
         'q',
         'rdb',
         'rpdb',
-        'wdb'
-    )
+        'wdb',
+    ),
 )
 def test_finds_debug_import_when_using_dunder_import(debugger_module):
     visitor = DebugStatementParser()

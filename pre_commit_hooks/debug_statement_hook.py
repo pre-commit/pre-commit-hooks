@@ -48,7 +48,7 @@ class DebugStatementParser(ast.NodeVisitor):
             if isinstance(node.args[0], ast.Constant) and node.args[0].value in DEBUG_STATEMENTS:
                 st = Debug(node.lineno, node.col_offset, node.args[0].value, 'imported')
                 self.breakpoints.append(st)
-        
+
         """python3.7+ breakpoint()"""
         if isinstance(node.func, ast.Name) and node.func.id == 'breakpoint':
             st = Debug(node.lineno, node.col_offset, node.func.id, 'called')
