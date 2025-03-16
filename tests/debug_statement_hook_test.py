@@ -26,6 +26,12 @@ def test_finds_debug_import_from_import():
     assert visitor.breakpoints == [Debug(1, 0, 'pudb', 'imported')]
 
 
+def test_finds_debug_import_when_using_dunder_import():
+    visitor = DebugStatementParser()
+    visitor.visit(ast.parse('__import__("pdb").set_trace()'))
+    assert visitor.breakpoints == [Debug(1, 0, 'pdb', 'imported')]
+
+
 def test_finds_breakpoint():
     visitor = DebugStatementParser()
     visitor.visit(ast.parse('breakpoint()'))
