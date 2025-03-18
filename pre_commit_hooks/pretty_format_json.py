@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections.abc import Mapping
 from collections.abc import Sequence
@@ -14,6 +15,7 @@ def _get_pretty_format(
         ensure_ascii: bool = True,
         sort_keys: bool = True,
         top_keys: Sequence[str] = (),
+        compact_arrays: bool = False,
 ) -> str:
     def pairs_first(pairs: Sequence[tuple[str, str]]) -> Mapping[str, str]:
         before = [pair for pair in pairs if pair[0] in top_keys]
@@ -22,12 +24,56 @@ def _get_pretty_format(
         if sort_keys:
             after.sort()
         return dict(before + after)
+
     json_pretty = json.dumps(
         json.loads(contents, object_pairs_hook=pairs_first),
         indent=indent,
         ensure_ascii=ensure_ascii,
     )
+
+    if compact_arrays:
+        json_pretty = _compact_arrays(json_pretty)
+
     return f'{json_pretty}\n'
+
+
+def _compact_arrays(json_text: str) -> str:
+    """Convert arrays with simple values to a single line format."""
+    pattern = re.compile(
+        r'''
+        (                             # Capturing group for the entire array
+            \[                        # Opening bracket
+            \s*                       # Optional whitespace
+            (?:                       # Non-capturing group for array elements
+                (?:                   # Non-capturing group for each value type
+                    "[^"]*"           # String: anything in quotes
+                    |
+                    -?                # Optional negative sign
+                    (?:
+                        0|[1-9]\d*    # Integer part: 0 or non-zero digit
+                                      # followed by digits
+                    )
+                    (?:\.\d+)?        # Optional fractional part
+                    (?:[eE][+-]?\d+)? # Optional exponent part
+                    |
+                    true|false        # Boolean
+                    |
+                    null              # Null
+                )
+                (?:\s*,\s*)?          # Optional comma and whitespace
+            )++                       # One or more elements
+            \s*                       # Optional whitespace
+            \]                        # Closing bracket
+        )
+    ''', re.VERBOSE,
+    )
+
+    def compact_match(match: re.Match[str]) -> str:
+        array_content = match.group(0)
+        compact = re.sub(r'\s*\n\s*', ' ', array_content)
+        return compact
+
+    return re.sub(pattern, compact_match, json_text)
 
 
 def _autofix(filename: str, new_contents: str) -> None:
@@ -96,6 +142,16 @@ def main(argv: Sequence[str] | None = None) -> int:
         default=[],
         help='Ordered list of keys to keep at the top of JSON hashes',
     )
+    parser.add_argument(
+        '--compact-arrays',
+        action='store_true',
+        dest='compact_arrays',
+        default=False,
+        help=(
+            'Format simple arrays on a single line for more '
+            'compact representation'
+        ),
+    )
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -109,6 +165,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             pretty_contents = _get_pretty_format(
                 contents, args.indent, ensure_ascii=not args.no_ensure_ascii,
                 sort_keys=not args.no_sort_keys, top_keys=args.top_keys,
+                compact_arrays=args.compact_arrays,
             )
         except ValueError:
             print(

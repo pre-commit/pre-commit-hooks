@@ -155,3 +155,96 @@ def test_diffing_output(capsys):
     assert actual_retval == expected_retval
     assert actual_out == expected_out
     assert actual_err == ''
+
+
+def test_compact_arrays_main(tmpdir):
+    # TODO: Intentionally don't address round trip bug caused by
+    # using `json.loads(json.dumps(data))`. This will need to be
+    # resolved separately.
+    srcfile = tmpdir.join('to_be_compacted.json')
+    srcfile.write(
+        '{\n'
+        '  "simple_array": [\n'
+        '    1,\n'
+        '    2,\n'
+        '    3\n'
+        '  ],\n'
+        '  "string_array": [\n'
+        '    "a",\n'
+        '    "b",\n'
+        '    "c"\n'
+        '  ],\n'
+        '  "mixed_array": [\n'
+        '    1,\n'
+        '    "string",\n'
+        '    true,\n'
+        '    null\n'
+        '  ],\n'
+        '  "nested_objects": [\n'
+        '    {\n'
+        '      "a": 1\n'
+        '    },\n'
+        '    {\n'
+        '      "b": 2\n'
+        '    }\n'
+        '  ]\n'
+        '}',
+    )
+
+    ret = main(['--compact-arrays', '--autofix', str(srcfile)])
+    assert ret == 1
+
+    with open(str(srcfile), encoding='UTF-8') as f:
+        contents = f.read()
+
+    # Simple arrays should be compacted
+    assert '"simple_array": [ 1, 2, 3 ]' in contents
+    assert '"string_array": [ "a", "b", "c" ]' in contents
+    assert '"mixed_array": [ 1, "string", true, null ]' in contents
+
+    # Nested array objects should remain expanded
+    assert '  "nested_objects": [\n' in contents
+    assert '      "a": 1\n' in contents
+
+
+def test_compact_arrays_diff_output(tmpdir, capsys):
+    srcfile = tmpdir.join('expanded_arrays.json')
+    srcfile.write(
+        '{\n'
+        '  "array": [\n'
+        '    1,\n'
+        '    2,\n'
+        '    3\n'
+        '  ]\n'
+        '}',
+    )
+
+    ret = main(['--compact-arrays', str(srcfile)])
+    assert ret == 1
+
+    out, _ = capsys.readouterr()
+    assert '+  "array": [ 1, 2, 3 ]' in out
+
+    # Validate diff output
+    assert '-    1,' in out
+    assert '-    2,' in out
+    assert '-    3' in out
+    assert '-  "array": [' in out
+    assert '-  ]' in out
+
+
+def test_compact_arrays_disabled(tmpdir):
+    """Test that compacting arrays does not impact default formatting."""
+    srcfile = tmpdir.join('already_compact.json')
+    srcfile.write('{\n  "array": [ 1, 2, 3 ]\n}')
+
+    ret = main(['--autofix', str(srcfile)])
+    assert ret == 1
+
+    with open(str(srcfile), encoding='UTF-8') as f:
+        contents = f.read()
+
+    assert '"array": [\n' in contents
+    assert '    1,' in contents
+    assert '    2,' in contents
+    assert '    3\n  ]' in contents
