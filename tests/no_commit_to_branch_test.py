@@ -5,19 +5,23 @@ import pytest
 from pre_commit_hooks.no_commit_to_branch import is_on_branch
 from pre_commit_hooks.no_commit_to_branch import main
 from pre_commit_hooks.util import cmd_output
+from testing.util import get_default_branch
 from testing.util import git_commit
+
+
+default_branch = get_default_branch()
 
 
 def test_other_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'anotherbranch')
-        assert is_on_branch({'master'}) is False
+        assert is_on_branch({default_branch}) is False
 
 
 def test_multi_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'another/branch')
-        assert is_on_branch({'master'}) is False
+        assert is_on_branch({default_branch}) is False
 
 
 def test_multi_branch_fail(temp_git_dir):
@@ -28,7 +32,7 @@ def test_multi_branch_fail(temp_git_dir):
 
 def test_master_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
-        assert is_on_branch({'master'}) is True
+        assert is_on_branch({default_branch}) is True
 
 
 def test_main_branch_call(temp_git_dir):
@@ -50,11 +54,11 @@ def test_branch_pattern_fail(temp_git_dir):
         assert is_on_branch(set(), {'another/.*'}) is True
 
 
-@pytest.mark.parametrize('branch_name', ('master', 'another/branch'))
+@pytest.mark.parametrize('branch_name', (default_branch, 'another/branch'))
 def test_branch_pattern_multiple_branches_fail(temp_git_dir, branch_name):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', branch_name)
-        assert main(('--branch', 'master', '--pattern', 'another/.*'))
+        assert main(('--branch', default_branch, '--pattern', 'another/.*'))
 
 
 def test_main_default_call(temp_git_dir):

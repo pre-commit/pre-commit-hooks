@@ -7,8 +7,12 @@ import pytest
 
 from pre_commit_hooks.check_merge_conflict import main
 from pre_commit_hooks.util import cmd_output
+from testing.util import get_default_branch
 from testing.util import get_resource_path
 from testing.util import git_commit
+
+
+default_branch = get_default_branch()
 
 
 @pytest.fixture
@@ -150,7 +154,12 @@ def test_worktree_merge_conflicts(f1_is_a_conflict_file, tmpdir, capsys):
     cmd_output('git', 'worktree', 'add', str(worktree))
     with worktree.as_cwd():
         cmd_output(
-            'git', 'pull', '--no-rebase', 'origin', 'master', retcode=None,
+            'git',
+            'pull',
+            '--no-rebase',
+            'origin',
+            default_branch,
+            retcode=None,
         )
         msg = f1_is_a_conflict_file.join('.git/worktrees/worktree/MERGE_MSG')
         assert msg.exists()
