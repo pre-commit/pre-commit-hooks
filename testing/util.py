@@ -17,5 +17,5 @@ def git_commit(*args, **kwargs):
 
 
 def get_default_branch():
-    cmd = ('git', 'config', '--get', 'init.defaultBranch')
-    return subprocess.getoutput(cmd).strip() or 'master'
+    ret = subprocess.getoutput('git config init.defaultBranch').strip()
+    return ret or 'master'
