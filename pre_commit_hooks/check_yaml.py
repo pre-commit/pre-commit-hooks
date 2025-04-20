@@ -63,7 +63,13 @@ def main(argv: Sequence[str] | None = None) -> int:
             with open(filename, encoding='UTF-8') as f:
                 load_fn(f)
         except ruamel.yaml.YAMLError as exc:
-            print(exc)
+            print(f'{filename}: Failed to yaml parse ({exc})')
+            retval = 1
+        except UnicodeDecodeError as exc:
+            print(
+                f'{filename}: Failed to read file due to encoding error '
+                f'({exc})',
+            )
             retval = 1
     return retval
 
