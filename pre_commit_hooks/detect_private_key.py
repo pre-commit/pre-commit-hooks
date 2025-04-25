@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 from collections.abc import Sequence
 
 BLACKLIST = [
@@ -29,6 +30,16 @@ def main(argv: Sequence[str] | None = None) -> int:
             content = f.read()
             if any(line in content for line in BLACKLIST):
                 private_key_files.append(filename)
+                continue
+        try:
+            if filename.endswith(('.gz', '.tgz')):
+                with gzip.open(filename, 'rb') as f:
+                    content = f.read()
+                    if any(line in content for line in BLACKLIST):
+                        private_key_files.append(filename)
+                        continue
+        except gzip.BadGzipFile:
+            pass
 
     if private_key_files:
         for private_key_file in private_key_files:

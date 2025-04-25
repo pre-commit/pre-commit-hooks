@@ -127,7 +127,7 @@
     description: detects the presence of private keys.
     entry: detect-private-key
     language: python
-    types: [text]
+    types_or: [text, tgz, gz]
 -   id: double-quote-string-fixer
     name: fix double quoted strings
     description: replaces double quoted strings with single quoted strings.
