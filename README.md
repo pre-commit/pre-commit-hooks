@@ -48,7 +48,7 @@ Check for files with names that would conflict on a case-insensitive filesystem 
 #### `check-docstring-first`
 Checks for a common error of placing code before the docstring.
 
-> [!NOTE]  
+> [!NOTE]
 > As raised in [#159](https://github.com/pre-commit/pre-commit-hooks/issues/159) attribute level docstrings will
 > be flagged by this. A basic workaround is to wrap the docstring with `()` which will bypass this throwing and
 > error, but could interfere with other libraries that parse them.
