@@ -20,10 +20,15 @@ def fix_file(file_obj: IO[bytes]) -> int:
     last_character = file_obj.read(1)
     # last_character will be '' for an empty file
     if last_character not in {LF, CR} and last_character != b'':
-        # Check if file uses CRLF endings
+        # Look at first line to determine line ending
         file_obj.seek(0, os.SEEK_SET)
-        content = file_obj.read()
-        ending = CRLF if CRLF in content else LF
+        first_line = file_obj.readline()
+        if CRLF in first_line:
+            ending = CRLF
+        elif CR in first_line:
+            ending = CR
+        else:
+            ending = LF
         # Needs this seek for windows, otherwise IOError
         file_obj.seek(0, os.SEEK_END)
         file_obj.write(ending)
