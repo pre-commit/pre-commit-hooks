@@ -129,13 +129,6 @@ The following arguments are available:
 #### `fix-byte-order-marker`
 removes UTF-8 byte order marker
 
-#### `fix-encoding-pragma`
-
-_Deprecated since py2 is EOL - use [pyupgrade](https://github.com/asottile/pyupgrade) instead._
-
-Add `# -*- coding: utf-8 -*-` to the top of python files.
-  - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
-
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
 
@@ -213,6 +206,7 @@ Trims trailing whitespace.
 ### Deprecated / replaced hooks
 
 - `check-byte-order-marker`: instead use fix-byte-order-marker
+- `fix-encoding-pragma`: instead use [`pyupgrade`](https://github.com/asottile/pyupgrade)
 
 ### As a standalone package
 
