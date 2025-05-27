@@ -127,7 +127,7 @@ The following arguments are available:
 - `--unique` - ensure each line is unique.
 
 #### `fix-byte-order-marker`
-removes UTF-8 byte order marker
+Removes UTF-8 byte order marker.
 
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
@@ -136,7 +136,7 @@ This is intended as a helper to migrate away from submodules.  If you want to
 ban them entirely use `forbid-submodules`
 
 #### `forbid-submodules`
-forbids any submodules in the repository.
+Forbids any submodules in the repository.
 
 #### `mixed-line-ending`
 Replaces or checks mixed line ending.
@@ -147,7 +147,7 @@ Replaces or checks mixed line ending.
       - `no` - Checks if there is any mixed line ending without modifying any file.
 
 #### `name-tests-test`
-verifies that test files are named correctly.
+Verifies that test files are named correctly.
 - `--pytest` (the default): ensure tests match `.*_test\.py`
 - `--pytest-test-first`: ensure tests match `test_.*\.py`
 - `--django` / `--unittest`: ensure tests match `test.*\.py`
