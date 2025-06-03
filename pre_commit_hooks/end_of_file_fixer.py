@@ -5,6 +5,10 @@ import os
 from collections.abc import Sequence
 from typing import IO
 
+LF = b'\n'
+CR = b'\r'
+CRLF = b'\r\n'
+
 
 def fix_file(file_obj: IO[bytes]) -> int:
     # Test for newline at end of file
@@ -15,13 +19,22 @@ def fix_file(file_obj: IO[bytes]) -> int:
         return 0
     last_character = file_obj.read(1)
     # last_character will be '' for an empty file
-    if last_character not in {b'\n', b'\r'} and last_character != b'':
+    if last_character not in {LF, CR} and last_character != b'':
+        # Look at first line to determine line ending
+        file_obj.seek(0, os.SEEK_SET)
+        first_line = file_obj.readline()
+        if CRLF in first_line:
+            ending = CRLF
+        elif CR in first_line:
+            ending = CR
+        else:
+            ending = LF
         # Needs this seek for windows, otherwise IOError
         file_obj.seek(0, os.SEEK_END)
-        file_obj.write(b'\n')
+        file_obj.write(ending)
         return 1
 
-    while last_character in {b'\n', b'\r'}:
+    while last_character in {LF, CR}:
         # Deal with the beginning of the file
         if file_obj.tell() == 1:
             # If we've reached the beginning of the file and it is all
@@ -38,7 +51,7 @@ def fix_file(file_obj: IO[bytes]) -> int:
     # newlines.  If we find extraneous newlines, then backtrack and trim them.
     position = file_obj.tell()
     remaining = file_obj.read()
-    for sequence in (b'\n', b'\r\n', b'\r'):
+    for sequence in (LF, CRLF, CR):
         if remaining == sequence:
             return 0
         elif remaining.startswith(sequence):
