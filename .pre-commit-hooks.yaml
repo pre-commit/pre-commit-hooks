@@ -3,7 +3,7 @@
     description: prevents giant files from being committed.
     entry: check-added-large-files
     language: python
-    stages: [pre-commit, pre-push, manual]
+    stages: [commit, push, manual]
     minimum_pre_commit_version: 3.2.0
 -   id: check-ast
     name: check python ast
@@ -40,7 +40,7 @@
     entry: check-executables-have-shebangs
     language: python
     types: [text, executable]
-    stages: [pre-commit, pre-push, manual]
+    stages: [commit, push, manual]
     minimum_pre_commit_version: 3.2.0
 -   id: check-illegal-windows-names
     name: check illegal windows names
@@ -59,7 +59,7 @@
     entry: check-shebang-scripts-are-executable
     language: python
     types: [text]
-    stages: [pre-commit, pre-push, manual]
+    stages: [commit, push, manual]
     minimum_pre_commit_version: 3.2.0
 -   id: pretty-format-json
     name: pretty format json
@@ -115,7 +115,7 @@
     entry: destroyed-symlinks
     language: python
     types: [file]
-    stages: [pre-commit, pre-push, manual]
+    stages: [commit, push, manual]
 -   id: detect-aws-credentials
     name: detect aws credentials
     description: detects *your* aws credentials from the aws cli credentials file.
@@ -140,7 +140,7 @@
     entry: end-of-file-fixer
     language: python
     types: [text]
-    stages: [pre-commit, pre-push, manual]
+    stages: [commit, push, manual]
     minimum_pre_commit_version: 3.2.0
 -   id: file-contents-sorter
     name: file contents sorter
@@ -208,5 +208,5 @@
     entry: trailing-whitespace-fixer
     language: python
     types: [text]
-    stages: [pre-commit, pre-push, manual]
+    stages: [commit, push, manual]
     minimum_pre_commit_version: 3.2.0
