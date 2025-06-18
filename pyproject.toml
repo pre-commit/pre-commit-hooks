@@ -1,0 +1,88 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools >= 65.3.0",
+  "setuptools_scm[toml] >= 7.0.5"
+]
+
+[options]
+packages = "find:"
+install_requires = [
+  "ruamel.yaml>=0.15",
+  'tomli>=1.1.0;python_version<"3.11"'
+]
+python_requires = ">=3.9"
+
+[project]
+name = "pre_commit_hooks"
+version = "5.0.0"
+description = "Some out-of-the-box hooks for pre-commit."
+readme = "README.md"
+authors = [{"email" = "asottile@umich.edu", "name" = "Anthony Sottile"}]
+license = "MIT"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy"
+]
+
+[project.scripts]
+check-added-large-files = "pre_commit_hooks.check_added_large_files:main"
+check-ast = "pre_commit_hooks.check_ast:main"
+check-builtin-literals = "pre_commit_hooks.check_builtin_literals:main"
+check-case-conflict = "pre_commit_hooks.check_case_conflict:main"
+check-docstring-first = "pre_commit_hooks.check_docstring_first:main"
+check-executables-have-shebangs = "pre_commit_hooks.check_executables_have_shebangs:main"
+check-json = "pre_commit_hooks.check_json:main"
+check-merge-conflict = "pre_commit_hooks.check_merge_conflict:main"
+check-shebang-scripts-are-executable = "pre_commit_hooks.check_shebang_scripts_are_executable:main"
+check-symlinks = "pre_commit_hooks.check_symlinks:main"
+check-toml = "pre_commit_hooks.check_toml:main"
+check-vcs-permalinks = "pre_commit_hooks.check_vcs_permalinks:main"
+check-xml = "pre_commit_hooks.check_xml:main"
+check-yaml = "pre_commit_hooks.check_yaml:main"
+debug-statement-hook = "pre_commit_hooks.debug_statement_hook:main"
+destroyed-symlinks = "pre_commit_hooks.destroyed_symlinks:main"
+detect-aws-credentials = "pre_commit_hooks.detect_aws_credentials:main"
+detect-private-key = "pre_commit_hooks.detect_private_key:main"
+double-quote-string-fixer = "pre_commit_hooks.string_fixer:main"
+end-of-file-fixer = "pre_commit_hooks.end_of_file_fixer:main"
+file-contents-sorter = "pre_commit_hooks.file_contents_sorter:main"
+fix-byte-order-marker = "pre_commit_hooks.fix_byte_order_marker:main"
+forbid-new-submodules = "pre_commit_hooks.forbid_new_submodules:main"
+mixed-line-ending = "pre_commit_hooks.mixed_line_ending:main"
+name-tests-test = "pre_commit_hooks.tests_should_end_in_test:main"
+no-commit-to-branch = "pre_commit_hooks.no_commit_to_branch:main"
+pre-commit-hooks-removed = "pre_commit_hooks.removed:main"
+pretty-format-json = "pre_commit_hooks.pretty_format_json:main"
+requirements-txt-fixer = "pre_commit_hooks.requirements_txt_fixer:main"
+sort-simple-yaml = "pre_commit_hooks.sort_simple_yaml:main"
+trailing-whitespace-fixer = "pre_commit_hooks.trailing_whitespace_fixer:main"
+
+[project.urls]
+homepage = "https://github.com/pre-commit/pre-commit-hooks"
+
+[tool.coverage.run]
+plugins = ["covdefaults"]
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = [
+  "tests.*",
+  "testing.*"
+]
+disallow_untyped_defs = false
+
+[tool.setuptools.packages.find]
+exclude = [
+  "tests*",
+  "testing*"
+]

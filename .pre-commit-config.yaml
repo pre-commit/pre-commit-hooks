@@ -9,10 +9,6 @@ repos:
     -   id: double-quote-string-fixer
     -   id: name-tests-test
     -   id: requirements-txt-fixer
--   repo: https://github.com/asottile/setup-cfg-fmt
-    rev: v2.8.0
-    hooks:
-    -   id: setup-cfg-fmt
 -   repo: https://github.com/asottile/reorder-python-imports
     rev: v3.15.0
     hooks:
@@ -39,3 +35,8 @@ repos:
     rev: v1.16.0
     hooks:
     -   id: mypy
+-   repo: https://github.com/pappasam/toml-sort
+    rev: v0.24.2
+    hooks:
+    -   id: toml-sort-fix
+        alias: toml
