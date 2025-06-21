@@ -51,6 +51,9 @@ Checks for a common error of placing code before the docstring.
 #### `check-executables-have-shebangs`
 Checks that non-binary executables have a proper shebang.
 
+#### `check-fluent`
+Checks that fluent files are correctly formatted.
+
 #### `check-illegal-windows-names`
 Check for files that cannot be created on Windows.
 
