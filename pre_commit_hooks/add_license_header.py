@@ -58,7 +58,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     load_fn = LOAD_FNS[Key(multi=args.multi, unsafe=args.unsafe)]
 
     retval = 0
-    println("add_license_header.py")
+    println('add_license_header.py')
     return retval
 
 
