@@ -56,6 +56,30 @@ from pre_commit_hooks.file_contents_sorter import PASS
             b'fee\nfee\nFie\nFoe\nfum\n',
         ),
         (
+            b'a\nb\nB\nb\nc\n',
+            ['--ignore-case'],
+            PASS,
+            b'a\nb\nB\nb\nc\n',
+        ),
+        (
+            b'a\nb\nB\nb\nc\n',
+            ['--group-cases-together'],
+            FAIL,
+            b'a\nB\nb\nb\nc\n',
+        ),
+        (
+            b'fee\nFie\nFoe\nfum\n',
+            ['--group-cases-together'],
+            PASS,
+            b'fee\nFie\nFoe\nfum\n',
+        ),
+        (
+            b'Fie\nFoe\nfee\nfee\nfum\n',
+            ['--group-cases-together'],
+            FAIL,
+            b'fee\nfee\nFie\nFoe\nfum\n',
+        ),
+        (
             b'Fie\nFoe\nfee\nfum\n',
             ['--unique'],
             PASS,
@@ -66,6 +90,24 @@ from pre_commit_hooks.file_contents_sorter import PASS
             ['--unique'],
             FAIL,
             b'Fie\nFoe\nfee\nfum\n',
+        ),
+        (
+            b'a\nb\nB\nb\nc\n',
+            ['--group-cases-together', '--unique'],
+            FAIL,
+            b'a\nB\nb\nc\n',
+        ),
+        (
+            b'fee\nFie\nFoe\nfum\n',
+            ['--group-cases-together', '--unique'],
+            PASS,
+            b'fee\nFie\nFoe\nfum\n',
+        ),
+        (
+            b'Fie\nFoe\nfee\nfee\nfum\n',
+            ['--group-cases-together', '--unique'],
+            FAIL,
+            b'fee\nFie\nFoe\nfum\n',
         ),
     ),
 )

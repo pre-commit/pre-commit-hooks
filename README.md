@@ -123,7 +123,8 @@ Note that this hook WILL remove blank lines and does NOT respect any comments.
 All newlines will be converted to line feeds (`\n`).
 
 The following arguments are available:
-- `--ignore-case` - fold lower case to upper case characters.
+- `--ignore-case` - fold lower case to upper case characters. this retains the original order of lines that differ only in case, so you probably want `--group-cases-together` instead.
+- `--group-cases-together` - group lines that differ only in case together, so e.g. `c`, `b`, `a`, and `B` are sorted to `a`, `B`, `b`, and `c` instead of `B`, `a`, `b`, and `c`.
 - `--unique` - ensure each line is unique.
 
 #### `fix-byte-order-marker`

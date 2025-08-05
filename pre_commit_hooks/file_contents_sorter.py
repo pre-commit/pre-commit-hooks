@@ -51,6 +51,10 @@ def sort_file_contents(
         return FAIL
 
 
+def group_cases_together_key(s: bytes) -> tuple[bytes, bytes]:
+    return s.lower(), s
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Files to sort')
@@ -61,22 +65,41 @@ def main(argv: Sequence[str] | None = None) -> int:
         action='store_const',
         const=bytes.lower,
         default=None,
-        help='fold lower case to upper case characters',
+        help='fold lower case to upper case characters. this retains\n'
+        'the original order of lines that differ only in case,\n'
+        'so you probably want --group-cases-together instead.',
     )
     mutex.add_argument(
+        '--group-cases-together',
+        action='store_const',
+        const=group_cases_together_key,
+        default=None,
+        help='group lines that differ only in case together,\n'
+        'so e.g. `c`, `b`, `a`, and `B` are sorted to\n'
+        '`a`, `B`, `b`, and `c` instead of `B`, `a`, `b`, and `c`.',
+    )
+    parser.add_argument(
         '--unique',
         action='store_true',
         help='ensure each line is unique',
     )
 
     args = parser.parse_args(argv)
+    # we can't just use add_mutually_exclusive_group for this since
+    # --unique is allowed with --group-cases-together
+    if args.ignore_case and args.unique:
+        parser.error(
+            'argument --ignore-case: not allowed with argument --unique',
+        )
+
+    key = args.ignore_case or args.group_cases_together
 
     retv = PASS
 
     for arg in args.filenames:
         with open(arg, 'rb+') as file_obj:
             ret_for_file = sort_file_contents(
-                file_obj, key=args.ignore_case, unique=args.unique,
+                file_obj, key=key, unique=args.unique,
             )
 
             if ret_for_file:
