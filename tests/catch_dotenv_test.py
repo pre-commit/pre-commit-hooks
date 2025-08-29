@@ -311,6 +311,8 @@ def test_atomic_write_failure_example(monkeypatch, tmp_path: Path, env_file: Pat
         os.chdir(cwd)
     # hook still blocks; but example creation failed -> message should not claim Example file generated
     assert ok is True
-    out = capsys.readouterr().out
+    captured = capsys.readouterr()
+    out = captured.out
+    err = captured.err
     assert 'Example file generated' not in out
-    assert 'ERROR: unable to write' in out
+    assert 'ERROR: unable to write' in err
