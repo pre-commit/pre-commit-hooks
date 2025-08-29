@@ -442,3 +442,109 @@ def test_atomic_write_failure_example(
     err = captured.err
     assert 'Example file generated' not in out
     assert 'ERROR: unable to write' in err
+
+
+def test_atomic_write_cleanup_failure(
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+        env_file: Path,
+) -> None:
+    """Test rare case where os.remove fails during cleanup after os.replace
+    failure.
+    """
+    def failing_remove(_path: str) -> None:
+        # Simulate os.remove failure during cleanup
+        raise OSError('remove-fail')
+
+    def failing_replace(*_a: object, **_k: object) -> None:
+        # First fail os.replace to trigger cleanup path
+        raise OSError('replace-fail')
+
+    monkeypatch.setattr(
+        'pre_commit_hooks.catch_dotenv.os.replace', failing_replace,
+    )
+    monkeypatch.setattr(
+        'pre_commit_hooks.catch_dotenv.os.remove', failing_remove,
+    )
+
+    # This should not raise an exception even if both replace and remove fail
+    modified = ensure_env_in_gitignore(
+        DEFAULT_ENV_FILE,
+        str(tmp_path / DEFAULT_GITIGNORE_FILE),
+        GITIGNORE_BANNER,
+    )
+    assert modified is False
+
+
+def test_create_example_read_error(
+        monkeypatch: pytest.MonkeyPatch,
+        tmp_path: Path,
+        env_file: Path,
+        capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Test OSError when reading source env file for create_example."""
+    def failing_open(*_args: object, **_kwargs: object) -> None:
+        raise OSError('Permission denied')
+
+    # Mock open to fail when trying to read the env file
+    monkeypatch.setattr('builtins.open', failing_open)
+
+    from pre_commit_hooks.catch_dotenv import create_example_env
+
+    result = create_example_env(str(env_file), str(tmp_path / 'test.example'))
+    assert result is False
+
+    captured = capsys.readouterr()
+    assert 'ERROR: unable to read' in captured.err
+
+
+def test_malformed_env_lines_ignored(tmp_path: Path, env_file: Path) -> None:
+    """Test that malformed env lines that don't match regex are ignored."""
+    # Create env file with malformed lines
+    malformed_env = tmp_path / 'malformed.env'
+    malformed_content = [
+        'VALID_KEY=value',
+        'invalid-line-no-equals',
+        '# comment line',
+        '',  # empty line
+        '=INVALID_EQUALS_FIRST',
+        'ANOTHER_VALID=value2',
+        'spaces in key=invalid',
+        '123_INVALID_START=value',  # starts with number
+    ]
+    malformed_env.write_text('\n'.join(malformed_content))
+
+    # Copy to .env location
+    shutil.copyfile(malformed_env, tmp_path / DEFAULT_ENV_FILE)
+
+    # Run create-example - should only extract valid keys
+    run_hook(tmp_path, [DEFAULT_ENV_FILE], create_example=True)
+
+    example_lines = (
+        (tmp_path / DEFAULT_EXAMPLE_ENV_FILE).read_text().splitlines()
+    )
+    key_lines = [ln for ln in example_lines if ln and not ln.startswith('#')]
+
+    # Should only have the valid keys
+    assert 'VALID_KEY=' in key_lines
+    assert 'ANOTHER_VALID=' in key_lines
+    assert len([k for k in key_lines if '=' in k]) == 2  # Only 2 valid keys
+
+
+def test_create_example_when_source_missing(
+        tmp_path: Path, env_file: Path,
+) -> None:
+    """Test --create-example when source .env doesn't exist but .env is
+    staged.
+    """
+    # Remove the source .env file but keep it in the staged files list
+    env_file.unlink()  # Remove the .env file
+
+    # Stage .env even though it doesn't exist on disk
+    ret = run_hook(tmp_path, [DEFAULT_ENV_FILE], create_example=True)
+
+    # Hook should still block commit
+    assert ret == 1
+
+    # But no example file should be created since source doesn't exist
+    assert not (tmp_path / DEFAULT_EXAMPLE_ENV_FILE).exists()
