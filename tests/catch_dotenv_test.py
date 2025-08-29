@@ -28,13 +28,18 @@ def env_file(tmp_path: Path) -> Path:
     All tests rely on this baseline content (optionally appending extra lines
     for edge cases) to ensure consistent parsing behavior.
     """
-    # __file__ => <repo_root>/tests/catch_dotenv_test.py
-    # parents[0] = <repo_root>/tests, parents[1] = <repo_root>
+    # Find repository root by looking for .git directory
+    test_file_path = Path(__file__).resolve()
+    repo_root = test_file_path
+    while repo_root.parent != repo_root:  # Stop at filesystem root
+        if (repo_root / '.git').exists():
+            break
+        repo_root = repo_root.parent
+    else:
+        raise RuntimeError('Could not find repository root (.git directory)')
+
     # Source file stored as test.env in repo (cannot commit a real .env in CI)
-    resource_env = (
-        Path(__file__).resolve().parents[1] /
-        'testing' / 'resources' / 'test.env'
-    )
+    resource_env = repo_root / 'testing' / 'resources' / 'test.env'
     dest = tmp_path / DEFAULT_ENV_FILE
     shutil.copyfile(resource_env, dest)
     return dest
@@ -144,8 +149,15 @@ def test_create_example_duplicate_key_variant_ignored(
     """Appending whitespace duplicate of existing key should not duplicate
     in example.
     """
-    with open(env_file, 'a', encoding='utf-8') as f:
+    # Create a copy of the env_file to avoid contaminating the fixture
+    modified_env = tmp_path / 'modified.env'
+    shutil.copyfile(env_file, modified_env)
+    with open(modified_env, 'a', encoding='utf-8') as f:
         f.write('BACKEND_CONTAINER_PORT =999 # duplicate variant\n')
+
+    # Override the env file path for this test
+    original_env = tmp_path / DEFAULT_ENV_FILE
+    shutil.copyfile(modified_env, original_env)
     run_hook(tmp_path, [DEFAULT_ENV_FILE], create_example=True)
     lines = (tmp_path / DEFAULT_EXAMPLE_ENV_FILE).read_text().splitlines()
     key_lines = [ln for ln in lines if ln and not ln.startswith('#')]
