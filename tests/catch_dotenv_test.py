@@ -171,9 +171,9 @@ def test_failure_message_content(tmp_path: Path, env_file: Path, capsys):
     assert ret == 1
     out = capsys.readouterr().out.strip()
     assert "Blocked committing" in out
-    assert DEFAULT_GITIGNORE_FILE in out
-    assert "Example file generated" in out
-    assert "Remove '.env'" in out
+    assert DEFAULT_GITIGNORE_FILE in out  # updated path appears
+    assert "Generated .env.example." in out
+    assert "Remove .env" in out
 
 
 def test_create_example_when_env_missing(tmp_path: Path, env_file: Path):
@@ -194,8 +194,8 @@ def test_gitignore_is_directory_error(tmp_path: Path, env_file: Path, capsys):
     gitignore_dir.mkdir()
     ret = run_hook(tmp_path, [DEFAULT_ENV_FILE])
     assert ret == 1  # still blocks commit
-    out = capsys.readouterr().out
-    assert "ERROR:" in out  # read failure logged
+    captured = capsys.readouterr()
+    assert "ERROR:" in captured.err  # error now printed to stderr
 
 
 def test_env_example_overwrites_existing(tmp_path: Path, env_file: Path):
@@ -268,7 +268,7 @@ def test_already_ignored_env_with_variations(tmp_path: Path, env_file: Path):
 
 
 def test_subdirectory_invocation(tmp_path: Path, env_file: Path):
-    """Running from a subdirectory still writes gitignore/example at repo root."""
+    """Running from a subdirectory now writes .gitignore relative to CWD (simplified behavior)."""
     sub = tmp_path / 'subdir'
     sub.mkdir()
     # simulate repository root marker
@@ -277,8 +277,8 @@ def test_subdirectory_invocation(tmp_path: Path, env_file: Path):
     cwd = os.getcwd()
     os.chdir(sub)
     try:
-        ret = main(['../' + DEFAULT_ENV_FILE])
-        gi = (tmp_path / DEFAULT_GITIGNORE_FILE).read_text().splitlines()
+        ret = main(['../' + DEFAULT_ENV_FILE])  # staged path relative to subdir
+        gi = (sub / DEFAULT_GITIGNORE_FILE).read_text().splitlines()
     finally:
         os.chdir(cwd)
     assert ret == 1
@@ -292,8 +292,8 @@ def test_atomic_write_failure_gitignore(monkeypatch, tmp_path: Path, env_file: P
     monkeypatch.setattr('pre_commit_hooks.catch_dotenv.os.replace', boom)
     modified = ensure_env_in_gitignore(DEFAULT_ENV_FILE, str(tmp_path / DEFAULT_GITIGNORE_FILE), GITIGNORE_BANNER)
     assert modified is False
-    out = capsys.readouterr().out
-    assert 'ERROR: unable to write' in out
+    captured = capsys.readouterr()
+    assert 'ERROR: unable to write' in captured.err
 
 
 def test_atomic_write_failure_example(monkeypatch, tmp_path: Path, env_file: Path, capsys):

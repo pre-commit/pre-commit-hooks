@@ -4,12 +4,13 @@ from __future__ import annotations
 import argparse
 import os
 import re
+import sys
 import tempfile
 from collections.abc import Sequence
 from typing import Iterable
 
-# --- Defaults / Constants ---
-DEFAULT_ENV_FILE = ".env"          # Canonical env file name
+# Defaults / constants
+DEFAULT_ENV_FILE = ".env"
 DEFAULT_GITIGNORE_FILE = ".gitignore"
 DEFAULT_EXAMPLE_ENV_FILE = ".env.example"
 GITIGNORE_BANNER = "# Added by pre-commit hook to prevent committing secrets"
@@ -18,8 +19,7 @@ _KEY_REGEX = re.compile(r"^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=")
 
 
 def _atomic_write(path: str, data: str) -> None:
-    """Write text to path atomically (best-effort)."""
-    # Using same directory for atomic os.replace semantics on POSIX.
+    """Atomic-ish text write: write to same-dir temp then os.replace."""
     fd, tmp_path = tempfile.mkstemp(dir=os.path.dirname(path) or ".")
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="") as tmp_f:
@@ -34,24 +34,19 @@ def _atomic_write(path: str, data: str) -> None:
 
 
 def ensure_env_in_gitignore(env_file: str, gitignore_file: str, banner: str) -> bool:
-    """Normalize `.gitignore` so it contains exactly one banner + env line at end.
-
-    Returns True if the file was created or its contents changed, False otherwise.
-    Strategy: read existing lines, strip trailing blanks, remove any prior occurrences of
-    the banner or env_file (even if duplicated), then append a single blank line,
-    banner, and env_file. Produces an idempotent final layout.
-    """
+    """Normalize .gitignore tail (banner + env) collapsing duplicates. Returns True if modified."""
     try:
         if os.path.exists(gitignore_file):
             with open(gitignore_file, "r", encoding="utf-8") as f:
-                lines = f.read().splitlines()
+                original_text = f.read()
+            lines = original_text.splitlines()
         else:
+            original_text = ""
             lines = []
     except OSError as exc:
-        print(f"ERROR: unable to read '{gitignore_file}': {exc}")
+        print(f"ERROR: unable to read {gitignore_file}: {exc}", file=sys.stderr)
         return False
-
-    original = list(lines)
+    original_content_str = original_text if lines else ""  # post-read snapshot
 
     # Trim trailing blank lines
     while lines and not lines[-1].strip():
@@ -69,27 +64,23 @@ def ensure_env_in_gitignore(env_file: str, gitignore_file: str, banner: str) -> 
     filtered.append(env_file)
 
     new_content = "\n".join(filtered) + "\n"
-    if original == filtered:
+    if new_content == (original_content_str if original_content_str.endswith("\n") else original_content_str + ("" if not original_content_str else "\n")):
         return False
     try:
         _atomic_write(gitignore_file, new_content)
         return True
     except OSError as exc:  # pragma: no cover
-        print(f"ERROR: unable to write '{gitignore_file}': {exc}")
+        print(f"ERROR: unable to write {gitignore_file}: {exc}", file=sys.stderr)
         return False
 
 
 def create_example_env(src_env: str, example_file: str) -> bool:
-    """Write example file containing only variable keys from real env file.
-
-    Returns True if file written (or updated), False on read/write error.
-    Lines accepted: optional 'export ' prefix then KEY=...; ignores comments & duplicates.
-    """
+    """Generate .env.example with unique KEY= lines (no values)."""
     try:
         with open(src_env, "r", encoding="utf-8") as f_env:
             lines = f_env.readlines()
     except OSError as exc:
-        print(f"ERROR: unable to read '{src_env}': {exc}")
+        print(f"ERROR: unable to read {src_env}: {exc}", file=sys.stderr)
         return False
 
     seen: set[str] = set()
@@ -125,41 +116,27 @@ def _has_env(filenames: Iterable[str], env_file: str) -> bool:
     return any(os.path.basename(name) == env_file for name in filenames)
 
 
-def _find_repo_root(start: str = '.') -> str:
-    """Ascend from start until a directory containing '.git' is found.
-
-    Falls back to absolute path of start if no parent contains '.git'. This mirrors
-    typical pre-commit execution (already at repo root) but makes behavior stable
-    when hook is invoked from a subdirectory (e.g. for direct ad‑hoc testing).
-    """
-    cur = os.path.abspath(start)
-    prev = None
-    while cur != prev:
-        if os.path.isdir(os.path.join(cur, '.git')):
-            return cur
-        prev, cur = cur, os.path.abspath(os.path.join(cur, os.pardir))
-    return os.path.abspath(start)
 
 
 def _print_failure(env_file: str, gitignore_file: str, example_created: bool, gitignore_modified: bool) -> None:
-    parts: list[str] = [f"Blocked committing '{env_file}'."]
+    parts: list[str] = [f"Blocked committing {env_file}."]
     if gitignore_modified:
-        parts.append(f"Added to '{gitignore_file}'.")
+        parts.append(f"Updated {gitignore_file}.")
     if example_created:
-        parts.append("Example file generated.")
-    parts.append(f"Remove '{env_file}' from the commit and commit again.")
+        parts.append("Generated .env.example.")
+    parts.append(f"Remove {env_file} from the commit and retry.")
     print(" ".join(parts))
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Main function for the pre-commit hook."""
+    """Hook entry-point."""
     parser = argparse.ArgumentParser(description="Block committing environment files (.env).")
     parser.add_argument('filenames', nargs='*', help='Staged filenames (supplied by pre-commit).')
     parser.add_argument('--create-example', action='store_true', help='Generate example env file (.env.example).')
     args = parser.parse_args(argv)
     env_file = DEFAULT_ENV_FILE
-    # Resolve repository root (directory containing .git) so writes happen there
-    repo_root = _find_repo_root('.')
+    # Use current working directory as repository root (simplified; no ascent)
+    repo_root = os.getcwd()
     gitignore_file = os.path.join(repo_root, DEFAULT_GITIGNORE_FILE)
     example_file = os.path.join(repo_root, DEFAULT_EXAMPLE_ENV_FILE)
     env_abspath = os.path.join(repo_root, env_file)
