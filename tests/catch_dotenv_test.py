@@ -95,7 +95,7 @@ def test_gitignore_with_existing_content_preserved(
     g = tmp_path / DEFAULT_GITIGNORE_FILE
     g.write_text(
         'node_modules/\n# comment line\n',
-    )  # no trailing newline section markers
+    )  # existing content with trailing newline
     run_hook(tmp_path, [DEFAULT_ENV_FILE])
     lines = g.read_text().splitlines()
     # original content should still be at top
@@ -372,7 +372,7 @@ def test_subdirectory_invocation(
     os.chdir(sub)
     try:
         ret = main(
-            ['../' + DEFAULT_ENV_FILE],
+            [str(Path('..') / DEFAULT_ENV_FILE)],
         )  # staged path relative to subdir
         gi = (sub / DEFAULT_GITIGNORE_FILE).read_text().splitlines()
     finally:

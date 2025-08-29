@@ -57,7 +57,7 @@ def _read_gitignore(gitignore_file: str) -> tuple[str, list[str]]:
             file=sys.stderr,
         )
         raise
-    return original_text if lines else '', lines
+    return original_text, lines
 
 
 def _normalize_gitignore_lines(
