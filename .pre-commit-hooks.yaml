@@ -23,6 +23,13 @@
     entry: check-builtin-literals
     language: python
     types: [python]
+-   id: catch-dotenv
+    name: catch dotenv files
+    description: blocks committing .env files. optionally creates value-sanitized .env.example.
+    entry: catch-dotenv
+    language: python
+    pass_filenames: true
+    always_run: false
 -   id: check-case-conflict
     name: check for case conflicts
     description: checks for files that would conflict in case-insensitive filesystems.

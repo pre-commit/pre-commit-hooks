@@ -42,6 +42,12 @@ Require literal syntax when initializing empty or zero Python builtin types.
   - Ignore this requirement for specific builtin types with `--ignore=type1,type2,…`.
   - Forbid `dict` keyword syntax with `--no-allow-dict-kwargs`.
 
+#### `catch-dotenv`
+Prevents committing `.env` files to version control and optionally generates `.env.example` files.
+  - Use `--create-example` to generate a `.env.example` file with variable names but no values.
+  - Automatically adds `.env` to `.gitignore` if not already present.
+  - Helps prevent accidental exposure of secrets and sensitive configuration.
+
 #### `check-case-conflict`
 Check for files with names that would conflict on a case-insensitive filesystem like MacOS HFS+ or Windows FAT.
 
