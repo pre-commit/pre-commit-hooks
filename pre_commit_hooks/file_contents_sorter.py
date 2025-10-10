@@ -12,10 +12,10 @@ conflicts and keep the file nicely ordered.
 from __future__ import annotations
 
 import argparse
+from collections.abc import Callable
 from collections.abc import Iterable
 from collections.abc import Sequence
 from typing import Any
-from typing import Callable
 from typing import IO
 
 PASS = 0
