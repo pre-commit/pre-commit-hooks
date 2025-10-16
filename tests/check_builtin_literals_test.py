@@ -38,11 +38,6 @@ t1 = ()
 '''
 
 
-@pytest.fixture
-def visitor():
-    return Visitor()
-
-
 @pytest.mark.parametrize(
     ('expression', 'calls'),
     [
@@ -85,7 +80,8 @@ def visitor():
         ('builtins.tuple()', []),
     ],
 )
-def test_non_dict_exprs(visitor, expression, calls):
+def test_non_dict_exprs(expression, calls):
+    visitor = Visitor(ignore=set())
     visitor.visit(ast.parse(expression))
     assert visitor.builtin_type_calls == calls
 
@@ -102,7 +98,8 @@ def test_non_dict_exprs(visitor, expression, calls):
         ('builtins.dict()', []),
     ],
 )
-def test_dict_allow_kwargs_exprs(visitor, expression, calls):
+def test_dict_allow_kwargs_exprs(expression, calls):
+    visitor = Visitor(ignore=set())
     visitor.visit(ast.parse(expression))
     assert visitor.builtin_type_calls == calls
 
@@ -114,17 +111,18 @@ def test_dict_allow_kwargs_exprs(visitor, expression, calls):
         ('dict(a=1, b=2, c=3)', [Call('dict', 1, 0)]),
         ("dict(**{'a': 1, 'b': 2, 'c': 3})", [Call('dict', 1, 0)]),
         ('builtins.dict()', []),
+        pytest.param('f(dict())', [Call('dict', 1, 2)], id='nested'),
     ],
 )
 def test_dict_no_allow_kwargs_exprs(expression, calls):
-    visitor = Visitor(allow_dict_kwargs=False)
+    visitor = Visitor(ignore=set(), allow_dict_kwargs=False)
     visitor.visit(ast.parse(expression))
     assert visitor.builtin_type_calls == calls
 
 
 def test_ignore_constructors():
     visitor = Visitor(
-        ignore=('complex', 'dict', 'float', 'int', 'list', 'str', 'tuple'),
+        ignore={'complex', 'dict', 'float', 'int', 'list', 'str', 'tuple'},
     )
     visitor.visit(ast.parse(BUILTIN_CONSTRUCTORS))
     assert visitor.builtin_type_calls == []
