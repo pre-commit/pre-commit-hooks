@@ -26,36 +26,37 @@ class Call(NamedTuple):
 class Visitor(ast.NodeVisitor):
     def __init__(
             self,
-            ignore: Sequence[str] | None = None,
+            ignore: set[str],
             allow_dict_kwargs: bool = True,
     ) -> None:
         self.builtin_type_calls: list[Call] = []
-        self.ignore = set(ignore) if ignore else set()
         self.allow_dict_kwargs = allow_dict_kwargs
+        self._disallowed = BUILTIN_TYPES.keys() - ignore
 
     def _check_dict_call(self, node: ast.Call) -> bool:
         return self.allow_dict_kwargs and bool(node.keywords)
 
     def visit_Call(self, node: ast.Call) -> None:
-        if not isinstance(node.func, ast.Name):
+        if (
             # Ignore functions that are object attributes (`foo.bar()`).
             # Assume that if the user calls `builtins.list()`, they know what
             # they're doing.
-            return
-        if node.func.id not in set(BUILTIN_TYPES).difference(self.ignore):
-            return
-        if node.func.id == 'dict' and self._check_dict_call(node):
-            return
-        elif node.args:
-            return
-        self.builtin_type_calls.append(
-            Call(node.func.id, node.lineno, node.col_offset),
-        )
+            isinstance(node.func, ast.Name) and
+            node.func.id in self._disallowed and
+            (node.func.id != 'dict' or not self._check_dict_call(node)) and
+            not node.args
+        ):
+            self.builtin_type_calls.append(
+                Call(node.func.id, node.lineno, node.col_offset),
+            )
+
+        self.generic_visit(node)
 
 
 def check_file(
         filename: str,
-        ignore: Sequence[str] | None = None,
+        *,
+        ignore: set[str],
         allow_dict_kwargs: bool = True,
 ) -> list[Call]:
     with open(filename, 'rb') as f:
