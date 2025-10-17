@@ -5,6 +5,7 @@ import math
 import os
 import subprocess
 from collections.abc import Sequence
+from fnmatch import fnmatch
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import zsplit
@@ -34,12 +35,17 @@ def find_large_added_files(
         filenames: Sequence[str],
         maxkb: int,
         *,
+        exclude: list[str] | None = None,
         enforce_all: bool = False,
 ) -> int:
     # Find all added files that are also in the list of files pre-commit tells
     # us about
     retv = 0
-    filenames_filtered = set(filenames)
+    exclude = [] if not exclude else exclude
+    filenames_filtered = {
+        fname for fname in filenames
+        if not any(fnmatch(fname, pat) for pat in exclude)
+    }
     filter_lfs_files(filenames_filtered)
 
     if not enforce_all:
@@ -68,12 +74,17 @@ def main(argv: Sequence[str] | None = None) -> int:
         '--maxkb', type=int, default=500,
         help='Maximum allowable KB for added files',
     )
+    parser.add_argument(
+        '--exclude', type=str, default='',
+        help='Comma-separated list of glob-style patterns to be excluded',
+    )
     args = parser.parse_args(argv)
 
     return find_large_added_files(
         args.filenames,
         args.maxkb,
         enforce_all=args.enforce_all,
+        exclude=args.exclude.split(','),
     )
 
 

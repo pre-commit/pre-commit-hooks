@@ -26,6 +26,7 @@ Add this to your `.pre-commit-config.yaml`
 #### `check-added-large-files`
 Prevent giant files from being committed.
   - Specify what is "too large" with `args: ['--maxkb=123']` (default=500kB).
+  - Optionally exclude glob-like patterns with `args: ['--exclude=uv.lock,examples/*ipynb']`
   - Limits checked files to those indicated as staged for addition by git.
   - If `git-lfs` is installed, lfs files will be skipped
     (requires `git-lfs>=2.2.1`)

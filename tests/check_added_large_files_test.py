@@ -43,6 +43,23 @@ def test_add_something_giant(temp_git_dir):
         assert find_large_added_files(['f.py'], 10) == 0
 
 
+def test_use_exclude(temp_git_dir):
+    with temp_git_dir.as_cwd():
+        temp_git_dir.join('uv.lock').write('a' * 10_000)
+        temp_git_dir.join('big.baddie').write('a' * 10_000)
+
+        cmd_output('git', 'add', 'uv.lock')
+        cmd_output('git', 'add', 'big.baddie')
+
+        # should fail due to big baddie as thats not excluded
+        assert find_large_added_files(
+            ['uv.lock', 'big.baddie'], 1, exclude=['*.lock'],
+        ) == 1
+        # should pass when all files excluded, with both expand and exact match
+        assert find_large_added_files(['uv.lock'], 1, exclude=['*.lock']) == 0
+        assert find_large_added_files(['uv.lock'], 1, exclude=['uv.lock']) == 0
+
+
 def test_enforce_all(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.join('f.py').write('a' * 10000)
