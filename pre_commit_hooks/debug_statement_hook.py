@@ -22,7 +22,7 @@ DEBUG_STATEMENTS = {
 
 DEBUG_CALL_STATEMENTS = {
     'breakpoint',
-    'print'
+    'print',
 }
 
 

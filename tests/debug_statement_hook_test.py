@@ -30,9 +30,9 @@ def test_finds_breakpoint():
     visitor = DebugStatementParser()
     visitor.visit(ast.parse('breakpoint()'))
     assert visitor.breakpoints == [Debug(1, 0, 'breakpoint', 'called')]
-    
-    
-def test_finds_print(): 
+
+
+def test_finds_print():
     visitor = DebugStatementParser()
     visitor.visit(ast.parse('print()'))
     assert visitor.breakpoints == [Debug(1, 0, 'print', 'called')]
