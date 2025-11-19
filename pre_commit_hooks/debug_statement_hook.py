@@ -22,7 +22,7 @@ DEBUG_STATEMENTS = {
 
 DEBUG_CALL_STATEMENTS = {
     'breakpoint',
-    'print'
+    'print',
 }
 
 
@@ -50,7 +50,10 @@ class DebugStatementParser(ast.NodeVisitor):
 
     def visit_Call(self, node: ast.Call) -> None:
         """python3.7+ breakpoint()"""
-        if isinstance(node.func, ast.Name) and node.func.id in DEBUG_CALL_STATEMENTS:
+        if (
+            isinstance(node.func, ast.Name) and
+            node.func.id in DEBUG_CALL_STATEMENTS
+        ):
             st = Debug(node.lineno, node.col_offset, node.func.id, 'called')
             self.breakpoints.append(st)
         self.generic_visit(node)
