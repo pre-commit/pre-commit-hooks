@@ -29,7 +29,7 @@
     entry: check-case-conflict
     language: python
 -   id: check-docstring-first
-    name: check docstring is first
+    name: check docstring is first (deprecated)
     description: checks a common error of defining a docstring after code.
     entry: check-docstring-first
     language: python
