@@ -45,9 +45,6 @@ Require literal syntax when initializing empty or zero Python builtin types.
 #### `check-case-conflict`
 Check for files with names that would conflict on a case-insensitive filesystem like MacOS HFS+ or Windows FAT.
 
-#### `check-docstring-first`
-Checks for a common error of placing code before the docstring.
-
 #### `check-executables-have-shebangs`
 Checks that non-binary executables have a proper shebang.
 
@@ -207,6 +204,8 @@ Trims trailing whitespace.
 
 - `check-byte-order-marker`: instead use fix-byte-order-marker
 - `fix-encoding-pragma`: instead use [`pyupgrade`](https://github.com/asottile/pyupgrade)
+- `check-docstring-first`: fundamentally flawed, deprecated without replacement.
+
 
 ### As a standalone package
 
