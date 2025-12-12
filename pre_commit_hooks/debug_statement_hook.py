@@ -74,7 +74,23 @@ def check_file(filename: str) -> int:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to run')
+    parser.add_argument(
+        '--forbid',
+        type=str, action='append',
+        help='Extra module name(s) to forbid',
+    )
+    parser.add_argument(
+        '--allow',
+        type=str,
+        action='append',
+        help='Extra module name(s) to allow',
+    )
     args = parser.parse_args(argv)
+
+    for name in args.forbid or ():
+        DEBUG_STATEMENTS.add(name)
+    for name in args.allow or ():
+        DEBUG_STATEMENTS.discard(name)
 
     retv = 0
     for filename in args.filenames:

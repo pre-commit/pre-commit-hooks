@@ -32,6 +32,20 @@ def test_finds_breakpoint():
     assert visitor.breakpoints == [Debug(1, 0, 'breakpoint', 'called')]
 
 
+def test_allow(tmpdir):
+    f_py = tmpdir.join('f.py')
+    f_py.write('import q')
+    ret = main([str(f_py), '--allow', 'q'])
+    assert ret == 0
+
+
+def test_forbid(tmpdir):
+    f_py = tmpdir.join('f.py')
+    f_py.write('import foo')
+    ret = main([str(f_py), '--forbid', 'foo'])
+    assert ret == 1
+
+
 def test_returns_one_for_failing_file(tmpdir):
     f_py = tmpdir.join('f.py')
     f_py.write('def f():\n    import pdb; pdb.set_trace()')
