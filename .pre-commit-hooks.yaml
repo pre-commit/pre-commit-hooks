@@ -216,4 +216,3 @@
     description: can take in a custom regex file to scan for custom secrets.
     entry: detect-secrets
     langauge: python
-    
