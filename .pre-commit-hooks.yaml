@@ -210,3 +210,10 @@
     types: [text]
     stages: [pre-commit, pre-push, manual]
     minimum_pre_commit_version: 3.2.0
+
+-   id: detect-secrets
+    name: detects secrets from custom regex file
+    description: can take in a custom regex file to scan for custom secrets.
+    entry: detect-secrets
+    langauge: python
+    
