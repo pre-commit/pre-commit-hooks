@@ -15,27 +15,27 @@ class BadFile(NamedTuple):
 # Patterns based on https://github.com/gitleaks/gitleaks/pull/1291
 # Azure Data Factory SHIR Key format: IR@{GUID}@{resource_name}@{location}@{base64}
 AZURE_DATAFACTORY_SHIR_PATTERN = re.compile(
-    rb"IR@[0-9a-zA-Z-]{36}@[^@\s]+@[0-9a-zA-Z\-=]*@[A-Za-z0-9+/=]{44}",
+    rb'IR@[0-9a-zA-Z-]{36}@[^@\s]+@[0-9a-zA-Z\-=]*@[A-Za-z0-9+/=]{44}',
 )
 
 # CSCAN0020, CSCAN0030 - App service deployment secrets
 AZURE_APP_SERVICE_DEPLOYMENT_PATTERN = re.compile(
-    rb"MII[a-zA-Z0-9=_\-]{200,}",
+    rb'MII[a-zA-Z0-9=_\-]{200,}',
 )
 
 # CSCAN0030, CSCAN0090, CSCAN0150 - Storage credentials (86 char)
 AZURE_STORAGE_86CHAR_PATTERN = re.compile(
-    rb"[ \t]{0,10}[a-zA-Z0-9/+]{86}==",
+    rb'[ \t]{0,10}[a-zA-Z0-9/+]{86}==',
 )
 
 # CSCAN0030, CSCAN0090, CSCAN0150 - Storage credentials (43 char)
 AZURE_STORAGE_43CHAR_PATTERN = re.compile(
-    rb"[a-zA-Z0-9/+]{43}=[^{@\d%\s]",
+    rb'[a-zA-Z0-9/+]{43}=[^{@\d%\s]',
 )
 
 # CSCAN0030, CSCAN0090, CSCAN0150 - SAS/sig tokens
 AZURE_STORAGE_SIG_PATTERN = re.compile(
-    rb"(?:sig|sas|password)=[a-zA-Z0-9%]{43,53}%3[dD]",
+    rb'(?:sig|sas|password)=[a-zA-Z0-9%]{43,53}%3[dD]',
     re.IGNORECASE,
 )
 
@@ -47,7 +47,7 @@ AZURE_STORAGE_USERIDPW_PATTERN = re.compile(
 
 # CSCAN0030 - AccountKey with MII prefix
 AZURE_STORAGE_ACCOUNTKEY_PATTERN = re.compile(
-    rb"AccountKey\s*=\s*MII[a-zA-Z0-9/+]{43,}={0,2}",
+    rb'AccountKey\s*=\s*MII[a-zA-Z0-9/+]{43,}={0,2}',
     re.IGNORECASE,
 )
 
@@ -59,13 +59,13 @@ AZURE_STORAGE_SERVICEBUS_PATTERN = re.compile(
 
 # CSCAN0130 - Monitoring Agent credentials
 AZURE_STORAGE_MONIKER_PATTERN = re.compile(
-    rb"Account Moniker\s*=.*?key\s*=",
+    rb'Account Moniker\s*=.*?key\s*=',
     re.IGNORECASE,
 )
 
 # CSCAN0110 - Blob URL with SAS token
 AZURE_STORAGE_BLOBURL_PATTERN = re.compile(
-    rb"https://[a-zA-Z0-9-]+\.(?:blob|file|queue|table|dfs|z\d+\.web)\.core\.windows\.net/.*?sig=[a-zA-Z0-9%]{30,}",
+    rb'https://[a-zA-Z0-9-]+\.(?:blob|file|queue|table|dfs|z\d+\.web)\.core\.windows\.net/.*?sig=[a-zA-Z0-9%]{30,}',
     re.IGNORECASE,
 )
 
@@ -101,13 +101,13 @@ AZURE_PASSWORD_UIDPW_PATTERN = re.compile(
 
 # CSCAN0160 - NetworkCredential with domain
 AZURE_NETWORK_CREDENTIAL_PATTERN = re.compile(
-    rb"NetworkCredential\([^)]*?(?:corp|europe|middleeast|northamerica|southpacific|southamerica|fareast|africa|redmond|exchange|extranet|partners|extranettest|parttest|noe|ntdev|ntwksta|sys-wingroup|windeploy|wingroup|winse|segroup|xcorp|xrep|phx|gme|usme|cdocidm|mslpa)\)",
+    rb'NetworkCredential\([^)]*?(?:corp|europe|middleeast|northamerica|southpacific|southamerica|fareast|africa|redmond|exchange|extranet|partners|extranettest|parttest|noe|ntdev|ntwksta|sys-wingroup|windeploy|wingroup|winse|segroup|xcorp|xrep|phx|gme|usme|cdocidm|mslpa)\)',
     re.IGNORECASE,
 )
 
 # CSCAN0160 - schtasks with domain credentials
 AZURE_NETWORK_SCHTASKS_PATTERN = re.compile(
-    rb"schtasks.*?/ru\s+(?:corp|europe|middleeast|northamerica|southpacific|southamerica|fareast|africa|redmond|exchange|extranet|partners|extranettest|parttest|noe|ntdev|ntwksta|sys-wingroup|windeploy|wingroup|winse|segroup|xcorp|xrep|phx|gme|usme|cdocidm|mslpa).*?/rp",
+    rb'schtasks.*?/ru\s+(?:corp|europe|middleeast|northamerica|southpacific|southamerica|fareast|africa|redmond|exchange|extranet|partners|extranettest|parttest|noe|ntdev|ntwksta|sys-wingroup|windeploy|wingroup|winse|segroup|xcorp|xrep|phx|gme|usme|cdocidm|mslpa).*?/rp',
     re.IGNORECASE,
 )
 
@@ -119,7 +119,7 @@ AZURE_NETWORK_DOTNET_PATTERN = re.compile(
 
 # CSCAN0200 - DevDiv TFVC credentials
 AZURE_DEVTFVC_PATTERN = re.compile(
-    rb"enc_username=.+[\n\r\s]+enc_password=.{3,}",
+    rb'enc_username=.+[\n\r\s]+enc_password=.{3,}',
 )
 
 # CSCAN0240 - DevOps Personal Access Token
@@ -135,12 +135,12 @@ PUBLISHSETTINGS_PWD_PATTERN = re.compile(
 
 # CSCAN0060 - PEM certificate files with private key
 PEM_PRIVATE_KEY_PATTERN = re.compile(
-    rb"-{5}BEGIN( ([DR]SA|EC|OPENSSH))? PRIVATE KEY-{5}",
+    rb'-{5}BEGIN( ([DR]SA|EC|OPENSSH))? PRIVATE KEY-{5}',
 )
 
 # CSCAN0080 - SecurityConfig XML passwords
 SECURITY_CONFIG_PASSWORD_PATTERN = re.compile(
-    rb"<[pP]ass[wW]ord>[^<]+</[pP]ass[wW]ord>",
+    rb'<[pP]ass[wW]ord>[^<]+</[pP]ass[wW]ord>',
 )
 
 # CSCAN0110 - Script passwords in PowerShell/CMD
@@ -155,7 +155,7 @@ GENERAL_PASSWORD_PATTERN = re.compile(
 
 # CSCAN0210 - Git credentials
 GIT_CREDENTIALS_PATTERN = re.compile(
-    rb"[hH][tT][tT][pP][sS]?://.+:.+@[^/]+\.[cC][oO][mM]",
+    rb'[hH][tT][tT][pP][sS]?://.+:.+@[^/]+\.[cC][oO][mM]',
 )
 
 # CSCAN0220 - Password contexts (ConvertTo-SecureString, X509Certificate2, etc.)
@@ -165,12 +165,12 @@ PASSWORD_CONTEXT_PATTERN = re.compile(
 
 # CSCAN0230 - Slack tokens
 SLACK_TOKEN_PATTERN = re.compile(
-    rb"xoxp-[a-zA-Z0-9]+-[a-zA-Z0-9]+-[a-zA-Z0-9]+-[a-zA-Z0-9]+|xoxb-[a-zA-Z0-9]+-[a-zA-Z0-9]+",
+    rb'xoxp-[a-zA-Z0-9]+-[a-zA-Z0-9]+-[a-zA-Z0-9]+-[a-zA-Z0-9]+|xoxb-[a-zA-Z0-9]+-[a-zA-Z0-9]+',
 )
 
 # CSCAN0250 - OAuth/JWT tokens and refresh tokens
 JWT_TOKEN_PATTERN = re.compile(
-    rb"eyJ[a-zA-Z0-9\-_%]+\.eyJ[a-zA-Z0-9\-_%]+\.[a-zA-Z0-9\-_%]+",
+    rb'eyJ[a-zA-Z0-9\-_%]+\.eyJ[a-zA-Z0-9\-_%]+\.[a-zA-Z0-9\-_%]+',
 )
 
 REFRESH_TOKEN_PATTERN = re.compile(
@@ -179,7 +179,7 @@ REFRESH_TOKEN_PATTERN = re.compile(
 
 # CSCAN0260 - Ansible Vault (corrected from CSCAN0270)
 ANSIBLE_VAULT_PATTERN = re.compile(
-    rb"\$ANSIBLE_VAULT;[0-9]\.[0-9];AES256[\r\n]+\d+",
+    rb'\$ANSIBLE_VAULT;[0-9]\.[0-9];AES256[\r\n]+\d+',
 )
 
 # CSCAN0270 - Azure PowerShell Token Cache
@@ -189,44 +189,44 @@ AZURE_POWERSHELL_TOKEN_PATTERN = re.compile(
 
 # CSCAN0140 - Default/known passwords
 DEFAULT_PASSWORDS_PATTERN = re.compile(
-    rb"(T!T@n1130|[pP]0rsche911|[cC]o[mM][mM]ac\!12|[pP][aA]ss@[wW]or[dD]1|[rR]dP[aA]\$\$[wW]0r[dD]|iis6\!dfu|[pP]@ss[wW]or[dD]1|[pP][aA]\$\$[wW]or[dD]1|\!\!123ab|[aA]dmin123|[pP]@ss[wW]0r[dD]1|[uU]ser@123|[aA]bc@123|[pP][aA]ss[wW]or[dD]@123|homerrocks|[pP][aA]\$\$[wW]0r[dD]1?|Y29NbWFjITEy|[pP][aA]ss4Sales|WS2012R2R0cks\!|DSFS0319Test|March2010M2\!|[pP][aA]ss[wW]ord~1|[mM]icr0s0ft|test1test\!|123@tieorg|homerocks|[eE]lvis1)",
+    rb'(T!T@n1130|[pP]0rsche911|[cC]o[mM][mM]ac\!12|[pP][aA]ss@[wW]or[dD]1|[rR]dP[aA]\$\$[wW]0r[dD]|iis6\!dfu|[pP]@ss[wW]or[dD]1|[pP][aA]\$\$[wW]or[dD]1|\!\!123ab|[aA]dmin123|[pP]@ss[wW]0r[dD]1|[uU]ser@123|[aA]bc@123|[pP][aA]ss[wW]or[dD]@123|homerrocks|[pP][aA]\$\$[wW]0r[dD]1?|Y29NbWFjITEy|[pP][aA]ss4Sales|WS2012R2R0cks\!|DSFS0319Test|March2010M2\!|[pP][aA]ss[wW]ord~1|[mM]icr0s0ft|test1test\!|123@tieorg|homerocks|[eE]lvis1)',
 )
 
 
 PATTERNS = [
-    ("datafactory-shir", AZURE_DATAFACTORY_SHIR_PATTERN),
-    ("app-service-deployment", AZURE_APP_SERVICE_DEPLOYMENT_PATTERN),
-    ("publishsettings-pwd", PUBLISHSETTINGS_PWD_PATTERN),
-    ("storage-86char", AZURE_STORAGE_86CHAR_PATTERN),
-    ("storage-43char", AZURE_STORAGE_43CHAR_PATTERN),
-    ("storage-sig", AZURE_STORAGE_SIG_PATTERN),
-    ("storage-useridpw", AZURE_STORAGE_USERIDPW_PATTERN),
-    ("storage-accountkey", AZURE_STORAGE_ACCOUNTKEY_PATTERN),
-    ("storage-servicebus", AZURE_STORAGE_SERVICEBUS_PATTERN),
-    ("storage-moniker", AZURE_STORAGE_MONIKER_PATTERN),
-    ("storage-bloburl", AZURE_STORAGE_BLOBURL_PATTERN),
-    ("password-machinekey", AZURE_PASSWORD_MACHINEKEY_PATTERN),
-    ("password-addkey", AZURE_PASSWORD_ADDKEY_PATTERN),
-    ("password-connstring", AZURE_PASSWORD_CONNSTRING_PATTERN),
-    ("password-value", AZURE_PASSWORD_VALUE_PATTERN),
-    ("password-uidpw", AZURE_PASSWORD_UIDPW_PATTERN),
-    ("network-credential", AZURE_NETWORK_CREDENTIAL_PATTERN),
-    ("network-schtasks", AZURE_NETWORK_SCHTASKS_PATTERN),
-    ("network-dotnet", AZURE_NETWORK_DOTNET_PATTERN),
-    ("devtfvc-secrets", AZURE_DEVTFVC_PATTERN),
-    ("devops-pat", AZURE_DEVOPS_PAT_PATTERN),
-    ("pem-private-key", PEM_PRIVATE_KEY_PATTERN),
-    ("security-config-password", SECURITY_CONFIG_PASSWORD_PATTERN),
-    ("script-password", SCRIPT_PASSWORD_PATTERN),
-    ("general-password", GENERAL_PASSWORD_PATTERN),
-    ("git-credentials", GIT_CREDENTIALS_PATTERN),
-    ("password-context", PASSWORD_CONTEXT_PATTERN),
-    ("slack-token", SLACK_TOKEN_PATTERN),
-    ("jwt-token", JWT_TOKEN_PATTERN),
-    ("refresh-token", REFRESH_TOKEN_PATTERN),
-    ("ansible-vault", ANSIBLE_VAULT_PATTERN),
-    ("azure-powershell-token", AZURE_POWERSHELL_TOKEN_PATTERN),
-    ("default-passwords", DEFAULT_PASSWORDS_PATTERN),
+    ('datafactory-shir', AZURE_DATAFACTORY_SHIR_PATTERN),
+    ('app-service-deployment', AZURE_APP_SERVICE_DEPLOYMENT_PATTERN),
+    ('publishsettings-pwd', PUBLISHSETTINGS_PWD_PATTERN),
+    ('storage-86char', AZURE_STORAGE_86CHAR_PATTERN),
+    ('storage-43char', AZURE_STORAGE_43CHAR_PATTERN),
+    ('storage-sig', AZURE_STORAGE_SIG_PATTERN),
+    ('storage-useridpw', AZURE_STORAGE_USERIDPW_PATTERN),
+    ('storage-accountkey', AZURE_STORAGE_ACCOUNTKEY_PATTERN),
+    ('storage-servicebus', AZURE_STORAGE_SERVICEBUS_PATTERN),
+    ('storage-moniker', AZURE_STORAGE_MONIKER_PATTERN),
+    ('storage-bloburl', AZURE_STORAGE_BLOBURL_PATTERN),
+    ('password-machinekey', AZURE_PASSWORD_MACHINEKEY_PATTERN),
+    ('password-addkey', AZURE_PASSWORD_ADDKEY_PATTERN),
+    ('password-connstring', AZURE_PASSWORD_CONNSTRING_PATTERN),
+    ('password-value', AZURE_PASSWORD_VALUE_PATTERN),
+    ('password-uidpw', AZURE_PASSWORD_UIDPW_PATTERN),
+    ('network-credential', AZURE_NETWORK_CREDENTIAL_PATTERN),
+    ('network-schtasks', AZURE_NETWORK_SCHTASKS_PATTERN),
+    ('network-dotnet', AZURE_NETWORK_DOTNET_PATTERN),
+    ('devtfvc-secrets', AZURE_DEVTFVC_PATTERN),
+    ('devops-pat', AZURE_DEVOPS_PAT_PATTERN),
+    ('pem-private-key', PEM_PRIVATE_KEY_PATTERN),
+    ('security-config-password', SECURITY_CONFIG_PASSWORD_PATTERN),
+    ('script-password', SCRIPT_PASSWORD_PATTERN),
+    ('general-password', GENERAL_PASSWORD_PATTERN),
+    ('git-credentials', GIT_CREDENTIALS_PATTERN),
+    ('password-context', PASSWORD_CONTEXT_PATTERN),
+    ('slack-token', SLACK_TOKEN_PATTERN),
+    ('jwt-token', JWT_TOKEN_PATTERN),
+    ('refresh-token', REFRESH_TOKEN_PATTERN),
+    ('ansible-vault', ANSIBLE_VAULT_PATTERN),
+    ('azure-powershell-token', AZURE_POWERSHELL_TOKEN_PATTERN),
+    ('default-passwords', DEFAULT_PASSWORDS_PATTERN),
 ]
 
 
@@ -241,7 +241,7 @@ def check_file_for_azure_keys(
     bad_files = []
 
     for filename in filenames:
-        with open(filename, "rb") as content:
+        with open(filename, 'rb') as content:
             text_body = content.read()
 
             # Check all Azure credential patterns
@@ -253,11 +253,11 @@ def check_file_for_azure_keys(
                         match = match[0]
 
                     # Obfuscate the key
-                    key_str = match.decode("utf-8", errors="replace")
+                    key_str = match.decode('utf-8', errors='replace')
                     if len(key_str) > 20:
-                        key_hidden = key_str[:10] + "***" + key_str[-7:]
+                        key_hidden = key_str[:10] + '***' + key_str[-7:]
                     else:
-                        key_hidden = key_str[:4] + "***"
+                        key_hidden = key_str[:4] + '***'
 
                     bad_files.append(
                         BadFile(filename, key_hidden, pattern_name),
@@ -268,7 +268,7 @@ def check_file_for_azure_keys(
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("filenames", nargs="+", help="Filenames to run")
+    parser.add_argument('filenames', nargs='+', help='Filenames to run')
     args = parser.parse_args(argv)
 
     bad_filenames = check_file_for_azure_keys(args.filenames)
@@ -283,5 +283,5 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     raise SystemExit(main())
