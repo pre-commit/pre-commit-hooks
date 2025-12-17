@@ -12,9 +12,9 @@
     language: python
     types: [python]
 -   id: check-byte-order-marker
-    name: 'check BOM - deprecated: use fix-byte-order-marker'
-    description: forbids files which have a utf-8 byte-order marker.
-    entry: check-byte-order-marker
+    name: check-byte-order-marker (removed)
+    description: (removed) use fix-byte-order-marker instead.
+    entry: pre-commit-hooks-removed check-byte-order-marker fix-byte-order-marker https://github.com/pre-commit/pre-commit-hooks
     language: python
     types: [text]
 -   id: check-builtin-literals
@@ -29,7 +29,7 @@
     entry: check-case-conflict
     language: python
 -   id: check-docstring-first
-    name: check docstring is first
+    name: check docstring is first (deprecated)
     description: checks a common error of defining a docstring after code.
     entry: check-docstring-first
     language: python
@@ -155,10 +155,10 @@
     language: python
     types: [text]
 -   id: fix-encoding-pragma
-    name: fix python encoding pragma (deprecated)
-    description: 'adds # -*- coding: utf-8 -*- to the top of python files.'
+    name: fix python encoding pragma (removed)
+    description: (removed) use pyupgrade instead.
+    entry: pre-commit-hooks-removed fix-encoding-pragma pyupgrade https://github.com/asottile/pyupgrade
     language: python
-    entry: fix-encoding-pragma
     types: [python]
 -   id: forbid-new-submodules
     name: forbid new submodules

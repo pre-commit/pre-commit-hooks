@@ -15,7 +15,7 @@ Add this to your `.pre-commit-config.yaml`
 
 ```yaml
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0  # Use the ref you want to point at
+    rev: v6.0.0  # Use the ref you want to point at
     hooks:
     -   id: trailing-whitespace
     # -   id: ...
@@ -44,9 +44,6 @@ Require literal syntax when initializing empty or zero Python builtin types.
 
 #### `check-case-conflict`
 Check for files with names that would conflict on a case-insensitive filesystem like MacOS HFS+ or Windows FAT.
-
-#### `check-docstring-first`
-Checks for a common error of placing code before the docstring.
 
 #### `check-executables-have-shebangs`
 Checks that non-binary executables have a proper shebang.
@@ -129,13 +126,6 @@ The following arguments are available:
 #### `fix-byte-order-marker`
 removes UTF-8 byte order marker
 
-#### `fix-encoding-pragma`
-
-_Deprecated since py2 is EOL - use [pyupgrade](https://github.com/asottile/pyupgrade) instead._
-
-Add `# -*- coding: utf-8 -*-` to the top of python files.
-  - To remove the coding pragma pass `--remove` (useful in a python3-only codebase)
-
 #### `forbid-new-submodules`
 Prevent addition of new git submodules.
 
@@ -213,6 +203,9 @@ Trims trailing whitespace.
 ### Deprecated / replaced hooks
 
 - `check-byte-order-marker`: instead use fix-byte-order-marker
+- `fix-encoding-pragma`: instead use [`pyupgrade`](https://github.com/asottile/pyupgrade)
+- `check-docstring-first`: fundamentally flawed, deprecated without replacement.
+
 
 ### As a standalone package
 
