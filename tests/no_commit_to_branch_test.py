@@ -11,13 +11,13 @@ from testing.util import git_commit
 def test_other_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'anotherbranch')
-        assert is_on_branch({'master'}) is False
+        assert is_on_branch({'placeholder'}) is False
 
 
 def test_multi_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', 'another/branch')
-        assert is_on_branch({'master'}) is False
+        assert is_on_branch({'placeholder'}) is False
 
 
 def test_multi_branch_fail(temp_git_dir):
@@ -26,9 +26,10 @@ def test_multi_branch_fail(temp_git_dir):
         assert is_on_branch({'another/branch'}) is True
 
 
-def test_master_branch(temp_git_dir):
+def test_exact_branch(temp_git_dir):
     with temp_git_dir.as_cwd():
-        assert is_on_branch({'master'}) is True
+        cmd_output('git', 'checkout', '-b', 'branchname')
+        assert is_on_branch({'branchname'}) is True
 
 
 def test_main_branch_call(temp_git_dir):
@@ -50,11 +51,11 @@ def test_branch_pattern_fail(temp_git_dir):
         assert is_on_branch(set(), {'another/.*'}) is True
 
 
-@pytest.mark.parametrize('branch_name', ('master', 'another/branch'))
+@pytest.mark.parametrize('branch_name', ('somebranch', 'another/branch'))
 def test_branch_pattern_multiple_branches_fail(temp_git_dir, branch_name):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', branch_name)
-        assert main(('--branch', 'master', '--pattern', 'another/.*'))
+        assert main(('--branch', 'somebranch', '--pattern', 'another/.*'))
 
 
 def test_main_default_call(temp_git_dir):

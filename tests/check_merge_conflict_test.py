@@ -27,10 +27,10 @@ def f1_is_a_conflict_file(tmpdir):
 
     cmd_output('git', 'clone', str(repo1), str(repo2))
 
-    # Commit in master
+    # Commit in mainline
     with repo1.as_cwd():
         repo1_f1.write('parent\n')
-        git_commit('-am', 'master commit2')
+        git_commit('-am', 'mainline commit2')
 
     # Commit in clone and pull
     with repo2.as_cwd():
@@ -82,10 +82,10 @@ def repository_pending_merge(tmpdir):
 
     cmd_output('git', 'clone', str(repo1), str(repo2))
 
-    # Commit in master
+    # Commit in mainline
     with repo1.as_cwd():
         repo1_f1.write('parent\n')
-        git_commit('-am', 'master commit2')
+        git_commit('-am', 'mainline commit2')
 
     # Commit in clone and pull without committing
     with repo2.as_cwd():
@@ -112,7 +112,7 @@ def test_merge_conflicts_git(capsys):
 
 
 @pytest.mark.parametrize(
-    'contents', (b'<<<<<<< HEAD\n', b'=======\n', b'>>>>>>> master\n'),
+    'contents', (b'<<<<<<< HEAD\n', b'=======\n', b'>>>>>>> main\n'),
 )
 def test_merge_conflicts_failing(contents, repository_pending_merge):
     repository_pending_merge.join('f2').write_binary(contents)
@@ -150,7 +150,7 @@ def test_worktree_merge_conflicts(f1_is_a_conflict_file, tmpdir, capsys):
     cmd_output('git', 'worktree', 'add', str(worktree))
     with worktree.as_cwd():
         cmd_output(
-            'git', 'pull', '--no-rebase', 'origin', 'master', retcode=None,
+            'git', 'pull', '--no-rebase', 'origin', 'HEAD', retcode=None,
         )
         msg = f1_is_a_conflict_file.join('.git/worktrees/worktree/MERGE_MSG')
         assert msg.exists()
