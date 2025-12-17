@@ -9,6 +9,7 @@ from testing.util import get_resource_path
 @pytest.mark.parametrize(
     ('filename', 'expected_retval'), (
         ('bad_yaml.notyaml', 1),
+        ('bad_encoding_yaml.yaml', 1),
         ('ok_yaml.yaml', 0),
     ),
 )
