@@ -105,18 +105,29 @@ def test_merge_conflicts_git(capsys):
     assert main(['f1']) == 1
     out, _ = capsys.readouterr()
     assert out == (
-        "f1:1: Merge conflict string '<<<<<<<' found\n"
-        "f1:3: Merge conflict string '=======' found\n"
         "f1:5: Merge conflict string '>>>>>>>' found\n"
     )
 
 
 @pytest.mark.parametrize(
-    'contents', (b'<<<<<<< HEAD\n', b'=======\n', b'>>>>>>> main\n'),
+    # Individual markers are not actually merge conflicts, need 3 markers
+    # to mark a real conflict
+    'contents, expected_retcode',
+    ((b'<<<<<<< ', 0),
+     (b'=======', 0),
+     (b'>>>>>>> ',0),
+     # Real conflict marker
+     (b'<<<<<<< HEAD\n=======\n>>>>>>> branch\n', 1),
+     # Allow for the possibility of an .rst file with a =======
+     # inside a conflict marker
+     (b'<<<<<<< HEAD\n=======\n=======\n>>>>>>> branch\n', 1),
+    )
 )
-def test_merge_conflicts_failing(contents, repository_pending_merge):
-    repository_pending_merge.join('f2').write_binary(contents)
-    assert main(['f2']) == 1
+def test_merge_conflicts_with_rst(
+    contents, expected_retcode, repository_pending_merge
+):
+    repository_pending_merge.join('f2.rst').write_binary(contents)
+    assert main(['f2.rst']) == expected_retcode
 
 
 @pytest.mark.parametrize(
@@ -138,11 +149,19 @@ def test_does_not_care_when_not_in_a_merge(tmpdir):
     f.write_binary(b'problem\n=======\n')
     assert main([str(f.realpath())]) == 0
 
-
-def test_care_when_assumed_merge(tmpdir):
+@pytest.mark.parametrize(
+    'contents, expected_retcode',
+    (
+        # Not a complete conflict marker
+        (b'=======', 0),
+        # Complete conflict marker
+        (b'<<<<<<< HEAD\nproblem\n=======\n>>>>>>> branch\n', 1),
+    )
+)
+def test_care_when_assumed_merge(contents, expected_retcode, tmpdir):
     f = tmpdir.join('README.md')
-    f.write_binary(b'problem\n=======\n')
-    assert main([str(f.realpath()), '--assume-in-merge']) == 1
+    f.write_binary(contents)
+    assert main([str(f.realpath()), '--assume-in-merge']) == expected_retcode
 
 
 def test_worktree_merge_conflicts(f1_is_a_conflict_file, tmpdir, capsys):

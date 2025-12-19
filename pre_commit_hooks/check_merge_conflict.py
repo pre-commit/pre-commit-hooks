@@ -9,11 +9,10 @@ from pre_commit_hooks.util import cmd_output
 
 CONFLICT_PATTERNS = [
     b'<<<<<<< ',
-    b'======= ',
-    b'=======\r\n',
-    b'=======\n',
+    b'=======',
     b'>>>>>>> ',
 ]
+N = len(CONFLICT_PATTERNS)
 
 
 def is_in_merge() -> bool:
@@ -40,15 +39,21 @@ def main(argv: Sequence[str] | None = None) -> int:
     retcode = 0
     for filename in args.filenames:
         with open(filename, 'rb') as inputfile:
+            expected_conflict_pattern_index = 0
             for i, line in enumerate(inputfile, start=1):
-                for pattern in CONFLICT_PATTERNS:
-                    if line.startswith(pattern):
+                # Look for conflict patterns in order
+                if line.startswith(
+                    CONFLICT_PATTERNS[expected_conflict_pattern_index]
+                ):
+                    expected_conflict_pattern_index += 1
+                    if expected_conflict_pattern_index == N:
                         print(
-                            f'{filename}:{i}: Merge conflict string '
-                            f'{pattern.strip().decode()!r} found',
+                            f"{filename}:{i}: Merge conflict string "
+                            f"{CONFLICT_PATTERNS[-1].strip().decode()!r} "
+                            f"found",
                         )
                         retcode = 1
-
+                        break
     return retcode
 
 
