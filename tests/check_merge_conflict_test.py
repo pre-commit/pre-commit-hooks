@@ -113,18 +113,19 @@ def test_merge_conflicts_git(capsys):
     # Individual markers are not actually merge conflicts, need 3 markers
     # to mark a real conflict
     'contents, expected_retcode',
-    ((b'<<<<<<< ', 0),
-     (b'=======', 0),
-     (b'>>>>>>> ',0),
-     # Real conflict marker
-     (b'<<<<<<< HEAD\n=======\n>>>>>>> branch\n', 1),
-     # Allow for the possibility of an .rst file with a =======
-     # inside a conflict marker
-     (b'<<<<<<< HEAD\n=======\n=======\n>>>>>>> branch\n', 1),
-    )
+    (
+        (b'<<<<<<< ', 0),
+        (b'=======', 0),
+        (b'>>>>>>> ', 0),
+        # Real conflict marker
+        (b'<<<<<<< HEAD\n=======\n>>>>>>> branch\n', 1),
+        # Allow for the possibility of an .rst file with a =======
+        # inside a conflict marker
+        (b'<<<<<<< HEAD\n=======\n=======\n>>>>>>> branch\n', 1),
+    ),
 )
 def test_merge_conflicts_with_rst(
-    contents, expected_retcode, repository_pending_merge
+    contents, expected_retcode, repository_pending_merge,
 ):
     repository_pending_merge.join('f2.rst').write_binary(contents)
     assert main(['f2.rst']) == expected_retcode
@@ -149,6 +150,7 @@ def test_does_not_care_when_not_in_a_merge(tmpdir):
     f.write_binary(b'problem\n=======\n')
     assert main([str(f.realpath())]) == 0
 
+
 @pytest.mark.parametrize(
     'contents, expected_retcode',
     (
@@ -156,7 +158,7 @@ def test_does_not_care_when_not_in_a_merge(tmpdir):
         (b'=======', 0),
         # Complete conflict marker
         (b'<<<<<<< HEAD\nproblem\n=======\n>>>>>>> branch\n', 1),
-    )
+    ),
 )
 def test_care_when_assumed_merge(contents, expected_retcode, tmpdir):
     f = tmpdir.join('README.md')

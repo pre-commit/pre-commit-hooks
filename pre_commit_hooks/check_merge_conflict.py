@@ -43,7 +43,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             for i, line in enumerate(inputfile, start=1):
                 # Look for conflict patterns in order
                 if line.startswith(
-                    CONFLICT_PATTERNS[expected_conflict_pattern_index]
+                    CONFLICT_PATTERNS[expected_conflict_pattern_index],
                 ):
                     expected_conflict_pattern_index += 1
                     if expected_conflict_pattern_index == N:
