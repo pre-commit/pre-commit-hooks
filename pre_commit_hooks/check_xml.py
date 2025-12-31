@@ -4,6 +4,10 @@ import argparse
 import xml.sax.handler
 from collections.abc import Sequence
 
+import defusedxml
+
+defusedxml.defuse_stdlib()
+
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
@@ -15,7 +19,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     for filename in args.filenames:
         try:
             with open(filename, 'rb') as xml_file:
-                xml.sax.parse(xml_file, handler)
+                defusedxml.sax.parse(xml_file, handler)
         except xml.sax.SAXException as exc:
             print(f'{filename}: Failed to xml parse ({exc})')
             retval = 1
