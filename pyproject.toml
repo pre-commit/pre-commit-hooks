@@ -20,6 +20,13 @@ dependencies = [
     'tomli>=1.1.0;python_version<"3.11"',
 ]
 
+[project.optional-dependencies]
+dev = [
+	"covdefaults",
+	"coverage",
+	"pytest",
+]
+
 [project.readme]
 file = "README.md"
 content-type = "text/markdown"
