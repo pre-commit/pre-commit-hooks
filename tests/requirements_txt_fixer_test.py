@@ -107,6 +107,15 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             PASS,
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
+        (
+            b'--extra-index-url https://example.com/simple\n'
+            b'--index-url https://pypi.org/simple\n'
+            b'requests\n',
+            FAIL,
+            b'--index-url https://pypi.org/simple\n'
+            b'--extra-index-url https://example.com/simple\n'
+            b'requests\n',
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):
