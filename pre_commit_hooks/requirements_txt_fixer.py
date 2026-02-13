@@ -34,6 +34,10 @@ class Requirement:
         assert m is not None
 
         name = m.group()
+        if name == b'-i' or name.startswith(b'--index-url='):
+            return b'--index-url'
+        elif name.startswith(b'--extra-index-url='):
+            return b'--extra-index-url'
         m = self.UNTIL_COMPARISON.search(name)
         if not m:
             return name

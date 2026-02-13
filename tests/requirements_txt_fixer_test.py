@@ -116,6 +116,24 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             b'--extra-index-url https://example.com/simple\n'
             b'requests\n',
         ),
+        (
+            b'--extra-index-url https://example.com/simple\n'
+            b'-i https://pypi.org/simple\n'
+            b'requests\n',
+            FAIL,
+            b'-i https://pypi.org/simple\n'
+            b'--extra-index-url https://example.com/simple\n'
+            b'requests\n',
+        ),
+        (
+            b'--extra-index-url=https://example.com/simple\n'
+            b'--index-url=https://pypi.org/simple\n'
+            b'requests\n',
+            FAIL,
+            b'--index-url=https://pypi.org/simple\n'
+            b'--extra-index-url=https://example.com/simple\n'
+            b'requests\n',
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):
