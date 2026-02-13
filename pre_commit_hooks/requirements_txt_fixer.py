@@ -13,6 +13,10 @@ FAIL = 1
 class Requirement:
     UNTIL_COMPARISON = re.compile(b'={2,3}|!=|~=|>=?|<=?')
     UNTIL_SEP = re.compile(rb'[^;\s]+')
+    _SPECIAL_ORDER = {
+        b'--index-url': 0,
+        b'--extra-index-url': 1,
+    }
 
     def __init__(self) -> None:
         self.value: bytes | None = None
@@ -30,6 +34,10 @@ class Requirement:
         assert m is not None
 
         name = m.group()
+        if name == b'-i' or name.startswith(b'--index-url='):
+            return b'--index-url'
+        elif name.startswith(b'--extra-index-url='):
+            return b'--extra-index-url'
         m = self.UNTIL_COMPARISON.search(name)
         if not m:
             return name
@@ -50,7 +58,13 @@ class Requirement:
             # with comments is kept)
             if self.name == requirement.name:
                 return bool(self.comments) > bool(requirement.comments)
-            return self.name < requirement.name
+            return (
+                self._SPECIAL_ORDER.get(self.name, 2),
+                self.name,
+            ) < (
+                self._SPECIAL_ORDER.get(requirement.name, 2),
+                requirement.name,
+            )
 
     def is_complete(self) -> bool:
         return (
