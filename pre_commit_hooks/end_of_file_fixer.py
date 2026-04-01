@@ -6,7 +6,7 @@ from collections.abc import Sequence
 from typing import IO
 
 
-def fix_file(file_obj: IO[bytes]) -> int:
+def fix_file(file_obj: IO[bytes], check_only=False) -> int:
     # Test for newline at end of file
     # Empty files will throw IOError here
     try:
@@ -18,7 +18,8 @@ def fix_file(file_obj: IO[bytes]) -> int:
     if last_character not in {b'\n', b'\r'} and last_character != b'':
         # Needs this seek for windows, otherwise IOError
         file_obj.seek(0, os.SEEK_END)
-        file_obj.write(b'\n')
+        if not check_only:
+            file_obj.write(b'\n')
         return 1
 
     while last_character in {b'\n', b'\r'}:
@@ -27,7 +28,8 @@ def fix_file(file_obj: IO[bytes]) -> int:
             # If we've reached the beginning of the file and it is all
             # linebreaks then we can make this file empty
             file_obj.seek(0)
-            file_obj.truncate()
+            if not check_only:
+                file_obj.truncate()
             return 1
 
         # Go back two bytes and read a character
@@ -43,7 +45,8 @@ def fix_file(file_obj: IO[bytes]) -> int:
             return 0
         elif remaining.startswith(sequence):
             file_obj.seek(position + len(sequence))
-            file_obj.truncate()
+            if not check_only:
+                file_obj.truncate()
             return 1
 
     return 0
@@ -51,6 +54,7 @@ def fix_file(file_obj: IO[bytes]) -> int:
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument('--check', action='store_true', help='Check without fixing')
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)
 
@@ -59,11 +63,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     for filename in args.filenames:
         # Read as binary so we can read byte-by-byte
         with open(filename, 'rb+') as file_obj:
-            ret_for_file = fix_file(file_obj)
+            ret_for_file = fix_file(file_obj, args.check)
             if ret_for_file:
-                print(f'Fixing {filename}')
+                if args.check:
+                    print(f'Wrong ending of file: {filename}')
+                else:
+                    print(f'Fixing {filename}')
             retv |= ret_for_file
-
     return retv
 
 
