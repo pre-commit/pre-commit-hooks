@@ -9,14 +9,17 @@ def _fix_file(
         filename: str,
         is_markdown: bool,
         chars: bytes | None,
+        check_only: bool = False,
+        error_lines: list[int] = None,
 ) -> bool:
     with open(filename, mode='rb') as file_processed:
         lines = file_processed.readlines()
-    newlines = [_process_line(line, is_markdown, chars) for line in lines]
+    newlines = [_process_line(line, is_markdown, chars, line_num, error_lines) for line_num, line in enumerate(lines)]
     if newlines != lines:
-        with open(filename, mode='wb') as file_processed:
-            for line in newlines:
-                file_processed.write(line)
+        if not check_only:
+            with open(filename, mode='wb') as file_processed:
+                for line in newlines:
+                    file_processed.write(line)
         return True
     else:
         return False
@@ -26,7 +29,10 @@ def _process_line(
         line: bytes,
         is_markdown: bool,
         chars: bytes | None,
+        line_num: int,
+        error_lines: list[int] | None
 ) -> bytes:
+    org_line = line
     if line[-2:] == b'\r\n':
         eol = b'\r\n'
         line = line[:-2]
@@ -38,11 +44,15 @@ def _process_line(
     # preserve trailing two-space for non-blank lines in markdown files
     if is_markdown and (not line.isspace()) and line.endswith(b'  '):
         return line[:-2].rstrip(chars) + b'  ' + eol
-    return line.rstrip(chars) + eol
+    result = line.rstrip(chars) + eol
+    if error_lines is not None and org_line != result:
+        error_lines.append(line_num+1)
+    return result
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
+    parser.add_argument('--check', action='store_true', help='Check without fixing')
     parser.add_argument(
         '--no-markdown-linebreak-ext',
         action='store_true',
@@ -93,8 +103,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     for filename in args.filenames:
         _, extension = os.path.splitext(filename.lower())
         md = all_markdown or extension in md_exts
-        if _fix_file(filename, md, chars):
-            print(f'Fixing {filename}')
+        error_lines = []
+        if _fix_file(filename, md, chars, args.check, error_lines):
+            if args.check:
+                location = ",".join(map(str, error_lines[:4]))
+                location += "..." if len(error_lines) > 4 else ""
+                print(f'Trailing whitespace check failed: {filename} @ {location}')
+            else:
+                print(f'Fixing {filename}')
             return_code = 1
     return return_code
 
