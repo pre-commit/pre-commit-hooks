@@ -44,7 +44,7 @@ def test_fix_file(input_s, expected_retval, output, options):
         options = [options]
 
     file_obj = io.BytesIO(input_s)
-    ret = fix_file(file_obj, "--check" in [*options])
+    ret = fix_file(file_obj, '--check' in [*options])
     assert file_obj.getvalue() == output
     assert ret == expected_retval
 

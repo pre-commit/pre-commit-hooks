@@ -30,7 +30,7 @@ def _process_line(
         is_markdown: bool,
         chars: bytes | None,
         line_num: int,
-        error_lines: list[int] | None
+        error_lines: list[int] | None,
 ) -> bytes:
     org_line = line
     if line[-2:] == b'\r\n':
@@ -46,7 +46,7 @@ def _process_line(
         return line[:-2].rstrip(chars) + b'  ' + eol
     result = line.rstrip(chars) + eol
     if error_lines is not None and org_line != result:
-        error_lines.append(line_num+1)
+        error_lines.append(line_num + 1)
     return result
 
 
@@ -106,8 +106,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         error_lines = []
         if _fix_file(filename, md, chars, args.check, error_lines):
             if args.check:
-                location = ",".join(map(str, error_lines[:4]))
-                location += "..." if len(error_lines) > 4 else ""
+                location = ','.join(map(str, error_lines[:4]))
+                location += '...' if len(error_lines) > 4 else ''
                 print(f'Trailing whitespace check failed: {filename} @ {location}')
             else:
                 print(f'Fixing {filename}')

@@ -18,21 +18,22 @@ def test_fixes_trailing_whitespace(input_s, expected, tmpdir):
     assert main((str(path),)) == 1
     assert path.read() == expected
 
+
 @pytest.mark.parametrize(
-    ('input_s', 'exit_code', "lines"),
+    ('input_s', 'exit_code', 'lines'),
     (
-            ('foo \nbar \n', 1, [1,2]),
-            ('bar\t\nbaz\t\n', 1, [1,2]),
-            ('bar\nbaz\t\n', 1, [2]),
+        ('foo \nbar \n', 1, [1, 2]),
+        ('bar\t\nbaz\t\n', 1, [1, 2]),
+        ('bar\nbaz\t\n', 1, [2]),
     ),
 )
 def test_fixes_trailing_whitespace_check_only(capsys, input_s, exit_code, lines, tmpdir):
     path = tmpdir.join('file.md')
     path.write(input_s)
-    assert main(('--check', str(path),)) == exit_code
+    assert main(('--check', str(path))) == exit_code
     assert path.read() == input_s
     captured = capsys.readouterr()
-    location = "@ " + ','.join(map(str, lines))
+    location = '@ ' + ','.join(map(str, lines))
     assert location in captured.out
 
 
