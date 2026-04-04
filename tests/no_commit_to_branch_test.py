@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import pytest
 
 from pre_commit_hooks.no_commit_to_branch import _default_branch
@@ -79,6 +81,14 @@ def test_default_branch_names(temp_git_dir, branch_name):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', branch_name)
         assert main(()) == 1
+
+
+def test_default_branch_falls_back_when_empty_branch(tmpdir):
+    with patch(
+        'pre_commit_hooks.no_commit_to_branch.cmd_output',
+        return_value='origin/',
+    ):
+        assert _default_branch() == frozenset({'master', 'main'})
 
 
 def test_default_branch_detects_from_origin(tmpdir):
