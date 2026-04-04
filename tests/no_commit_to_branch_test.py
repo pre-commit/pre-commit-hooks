@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+from pre_commit_hooks.no_commit_to_branch import _default_branch
 from pre_commit_hooks.no_commit_to_branch import is_on_branch
 from pre_commit_hooks.no_commit_to_branch import main
 from pre_commit_hooks.util import cmd_output
@@ -78,3 +79,35 @@ def test_default_branch_names(temp_git_dir, branch_name):
     with temp_git_dir.as_cwd():
         cmd_output('git', 'checkout', '-b', branch_name)
         assert main(()) == 1
+
+
+def test_default_branch_detects_from_origin(tmpdir):
+    remote = tmpdir.join('remote')
+    cmd_output('git', 'init', '--', str(remote))
+    with remote.as_cwd():
+        cmd_output('git', 'checkout', '-b', 'develop')
+        git_commit('--allow-empty', '-m', 'init')
+
+    local = tmpdir.join('local')
+    cmd_output('git', 'clone', str(remote), str(local))
+
+    with local.as_cwd():
+        assert _default_branch() == frozenset({'develop'})
+
+
+def test_main_blocks_detected_default_branch(tmpdir):
+    remote = tmpdir.join('remote')
+    cmd_output('git', 'init', '--', str(remote))
+    with remote.as_cwd():
+        cmd_output('git', 'checkout', '-b', 'develop')
+        git_commit('--allow-empty', '-m', 'init')
+
+    local = tmpdir.join('local')
+    cmd_output('git', 'clone', str(remote), str(local))
+
+    with local.as_cwd():
+        # On detected default branch — should be blocked
+        assert main(()) == 1
+        # On a feature branch — should pass
+        cmd_output('git', 'checkout', '-b', 'feature')
+        assert main(()) == 0

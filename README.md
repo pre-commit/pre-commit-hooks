@@ -152,7 +152,9 @@ verifies that test files are named correctly.
 #### `no-commit-to-branch`
 Protect specific branches from direct checkins.
   - Use `args: [--branch, staging, --branch, main]` to set the branch.
-    Both `main` and `master` are protected by default if no branch argument is set.
+    If no branch argument is set, the hook auto-detects the repository's default
+    branch from `origin/HEAD`. Falls back to protecting both `main` and `master`
+    if `origin/HEAD` is not configured.
   - `-b` / `--branch` may be specified multiple times to protect multiple
     branches.
   - `-p` / `--pattern` can be used to protect branches that match a supplied regex
