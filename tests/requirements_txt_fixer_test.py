@@ -107,6 +107,16 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             PASS,
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
+
+        (
+            b'--extra-index-url https://example-extra/simple\n'
+            b'--index-url https://example-main/simple\n'
+            b'requests==2.31.0\n',
+            FAIL,
+            b'--index-url https://example-main/simple\n'
+            b'--extra-index-url https://example-extra/simple\n'
+            b'requests==2.31.0\n',
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):

@@ -36,6 +36,15 @@ class Requirement:
 
         return name[:m.start()]
 
+    @property
+    def sort_key(self) -> tuple[int, bytes]:
+        if self.name == b'--index-url':
+            return (0, self.name)
+        elif self.name == b'--extra-index-url':
+            return (1, self.name)
+        else:
+            return (2, self.name)
+
     def __lt__(self, requirement: Requirement) -> bool:
         # \n means top of file comment, so always return True,
         # otherwise just do a string comparison with value.
@@ -50,7 +59,7 @@ class Requirement:
             # with comments is kept)
             if self.name == requirement.name:
                 return bool(self.comments) > bool(requirement.comments)
-            return self.name < requirement.name
+            return self.sort_key < requirement.sort_key
 
     def is_complete(self) -> bool:
         return (
