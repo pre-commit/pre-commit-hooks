@@ -107,6 +107,39 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             PASS,
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
+        # --index-url and --extra-index-url should maintain original order
+        # see: https://github.com/pre-commit/pre-commit-hooks/issues/612
+        (
+            b'--index-url https://example.com/simple\n'
+            b'--extra-index-url https://example.com/extra\n'
+            b'foo\n',
+            PASS,
+            b'--index-url https://example.com/simple\n'
+            b'--extra-index-url https://example.com/extra\n'
+            b'foo\n',
+        ),
+        # pip options should not be reordered even if out of alpha order
+        (
+            b'--extra-index-url https://example.com/extra\n'
+            b'--index-url https://example.com/simple\n'
+            b'foo\n',
+            PASS,
+            b'--extra-index-url https://example.com/extra\n'
+            b'--index-url https://example.com/simple\n'
+            b'foo\n',
+        ),
+        # packages should still be sorted while pip options stay in place
+        (
+            b'--index-url https://example.com/simple\n'
+            b'--extra-index-url https://example.com/extra\n'
+            b'foo\n'
+            b'bar\n',
+            FAIL,
+            b'--index-url https://example.com/simple\n'
+            b'--extra-index-url https://example.com/extra\n'
+            b'bar\n'
+            b'foo\n',
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):

@@ -45,6 +45,14 @@ class Requirement:
         elif requirement.value == b'\n':
             return False
         else:
+            # if both are pip options (start with --), maintain original
+            # order to avoid breaking semantic ordering
+            # (e.g. --index-url must come before --extra-index-url)
+            if (
+                self.name.startswith(b'--') and
+                requirement.name.startswith(b'--')
+            ):
+                return False
             # if 2 requirements have the same name, the one with comments
             # needs to go first (so that when removing duplicates, the one
             # with comments is kept)
