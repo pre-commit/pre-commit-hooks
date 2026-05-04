@@ -4,7 +4,8 @@ import argparse
 import math
 import os
 import subprocess
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
+from collections.abc import Sequence
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import zsplit

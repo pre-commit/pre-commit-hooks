@@ -5,7 +5,8 @@ import argparse
 import shlex
 import sys
 from collections.abc import Generator
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
+from collections.abc import Sequence
 from typing import NamedTuple
 
 from pre_commit_hooks.util import cmd_output

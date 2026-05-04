@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from collections.abc import Iterable
 from collections.abc import Iterator
-from collections.abc import Iterable, Sequence
+from collections.abc import Sequence
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import cmd_output

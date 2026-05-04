@@ -3,7 +3,8 @@ from __future__ import annotations
 import argparse
 import configparser
 import os
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
+from collections.abc import Sequence
 from typing import NamedTuple
 
 

@@ -14,7 +14,6 @@ from __future__ import annotations
 import argparse
 from collections.abc import Callable
 from collections.abc import Iterable
-from collections.abc import Iterable
 from typing import Any
 from typing import IO
 

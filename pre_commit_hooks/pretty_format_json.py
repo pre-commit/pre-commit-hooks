@@ -3,8 +3,9 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections.abc import Iterable
 from collections.abc import Mapping
-from collections.abc import Iterable, Sequence
+from collections.abc import Sequence
 from difflib import unified_diff
 
 
