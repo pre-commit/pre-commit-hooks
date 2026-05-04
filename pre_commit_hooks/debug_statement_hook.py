@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import ast
 import traceback
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from typing import NamedTuple
 
 
@@ -71,7 +71,7 @@ def check_file(filename: str) -> int:
     return int(bool(visitor.breakpoints))
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to run')
     args = parser.parse_args(argv)

@@ -5,7 +5,7 @@ import io
 import re
 import sys
 import tokenize
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 if sys.version_info >= (3, 12):  # pragma: >=3.12 cover
     FSTRING_START = tokenize.FSTRING_START
@@ -73,7 +73,7 @@ def fix_strings(filename: str) -> int:
         return 0
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

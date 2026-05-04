@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Generator
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from typing import Any
 from typing import NamedTuple
 
@@ -37,7 +37,7 @@ LOAD_FNS = {
 }
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-m', '--multi', '--allow-multiple-documents', action='store_true',

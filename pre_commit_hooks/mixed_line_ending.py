@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import collections
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 
 CRLF = b'\r\n'
@@ -62,7 +62,7 @@ def fix_filename(filename: str, fix: str) -> int:
         return other_endings
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-f', '--fix',

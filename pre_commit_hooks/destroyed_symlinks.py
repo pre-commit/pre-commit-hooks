@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import shlex
 import subprocess
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 from pre_commit_hooks.util import cmd_output
 from pre_commit_hooks.util import zsplit
@@ -66,7 +66,7 @@ def find_destroyed_symlinks(files: Sequence[str]) -> list[str]:
     return destroyed_links
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)

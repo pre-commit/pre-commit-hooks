@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 from collections.abc import Iterable
 from collections.abc import Iterator
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 from pre_commit_hooks.util import added_files
 from pre_commit_hooks.util import cmd_output
@@ -56,7 +56,7 @@ def find_conflicting_filenames(filenames: Sequence[str]) -> int:
     return retv
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'filenames', nargs='*',

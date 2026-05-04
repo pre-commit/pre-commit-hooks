@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import os.path
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 from pre_commit_hooks.util import cmd_output
 
@@ -28,7 +28,7 @@ def is_in_merge() -> bool:
     )
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument('--assume-in-merge', action='store_true')

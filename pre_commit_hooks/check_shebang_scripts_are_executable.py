@@ -4,7 +4,7 @@ from __future__ import annotations
 import argparse
 import shlex
 import sys
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 from pre_commit_hooks.check_executables_have_shebangs import EXECUTABLE_VALUES
 from pre_commit_hooks.check_executables_have_shebangs import git_ls_files
@@ -42,7 +42,7 @@ def _message(path: str) -> None:
     )
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('filenames', nargs='*')
     args = parser.parse_args(argv)

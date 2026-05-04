@@ -20,7 +20,7 @@ complicated YAML files.
 from __future__ import annotations
 
 import argparse
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 
 QUOTES = ["'", '"']
@@ -99,7 +99,7 @@ def first_key(lines: list[str]) -> str:
         return ''  # not actually reached in reality
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

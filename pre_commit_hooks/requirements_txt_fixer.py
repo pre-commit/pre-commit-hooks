@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import re
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from typing import IO
 
 
@@ -142,7 +142,7 @@ def fix_requirements(f: IO[bytes]) -> int:
         return FAIL
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='Filenames to fix')
     args = parser.parse_args(argv)

@@ -3,10 +3,10 @@ from __future__ import annotations
 import argparse
 import os.path
 import re
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     mutex = parser.add_mutually_exclusive_group()

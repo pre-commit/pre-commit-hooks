@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import re
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from typing import AbstractSet
 
 from pre_commit_hooks.util import CalledProcessError
@@ -24,7 +24,7 @@ def is_on_branch(
     )
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-b', '--branch', action='append',

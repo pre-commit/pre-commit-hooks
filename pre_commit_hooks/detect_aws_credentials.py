@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import configparser
 import os
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from typing import NamedTuple
 
 
@@ -89,7 +89,7 @@ def check_file_for_aws_keys(
     return bad_files
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='+', help='Filenames to run')
     parser.add_argument(

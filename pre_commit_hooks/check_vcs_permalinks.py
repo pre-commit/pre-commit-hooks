@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from re import Pattern
 
 
@@ -28,7 +28,7 @@ def _check_filename(filename: str, patterns: list[Pattern[bytes]]) -> int:
     return retv
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument(

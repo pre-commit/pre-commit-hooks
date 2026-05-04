@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import argparse
 import xml.sax.handler
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*', help='XML filenames to check.')
     args = parser.parse_args(argv)

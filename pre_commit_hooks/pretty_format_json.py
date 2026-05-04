@@ -4,7 +4,7 @@ import argparse
 import json
 import sys
 from collections.abc import Mapping
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from difflib import unified_diff
 
 
@@ -55,7 +55,7 @@ def get_diff(source: str, target: str, file: str) -> str:
     return ''.join(diff)
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '--autofix',

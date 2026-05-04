@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import argparse
 import os.path
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description='Checks for broken symlinks.')
     parser.add_argument('filenames', nargs='*', help='Filenames to check')
     args = parser.parse_args(argv)

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import ast
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from typing import NamedTuple
 
 
@@ -70,7 +70,7 @@ def parse_ignore(value: str) -> set[str]:
     return set(value.split(','))
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def main(argv: Iterable[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('filenames', nargs='*')
     parser.add_argument('--ignore', type=parse_ignore, default=set())
