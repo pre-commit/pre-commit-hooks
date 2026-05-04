@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Generator
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 from typing import Any
 from typing import NamedTuple
 

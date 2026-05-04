@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 from re import Pattern
 
 

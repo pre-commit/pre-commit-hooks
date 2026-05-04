@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import re
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 from typing import AbstractSet
 
 from pre_commit_hooks.util import CalledProcessError

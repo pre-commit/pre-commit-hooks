@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import argparse
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 
 
 def main(argv: Iterable[str] | None = None) -> int:

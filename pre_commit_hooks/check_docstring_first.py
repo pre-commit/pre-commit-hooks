@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import io
 import tokenize
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 from tokenize import tokenize as tokenize_tokenize
 
 NON_CODE_TOKENS = frozenset((

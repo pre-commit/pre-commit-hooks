@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import os
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 
 
 def _fix_file(

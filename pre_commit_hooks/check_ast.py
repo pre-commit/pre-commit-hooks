@@ -5,7 +5,7 @@ import ast
 import platform
 import sys
 import traceback
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 
 
 def main(argv: Iterable[str] | None = None) -> int:

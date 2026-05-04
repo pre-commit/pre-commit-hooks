@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 import os.path
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable
 
 from pre_commit_hooks.util import cmd_output
 
