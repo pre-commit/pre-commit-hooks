@@ -190,6 +190,14 @@
     language: python
     pass_filenames: false
     always_run: true
+-   id: remove-em-dash
+    name: remove em-dash
+    description: replaces em-dashes with a plain hyphen.
+    entry: remove-em-dash
+    language: python
+    types: [text]
+    stages: [pre-commit, pre-push, manual]
+    minimum_pre_commit_version: 3.2.0
 -   id: requirements-txt-fixer
     name: fix requirements.txt
     description: sorts entries in requirements.txt.

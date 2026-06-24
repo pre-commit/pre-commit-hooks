@@ -175,6 +175,11 @@ the following commandline options:
   - `--no-sort-keys` - when autofixing, retain the original key ordering (instead of sorting the keys)
   - `--top-keys comma,separated,keys` - Keys to keep at the top of mappings.
 
+#### `remove-em-dash`
+Replaces em-dashes (Unicode `U+2014`) with a plain hyphen (`-`).
+  - Only the UTF-8 encoding of the em-dash is replaced; files using other
+    encodings are left untouched.
+
 #### `requirements-txt-fixer`
 Sorts entries in requirements.txt and constraints.txt and removes incorrect entry for `pkg-resources==0.0.0`
 
