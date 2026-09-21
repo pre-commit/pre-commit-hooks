@@ -107,7 +107,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     retval = 0
 
     for filename in args.filenames:
-        with open(filename, 'r+') as f:
+        with open(filename, 'r+', encoding='utf-8', newline='') as f:
             lines = [line.rstrip() for line in f.readlines()]
             new_lines = sort(lines)
 

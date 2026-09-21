@@ -52,6 +52,18 @@ def test_integration_good_bad_lines(tmpdir, bad_lines, good_lines, retval):
         assert [line.rstrip() for line in f.readlines()] == good_lines
 
 
+def test_non_ascii_content_roundtrip(tmpdir):
+    file_path = os.path.join(str(tmpdir), 'foo.yaml')
+
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.write('b: caf\u00e9\n\na: \u2603\n')
+
+    assert main([file_path]) == RETVAL_BAD
+
+    with open(file_path, encoding='utf-8') as f:
+        assert f.read() == 'a: \u2603\n\nb: caf\u00e9\n'
+
+
 def test_parse_header():
     lines = ['# some header', '# is here', '', 'this is not a header']
     assert parse_block(lines, header=True) == ['# some header', '# is here']
