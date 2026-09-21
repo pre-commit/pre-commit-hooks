@@ -17,6 +17,12 @@ def test_main(filename, expected_retval):
     assert ret == expected_retval
 
 
+def test_main_non_utf8_file(tmpdir):
+    f = tmpdir.join('latin1.yaml')
+    f.write_binary(b'key: caf\xe9\n')
+    assert main((str(f),))
+
+
 def test_main_allow_multiple_documents(tmpdir):
     f = tmpdir.join('test.yaml')
     f.write('---\nfoo\n---\nbar\n')

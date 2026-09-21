@@ -65,6 +65,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         except ruamel.yaml.YAMLError as exc:
             print(exc)
             retval = 1
+        except UnicodeDecodeError as exc:
+            print(f'{filename}: invalid UTF-8: {exc}')
+            retval = 1
     return retval
 
 
