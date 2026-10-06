@@ -107,6 +107,26 @@ from pre_commit_hooks.requirements_txt_fixer import Requirement
             PASS,
             b'a=2.0.0 \\\n --hash=sha256:abcd\nb==1.0.0\n',
         ),
+        # `--index-url` must be kept before `--extra-index-url` so pip does
+        # not drop the primary index URL (see issue #612).
+        (
+            b'--index-url https://primary.example.com\n'
+            b'--extra-index-url https://extra.example.com\n'
+            b'foo==1.0\n',
+            PASS,
+            b'--index-url https://primary.example.com\n'
+            b'--extra-index-url https://extra.example.com\n'
+            b'foo==1.0\n',
+        ),
+        (
+            b'--extra-index-url https://extra.example.com\n'
+            b'--index-url https://primary.example.com\n'
+            b'foo==1.0\n',
+            FAIL,
+            b'--index-url https://primary.example.com\n'
+            b'--extra-index-url https://extra.example.com\n'
+            b'foo==1.0\n',
+        ),
     ),
 )
 def test_integration(input_s, expected_retval, output, tmpdir):
