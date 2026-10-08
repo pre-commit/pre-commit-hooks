@@ -1,13 +1,8 @@
 from __future__ import annotations
 
 import argparse
-import sys
+import tomllib
 from collections.abc import Sequence
-
-if sys.version_info >= (3, 11):  # pragma: >=3.11 cover
-    import tomllib
-else:  # pragma: <3.11 cover
-    import tomli as tomllib
 
 
 def main(argv: Sequence[str] | None = None) -> int:
