@@ -50,6 +50,21 @@ class Requirement:
             # with comments is kept)
             if self.name == requirement.name:
                 return bool(self.comments) > bool(requirement.comments)
+            # `--index-url` must be ordered before `--extra-index-url`.  pip
+            # uses the first `--index-url` as the primary index and treats
+            # subsequent `--extra-index-url` entries as additional indexes; if
+            # `--extra-index-url` appears first it is silently dropped, so we
+            # keep the index URL first (see issue #612).
+            if (
+                    self.name == b'--index-url' and
+                    requirement.name == b'--extra-index-url'
+            ):
+                return True
+            if (
+                    self.name == b'--extra-index-url' and
+                    requirement.name == b'--index-url'
+            ):
+                return False
             return self.name < requirement.name
 
     def is_complete(self) -> bool:
