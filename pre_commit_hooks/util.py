@@ -10,15 +10,20 @@ class CalledProcessError(RuntimeError):
 
 def added_files() -> set[str]:
     cmd = ('git', 'diff', '--staged', '--name-only', '--diff-filter=A', '-z')
-    return set(zsplit(cmd_output(*cmd)))
+    return set(zsplit(cmd_output(*cmd, encoding_errors='surrogateescape')))
 
 
-def cmd_output(*cmd: str, retcode: int | None = 0, **kwargs: Any) -> str:
+def cmd_output(
+        *cmd: str,
+        retcode: int | None = 0,
+        encoding_errors: str = 'strict',
+        **kwargs: Any,
+) -> str:
     kwargs.setdefault('stdout', subprocess.PIPE)
     kwargs.setdefault('stderr', subprocess.PIPE)
     proc = subprocess.Popen(cmd, **kwargs)
     stdout, stderr = proc.communicate()
-    stdout = stdout.decode()
+    stdout = stdout.decode(errors=encoding_errors)
     if retcode is not None and proc.returncode != retcode:
         raise CalledProcessError(cmd, retcode, proc.returncode, stdout, stderr)
     return stdout

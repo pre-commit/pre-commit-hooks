@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import sys
 
 import pytest
@@ -114,6 +115,24 @@ def test_unicode_file_conflicts_with_committed_file(
         temp_git_dir.join(new_name).write('content')
         cmd_output('git', 'add', '--', new_name)
         assert find_conflicting_filenames([new_name]) == 1
+
+
+@skip_win32  # pragma: win32 no cover
+@pytest.mark.parametrize(
+    ('new_name', 'expected'), ((b'normal.py', 0), (b'BAD-\xff.py', 1)),
+)
+def test_non_utf8_file_names(temp_git_dir, new_name, expected):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'config', 'core.ignorecase', 'false')
+        with open(b'bad-\xff.py', 'w') as file:
+            file.write('content')
+        cmd_output('git', 'add', '-A')
+        git_commit('-m', 'Add non-UTF-8 filename')
+        with open(new_name, 'w') as file:
+            file.write('content')
+        filename = os.fsdecode(new_name)
+        cmd_output('git', 'add', '--', filename)
+        assert find_conflicting_filenames([filename]) == expected
 
 
 @skip_win32  # pragma: win32 no cover

@@ -27,7 +27,13 @@ def directories_for(files: set[str]) -> set[str]:
 
 
 def find_conflicting_filenames(filenames: Sequence[str]) -> int:
-    repo_files = set(zsplit(cmd_output('git', 'ls-files', '-z')))
+    repo_files = set(
+        zsplit(
+            cmd_output(
+                'git', 'ls-files', '-z', encoding_errors='surrogateescape',
+            ),
+        ),
+    )
     repo_files |= directories_for(repo_files)
     relevant_files = set(filenames) | added_files()
     relevant_files |= directories_for(relevant_files)

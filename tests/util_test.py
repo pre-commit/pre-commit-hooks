@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import sys
 
 import pytest
@@ -18,6 +19,34 @@ def test_raises_on_error():
 def test_output():
     ret = cmd_output('sh', '-c', 'echo hi')
     assert ret == 'hi\n'
+
+
+def test_output_keeps_strict_decoding():
+    with pytest.raises(UnicodeDecodeError):
+        cmd_output(
+            sys.executable, '-c',
+            'import sys; sys.stdout.buffer.write(b"\\xff")',
+        )
+
+
+def test_output_surrogateescape():
+    ret = cmd_output(
+        sys.executable, '-c', 'import sys; sys.stdout.buffer.write(b"\\xff")',
+        encoding_errors='surrogateescape',
+    )
+    assert ret == '\udcff'
+    assert ret.encode('utf-8', 'surrogateescape') == b'\xff'
+
+
+@pytest.mark.skipif(sys.platform == 'win32', reason='POSIX filename bytes')
+def test_added_files_preserves_non_utf8_name(temp_git_dir):
+    raw_name = b'bad-\xff.txt'
+    filename = os.fsdecode(raw_name)
+    with temp_git_dir.as_cwd():
+        with open(raw_name, 'w') as file:
+            file.write('content')
+        cmd_output('git', 'add', '--', filename)
+        assert added_files() == {filename}
 
 
 skip_windows_filename = pytest.mark.skipif(
