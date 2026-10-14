@@ -43,6 +43,15 @@ def test_add_something_giant(temp_git_dir):
         assert find_large_added_files(['f.py'], 10) == 0
 
 
+@pytest.mark.parametrize('filename', ('mañana.txt', 'snowman-☃.bin'))
+def test_large_unicode_file_is_checked(temp_git_dir, filename):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'config', 'core.quotePath', 'true')
+        temp_git_dir.join(filename).write('a' * 2048)
+        cmd_output('git', 'add', '--', filename)
+        assert main(['--maxkb', '1', filename]) == 1
+
+
 def test_enforce_all(temp_git_dir):
     with temp_git_dir.as_cwd():
         temp_git_dir.join('f.py').write('a' * 10000)

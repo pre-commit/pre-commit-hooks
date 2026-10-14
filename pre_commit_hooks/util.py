@@ -9,8 +9,8 @@ class CalledProcessError(RuntimeError):
 
 
 def added_files() -> set[str]:
-    cmd = ('git', 'diff', '--staged', '--name-only', '--diff-filter=A')
-    return set(cmd_output(*cmd).splitlines())
+    cmd = ('git', 'diff', '--staged', '--name-only', '--diff-filter=A', '-z')
+    return set(zsplit(cmd_output(*cmd)))
 
 
 def cmd_output(*cmd: str, retcode: int | None = 0, **kwargs: Any) -> str:

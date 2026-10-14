@@ -96,6 +96,26 @@ def test_file_conflicts_with_committed_file(temp_git_dir):
         assert find_conflicting_filenames(['F.py']) == 1
 
 
+@pytest.mark.parametrize(
+    ('old_name', 'new_name'), (
+        ('café.py', 'CAFÉ.py'),
+        ('π.py', 'Π.py'),
+    ),
+)
+def test_unicode_file_conflicts_with_committed_file(
+        temp_git_dir, old_name, new_name,
+):
+    with temp_git_dir.as_cwd():
+        cmd_output('git', 'config', 'core.quotePath', 'true')
+        cmd_output('git', 'config', 'core.ignorecase', 'false')
+        temp_git_dir.join(old_name).write('content')
+        cmd_output('git', 'add', '--', old_name)
+        git_commit('-m', 'Add original file')
+        temp_git_dir.join(new_name).write('content')
+        cmd_output('git', 'add', '--', new_name)
+        assert find_conflicting_filenames([new_name]) == 1
+
+
 @skip_win32  # pragma: win32 no cover
 def test_file_conflicts_with_committed_dir(temp_git_dir):
     with temp_git_dir.as_cwd():
