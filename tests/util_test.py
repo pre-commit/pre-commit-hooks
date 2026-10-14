@@ -38,7 +38,9 @@ def test_output_surrogateescape():
     assert ret.encode('utf-8', 'surrogateescape') == b'\xff'
 
 
-@pytest.mark.skipif(sys.platform == 'win32', reason='POSIX filename bytes')
+@pytest.mark.skipif(
+    sys.platform == 'win32', reason='POSIX filename bytes',
+)  # pragma: win32 no cover
 def test_added_files_preserves_non_utf8_name(temp_git_dir):
     raw_name = b'bad-\xff.txt'
     filename = os.fsdecode(raw_name)
