@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import sys
 
 import pytest
 
@@ -8,6 +9,30 @@ from pre_commit_hooks.check_shebang_scripts_are_executable import \
     _check_git_filemode
 from pre_commit_hooks.check_shebang_scripts_are_executable import main
 from pre_commit_hooks.util import cmd_output
+
+skip_win32 = pytest.mark.skipif(
+    sys.platform == 'win32',
+    reason="non-git checks aren't relevant on windows",
+)
+
+
+@skip_win32  # pragma: win32 no cover
+@pytest.mark.parametrize(
+    ('content', 'mode', 'expected'),
+    (
+        pytest.param('#!python', '+x', 0, id='shebang with executable'),
+        pytest.param('#!python', '-x', 1, id='shebang without executable'),
+        pytest.param('', '+x', 0, id='no shebang with executable'),
+        pytest.param('', '-x', 0, id='no shebang without executable'),
+    ),
+)
+def test_non_git_executable_shebang(tmpdir, content, mode, expected):
+    with tmpdir.as_cwd():
+        path = tmpdir.join('path')
+        path.write(content)
+        cmd_output('chmod', mode, str(path))
+
+        assert main((str(path),)) == expected
 
 
 def test_check_git_filemode_passing(tmpdir):
