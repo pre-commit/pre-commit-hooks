@@ -1,9 +1,12 @@
 from __future__ import annotations
 
 import os
+import sys
+from types import SimpleNamespace
 
 import pytest
 
+import pre_commit_hooks.check_shebang_scripts_are_executable as shebang_hook
 from pre_commit_hooks.check_shebang_scripts_are_executable import \
     _check_git_filemode
 from pre_commit_hooks.check_shebang_scripts_are_executable import main
@@ -87,3 +90,51 @@ def test_git_executable_shebang(temp_git_dir, content, mode, expected):
         filenames = [path for path in [str(path)] if os.access(path, os.X_OK)]
 
         assert main(filenames) == expected
+
+
+@pytest.mark.parametrize(
+    ('content', 'executable', 'expected'),
+    (
+        ('#!/bin/sh\n', False, 1),
+        ('#!/bin/sh\n', True, 0),
+        ('echo hello\n', False, 0),
+    ),
+)
+def test_without_git_repository(tmp_path, monkeypatch, content, executable, expected):
+    script = tmp_path / 'example.sh'
+    script.write_text(content)
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(
+        shebang_hook, 'os',
+        SimpleNamespace(access=lambda path, mode: executable, X_OK=os.X_OK),
+    )
+    monkeypatch.setattr(
+        shebang_hook, 'sys', SimpleNamespace(platform='linux', stderr=sys.stderr),
+    )
+
+    assert main([str(script)]) == expected
+
+
+def test_without_git_repository_on_windows_raises(tmp_path, monkeypatch):
+    script = tmp_path / 'example.sh'
+    script.write_text('#!/bin/sh\n')
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(
+        shebang_hook, 'sys', SimpleNamespace(platform='win32', stderr=sys.stderr),
+    )
+
+    with pytest.raises(shebang_hook.CalledProcessError):
+        main([str(script)])
+
+
+def test_git_failure_inside_repository_is_not_hidden(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    cmd_output('git', 'init', '.')
+
+    def broken_ls_files(paths):
+        raise shebang_hook.CalledProcessError('simulated git error')
+
+    monkeypatch.setattr(shebang_hook, 'git_ls_files', broken_ls_files)
+
+    with pytest.raises(shebang_hook.CalledProcessError, match='simulated'):
+        main([])
