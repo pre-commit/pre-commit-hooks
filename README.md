@@ -179,7 +179,7 @@ the following commandline options:
 Sorts entries in requirements.txt and constraints.txt and removes incorrect entry for `pkg-resources==0.0.0`
 
 #### `sort-simple-yaml`
-Sorts simple YAML files which consist only of top-level
+Sorts simple UTF-8 YAML files which consist only of top-level
 keys, preserving comments and blocks.
 
 Note that `sort-simple-yaml` by default matches no `files` as it enforces a

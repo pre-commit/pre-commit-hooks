@@ -4,6 +4,7 @@ import os
 
 import pytest
 
+from pre_commit_hooks import sort_simple_yaml
 from pre_commit_hooks.sort_simple_yaml import first_key
 from pre_commit_hooks.sort_simple_yaml import main
 from pre_commit_hooks.sort_simple_yaml import parse_block
@@ -50,6 +51,29 @@ def test_integration_good_bad_lines(tmpdir, bad_lines, good_lines, retval):
 
     with open(file_path) as f:
         assert [line.rstrip() for line in f.readlines()] == good_lines
+
+
+@pytest.mark.parametrize(
+    'source,expected_status',
+    [
+        ('z: last\n\na: \u041d\n', RETVAL_BAD),
+        ('a: \u041d\n\nz: last\n', RETVAL_GOOD),
+    ],
+)
+def test_utf8_yaml_with_cp1252_locale(
+        tmp_path, monkeypatch, source, expected_status,
+):
+    path = tmp_path / 'config.yaml'
+    path.write_text(source, encoding='utf-8')
+    original_open = open
+
+    def cp1252_open(filename, mode, **kwargs):
+        kwargs.setdefault('encoding', 'cp1252')
+        return original_open(filename, mode, **kwargs)
+
+    monkeypatch.setattr(sort_simple_yaml, 'open', cp1252_open, raising=False)
+    assert main([str(path)]) == expected_status
+    assert path.read_text(encoding='utf-8') == 'a: \u041d\n\nz: last\n'
 
 
 def test_parse_header():
